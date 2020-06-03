@@ -1,6 +1,6 @@
 import DisplaySprite from "../displaySprite.js";
 
-class DisplayKiosk extends DisplaySprite{
+class DisplayStartScreen extends DisplaySprite{
     constructor(x, y, width, height){
         super(x, y, width, height);
 
@@ -8,4 +8,3 @@ class DisplayKiosk extends DisplaySprite{
 
     draw(){}
 }
-
