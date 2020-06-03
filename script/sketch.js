@@ -6,11 +6,12 @@ import Sprite from "./sprite.js";
 import DisplayStartScreen from "./startScreen/displayStartScreen.js";
 import DisplayEndScreen from "./endScreen/displayEndScreen.js";
 
+import DisplayBar from "./simulation/displayElements/displayBar.js";
 import DisplayCoffeeHouse from "./simulation/displayElements/displayCoffeeHouse.js";
 import DisplayDemo from "./simulation/displayElements/displayDemo.js";
-import DisplayPark from "./simulation/displayElements/displayPark.js";
-import DisplayBar from "./simulation/displayElements/displayBar.js";
 import DisplayKiosk from "./simulation/displayElements/displayKiosk.js";
+import DisplayPark from "./simulation/displayElements/displayPark.js";
+
 
 // interactive elements
 import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
