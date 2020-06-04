@@ -1,4 +1,4 @@
-import DisplaySprite from "../displaySprite.js";
+import DisplaySprite from "../../displaySprite.js";
 
 class DisplayCoffeeHouse extends DisplaySprite{
     constructor(x, y, width, height){
