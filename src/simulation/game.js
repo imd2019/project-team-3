@@ -12,6 +12,9 @@ export default class Game{
     }
 
     reset(){
+        for(let elem in this.rooms){
+            elem.reset();
+        }
         this.currentRoom = 0;
         this.player.reset(); 
     }
