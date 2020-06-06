@@ -10,6 +10,16 @@ export default class Game{
         this.views.push(view);
     }
 
+    enterView(name) {
+        for (let i in this.views) {
+            if (this.views[i].name === name) {
+                this.views[i].enter();
+                this.currentView = i;
+                break;
+            }
+        }
+    }
+
     display() {
         this.views[this.currentView].display();
     }
