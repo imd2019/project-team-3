@@ -1,4 +1,7 @@
-export default class Game{
+import EventDispatcher from "../eventDispatcher.js";
+
+
+export default class Game extends EventDispatcher {
     constructor(player){
         this.views = [];
         this.currentView = 1;

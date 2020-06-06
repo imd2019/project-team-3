@@ -22,6 +22,7 @@ import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
 // create instances
 let player = new Player();
 let game = new Game(player);
+game.addEventListener("enterView", function(name) {game.enterView(name);})
 
 let world = new Sprite(0, 0, windowWidth, windowHeight);
 
