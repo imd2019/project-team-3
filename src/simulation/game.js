@@ -1,21 +1,24 @@
-
 export default class Game{
     constructor(player){
-        this.rooms = [];
-        this.currentRoom = 0;
+        this.views = [];
+        this.currentView = 1;
         this.player = player;
 
     }
 
-    addRoom(room){
-        this.rooms.push(room);
+    addView(view){
+        this.views.push(view);
+    }
+
+    display() {
+        this.views[this.currentView].display();
     }
 
     reset(){
-        for(let elem in this.rooms){
+        for(let elem in this.views){
             elem.reset();
         }
-        this.currentRoom = 0;
+        this.currentView = 1;
         this.player.reset(); 
     }
 }

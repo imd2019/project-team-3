@@ -43,4 +43,12 @@ export default class InteractiveObject extends DisplayObject {
       this.released();
     }
   }
+
+  mouseHovered() {
+    if (this.enabled && this.hitTest(mouseX, mouseY)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
