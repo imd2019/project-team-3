@@ -17,6 +17,8 @@ import DisplayEndScreen from "./endScreen/displayEndScreen.js";
 import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
 import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
 
+// console.log(document.title);
+
 // create instances
 let player = new Player();
 let game = new Game(player);
