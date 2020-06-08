@@ -26,10 +26,9 @@ export default class EventDispatcher{
     if (!(event.type in this.listeners)) {
       return true;
     }
-    for(let i in this.listeners[type]) {
-      if (this.listeners[type][i] === callback) {
-        this.listeners[type].call(this, event);
-      }
+    event.target = this;
+    for(let elem of this.listeners[event.type]) {
+      elem.call(this, event);
     }
     return !event.defaultPrevented;
   }

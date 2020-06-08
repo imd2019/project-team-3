@@ -2,6 +2,7 @@ import EventDispatcher from "./eventDispatcher.js"
 
 export default class DisplayObject extends EventDispatcher { 
   constructor(x, y) {
+    super();
     this.x = x;
     this.y = y;
     this.scale = 1;

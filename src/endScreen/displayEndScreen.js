@@ -1,6 +1,6 @@
-import DisplaySprite from "../script/displaySprite.js/index.js";
+import Sprite from "../sprite.js";
 
-class DisplayEndScreen extends DisplaySprite{
+export default class DisplayEndScreen extends Sprite{
     constructor(x, y, width, height){
         super(x, y, width, height);
 

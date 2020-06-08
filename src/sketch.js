@@ -22,7 +22,9 @@ import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
 // create instances
 let player = new Player();
 let game = new Game(player);
-game.addEventListener("enterView", function(name) {game.enterView(name);})
+window.addEventListener("enterView", function(ev) {game.enterView(ev.detail);})
+
+let backgnd = 0;
 
 let world = new Sprite(0, 0, windowWidth, windowHeight);
 
@@ -55,6 +57,9 @@ game.addView(kiosk);
 game.addView(demo);
 game.addView(coffeeHouse);
 game.addView(bar);
+
+const ev = new CustomEvent("enterView", { detail: "kiosk" });
+window.dispatchEvent(ev);
 
 function draw() {
     game.display();

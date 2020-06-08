@@ -6,7 +6,7 @@ function preload() {
 
 function setup() {
     sketch.createCanvas(windowWidth, windowHeight);
-    sketch.framerate(30);
+    frameRate(30);
 }
 window.setup = setup;
 
