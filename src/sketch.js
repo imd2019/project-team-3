@@ -62,15 +62,16 @@ const ev = new CustomEvent("enterView", { detail: "kiosk" });
 window.dispatchEvent(ev);
 
 function draw() {
+    world.display();
     game.display();
 }
 window.draw = draw;
 
-function mouseClicked() {}
+function mouseClicked() { world.mouseClicked(); }
 window.mouseClicked = mouseClicked;
 
-function mousePressed() {}
+function mousePressed() { world.mousePressed(); }
 window.mousePressed = mousePressed;
 
-function mouseReleased() {}
+function mouseReleased() { world.mouseReleased(); }
 window.mouseReleased = mouseReleased;
