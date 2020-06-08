@@ -17,9 +17,14 @@ import DisplayEndScreen from "./endScreen/displayEndScreen.js";
 import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
 import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
 
+// console.log(document.title);
+
 // create instances
 let player = new Player();
 let game = new Game(player);
+window.addEventListener("enterView", function(ev) {game.enterView(ev.detail);})
+
+let backgnd = 0;
 
 let world = new Sprite(0, 0, windowWidth, windowHeight);
 
@@ -52,6 +57,9 @@ game.addView(kiosk);
 game.addView(demo);
 game.addView(coffeeHouse);
 game.addView(bar);
+
+const ev = new CustomEvent("enterView", { detail: "kiosk" });
+window.dispatchEvent(ev);
 
 function draw() {
     game.display();
