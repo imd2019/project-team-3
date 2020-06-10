@@ -26,7 +26,7 @@ export default class EventDispatcher{
     if (!(event.type in this.listeners)) {
       return true;
     }
-    event.target = this;
+    // event.target = this;
     for(let elem of this.listeners[event.type]) {
       elem.call(this, event);
     }

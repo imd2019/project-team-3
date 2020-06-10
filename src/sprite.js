@@ -1,8 +1,8 @@
 import InteractiveObject from "./interactiveObject.js";
 
 export default class Sprite extends InteractiveObject {
-  constructor(x, y, width, height) {
-    super(x, y, width, height);
+  constructor(x, y, width, height, backgnd) {
+    super(x, y, width, height, backgnd);
     this.children = [];
   }
 

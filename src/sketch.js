@@ -14,10 +14,34 @@ import DisplayStartScreen from "./startScreen/displayStartScreen.js";
 import DisplayEndScreen from "./endScreen/displayEndScreen.js";
 
 // interactive element classes
-import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
-import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
+import BarLink from "./simulation/interactiveElements/barLink.js";
+import CoffeeHouseLink from "./simulation/interactiveElements/coffeeHouseLink.js";
+import DemoLink from "./simulation/interactiveElements/demoLink.js";
+import KioskLink from "./simulation/interactiveElements/kioskLink.js";
+import ParkLink from "./simulation/interactiveElements/parkLink.js";
 
-// console.log(document.title);
+import DemoSign from "./simulation/interactiveElements/demoSign.js";
+import Flyer from "./simulation/interactiveElements/flyer.js";
+import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
+import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
+import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
+
+// load images
+let barLink, coffeeHouseLink, demoLink, kioskLink, parkLink;
+let demoSign, flyer, mobilePhone, phoneIcon, streetLampBulb;
+
+function preload() {
+    barLink = loadImage();
+    coffeeHouseLink = loadImage();
+    demoLink = loadImage();
+    kioskLink = loadImage();
+    parkLink = loadImage();
+    demoSign = loadImage();
+    flyer = loadImage();
+    mobilePhone = loadImage();
+    phoneIcon = loadImage();
+    streetLampBulb = loadImage();
+}
 
 // create instances
 let player = new Player();
@@ -28,14 +52,8 @@ let backgnd = 0;
 
 let world = new Sprite(0, 0, windowWidth, windowHeight);
 
-let park0 = new View("park_0", backgnd);
-world.addChild(park0);
-
-let park1 = new View("park_1", backgnd);
-world.addChild(park1);
-
-let park2 = new View("park_2", backgnd);
-world.addChild(park2);
+let park = new View("park", backgnd);
+world.addChild(park);
 
 let kiosk = new View("kiosk", backgnd);
 world.addChild(kiosk);
@@ -50,16 +68,11 @@ let bar = new View("bar", backgnd);
 world.addChild(bar);
 
 // add views
-game.addView(park0);
-game.addView(park1);
-game.addView(park2);
+game.addView(park);
 game.addView(kiosk);
 game.addView(demo);
 game.addView(coffeeHouse);
 game.addView(bar);
-
-const ev = new CustomEvent("enterView", { detail: "kiosk" });
-window.dispatchEvent(ev);
 
 function draw() {
     world.display();
