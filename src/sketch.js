@@ -42,6 +42,7 @@ function preload() {
     phoneIcon = loadImage();
     streetLampBulb = loadImage();
 }
+window.preload = preload;
 
 // create instances
 let player = new Player();
