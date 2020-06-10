@@ -1,10 +1,11 @@
 import DisplayObject from "./displayObject.js";
 
 export default class InteractiveObject extends DisplayObject {
-  constructor(x, y, width, height) {
+  constructor(x, y, width, height, backgnd) {
     super(x, y);
     this.width = width;
     this.height = height;
+    this.backgnd = backgnd;
     this.parent = undefined;
     this.enabled = true;
   }
@@ -14,6 +15,10 @@ export default class InteractiveObject extends DisplayObject {
 
   disable(){
     this.enabled = false;
+  }
+
+  draw() {
+    image(this.backgnd, this.x, this.y, this.width, this.height);
   }
 
   hitTest(x, y) {
@@ -41,6 +46,14 @@ export default class InteractiveObject extends DisplayObject {
   mouseReleased() {
     if (this.hitTest(mouseX, mouseY)) {
       this.released();
+    }
+  }
+
+  mouseHovered() {
+    if (this.enabled && this.hitTest(mouseX, mouseY)) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

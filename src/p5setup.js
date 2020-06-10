@@ -1,8 +1,4 @@
-let sketch = new p5();
-
-function preload() {
-
-}
+let sketch = new p5()
 
 function setup() {
     sketch.createCanvas(windowWidth, windowHeight);
