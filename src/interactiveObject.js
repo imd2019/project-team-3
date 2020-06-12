@@ -1,7 +1,7 @@
 import DisplayObject from "./displayObject.js";
 
 export default class InteractiveObject extends DisplayObject {
-  constructor(x, y, width, height, backgnd) {
+  constructor(x, y, width, height, backgnd = undefined) {
     super(x, y);
     this.width = width;
     this.height = height;
@@ -18,7 +18,9 @@ export default class InteractiveObject extends DisplayObject {
   }
 
   draw() {
-    image(this.backgnd, this.x, this.y, this.width, this.height);
+    if (this.backgnd != undefined) {
+      image(this.backgnd, this.x, this.y, this.width, this.height);
+    }
   }
 
   hitTest(x, y) {

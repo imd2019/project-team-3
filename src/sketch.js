@@ -27,58 +27,68 @@ import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
 import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
 
 // load images
+let parkBackgnd, kioskBackgnd, demoBackgnd, coffeeHouseBackgnd, barBackgnd;
+
 let barLink, coffeeHouseLink, demoLink, kioskLink, parkLink;
 let demoSign, flyer, mobilePhone, phoneIcon, streetLampBulb;
 
 function preload() {
-    barLink = loadImage();
-    coffeeHouseLink = loadImage();
-    demoLink = loadImage();
-    kioskLink = loadImage();
-    parkLink = loadImage();
-    demoSign = loadImage();
-    flyer = loadImage();
-    mobilePhone = loadImage();
-    phoneIcon = loadImage();
-    streetLampBulb = loadImage();
-}
+    // backgnd images
+    parkBackgnd = loadImage("../img/park/0_backgnd.png", setupGame);
+    // kioskBackgnd = loadImage("");
+    // demoBackgnd = loadImage("");
+    // coffeeHouseBackgnd = loadImage("");
+    // barBackgnd = loadImage("");
 
-// create instances
+    // interactive elements
+    // barLink = loadImage("");
+    // coffeeHouseLink = loadImage("");
+    // demoLink = loadImage("");
+    // kioskLink = loadImage("");
+    // parkLink = loadImage("");
+    // demoSign = loadImage("");
+    // flyer = loadImage("");
+    // mobilePhone = loadImage("");
+    // phoneIcon = loadImage("");
+    // streetLampBulb = loadImage("");
+}
+window.preload = preload;
+
+/* setup */
+
 let player = new Player();
+
 let game = new Game(player);
 window.addEventListener("enterView", function(ev) {game.enterView(ev.detail);})
 
-let backgnd = 0;
+let world = new Sprite(0, 0, windowWidth, windowHeight)
 
-let world = new Sprite(0, 0, windowWidth, windowHeight);
+function setupGame () {
+    let park = new View("park", parkBackgnd);
+    game.addView(park);
 
-let park = new View("park", backgnd);
-world.addChild(park);
+    let kiosk = new View("kiosk", parkBackgnd);
+    game.addView(kiosk);
 
-let kiosk = new View("kiosk", backgnd);
-world.addChild(kiosk);
+    let demo = new View("demo", parkBackgnd);
+    game.addView(demo);
 
-let demo = new View("demo", backgnd);
-world.addChild(demo);
+    let coffeeHouse = new View("coffeeHouse", parkBackgnd);
+    game.addView(coffeeHouse);
 
-let coffeeHouse = new View("coffeeHouse", backgnd);
-world.addChild(coffeeHouse);
+    let bar = new View("bar", parkBackgnd);    
+    game.addView(bar);
+}
 
-let bar = new View("bar", backgnd);
-world.addChild(bar);
-
-// add views
-game.addView(park);
-game.addView(kiosk);
-game.addView(demo);
-game.addView(coffeeHouse);
-game.addView(bar);
+/* display */
 
 function draw() {
     world.display();
     game.display();
 }
 window.draw = draw;
+
+/* interaction */
 
 function mouseClicked() { world.mouseClicked(); }
 window.mouseClicked = mouseClicked;
