@@ -1,11 +1,10 @@
 import EventDispatcher from "../eventDispatcher.js";
 
-
 export default class Game extends EventDispatcher {
     constructor(player){
         super();
         this.views = [];
-        this.currentView = 1;
+        this.currentView = 0;
         this.player = player;
 
     }

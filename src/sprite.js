@@ -15,8 +15,8 @@ export default class Sprite extends InteractiveObject {
 
       this.draw();
 
-      for (let index in this.children) {
-        this.children[index].display();
+      for (let elem of this.children) {
+        elem.display();
       }
 
       pop();

@@ -27,18 +27,27 @@ import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
 import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
 
 // load images
-let parkBackgnd, kioskBackgnd, demoBackgnd, coffeeHouseBackgnd, barBackgnd;
+let parkBackgnd, moonImg, cityImg, treesImg;
+let kioskBackgnd;
+let demoBackgnd;
+let coffeeHouseBackgnd;
+let barBackgnd;
 
 let barLink, coffeeHouseLink, demoLink, kioskLink, parkLink;
 let demoSign, flyer, mobilePhone, phoneIcon, streetLampBulb;
 
 function preload() {
     // backgnd images
-    parkBackgnd = loadImage("../img/park/0_backgnd.png", setupGame);
+    parkBackgnd = loadImage("../img/park/0_backgnd.png");
     // kioskBackgnd = loadImage("");
     // demoBackgnd = loadImage("");
     // coffeeHouseBackgnd = loadImage("");
     // barBackgnd = loadImage("");
+
+    // layers
+    moonImg = loadImage("../img/park/1_moon.png");
+    cityImg = loadImage("../img/park/2_city.png");
+    treesImg = loadImage("../img/park/4_trees.png", setupGame);
 
     // interactive elements
     // barLink = loadImage("");
@@ -64,6 +73,7 @@ window.addEventListener("enterView", function(ev) {game.enterView(ev.detail);})
 let world = new Sprite(0, 0, windowWidth, windowHeight)
 
 function setupGame () {
+    // views
     let park = new View("park", parkBackgnd);
     game.addView(park);
 
@@ -78,6 +88,18 @@ function setupGame () {
 
     let bar = new View("bar", parkBackgnd);    
     game.addView(bar);
+
+    // display objects
+    let moon = new InteractiveObject(800, 100, 213, 212, moonImg);
+    park.addChild(moon);
+
+    let city = new InteractiveObject(0, 245, 3327, 703, cityImg);
+    park.addChild(city);
+
+    let trees = new InteractiveObject(0, windowHeight - 1030, 4245, 695, treesImg);
+    park.addChild(trees);
+
+    // interactive objects
 }
 
 /* display */
