@@ -9,10 +9,6 @@ import View from "./simulation/view.js";
 import InteractiveObject from "./interactiveObject.js";
 import Sprite from "./sprite.js";
 
-// display element classes
-import DisplayStartScreen from "./startScreen/displayStartScreen.js";
-import DisplayEndScreen from "./endScreen/displayEndScreen.js";
-
 // interactive element classes
 import BarLink from "./simulation/interactiveElements/barLink.js";
 import CoffeeHouseLink from "./simulation/interactiveElements/coffeeHouseLink.js";
@@ -105,7 +101,6 @@ function setupGame () {
 /* display */
 
 function draw() {
-    world.display();
     game.display();
 }
 window.draw = draw;
