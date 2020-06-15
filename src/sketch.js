@@ -26,24 +26,26 @@ import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
 let parkBackgnd, moonImg, cityImg, treesImg;
 let kioskBackgnd;
 let demoBackgnd;
-let coffeeHouseBackgnd;
-let barBackgnd;
+let coffeeHouseBackgnd, coffeeHouseForegnd;
+let barBackgnd, barForegnd;
 
 let barLink, coffeeHouseLink, demoLink, kioskLink, parkLink;
-let demoSign, flyer, mobilePhone, phoneIcon, streetLampBulb;
+let door, demoSign, flyer, mobilePhone, phoneIcon, streetLampBulb;
 
 function preload() {
     // backgnd images
     parkBackgnd = loadImage("../img/park/0_backgnd.png");
     // kioskBackgnd = loadImage("");
     // demoBackgnd = loadImage("");
-    // coffeeHouseBackgnd = loadImage("");
-    // barBackgnd = loadImage("");
+    coffeeHouseBackgnd = loadImage("../img/coffeehouse/0_backgnd.png");
+    barBackgnd = loadImage("../img/bar/0_backgnd.png");
 
     // layers
     moonImg = loadImage("../img/park/1_moon.png");
     cityImg = loadImage("../img/park/2_city.png");
-    treesImg = loadImage("../img/park/4_trees.png", setupGame);
+    treesImg = loadImage("../img/park/4_trees.png");
+    coffeeHouseForegnd = loadImage("../img/coffeehouse/5_foregnd.png");
+    barForegnd = loadImage("../img/bar/1_foregnd.png", setupGame);
 
     // interactive elements
     // barLink = loadImage("");
