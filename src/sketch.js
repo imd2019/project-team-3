@@ -23,41 +23,43 @@ import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
 import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
 
 // load images
-let parkBackgnd, moonImg, cityImg, treesImg;
+let parkBackgnd, moonImg, cityImg, streetImg, treesImg;
 let kioskBackgnd;
 let demoBackgnd;
-let coffeeHouseBackgnd, coffeeHouseForegnd;
-let barBackgnd, barForegnd;
+let coffeeHouseBackgnd, coffeeHouseForegndImg;
+let barBackgnd, barForegndImg;
 
-let barLink, coffeeHouseLink, demoLink, kioskLink, parkLink;
-let door, demoSign, flyer, mobilePhone, phoneIcon, streetLampBulb;
+let barLinkImg, coffeeHouseLinkImg, demoLinkImg, kioskLinkImg, parkLinkImg;
+let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbImg;
 
 function preload() {
     // backgnd images
     parkBackgnd = loadImage("../img/park/0_backgnd.png");
     // kioskBackgnd = loadImage("");
     // demoBackgnd = loadImage("");
-    coffeeHouseBackgnd = loadImage("../img/coffeehouse/0_backgnd.png");
+    coffeeHouseBackgnd = loadImage("../img/coffeeHouse/0_backgnd.png");
     barBackgnd = loadImage("../img/bar/0_backgnd.png");
 
     // layers
     moonImg = loadImage("../img/park/1_moon.png");
     cityImg = loadImage("../img/park/2_city.png");
-    treesImg = loadImage("../img/park/4_trees.png");
-    coffeeHouseForegnd = loadImage("../img/coffeehouse/5_foregnd.png");
-    barForegnd = loadImage("../img/bar/1_foregnd.png", setupGame);
+    streetImg = loadImage("../img/park/3_street.png");
+    treesImg = loadImage("../img/park/5_trees.png");
+    coffeeHouseForegndImg = loadImage("../img/coffeeHouse/5_foregnd.png");
+    barForegndImg = loadImage("../img/bar/1_foregnd.png");
 
     // interactive elements
-    // barLink = loadImage("");
-    // coffeeHouseLink = loadImage("");
-    // demoLink = loadImage("");
-    // kioskLink = loadImage("");
-    // parkLink = loadImage("");
-    // demoSign = loadImage("");
-    // flyer = loadImage("");
-    // mobilePhone = loadImage("");
-    // phoneIcon = loadImage("");
-    // streetLampBulb = loadImage("");
+    // barLinkImg = loadImage("");
+    coffeeHouseLinkImg = loadImage("../img/park/4_interactionSpaces/4_coffeeHouse.png");
+    // demoLinkImg = loadImage("");
+    // kioskLinkImg = loadImage("");
+    // parkLinkImg = loadImage("");
+    // demoSignImg = loadImage("");
+    flyerBoxImg = loadImage("../img/assets/flyerbox.png");
+    // mobilePhoneImg = loadImage("");
+    // phoneIconImg = loadImage("");
+    streetLampBulbImg = loadImage("../img/assets/lamp-on.png");
+    doorImg = loadImage("../img/coffeeHouse/1_door.png", setupGame);
 }
 window.preload = preload;
 
@@ -81,23 +83,36 @@ function setupGame () {
     let demo = new View("demo", parkBackgnd);
     game.addView(demo);
 
-    let coffeeHouse = new View("coffeeHouse", parkBackgnd);
+    let coffeeHouse = new View("coffeeHouse", coffeeHouseBackgnd);
     game.addView(coffeeHouse);
 
-    let bar = new View("bar", parkBackgnd);    
+    let bar = new View("bar", barBackgnd);
     game.addView(bar);
 
     // display objects
-    let moon = new InteractiveObject(800, 100, 213, 212, moonImg);
+    let moon = new InteractiveObject(2086, 25, 213, 212, moonImg);
     park.addChild(moon);
 
-    let city = new InteractiveObject(0, 245, 3327, 703, cityImg);
+    let city = new InteractiveObject(773, 6, 3327, 703, cityImg);
     park.addChild(city);
 
-    let trees = new InteractiveObject(0, windowHeight - 1030, 4245, 695, treesImg);
+    let street = new InteractiveObject(1721, 320, 3327, 703, streetImg);
+    park.addChild(street);
+
+    let trees = new InteractiveObject(-1, 73, 4245, 695, treesImg);
     park.addChild(trees);
 
+    let coffeeHouseForegnd = new InteractiveObject(0, 0, 3327, 703, coffeeHouseForegndImg);
+    coffeeHouse.addChild(coffeeHouseForegnd);
+
+    let barForegnd = new InteractiveObject(0, 0, 3327, 703, barForegndImg);
+    bar.addChild(barForegnd);
+
+    // let flyerBoxPark = new InteractiveObject(0, 245, 3327, 703, flyerBoxImg);
+    // park.addChild(flyerBoxPark);
+
     // interactive objects
+
 }
 
 /* display */
