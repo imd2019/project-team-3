@@ -17,7 +17,7 @@ import KioskLink from "./simulation/interactiveElements/kioskLink.js";
 import ParkLink from "./simulation/interactiveElements/parkLink.js";
 
 import DemoSign from "./simulation/interactiveElements/demoSign.js";
-import Flyer from "./simulation/interactiveElements/flyer.js";
+import Flyer from "./simulation/interactiveElements/flyerBox.js";
 import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
 import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
 import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
@@ -71,6 +71,8 @@ let game = new Game(player);
 window.addEventListener("enterView", function(ev) {game.enterView(ev.detail);})
 
 let world = new Sprite(0, 0, windowWidth, windowHeight)
+let globalObjects = new Sprite(0, 0, windowWidth, windowHeight);
+world.addChild(globalObjects);
 
 function setupGame () {
     // views
@@ -108,10 +110,71 @@ function setupGame () {
     let barForegnd = new InteractiveObject(0, 0, 3327, 703, barForegndImg);
     bar.addChild(barForegnd);
 
-    // let flyerBoxPark = new InteractiveObject(0, 245, 3327, 703, flyerBoxImg);
-    // park.addChild(flyerBoxPark);
+    // let flyerBox_park = new InteractiveObject(0, 245, 3327, 703, flyerBoxImg);
+    // park.addChild(flyerBox_park);
 
     // interactive objects
+
+    let barLink = new BarLink();
+    demo.addChild(barLink);
+    world.addChild(barLink);
+
+    let coffeeHouseLink = new CoffeeHouseLink();
+    park.addChild(coffeeHouseLink);
+    world.addChild(coffeeHouseLink);
+
+    let demoLink_park = new DemoLink();
+    park.addChild(demoLink_park);
+    world.addChild(demoLink_park);
+
+    let demoLink_bar = new DemoLink();
+    bar.addChild(demoLink_bar);
+    world.addChild(demoLink_bar);
+
+    let kioskLink = new KioskLink();
+    park.addChild(kioskLink);
+    world.addChild(kioskLink);
+
+    let parkLink_kiosk = new ParkLink();
+    kiosk.addChild(parkLink_kiosk);
+    world.addChild(parkLink_kiosk);
+
+    let parkLink_demo = new ParkLink();
+    demo.addChild(parkLink_demo);
+    world.addChild(parkLink_demo);
+
+    let parkLink_coffeeHouse = new ParkLink();
+    coffeeHouse.addChild(parkLink_coffeeHouse);
+    world.addChild(parkLink_coffeeHouse);
+
+    let door_coffeeHouse = new Door();
+    coffeeHouse.addChild(door_coffeeHouse);
+    world.addChild(door_coffeeHouse);
+
+    let demoSign_demo = new DemoSign();
+    demo.addChild(demoSign_demo);
+    world.addChild(demoSign_demo);
+
+    let demoSign_counterdemo = new DemoSign();
+    demo.addChild(demoSign_counterdemo);
+    world.addChild(demoSign_counterdemo);
+
+    let flyerBox_coffeeHouse = new FlyerBox();
+    coffeeHouse.addChild()
+
+    let flyer = new Flyer();
+    coffeeHouse.addChild(flyer);
+    world.addChild(flyer);
+
+    // street lamp bulbs ...
+
+    // global objects
+
+    let mobilePhone = new MobilePhone();
+    globalObjects.addChild(mobilePhone);
+
+    let phoneIcon = new PhoneIcon();
+    globalObjects.addChild(phoneIcon);
 
 }
 
@@ -119,6 +182,7 @@ function setupGame () {
 
 function draw() {
     game.display();
+    globalObjects.display();
 }
 window.draw = draw;
 
