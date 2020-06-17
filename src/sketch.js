@@ -47,7 +47,7 @@ function preload() {
   cityImg = loadImage("../img/park/2_city.png");
   streetImg = loadImage("../img/park/3_street.png");
   treesImg = loadImage("../img/park/5_trees.png");
-  coffeeHouseForegndImg = loadImage("../img/coffeeHouse/5_foregnd.png");
+  coffeeHouseForegndImg = loadImage("../img/coffeeHouse/3_foregnd.png");
   barForegndImg = loadImage("../img/bar/1_foregnd.png");
 
   // interactive elements
@@ -118,51 +118,36 @@ function setupGame () {
   // interactive objects
   let barLink = new BarLink();
   demo.addChild(barLink);
-  world.addChild(barLink);
 
   let coffeeHouseLink = new CoffeeHouseLink(3503, 312, 208, 129, coffeeHouseLinkImg);
   park.addChild(coffeeHouseLink);
-  world.addChild(coffeeHouseLink);
 
   let demoLink = new DemoLink();
   park.addChild(demoLink);
-  world.addChild(demoLink);
 
   let kioskLink = new KioskLink();
   park.addChild(kioskLink);
-  world.addChild(kioskLink);
 
   let parkLink_kiosk = new ParkLink();
   kiosk.addChild(parkLink_kiosk);
-  world.addChild(parkLink_kiosk);
 
   let parkLink_demo = new ParkLink();
   demo.addChild(parkLink_demo);
-  world.addChild(parkLink_demo);
 
   let parkLink_coffeeHouse = new ParkLink();
   coffeeHouse.addChild(parkLink_coffeeHouse);
-  world.addChild(parkLink_coffeeHouse);
 
   let door_coffeeHouse = new Door(1295, 379, 128, 214, doorImg);
   coffeeHouse.addChild(door_coffeeHouse);
-  world.addChild(door_coffeeHouse);
 
-  let demoSign_demo = new DemoSign();
-  demo.addChild(demoSign_demo);
-  world.addChild(demoSign_demo);
-
-  let demoSign_counterdemo = new DemoSign();
-  demo.addChild(demoSign_counterdemo);
-  world.addChild(demoSign_counterdemo);
+  let demoSign = new DemoSign();
+  demo.addChild(demoSign);
 
   let flyerBox_coffeeHouse = new FlyerBox(581, 335, 61, 139, flyerBoxImg);
   coffeeHouse.addChild(flyerBox_coffeeHouse);
-  world.addChild(flyerBox_coffeeHouse);
 
   let flyer = new Flyer();
   coffeeHouse.addChild(flyer);
-  world.addChild(flyer);
 
   // street lamp bulbs ...
 
@@ -173,9 +158,8 @@ function setupGame () {
   let phoneIcon = new PhoneIcon();
   globalObjects.addChild(phoneIcon);
 
-  // set world scale
-  world.scale = park.scale;
 
+  game.scale = park.scale;
 }
 
 /* display */
@@ -188,11 +172,11 @@ window.draw = draw;
 
 /* interaction */
 
-function mouseClicked() { world.mouseClicked(); }
+function mouseClicked() { game.mouseClicked(); }
 window.mouseClicked = mouseClicked;
 
-function mousePressed() { world.mousePressed(); }
+function mousePressed() { game.mousePressed(); }
 window.mousePressed = mousePressed;
 
-function mouseReleased() { world.mouseReleased(); }
+function mouseReleased() { game.mouseReleased(); }
 window.mouseReleased = mouseReleased;

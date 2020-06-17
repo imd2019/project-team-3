@@ -1,37 +1,47 @@
-import EventDispatcher from "../eventDispatcher.js";
+import Sprite from "../sprite.js";
 
-export default class Game extends EventDispatcher {
-    constructor(player){
-        super();
-        this.views = [];
-        this.currentView = 0;
-        this.player = player;
+export default class Game extends Sprite {
+  constructor(player){
+    super(0, 0, windowWidth, windowHeight, undefined);
+    this.currentView = 0;
+    this.player = player;
+  }
 
+  addView(view){
+    this.addChild(view);
+  }
+
+  enterView(name) {
+    for (let i in this.children) {
+      if (this.children[i].name === name) {
+        this.children[i].enter();
+        this.currentView = i;
+        break;
+      }
     }
+  }
 
-    addView(view){
-        this.views.push(view);
-    }
+  pressed() {
+    this.children[this.currentView].mousePressed();
+  }
 
-    enterView(name) {
-        for (let i in this.views) {
-            if (this.views[i].name === name) {
-                this.views[i].enter();
-                this.currentView = i;
-                break;
-            }
-        }
-    }
+  clicked() {
+    this.children[this.currentView].mouseClicked();
+  }
 
-    display() {
-        this.views[this.currentView].display();
-    }
+  released() {
+    this.children[this.currentView].mouseReleased();
+  }
 
-    reset(){
-        for(let elem in this.views){
-            elem.reset();
-        }
-        this.currentView = 1;
-        this.player.reset(); 
+  display() {
+    this.children[this.currentView].display();
+  }
+
+  reset(){
+    for(let elem in this.children){
+      elem.reset();
     }
+    this.currentView = 1;
+    this.player.reset(); 
+  }
 }
