@@ -19,7 +19,6 @@ export default class InteractiveObject extends DisplayObject {
 
   draw() {
     if (this.backgnd != undefined) {
-      // console.log(this.backgnd);
       image(this.backgnd, 0, 0, this.width, this.height);
     }
   }
