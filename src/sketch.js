@@ -17,7 +17,8 @@ import KioskLink from "./simulation/interactiveElements/kioskLink.js";
 import ParkLink from "./simulation/interactiveElements/parkLink.js";
 
 import DemoSign from "./simulation/interactiveElements/demoSign.js";
-import Flyer from "./simulation/interactiveElements/flyerBox.js";
+import FlyerBox from "./simulation/interactiveElements/flyerBox.js";
+import Flyer from "./simulation/interactiveElements/flyer.js";
 import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
 import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
 import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
@@ -143,9 +144,9 @@ function setupGame () {
     coffeeHouse.addChild(parkLink_coffeeHouse);
     world.addChild(parkLink_coffeeHouse);
 
-    // let door_coffeeHouse = new Door();
-    // coffeeHouse.addChild(door_coffeeHouse);
-    // world.addChild(door_coffeeHouse);
+    let door_coffeeHouse = new Door();
+    coffeeHouse.addChild(door_coffeeHouse);
+    world.addChild(door_coffeeHouse);
 
     let demoSign_demo = new DemoSign();
     demo.addChild(demoSign_demo);
@@ -155,9 +156,9 @@ function setupGame () {
     demo.addChild(demoSign_counterdemo);
     world.addChild(demoSign_counterdemo);
 
-    // let flyerBox_coffeeHouse = new FlyerBox();
-    // coffeeHouse.addChild(flyerBox_coffeeHouse);
-    // world.addChild(flyerBox_coffeeHouse);
+    let flyerBox_coffeeHouse = new FlyerBox();
+    coffeeHouse.addChild(flyerBox_coffeeHouse);
+    world.addChild(flyerBox_coffeeHouse);
 
     let flyer = new Flyer();
     coffeeHouse.addChild(flyer);
