@@ -98,10 +98,10 @@ function setupGame () {
     let city = new InteractiveObject(773, 6, 3327, 703, cityImg);
     park.addChild(city);
 
-    let street = new InteractiveObject(1721, 320, 3327, 703, streetImg);
+    let street = new InteractiveObject(1721, 320, 2002, 289, streetImg);
     park.addChild(street);
 
-    let trees = new InteractiveObject(-1, 73, 4245, 695, treesImg);
+    let trees = new InteractiveObject(-1, 74, 4103, 695, treesImg);
     park.addChild(trees);
 
     let coffeeHouseForegnd = new InteractiveObject(0, 0, 3327, 703, coffeeHouseForegndImg);
@@ -123,13 +123,9 @@ function setupGame () {
     park.addChild(coffeeHouseLink);
     world.addChild(coffeeHouseLink);
 
-    let demoLink_park = new DemoLink();
-    park.addChild(demoLink_park);
-    world.addChild(demoLink_park);
-
-    let demoLink_bar = new DemoLink();
-    bar.addChild(demoLink_bar);
-    world.addChild(demoLink_bar);
+    let demoLink = new DemoLink();
+    park.addChild(demoLink);
+    world.addChild(demoLink);
 
     let kioskLink = new KioskLink();
     park.addChild(kioskLink);
@@ -147,9 +143,9 @@ function setupGame () {
     coffeeHouse.addChild(parkLink_coffeeHouse);
     world.addChild(parkLink_coffeeHouse);
 
-    let door_coffeeHouse = new Door();
-    coffeeHouse.addChild(door_coffeeHouse);
-    world.addChild(door_coffeeHouse);
+    // let door_coffeeHouse = new Door();
+    // coffeeHouse.addChild(door_coffeeHouse);
+    // world.addChild(door_coffeeHouse);
 
     let demoSign_demo = new DemoSign();
     demo.addChild(demoSign_demo);
@@ -159,8 +155,9 @@ function setupGame () {
     demo.addChild(demoSign_counterdemo);
     world.addChild(demoSign_counterdemo);
 
-    let flyerBox_coffeeHouse = new FlyerBox();
-    coffeeHouse.addChild()
+    // let flyerBox_coffeeHouse = new FlyerBox();
+    // coffeeHouse.addChild(flyerBox_coffeeHouse);
+    // world.addChild(flyerBox_coffeeHouse);
 
     let flyer = new Flyer();
     coffeeHouse.addChild(flyer);
