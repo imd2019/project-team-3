@@ -24,7 +24,30 @@ export default class InteractiveObject extends DisplayObject {
   }
 
   hitTest(x, y) {
-    return x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height;
+    let p = this.parent;
+    let dx = 0;
+    let dy = 0;
+    let s = 1;
+
+    while (p != undefined) {
+      if (p.parent != undefined) {
+        dx += p.x * p.parent.scale;
+        dy += p.y * p.parent.scale;
+        s *= p.scale;
+      } else {
+        dx += p.x;
+        dy += p.y;
+      }
+
+      p = p.parent;
+    }
+
+    return (
+      x > this.x * s + dx &&
+      x < this.x * s + dx + this.width * s &&
+      y > this.y * s + dy &&
+      y < this.y * s + dy + this.height * s
+    );
   }
 
   pressed() {}

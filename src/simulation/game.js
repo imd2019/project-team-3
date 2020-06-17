@@ -23,18 +23,30 @@ export default class Game extends Sprite {
 
   pressed() {
     this.children[this.currentView].mousePressed();
+    this.getGlobal().mousePressed();
   }
 
   clicked() {
     this.children[this.currentView].mouseClicked();
+    this.getGlobal().mouseClicked();
   }
 
   released() {
     this.children[this.currentView].mouseReleased();
+    this.getGlobal().mouseReleased();
   }
 
   display() {
     this.children[this.currentView].display();
+    this.getGlobal().display();
+  }
+
+  getGlobal() {
+    for (let elem of this.children) {
+      if (!elem.name) {
+        return elem;
+      }
+    }
   }
 
   reset(){

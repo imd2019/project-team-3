@@ -2,7 +2,7 @@ import Sprite from "../Sprite.js";
 
 export default class View extends Sprite {
   constructor(name, width, height, backgnd){
-    super((windowWidth / 2) - (width / 2), 0, width, height, backgnd);
+    super(0, 0, width, height, backgnd);
     this.name = name;
     this.width = width;
     this.height = height;
@@ -12,6 +12,7 @@ export default class View extends Sprite {
       this.alreadyEntered = true;
     }
     this.scale = windowHeight / height;
+    this.x = (windowWidth / 2) - ((width * this.scale) / 2);
   }
 
   enter() {
