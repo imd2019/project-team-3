@@ -143,9 +143,9 @@ function setupGame () {
     coffeeHouse.addChild(parkLink_coffeeHouse);
     world.addChild(parkLink_coffeeHouse);
 
-    // let door_coffeeHouse = new Door();
-    // coffeeHouse.addChild(door_coffeeHouse);
-    // world.addChild(door_coffeeHouse);
+    let coffeeHouseDoor = new Door(1295, 379, 128, 214, doorImg);
+    coffeeHouse.addChild(coffeeHouseDoor);
+    world.addChild(door_coffeeHouse);
 
     let demoSign_demo = new DemoSign();
     demo.addChild(demoSign_demo);
