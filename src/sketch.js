@@ -144,7 +144,7 @@ function setupGame () {
     coffeeHouse.addChild(parkLink_coffeeHouse);
     world.addChild(parkLink_coffeeHouse);
 
-    let door_coffeeHouse = new Door();
+    let door_coffeeHouse = new Door(1295, 379, 128, 214, doorImg);
     coffeeHouse.addChild(door_coffeeHouse);
     world.addChild(door_coffeeHouse);
 
