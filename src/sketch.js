@@ -116,7 +116,7 @@ function setupGame () {
   let demoLink_demo = new DemoLink(1778, 394, 471, 150, demoLinkDemoImg);
   park.addChild(demoLink_demo);
 
-  let coffeeHouseLink = new CoffeeHouseLink(3503, 352, 208, 129, coffeeHouseLinkImg);
+  let coffeeHouseLink = new CoffeeHouseLink(3353, 352, 208, 129, coffeeHouseLinkImg);
   park.addChild(coffeeHouseLink);
 
   let trees = new InteractiveObject(-1, 74, 4103, 695, treesImg);

@@ -24,13 +24,35 @@ export default class View extends Sprite {
   move(dir, speed) {
     switch (dir) {
       case "left":
-        if (this.x < -6 * speed) {
-          this.x += 6 * speed;
+        if (this.children[this.children.length - 1].x * this.scale < Math.abs(this.x) - 6 * speed) {
+          // moon
+          this.children[0].x += 1 * speed;
+          // city
+          this.children[1].x += 2 * speed;
+          // street 
+          for (let i = 2; i < 6; i++) {
+            this.children[i].x += 3 * speed;
+          }
+          // foreground
+          for (let i = 6; i < this.children.length; i++) {
+            this.children[i].x += 3.5 * speed;
+          }
         }
         break;
       case "right":
-        if (this.x > windowWidth - this.width * this.scale ) {
-          this.x -= 6 * speed;
+        if (this.children[this.children.length - 1].x * this.scale > this.x + 6 * speed) {
+          // moon
+          this.children[0].x -= 1 * speed;          
+          // city
+          this.children[1].x -= 2 * speed;
+          // street 
+          for (let i = 2; i < 6; i++) {
+            this.children[i].x -= 3 * speed;
+          }
+          // foreground
+          for (let i = 6; i < this.children.length; i++) {
+            this.children[i].x -= 3.5 * speed;
+          }
         }
         break;
     }
