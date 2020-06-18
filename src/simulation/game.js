@@ -21,17 +21,21 @@ export default class Game extends Sprite {
     }
   }
 
-  pressed() {
+  moveView(dir, speed) {
+    this.children[this.currentView].move(dir, speed);
+  }
+
+  mousePressed() {
     this.children[this.currentView].mousePressed();
     this.getGlobal().mousePressed();
   }
 
-  clicked() {
+  mouseClicked() {
     this.children[this.currentView].mouseClicked();
     this.getGlobal().mouseClicked();
   }
 
-  released() {
+  mouseReleased() {
     this.children[this.currentView].mouseReleased();
     this.getGlobal().mouseReleased();
   }

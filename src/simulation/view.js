@@ -4,8 +4,6 @@ export default class View extends Sprite {
   constructor(name, width, height, backgnd){
     super(0, 0, width, height, backgnd);
     this.name = name;
-    this.width = width;
-    this.height = height;
     if (name != "park") {
       this.alreadyEntered = false;
     } else {
@@ -21,6 +19,39 @@ export default class View extends Sprite {
 
   isEntered() {
     return this.alreadyEntered;
+  }
+
+  move(dir, speed) {
+    switch (dir) {
+      case "left":
+        if (this.x < -6 * speed) {
+          this.x += 6 * speed;
+        }
+        break;
+      case "right":
+        if (this.x > windowWidth - this.width * this.scale ) {
+          this.x -= 6 * speed;
+        }
+        break;
+    }
+  }
+
+  mousePressed() {
+    for (let elem of this.children) {
+      elem.mousePressed();
+    }
+  }
+
+  mouseClicked() {
+    for (let elem of this.children) {
+      elem.mouseClicked();
+    }
+  }
+
+  mouseReleased() {
+    for (let elem of this.children) {
+      elem.mouseReleased();
+    }
   }
 
   reset() {
