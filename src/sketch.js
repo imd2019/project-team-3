@@ -144,7 +144,8 @@ function setupGame () {
   let streetLamp_5 = new StreetLampBulb(2565, 288, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_5);
 
-
+  let streetLamp_6 = new StreetLampBulb(2872, 286, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
+  park.addChild(streetLamp_6);
 
   let streetLamp_7 = new StreetLampBulb(3488, 395, 24, 10, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_7);
