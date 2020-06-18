@@ -24,7 +24,7 @@ export default class View extends Sprite {
   move(dir, speed) {
     switch (dir) {
       case "left":
-        if (this.children[this.children.length - 1].x * this.scale < Math.abs(this.x) - 6 * speed) {
+        if (this.children[6].x * this.scale < Math.abs(this.x) - 6 * speed) {
           // moon
           this.children[0].x += 1 * speed;
           // city
@@ -40,7 +40,7 @@ export default class View extends Sprite {
         }
         break;
       case "right":
-        if (this.children[this.children.length - 1].x * this.scale > this.x + 6 * speed) {
+        if (this.children[6].x * this.scale > this.x + 6 * speed) {
           // moon
           this.children[0].x -= 1 * speed;          
           // city

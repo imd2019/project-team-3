@@ -33,7 +33,7 @@ let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg, kioskLinkImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
-let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbImg, demoBenchImg;
+let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg;
 
 function preload() {
   // backgnd images
@@ -66,7 +66,8 @@ function preload() {
   flyerBoxImg = loadImage("../img/coffeeHouse/2_elements/2_flyerbox.png");
   // mobilePhoneImg = loadImage("");
   // phoneIconImg = loadImage("");
-  streetLampBulbImg = loadImage("../img/assets/lamp-on.png");
+  streetLampBulbOnImg = loadImage("../img/assets/lamp-on.png");
+  streetLampBulbOffImg = loadImage("../img/assets/lamp-off.png");
   doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png", setupGame);
 }
 window.preload = preload;
@@ -122,11 +123,37 @@ function setupGame () {
   let trees = new InteractiveObject(-1, 74, 4103, 695, treesImg);
   park.addChild(trees);
 
-  let kioskLink = new KioskLink(0, 0, 0, 0, kioskLinkImg); // adjust position & size! // correct Image!!!
+  let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg); // adjust position & size! // correct Image!!!
   park.addChild(kioskLink);
 
   let parkForegnd = new InteractiveObject(2, 228, 3904, 543, parkForegndImg);
   park.addChild(parkForegnd);
+
+  let streetLamp_1 = new StreetLampBulb(496, 336, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
+  park.addChild(streetLamp_1);
+
+  let streetLamp_2 = new StreetLampBulb(1012, 250, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
+  park.addChild(streetLamp_2);
+
+  let streetLamp_3 = new StreetLampBulb(1450, 294, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
+  park.addChild(streetLamp_3);
+
+  let streetLamp_4 = new StreetLampBulb(1756, 292, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
+  park.addChild(streetLamp_4);
+
+  let streetLamp_5 = new StreetLampBulb(2565, 288, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
+  park.addChild(streetLamp_5);
+
+
+
+  let streetLamp_7 = new StreetLampBulb(3488, 395, 24, 10, streetLampBulbOnImg, streetLampBulbOffImg);
+  park.addChild(streetLamp_7);
+
+  let streetLamp_8 = new StreetLampBulb(3605, 394, 16, 7, streetLampBulbOnImg, streetLampBulbOffImg);
+  park.addChild(streetLamp_8);
+
+  let streetLamp_9 = new StreetLampBulb(3736, 370, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
+  park.addChild(streetLamp_9);
 
   let coffeeHouseForegnd = new InteractiveObject(0, 0, 1792, 768, coffeeHouseForegndImg);
   coffeeHouse.addChild(coffeeHouseForegnd);
