@@ -92,5 +92,11 @@ export default class View extends Sprite {
     if (this.name != "park") {
       this.alreadyEntered = false;
     }
+    for (elem of this.children) {
+      if(elem.enabled === false)
+        elem.enabled = true;
+      if (elem.visible === false)
+        elem.visible = true;
+    }
   }
 }

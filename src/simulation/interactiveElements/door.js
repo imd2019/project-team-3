@@ -6,5 +6,6 @@ export default class Door extends Sprite {
     }
 
     clicked() {
+        
     }
 }

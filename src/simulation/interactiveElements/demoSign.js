@@ -5,5 +5,8 @@ export default class demoSign extends Sprite {
         super(x, y, width, height, backgnd);
     }
 
-    clicked() {}
+    clicked() {
+        this.disable();
+        this.visible = false;
+    }
 }

@@ -5,5 +5,7 @@ export default class FlyerBox extends Sprite {
         super(x, y, width, height, backgnd);
     }
 
-    clicked() {}
+    clicked() {
+        
+    }
 }

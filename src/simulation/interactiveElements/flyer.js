@@ -5,5 +5,7 @@ export default class Flyer extends Sprite {
         super(x, y, width, height, backgnd);
     }
 
-    clicked() {}
+    clicked() {
+        
+    }
 }

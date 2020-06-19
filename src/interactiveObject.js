@@ -57,19 +57,19 @@ export default class InteractiveObject extends DisplayObject {
   released() {}
 
   mousePressed() {
-    if (this.hitTest(mouseX, mouseY)) {
+    if (this.enabled && this.hitTest(mouseX, mouseY)) {
       this.pressed();
     }
   }
 
   mouseClicked() {
-    if (this.hitTest(mouseX, mouseY)) {
+    if (this.enabled && this.hitTest(mouseX, mouseY)) {
       this.clicked();
     }
   }
 
   mouseReleased() {
-    if (this.hitTest(mouseX, mouseY)) {
+    if (this. enabled && this.hitTest(mouseX, mouseY)) {
       this.released();
     }
   }

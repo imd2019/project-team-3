@@ -34,7 +34,7 @@ let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg, kioskLinkImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
-let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, k;
+let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg;
 
 function preload() {
   // backgnd images
@@ -82,9 +82,10 @@ window.preload = preload;
 /* setup */
 
 let player = new Player();
+window.addEventListener("addAction", function(ev) {player.addAction(ev.detail.origin, ev.detail.name, ev.detail.data);});
 
 let game = new Game(player);
-window.addEventListener("enterView", function(ev) {game.enterView(ev.detail);})
+window.addEventListener("enterView", function(ev) {game.enterView(ev.detail);});
 
 let globalObjects = new Sprite(0, 0, windowWidth, windowHeight);
 
@@ -222,8 +223,6 @@ function setupGame () {
 
   let flyer = new Flyer();
   coffeeHouse.addChild(flyer);
-
-  // street lamp bulbs ...
 
   // global objects
   let mobilePhone = new MobilePhone();
