@@ -40,7 +40,7 @@ export default class View extends Sprite {
             }
           }
         } else {
-          if (this.x < 0) {
+          if (this.x < - 3.5 * speed) {
             this.x += 3.5 * speed;
           }
         }
@@ -62,7 +62,7 @@ export default class View extends Sprite {
             }
         }
         } else {
-          if (this.x > this.width * this.scale - windowWidth) { // fix right border
+          if (this.x > windowWidth - this.width * this.scale) {
             this.x -= 3.5 * speed;
           }
         }

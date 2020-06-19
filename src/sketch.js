@@ -127,13 +127,13 @@ function setupGame () {
   let coffeeHouseLink = new CoffeeHouseLink(3353, 352, 208, 129, coffeeHouseLinkImg);
   park.addChild(coffeeHouseLink);
 
-  let trees = new InteractiveObject(-1, 74, 4103, 695, treesImg);
+  let trees = new InteractiveObject(-1, 89, 4103, 695, treesImg);
   park.addChild(trees);
 
   let parkAdvertisingColumn = new ParkLink(800, 330, 111, 267, parkLinkImg_kiosk);
   park.addChild(parkAdvertisingColumn);
 
-  let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg);
+  let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg, kioskLinkImg); // image with light off missing!
   park.addChild(kioskLink);
 
   let parkForegnd = new InteractiveObject(2, 228, 3904, 543, parkForegndImg);
@@ -181,11 +181,23 @@ function setupGame () {
   let parkLink_kiosk = new ParkLink(1480, 189, 184, 444, parkLinkImg_kiosk);
   kiosk.addChild(parkLink_kiosk);
 
+  let streetLamp_coffeeHouse = new StreetLampBulb(280, 63, 37, 16, streetLampBulbOnImg, streetLampBulbOffImg);
+  coffeeHouse.addChild(streetLamp_coffeeHouse);
+
   let coffeeHouseForegnd = new InteractiveObject(0, 0, 1792, 768, coffeeHouseForegndImg);
   coffeeHouse.addChild(coffeeHouseForegnd);
 
+  let parkLink_coffeeHouse = new ParkLink(129, 123, 241, 422, parkLinkImg_coffeeHouse);
+  coffeeHouse.addChild(parkLink_coffeeHouse);
+
   let barForegnd = new InteractiveObject(0, 0, 1793, 769, barForegndImg);
   bar.addChild(barForegnd);
+
+  let streetLampDemo_1 = new StreetLampBulb(614, 34, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
+  demo.addChild(streetLampDemo_1);
+
+  let streetLampDemo_2 = new StreetLampBulb(1333, 31, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
+  demo.addChild(streetLampDemo_2);
 
   let barLink = new BarLink(1065, 140, 147, 228, barLinkImg);
   demo.addChild(barLink);
@@ -198,9 +210,6 @@ function setupGame () {
 
   let parkLink_demo = new ParkLink(1612, 337, 184, 407, parkLinkImg_demo);
   demo.addChild(parkLink_demo);
-
-  let parkLink_coffeeHouse = new ParkLink(129, 123, 241, 422, parkLinkImg_coffeeHouse);
-  coffeeHouse.addChild(parkLink_coffeeHouse);
 
   let door_coffeeHouse = new Door(1295, 379, 128, 214, doorImg);
   coffeeHouse.addChild(door_coffeeHouse);

@@ -1,8 +1,8 @@
-import Sprite from "../../Sprite.js";
+import Kiosk from "./kiosk.js";
 
-export default class KioskLink extends Sprite {
-    constructor(x, y, width, height, backgnd) {
-        super(x, y, width, height, backgnd);
+export default class KioskLink extends Kiosk {
+    constructor(x, y, width, height, onImg, offImg) {
+        super(x, y, width, height, onImg, offImg);
     }
 
     clicked() {
