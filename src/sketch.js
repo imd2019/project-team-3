@@ -24,16 +24,17 @@ import Door from "./simulation/interactiveElements/door.js";
 import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
 import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
 import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
+import Kiosk from "./simulation/interactiveElements/kiosk.js";
 
 // load images
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
-let kioskBackgnd;
+let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
 let demoBackgnd, demoForegndImg;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg, kioskLinkImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
-let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg;
+let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, k;
 
 function preload() {
   // backgnd images
@@ -51,6 +52,10 @@ function preload() {
   coffeeHouseForegndImg = loadImage("../img/coffeeHouse/1_foregnd.png");
   barForegndImg = loadImage("../img/bar/1_foregnd.png");
   demoForegndImg = loadImage("../img/demo/2_foregnd.png");
+  kioskTreesImg = loadImage("../img/kiosk/1_trees.png");
+  kioskBuildingImg_off = loadImage("../img/kiosk/2_building_off.png"); 
+  kioskTrashcanImg = loadImage("../img/kiosk/3_elements/3_trashcan.png");
+  kioskSunshadeImg = loadImage("../img/kiosk/3_elements/3_sunshade.png");
 
   // interactive elements
   barLinkImg = loadImage("../img/demo/1_interactionSpaces/1_door.png");
@@ -58,7 +63,7 @@ function preload() {
   demoLinkBarImg = loadImage("../img/park/4_interactionSpaces/4_demo-bar.png");
   demoLinkDemoImg = loadImage("../img/park/4_interactionSpaces/4_demo-demo.png");
   kioskLinkImg = loadImage("../img/park/4_interactionSpaces/4_kiosk.png");
-  parkLinkImg_kiosk = loadImage("../img/kiosk/4_advertisingColumn.png");
+  parkLinkImg_kiosk = loadImage("../img/kiosk/4_interactionSpaces/4_advertisingColumn.png");
   parkLinkImg_demo = loadImage("../img/demo/1_interactionSpaces/1_park.png");
   parkLinkImg_coffeeHouse = loadImage("../img/coffeeHouse/3_interactionSpaces/3_park.png");
   demoSignImg = loadImage("../img/demo/3_elements/3_sign.png");
@@ -69,6 +74,8 @@ function preload() {
   streetLampBulbOnImg = loadImage("../img/assets/lamp-on.png");
   streetLampBulbOffImg = loadImage("../img/assets/lamp-off.png");
   doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png", setupGame);
+  kioskBuildingImg_on = loadImage("../img/kiosk/2_building_on.png");
+
 }
 window.preload = preload;
 
@@ -123,7 +130,10 @@ function setupGame () {
   let trees = new InteractiveObject(-1, 74, 4103, 695, treesImg);
   park.addChild(trees);
 
-  let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg); // adjust position & size! // correct Image!!!
+  let parkAdvertisingColumn = new ParkLink(800, 330, 111, 267, parkLinkImg_kiosk);
+  park.addChild(parkAdvertisingColumn);
+
+  let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg);
   park.addChild(kioskLink);
 
   let parkForegnd = new InteractiveObject(2, 228, 3904, 543, parkForegndImg);
@@ -156,6 +166,21 @@ function setupGame () {
   let streetLamp_9 = new StreetLampBulb(3736, 370, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_9);
 
+  let kioskTrees = new InteractiveObject(0, 0, 1792, 768, kioskTreesImg);
+  kiosk.addChild(kioskTrees);
+
+  let kioskBuilding = new Kiosk(298, 55, 733, 579, kioskBuildingImg_off, kioskBuildingImg_on);
+  kiosk.addChild(kioskBuilding);
+
+  let kioskSunshade = new InteractiveObject(859, 240, 500, 400, kioskSunshadeImg);
+  kiosk.addChild(kioskSunshade);
+
+  let kioskTrashcan = new InteractiveObject(300, 528, 101, 110, kioskTrashcanImg);
+  kiosk.addChild(kioskTrashcan);
+
+  let parkLink_kiosk = new ParkLink(1480, 189, 184, 444, parkLinkImg_kiosk);
+  kiosk.addChild(parkLink_kiosk);
+
   let coffeeHouseForegnd = new InteractiveObject(0, 0, 1792, 768, coffeeHouseForegndImg);
   coffeeHouse.addChild(coffeeHouseForegnd);
 
@@ -171,9 +196,6 @@ function setupGame () {
   let demoBench = new DemoBench(5, 578, 461, 231, demoBenchImg);
   demo.addChild(demoBench);
 
-  let parkLink_kiosk = new ParkLink(1480, 189, 184, 444, parkLinkImg_kiosk);
-  kiosk.addChild(parkLink_kiosk);
-
   let parkLink_demo = new ParkLink(1612, 337, 184, 407, parkLinkImg_demo);
   demo.addChild(parkLink_demo);
 
@@ -186,7 +208,7 @@ function setupGame () {
   let demoSign = new DemoSign(790, 668, 116, 51, demoSignImg);
   demo.addChild(demoSign);
 
-  let flyerBox_coffeeHouse = new FlyerBox(581, 335, 61, 139, flyerBoxImg);
+  let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg);
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
   let flyer = new Flyer();

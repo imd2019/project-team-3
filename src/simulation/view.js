@@ -24,34 +24,46 @@ export default class View extends Sprite {
   move(dir, speed) {
     switch (dir) {
       case "left":
-        if (this.children[6].x * this.scale < Math.abs(this.x) - 6 * speed) {
-          // moon
-          this.children[0].x += 1 * speed;
-          // city
-          this.children[1].x += 2 * speed;
-          // street 
-          for (let i = 2; i < 6; i++) {
-            this.children[i].x += 3 * speed;
+        if (this.name === "park") {
+          if (this.children[6].x * this.scale < Math.abs(this.x) - 6 * speed) {
+            // moon
+            this.children[0].x += 1 * speed;
+            // city
+            this.children[1].x += 2 * speed;
+            // street 
+            for (let i = 2; i < 6; i++) {
+              this.children[i].x += 3 * speed;
+            }
+            // foreground
+            for (let i = 6; i < this.children.length; i++) {
+              this.children[i].x += 3.5 * speed;
+            }
           }
-          // foreground
-          for (let i = 6; i < this.children.length; i++) {
-            this.children[i].x += 3.5 * speed;
+        } else {
+          if (this.x < 0) {
+            this.x += 3.5 * speed;
           }
         }
         break;
       case "right":
-        if (this.children[6].x * this.scale > this.x + 6 * speed) {
-          // moon
-          this.children[0].x -= 1 * speed;          
-          // city
-          this.children[1].x -= 2 * speed;
-          // street 
-          for (let i = 2; i < 6; i++) {
-            this.children[i].x -= 3 * speed;
-          }
-          // foreground
-          for (let i = 6; i < this.children.length; i++) {
-            this.children[i].x -= 3.5 * speed;
+        if (this.name === "park") {
+          if (this.children[6].x * this.scale > this.x + 6 * speed) {
+            // moon
+            this.children[0].x -= 1 * speed;          
+            // city
+            this.children[1].x -= 2 * speed;
+            // street 
+            for (let i = 2; i < 6; i++) {
+              this.children[i].x -= 3 * speed;
+            }
+            // foreground
+            for (let i = 6; i < this.children.length; i++) {
+              this.children[i].x -= 3.5 * speed;
+            }
+        }
+        } else {
+          if (this.x > this.width * this.scale - windowWidth) { // fix right border
+            this.x -= 3.5 * speed;
           }
         }
         break;
