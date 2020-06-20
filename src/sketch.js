@@ -25,13 +25,15 @@ import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
 import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
 import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
 import Kiosk from "./simulation/interactiveElements/kiosk.js";
+import Arcade from "./simulation/interactiveElements/arcade.js";
+import BarPhone from "./simulation/interactiveElements/barPhone.js";
 
 // load images
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
 let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
 let demoBackgnd, demoForegndImg;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
-let barBackgnd, barForegndImg;
+let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg, kioskLinkImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
 let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg;
@@ -75,7 +77,8 @@ function preload() {
   streetLampBulbOffImg = loadImage("../img/assets/lamp-off.png");
   doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png", setupGame);
   kioskBuildingImg_on = loadImage("../img/kiosk/2_building_on.png");
-
+  barArcadeImg = loadImage("../img/bar/2_elements/2_arcade.png");
+  barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png");
 }
 window.preload = preload;
 
@@ -179,7 +182,7 @@ function setupGame () {
   let kioskTrashcan = new InteractiveObject(300, 528, 101, 110, kioskTrashcanImg);
   kiosk.addChild(kioskTrashcan);
 
-  let parkLink_kiosk = new ParkLink(1480, 189, 184, 444, parkLinkImg_kiosk);
+  let parkLink_kiosk = new ParkLink(1480, 206, 184, 444, parkLinkImg_kiosk);
   kiosk.addChild(parkLink_kiosk);
 
   let streetLamp_coffeeHouse = new StreetLampBulb(280, 63, 37, 16, streetLampBulbOnImg, streetLampBulbOffImg);
@@ -193,6 +196,12 @@ function setupGame () {
 
   let barForegnd = new InteractiveObject(0, 0, 1793, 769, barForegndImg);
   bar.addChild(barForegnd);
+
+  let barArcade = new Arcade(1532, 208, 360, 541, barArcadeImg);
+  bar.addChild(barArcade);
+
+  let barPhone = new BarPhone(357, 356, 22, 8, barPhoneImg);
+  bar.addChild(barPhone);
 
   let streetLampDemo_1 = new StreetLampBulb(614, 34, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
   demo.addChild(streetLampDemo_1);
@@ -212,7 +221,7 @@ function setupGame () {
   let parkLink_demo = new ParkLink(1612, 337, 184, 407, parkLinkImg_demo);
   demo.addChild(parkLink_demo);
 
-  let door_coffeeHouse = new Door(1295, 379, 128, 214, doorImg);
+  let door_coffeeHouse = new Door(1300, 379, 128, 214, doorImg);
   coffeeHouse.addChild(door_coffeeHouse);
 
   let demoSign = new DemoSign(790, 668, 116, 51, demoSignImg);
