@@ -38,6 +38,11 @@ let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
 let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg;
 
+// load soundfiles
+let owlSound, demoSound, citySound, leavesSound, trafficSound, coffeeHouseSound, fountainSound, policeSirenSound;
+let phoneMsgSound, phoneVibrationSound, phoneSendSound, phoneTapSound, doorSound, insideStepsSound, outsideStepsSound, lampClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound, woodenFloorSound;
+
+
 function preload() {
   // backgnd images
   parkBackgnd = loadImage("../img/park/0_backgnd.png");
@@ -79,7 +84,30 @@ function preload() {
   doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png", setupGame);
   kioskBuildingImg_on = loadImage("../img/kiosk/2_building_on.png");
   barArcadeImg = loadImage("../img/bar/2_elements/2_arcade.png");
-  barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png");
+  barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png");#
+
+  // sound
+  owlSound = loadSound("../sound/ambient/");
+  demoSound = loadSound("../sound/ambient/");
+  citySound = loadSound("../sound/ambient/");
+  leavesSound = loadSound("../sound/ambient/");
+  trafficSound = loadSound("../sound/ambient/");
+  coffeeHouseSound = loadSound("../sound/ambient/");
+  fountainSound = loadSound("../sound/ambient/");
+  policeSirenSound = loadSound("../sound/ambient/");
+  phoneMsgSound = loadSound("../sound/eventRelated/");
+  phoneVibrationSound = loadSound("../sound/eventRelated/");
+  phoneSendSound = loadSound("../sound/eventRelated/");
+  phoneTapSound = loadSound("../sound/eventRelated/");
+  doorSound = loadSound("../sound/eventRelated/");
+  insideStepsSound = loadSound("../sound/eventRelated/");
+  outsideStepsSound = loadSound("../sound/eventRelated/");
+  lampClickSound = loadSound("../sound/eventRelated/");
+  registerSound = loadSound("../sound/eventRelated/");
+  newspaperSound = loadSound("../sound/eventRelated/");
+  pickupSignSound = loadSound("../sound/eventRelated/");
+  flyerSound = loadSound("../sound/eventRelated/");
+  woodenFloorSound = loadSound("../sound/eventRelated/");
 }
 window.preload = preload;
 
