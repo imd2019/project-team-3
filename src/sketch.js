@@ -320,26 +320,44 @@ window.addEventListener("phoneTap", (ev) => {
   phoneTapSound.play();
 });
 
-// window.addEventListener();
+// let insideStepsSound, outsideStepsSound;
 
-// window.addEventListener();
+window.addEventListener("enterCoffeeHouse", () => {
+  doorSound.play();
+});
 
-// window.addEventListener();
+window.addEventListener("pickupSign", () => {
+  pickupSignSound.play();
+});
 
-// window.addEventListener();
+window.addEventListener("pickupFlyer", () => {
+  flyerSound.play();
+});
+
+window.addEventListener("buyNewspaper", () => {
+  newspaperSound.play();
+});
+
+window.addEventListener("lampClick", () => {
+  lampClickSound.play();
+});
+
+window.addEventListener("walkOutside", () => {
+  if (!outsideStepsSound.isPlaying()) {
+    insideStepsSound.play();
+  }
+});
+
+window.addEventListener("walkInside", () => {
+  if (!insideStepsSound.isPlaying) {
+    insideStepsSound.play();
+  }
+});
 
 /* display */
 
 function draw() {
   game.display();
-
-  if (mouseX >= windowWidth - 150) {
-    if (mouseX >= windowWidth - 50) game.moveView("right", 3);
-    else game.moveView("right", 1);
-  } else if (mouseX <= 150) {
-    if(mouseX <= 50) game.moveView("left", 3);
-    else game.moveView("left", 1);
-  }
 }
 window.draw = draw;
 

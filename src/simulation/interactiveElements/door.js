@@ -6,6 +6,6 @@ export default class Door extends Sprite {
   }
 
   clicked() {
-      
+    window.dispatchEvent(new CustomEvent("enterCoffeeHouse"));
   }
 }
