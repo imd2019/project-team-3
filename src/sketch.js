@@ -42,6 +42,11 @@ let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampB
 
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
 
+// load soundfiles
+let owlSound, demoSound, citySound, leavesSound, trafficSound, coffeeHouseSound, fountainSound, policeSirenSound;
+let phoneMsgSound, phoneVibrationSound, phoneSendSound, phoneTapSound, doorSound, insideStepsSound, outsideStepsSound, lampClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound, woodenFloorSound;
+
+
 function preload() {
   // backgnd images
   parkBackgnd = loadImage("../img/park/0_backgnd.png");
@@ -94,6 +99,29 @@ function preload() {
   demoPeopleImg_right = loadImage("../img/demo/4_people/4_people_right.png");
   demoPeopleSignsImg_left = loadImage("../img/demo/4_people/4_signs_left.png");
   demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png", setupGame);
+
+  // sound
+  owlSound = loadSound("../sound/ambient/");
+  demoSound = loadSound("../sound/ambient/");
+  citySound = loadSound("../sound/ambient/");
+  leavesSound = loadSound("../sound/ambient/");
+  trafficSound = loadSound("../sound/ambient/");
+  coffeeHouseSound = loadSound("../sound/ambient/");
+  fountainSound = loadSound("../sound/ambient/");
+  policeSirenSound = loadSound("../sound/ambient/");
+  phoneMsgSound = loadSound("../sound/eventRelated/");
+  phoneVibrationSound = loadSound("../sound/eventRelated/");
+  phoneSendSound = loadSound("../sound/eventRelated/");
+  phoneTapSound = loadSound("../sound/eventRelated/");
+  doorSound = loadSound("../sound/eventRelated/");
+  insideStepsSound = loadSound("../sound/eventRelated/");
+  outsideStepsSound = loadSound("../sound/eventRelated/");
+  lampClickSound = loadSound("../sound/eventRelated/");
+  registerSound = loadSound("../sound/eventRelated/");
+  newspaperSound = loadSound("../sound/eventRelated/");
+  pickupSignSound = loadSound("../sound/eventRelated/");
+  flyerSound = loadSound("../sound/eventRelated/");
+  woodenFloorSound = loadSound("../sound/eventRelated/");
 }
 window.preload = preload;
 
