@@ -114,10 +114,17 @@ window.preload = preload;
 /* setup */
 
 let player = new Player();
-window.addEventListener("addAction", function(ev) {player.addAction(ev.detail.origin, ev.detail.name, ev.detail.data);});
+window.addEventListener("addAction", (ev) => {
+  player.addAction(ev.detail.origin, ev.detail.name, ev.detail.data);
+});
 
 let game = new Game(player);
-window.addEventListener("enterView", function(ev) {game.enterView(ev.detail);});
+window.addEventListener("enterView", (ev) => {
+  game.enterView(ev.detail);
+  if(ev.detail === "bar") {
+    doorSound.play();
+  }
+});
 
 let globalObjects = new Sprite(0, 0, windowWidth, windowHeight);
 
@@ -271,6 +278,32 @@ function setupGame () {
 
   game.addChild(globalObjects);
 }
+
+/* sound events */
+
+window.addEventListener("phoneReceiveMsg", (ev) => {
+  phoneMsgSound.play();
+} );
+
+window.addEventListener("phoneSendMsg", (ev) => {
+  phoneSendSound.play();
+});
+
+window.addEventListener("phoneVibration", (ev) => {
+  phoneVibrationSound.play();  
+});
+
+window.addEventListener("phoneTap", (ev) => {
+  phoneTapSound.play();
+});
+
+// window.addEventListener();
+
+// window.addEventListener();
+
+// window.addEventListener();
+
+// window.addEventListener();
 
 /* display */
 
