@@ -23,6 +23,11 @@ export default class Game extends Sprite {
 
   moveView(dir, speed) {
     this.children[this.currentView].move(dir, speed);
+    if (this.children[this.currentView] != "bar") {
+      window.dispatchEvent(new CustomEvent("walkOutside"));
+    } else {
+      window.dispatchEvent(new CustomEvent("walkInside"));
+    }
   }
 
   mousePressed() {
@@ -43,6 +48,14 @@ export default class Game extends Sprite {
   display() {
     this.children[this.currentView].display();
     this.getGlobal().display();
+
+    if (mouseX >= windowWidth - 150) {
+      if (mouseX >= windowWidth - 50) this.moveView("right", 3);
+      else this.moveView("right", 1);
+    } else if (mouseX <= 150) {
+      if(mouseX <= 50) this.moveView("left", 3);
+      else this.moveView("left", 1);
+    }
   }
 
   getGlobal() {

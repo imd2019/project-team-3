@@ -6,6 +6,6 @@ export default class FlyerBox extends Sprite {
     }
 
     clicked() {
-        
+        window.dispatchEvent(new CustomEvent("pickupFlyer"));
     }
 }

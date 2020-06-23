@@ -8,5 +8,6 @@ export default class demoSign extends Sprite {
     clicked() {
         this.disable();
         this.visible = false;
+        window.dispatchEvent(new CustomEvent("pickupSign"));
     }
 }
