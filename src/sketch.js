@@ -94,11 +94,11 @@ function preload() {
   trafficSound = loadSound("../sound/ambient/");
   coffeeHouseSound = loadSound("../sound/ambient/");
   fountainSound = loadSound("../sound/ambient/");
-  policeSirenSound = loadSound("../sound/ambient/");
-  phoneMsgSound = loadSound("../sound/eventRelated/");
-  phoneVibrationSound = loadSound("../sound/eventRelated/");
-  phoneSendSound = loadSound("../sound/eventRelated/");
-  phoneTapSound = loadSound("../sound/eventRelated/");
+  policeSirenSound = loadSound("../sound/ambient/policeSiren.mp3");
+  phoneMsgSound = loadSound("../sound/eventRelated/phoneMsg.mp3");
+  phoneVibrationSound = loadSound("../sound/eventRelated/phoneVibration.mp3");
+  phoneSendSound = loadSound("../sound/eventRelated/phoneSendMsg.mp3");
+  phoneTapSound = loadSound("../sound/eventRelated/phoneTap.mp3");
   doorSound = loadSound("../sound/eventRelated/");
   insideStepsSound = loadSound("../sound/eventRelated/");
   outsideStepsSound = loadSound("../sound/eventRelated/");
