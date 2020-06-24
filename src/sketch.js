@@ -321,7 +321,7 @@ window.addEventListener("lampClick", () => {
 
 window.addEventListener("walkOutside", () => {
   if (!outsideStepsSound.isPlaying()) {
-    insideStepsSound.play();
+    outsideStepsSound.play();
   }
 });
 
