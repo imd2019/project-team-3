@@ -26,6 +26,8 @@ export default class View extends Sprite {
       case "left":
         if (this.name === "park") {
           if (this.children[6].x * this.scale < Math.abs(this.x) - 6 * speed) {
+            this.moveSound();
+
             // moon
             this.children[0].x += 1 * speed;
             // city
@@ -48,6 +50,7 @@ export default class View extends Sprite {
       case "right":
         if (this.name === "park") {
           if (this.children[6].x * this.scale > this.x + 6 * speed) {
+            this.moveSound();
             // moon
             this.children[0].x -= 1 * speed;          
             // city
@@ -67,6 +70,14 @@ export default class View extends Sprite {
           }
         }
         break;
+    }
+  }
+
+  moveSound() {
+    if (this != "bar") {
+      window.dispatchEvent(new CustomEvent("walkOutside"));
+    } else {
+      window.dispatchEvent(new CustomEvent("walkInside"));
     }
   }
 
