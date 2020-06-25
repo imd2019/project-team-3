@@ -39,7 +39,7 @@ let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
-let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
+let doorImg, demoSignImg, flyerBoxImg, flyerImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
 
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
 
@@ -197,9 +197,6 @@ function setupGame () {
   let trees = new InteractiveObject(-1, 89, 4103, 695, treesImg);
   park.addChild(trees);
 
-  let parkAdvertisingColumn = new ParkLink(800, 330, 111, 267, parkLinkImg_kiosk);
-  park.addChild(parkAdvertisingColumn);
-
   let flyerBox_park = new FlyerBox(1262, 539, 61, 139, flyerBoxImg);
   park.addChild(flyerBox_park);
   
@@ -273,7 +270,6 @@ function setupGame () {
     });
   });
   window.addEventListener("hideNewspapers", () => {
-    console.log("HI");
     newspapers.forEach(elem => elem.hide());
   });
 
