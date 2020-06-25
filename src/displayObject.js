@@ -24,4 +24,12 @@ export default class DisplayObject extends EventDispatcher {
       pop();
     }
   }
+
+  show() {
+    this.visible = true;
+  }
+
+  hide() {
+    this.visible = false;
+  }
 }
