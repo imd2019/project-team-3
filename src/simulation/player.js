@@ -4,7 +4,7 @@ export default class Player extends Simulation{
   constructor(){
     super();
     this.actions = {};
-    this.phoneInUse = true;
+    this.phoneInUse = false;
   }
 
   addAction(origin, name, data){
