@@ -318,7 +318,7 @@ function setupGame () {
   let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg);
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
-  let flyerCoffeeHouse = new Flyer(windowWidth, windowHeight, 492, 736, flyerImg);
+  let flyerCoffeeHouse = new Flyer(windowWidth / 2, windowHeight / 2, 492, 736, flyerImg);
   coffeeHouse.addChild(flyerCoffeeHouse);
 
   // global objects

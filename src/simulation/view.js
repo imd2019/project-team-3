@@ -43,6 +43,7 @@ export default class View extends Sprite {
           }
         } else {
           if (this.x < - 3.5 * speed) {
+            this.moveSound();
             this.x += 3.5 * speed;
           }
         }
@@ -66,6 +67,7 @@ export default class View extends Sprite {
         }
         } else {
           if (this.x > windowWidth - this.width * this.scale) {
+            this.moveSound();
             this.x -= 3.5 * speed;
           }
         }
