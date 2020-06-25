@@ -6,8 +6,8 @@ import Game from "./simulation/game.js";
 import View from "./simulation/view.js";
 
 // general display classes
+import DisplayObject from "./displayObject.js";
 import InteractiveObject from "./interactiveObject.js";
-import Sprite from "./sprite.js";
 import DualBackgndSprite from "./simulation/dualBackgndSprite.js";
 
 // interactive element classes
@@ -153,12 +153,11 @@ window.addEventListener("enterView", (ev) => {
   }
 });
 
-let globalObjects = new Sprite(0, 0, windowWidth, windowHeight);
-
 function setupGame () {
   // views
   let park = new View("park", 4098, 768, parkBackgnd);
   game.addView(park);
+  game.enterView("park");
 
   let kiosk = new View("kiosk", 1792, 768, parkBackgnd);
   game.addView(kiosk);
@@ -172,17 +171,20 @@ function setupGame () {
   let bar = new View("bar", 1793, 768, barBackgnd);
   game.addView(bar);
 
+  let global = new View("global", windowWidth, windowHeight);
+  game.addView(global);
+
   // display objects & interactive objects
-  let moon_park = new InteractiveObject(2086, 25, 213, 212, moonImg);
+  let moon_park = new DisplayObject(2086, 25, 213, 212, moonImg);
   park.addChild(moon_park);
 
-  let moon_kiosk = new InteractiveObject(950, -60, 213, 212, moonImg);
+  let moon_kiosk = new DisplayObject(950, -60, 213, 212, moonImg);
   kiosk.addChild(moon_kiosk);
 
-  let city = new InteractiveObject(0, 0, 4100, 769, cityImg);
+  let city = new DisplayObject(0, 0, 4100, 769, cityImg);
   park.addChild(city);
 
-  let street = new InteractiveObject(1598, 345, 2125, 308, streetImg);
+  let street = new DisplayObject(1598, 345, 2125, 308, streetImg);
   park.addChild(street);
 
   let demoLink_bar = new DemoLink(1936, 338, 188, 132, demoLinkBarImg);
@@ -194,7 +196,7 @@ function setupGame () {
   let coffeeHouseLink = new CoffeeHouseLink(3353, 352, 208, 129, coffeeHouseLinkImg);
   park.addChild(coffeeHouseLink);
 
-  let trees = new InteractiveObject(-1, 89, 4103, 695, treesImg);
+  let trees = new DisplayObject(-1, 89, 4103, 695, treesImg);
   park.addChild(trees);
 
   let flyerBox_park = new FlyerBox(1262, 539, 61, 139, flyerBoxImg);
@@ -204,7 +206,7 @@ function setupGame () {
   park.addChild(kioskLink);
   window.addEventListener("openKiosk", () => { kioskLink.open(); });
 
-  let parkForegnd = new InteractiveObject(2, 228, 3904, 543, parkForegndImg);
+  let parkForegnd = new DisplayObject(2, 228, 3904, 543, parkForegndImg);
   park.addChild(parkForegnd);
 
   let streetLamp_1 = new StreetLampBulb(496, 336, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
@@ -234,7 +236,7 @@ function setupGame () {
   let streetLamp_9 = new StreetLampBulb(3736, 370, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_9);
 
-  let kioskTrees = new InteractiveObject(0, 0, 1792, 768, kioskTreesImg);
+  let kioskTrees = new DisplayObject(0, 0, 1792, 768, kioskTreesImg);
   kiosk.addChild(kioskTrees);
 
   let kioskBuilding = new Kiosk(298, 55, 733, 579, kioskBuildingImg_off, kioskBuildingImg_on);
@@ -273,10 +275,10 @@ function setupGame () {
     newspapers.forEach(elem => elem.hide());
   });
 
-  let kioskSunshade = new InteractiveObject(859, 240, 500, 400, kioskSunshadeImg);
+  let kioskSunshade = new DisplayObject(859, 240, 500, 400, kioskSunshadeImg);
   kiosk.addChild(kioskSunshade);
 
-  let kioskTrashcan = new InteractiveObject(300, 528, 101, 110, kioskTrashcanImg);
+  let kioskTrashcan = new DisplayObject(300, 528, 101, 110, kioskTrashcanImg);
   kiosk.addChild(kioskTrashcan);
 
   let parkLink_kiosk = new ParkLink(1506, 300, 131, 145, parkLinkImg_kiosk);
@@ -285,13 +287,13 @@ function setupGame () {
   let streetLamp_coffeeHouse = new StreetLampBulb(280, 63, 37, 16, streetLampBulbOnImg, streetLampBulbOffImg);
   coffeeHouse.addChild(streetLamp_coffeeHouse);
 
-  let coffeeHouseForegnd = new InteractiveObject(0, 0, 1792, 768, coffeeHouseForegndImg);
+  let coffeeHouseForegnd = new DisplayObject(0, 0, 1792, 768, coffeeHouseForegndImg);
   coffeeHouse.addChild(coffeeHouseForegnd);
 
   let parkLink_coffeeHouse = new ParkLink(129, 123, 241, 57, parkLinkImg_coffeeHouse);
   coffeeHouse.addChild(parkLink_coffeeHouse);
 
-  let barForegnd = new InteractiveObject(0, 0, 1793, 769, barForegndImg);
+  let barForegnd = new DisplayObject(0, 0, 1793, 769, barForegndImg);
   bar.addChild(barForegnd);
 
   let barArcade = new Arcade(1532, 208, 360, 541, barArcadeImg);
@@ -318,10 +320,10 @@ function setupGame () {
   let counterDemoPeople = new DemoPeople(1081, 322, 503, 352, demoPeopleImg_right);
   demo.addChild(counterDemoPeople);
 
-  let demoSignsLeft = new InteractiveObject(214, 215, 1315, 322, demoPeopleSignsImg_left);
+  let demoSignsLeft = new DisplayObject(214, 215, 1315, 322, demoPeopleSignsImg_left);
   demo.addChild(demoSignsLeft);
 
-  let demoSignsRight = new InteractiveObject(268, 226, 1311, 313, demoPeopleSignsImg_right);
+  let demoSignsRight = new DisplayObject(268, 226, 1311, 313, demoPeopleSignsImg_right);
   demo.addChild(demoSignsRight);
 
   let demoBench = new DemoBench(5, 578, 461, 231, demoBenchImg);
@@ -339,17 +341,15 @@ function setupGame () {
   let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg);
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
-  let flyerCoffeeHouse = new Flyer(windowWidth / 2, windowHeight / 2, 492, 736, flyerImg);
-  coffeeHouse.addChild(flyerCoffeeHouse);
-
   // global objects
+  let flyerCoffeeHouse = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg);
+  global.addChild(flyerCoffeeHouse);
+
   let mobilePhone = new MobilePhone();
-  globalObjects.addChild(mobilePhone);
+  global.addChild(mobilePhone);
 
   let phoneIcon = new PhoneIcon();
-  globalObjects.addChild(phoneIcon);
-
-  game.addChild(globalObjects);
+  global.addChild(phoneIcon);
 }
 
 /* sound events */

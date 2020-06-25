@@ -3,46 +3,56 @@ import Sprite from "../sprite.js";
 export default class Game extends Sprite {
   constructor(player){
     super(0, 0, windowWidth, windowHeight, undefined);
-    this.currentView = 0;
+    this.currentView = undefined;
     this.player = player;
+    this.children = {};
   }
 
   addView(view){
-    this.addChild(view);
+    this.children[view.name] = view;
   }
 
   enterView(name) {
-    for (let i in this.children) {
-      if (this.children[i].name === name) {
-        this.children[i].enter();
-        this.currentView = i;
-        break;
-      }
+    if (name in this.children) {
+        this.children[name].enter();
+        this.currentView = name;
     }
   }
 
   moveView(dir, speed) {
-    this.children[this.currentView].move(dir, speed);
+    if (this.currentView) {
+      this.children[this.currentView].move(dir, speed);
+    }
   }
 
   mousePressed() {
-    this.children[this.currentView].mousePressed();
-    this.getGlobal().mousePressed();
+    if (this.currentView) {
+      if (!this.children.global.mousePressed()) {
+        this.children[this.currentView].mousePressed();
+      }
+    }
   }
 
   mouseClicked() {
-    this.children[this.currentView].mouseClicked();
-    this.getGlobal().mouseClicked();
+    if (this.currentView) {
+      if (!this.children.global.mouseClicked()) {
+        this.children[this.currentView].mouseClicked();
+      }
+    }
   }
 
   mouseReleased() {
-    this.children[this.currentView].mouseReleased();
-    this.getGlobal().mouseReleased();
+    if (this.currentView) {
+      this.children.global.mouseReleased();
+      this.children[this.currentView].mouseReleased();
+    }
   }
 
   display() {
-    this.children[this.currentView].display();
-    this.getGlobal().display();
+    if (this.currentView) {
+      this.children[this.currentView].display();
+      this.children.global.display();
+    }
 
     if(!this.player.phoneInUse) {
       if (mouseX >= windowWidth - 150) {
@@ -51,14 +61,6 @@ export default class Game extends Sprite {
       } else if (mouseX <= 150) {
         if(mouseX <= 50) this.moveView("left", 3);
         else this.moveView("left", 1);
-      }
-    }
-  }
-
-  getGlobal() {
-    for (let elem of this.children) {
-      if (!elem.name) {
-        return elem;
       }
     }
   }

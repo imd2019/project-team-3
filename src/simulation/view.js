@@ -1,14 +1,11 @@
 import Sprite from "../Sprite.js";
+import DisplayObject from "../displayObject.js";
 
 export default class View extends Sprite {
   constructor(name, width, height, backgnd){
     super(0, 0, width, height, backgnd);
     this.name = name;
-    if (name != "park") {
-      this.alreadyEntered = false;
-    } else {
-      this.alreadyEntered = true;
-    }
+    this.alreadyEntered = false;
     this.scale = windowHeight / height;
     this.x = (windowWidth / 2) - ((width * this.scale) / 2);
   }
@@ -84,21 +81,24 @@ export default class View extends Sprite {
   }
 
   mousePressed() {
-    for (let elem of this.children) {
-      elem.mousePressed();
+    for (let i = this.children.length - 1; i >= 0; i--) {
+      if(this.children[i].mousePressed()) return true;
     }
+    return false;
   }
 
   mouseClicked() {
-    for (let elem of this.children) {
-      elem.mouseClicked();
+    for (let i = this.children.length - 1; i >= 0; i--) {
+      if(this.children[i].mouseClicked()) return true;
     }
+    return false;
   }
 
   mouseReleased() {
-    for (let elem of this.children) {
-      elem.mouseReleased();
+    for (let i = this.children.length - 1; i >= 0; i--) {
+      if(this.children[i].mouseReleased()) return true;
     }
+    return false;
   }
 
   reset() {

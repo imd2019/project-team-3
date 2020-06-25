@@ -6,6 +6,7 @@ export default class Flyer extends Sprite {
     }
 
     clicked() {
-        
+        this.visible = false;
+        this.enabled = false;
     }
 }
