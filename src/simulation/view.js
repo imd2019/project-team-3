@@ -1,5 +1,4 @@
 import Sprite from "../Sprite.js";
-import DisplayObject from "../displayObject.js";
 
 export default class View extends Sprite {
   constructor(name, width, height, backgnd){
@@ -73,7 +72,7 @@ export default class View extends Sprite {
   }
 
   moveSound() {
-    if (this != "bar") {
+    if (this.name != "bar") {
       window.dispatchEvent(new CustomEvent("walkOutside"));
     } else {
       window.dispatchEvent(new CustomEvent("walkInside"));

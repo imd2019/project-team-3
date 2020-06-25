@@ -7,7 +7,7 @@ export default class demoSign extends Sprite {
 
     clicked() {
         this.disable();
-        this.visible = false;
+        this.hide();
         window.dispatchEvent(new CustomEvent("addAction", {detail: {
             origin: "demo",
             name: "pickupSign",

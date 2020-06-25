@@ -16,10 +16,12 @@ export default class StreetLampBulb extends Sprite {
     if(this.on){
       image(this.backgnd, 0, 0, this.width, this.height);
       noStroke();
+      // blendMode(BLEND);
       fill(249, 201, 91, 80);
       arc(this.width / 2, 2 * this.height / 3, this.width, this.height / 4, -PI, 0);
       quad(0, 2 * this.height / 3, this.width, 2 * this.height / 3, this.width + 4 * this.height, 27 * this.height, - 4 * this.height, 27 * this.height);
       arc(this.width / 2, 27 * this.height, this.width + 8 * this.height, 4 * this.height, 0, PI);
+      // blendMode(BLEND);
     } else{
       image(this.offImg, 0, 0, this.width, this.height);
     }

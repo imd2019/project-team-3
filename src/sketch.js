@@ -38,7 +38,7 @@ let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
-let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
+let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
 let doorImg, demoSignImg, flyerBoxImg, flyerImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
 
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
@@ -74,7 +74,8 @@ function preload() {
   barLinkImg = loadImage("../img/demo/1_interactionSpaces/1_door.png");
   coffeeHouseLinkImg = loadImage("../img/park/4_interactionSpaces/4_coffeeHouse.png");
   demoLinkBarImg = loadImage("../img/park/4_interactionSpaces/4_demo-bar.png");
-  demoLinkDemoImg = loadImage("../img/park/4_interactionSpaces/4_demo-demo.png");
+  demoLinkDemoImg_demo = loadImage("../img/park/4_interactionSpaces/4_demo-demo.png");
+  demoLinkDemoImg_noDemo = loadImage("../img/park/4_interactionSpaces/4_demo-pastDemo.png");
   demoLinkSignsLeftImg = loadImage("../img/park/4_interactionSpaces/4_demo-signs-1.png");
   demoLinkSignsRightImg = loadImage("../img/park/4_interactionSpaces/4_demo-signs-2.png");
   kioskLinkImg_on = loadImage("../img/park/4_interactionSpaces/4_kiosk_open.png");
@@ -150,6 +151,9 @@ window.addEventListener("enterView", (ev) => {
     if (player.actionDone("kiosk")) {
       window.dispatchEvent(new CustomEvent("hideNewspapers"));
     }
+    if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
+      window.dispatchEvent(new CustomEvent("endDemo"));
+    }
   }
 });
 
@@ -190,7 +194,7 @@ function setupGame () {
   let demoLink_bar = new DemoLink(1936, 338, 188, 132, demoLinkBarImg);
   park.addChild(demoLink_bar);
 
-  let demoLink_demo = new DemoLink(1788, 425, 470, 117, demoLinkDemoImg, demoLinkSignsLeftImg, demoLinkSignsRightImg);
+  let demoLink_demo = new DemoLink(1788, 425, 470, 117, demoLinkDemoImg_demo, demoLinkSignsLeftImg, demoLinkSignsRightImg, demoLinkDemoImg_noDemo);
   park.addChild(demoLink_demo);
 
   let coffeeHouseLink = new CoffeeHouseLink(3353, 352, 208, 129, coffeeHouseLinkImg);
@@ -308,16 +312,16 @@ function setupGame () {
   let streetLampDemo_2 = new StreetLampBulb(1333, 31, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
   demo.addChild(streetLampDemo_2);
 
-  let barLink = new BarLink(1091, 137, 147, 228, barLinkImg);
-  demo.addChild(barLink);
-
   let demoForegnd = new DualBackgndSprite(-160, -6, 2180, 845, demoForegndImg_demo, demoForegndImg_pastDemo);
   demo.addChild(demoForegnd);
 
-  let demoPeople = new DemoPeople(223, 311, 546, 331, demoPeopleImg_left);
+  let barLink = new BarLink(1091, 137, 147, 228, barLinkImg);
+  demo.addChild(barLink);
+
+  let demoPeople = new DemoPeople(223, 311, 546, 331, demoPeopleImg_left, "demo");
   demo.addChild(demoPeople);
 
-  let counterDemoPeople = new DemoPeople(1081, 322, 503, 352, demoPeopleImg_right);
+  let counterDemoPeople = new DemoPeople(1081, 322, 503, 352, demoPeopleImg_right, "counterDemo");
   demo.addChild(counterDemoPeople);
 
   let demoSignsLeft = new DisplayObject(214, 215, 1315, 322, demoPeopleSignsImg_left);
@@ -332,11 +336,39 @@ function setupGame () {
   let parkLink_demo = new ParkLink(1612, 337, 184, 65, parkLinkImg_demo);
   demo.addChild(parkLink_demo);
 
-  let door_coffeeHouse = new Door(1300, 379, 128, 214, doorImg);
-  coffeeHouse.addChild(door_coffeeHouse);
-
   let demoSign = new DemoSign(790, 668, 116, 51, demoSignImg);
   demo.addChild(demoSign);
+
+  window.addEventListener("pickupSign", () => {
+    parkLink_demo.disable();
+    demoPeople.enable();
+    counterDemoPeople.enable();
+  })
+
+  window.addEventListener("joinDemo", (ev) => {
+    parkLink_demo.enable();
+  })
+
+  window.addEventListener("watchDemo", () => {
+    demoSign.disable();
+  });
+
+  window.addEventListener("endDemo", () => {
+    demoForegnd.changeBackgnd();
+    demoPeople.hide();
+    counterDemoPeople.hide();
+    demoSignsLeft.hide();
+    demoSignsRight.hide();
+
+    demoLink_demo.changeBackground();
+
+
+    barLink.enable();
+    barLink.show();
+  });
+
+  let door_coffeeHouse = new Door(1300, 379, 128, 214, doorImg);
+  coffeeHouse.addChild(door_coffeeHouse);
 
   let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg, "coffeeHouse");
   coffeeHouse.addChild(flyerBox_coffeeHouse);
@@ -403,7 +435,7 @@ window.addEventListener("closeFlyer", () => {
 
 window.addEventListener("buyNewspaper", () => {
   newspaperSound.play();
-  setTimeout(() => { registerSound.play() }, 1000);
+  setTimeout(() => { registerSound.play() }, 500);
 });
 
 window.addEventListener("lampClick", () => {
@@ -417,7 +449,7 @@ window.addEventListener("walkOutside", () => {
 });
 
 window.addEventListener("walkInside", () => {
-  if (!insideStepsSound.isPlaying) {
+  if (!insideStepsSound.isPlaying()) {
     insideStepsSound.play();
   }
 });

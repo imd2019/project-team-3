@@ -6,6 +6,11 @@ export default class DemoBench extends Sprite {
   }
 
   clicked() {
-    window.dispatchEvent(new CustomEvent("addAction", { detail: {origin: "demo", name: "demo-visited", data: true}}));
+    this.disable();
+    window.dispatchEvent(new CustomEvent("addAction", { detail: {
+      origin: "demo",
+      name: "watchDemo",
+      data: {}
+    }}));
   }
 }

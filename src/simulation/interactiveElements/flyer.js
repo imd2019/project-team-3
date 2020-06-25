@@ -8,8 +8,8 @@ export default class Flyer extends Sprite {
   }
 
   clicked() {
-    this.visible = false;
-    this.enabled = false;
+    this.disable();
+    this.hide();
     window.dispatchEvent(new CustomEvent("closeFlyer"));
   }
 }
