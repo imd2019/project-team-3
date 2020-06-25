@@ -27,6 +27,7 @@ import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
 import Kiosk from "./simulation/interactiveElements/kiosk.js";
 import Arcade from "./simulation/interactiveElements/arcade.js";
 import BarPhone from "./simulation/interactiveElements/barPhone.js";
+import Newspaper from "./simulation/interactiveElements/newspaper.js";
 
 // load images
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
@@ -36,7 +37,7 @@ let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
-let doorImg, demoSignImg, flyerBoxImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg;
+let doorImg, demoSignImg, flyerBoxImg, flyerImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
 
 // load soundfiles
 let owlSound, demoSound, citySound, leavesSound, trafficSound, coffeeHouseSound, fountainSound, policeSirenSound, rainSound;
@@ -76,15 +77,17 @@ function preload() {
   parkLinkImg_coffeeHouse = loadImage("../img/coffeeHouse/3_interactionSpaces/3_park.png");
   demoSignImg = loadImage("../img/demo/3_elements/3_sign.png");
   demoBenchImg = loadImage("../img/demo/3_elements/3_bench.png");
-  flyerBoxImg = loadImage("../img/coffeeHouse/2_elements/2_flyerbox.png");
+  flyerBoxImg = loadImage("../img/assets/flyerbox.png");
+  flyerImg = loadImage("../img/coffeeHouse/2_elements/2_flyer.png");
+  newspaperImg = loadImage("../img/kiosk/3_elements/3_newspaper.png");
   // mobilePhoneImg = loadImage("");
   // phoneIconImg = loadImage("");
   streetLampBulbOnImg = loadImage("../img/assets/lamp-on.png");
   streetLampBulbOffImg = loadImage("../img/assets/lamp-off.png");
-  doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png", setupGame);
+  doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png");
   kioskBuildingImg_on = loadImage("../img/kiosk/2_building_on.png");
   barArcadeImg = loadImage("../img/bar/2_elements/2_arcade.png");
-  barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png");
+  barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png", setupGame);
 
   // sound
   owlSound = loadSound("../sound/ambient/owl.mp3");
@@ -115,6 +118,7 @@ window.preload = preload;
 
 let player = new Player();
 window.addEventListener("addAction", (ev) => {
+  window.dispatchEvent(new CustomEvent(ev.detail.name, { detail: ev.detail.data }));
   player.addAction(ev.detail.origin, ev.detail.name, ev.detail.data);
 });
 
@@ -126,8 +130,13 @@ window.addEventListener("enterView", (ev) => {
     doorSound.play();
   }
 
-  if (ev.detail === "park" && (player.actionDone("demo") || player.actionDone("coffeeHouse"))) {
-    window.dispatchEvent(new CustomEvent("openKiosk"));
+  if (ev.detail === "park") {
+    if (player.actionDone("demo") || player.actionDone("coffeeHouse")) {
+      window.dispatchEvent(new CustomEvent("openKiosk"));
+    }
+    if (player.actionDone("kiosk")) {
+      window.dispatchEvent(new CustomEvent("hideNewspapers"));
+    }
   }
 });
 
@@ -178,6 +187,9 @@ function setupGame () {
   let parkAdvertisingColumn = new ParkLink(800, 330, 111, 267, parkLinkImg_kiosk);
   park.addChild(parkAdvertisingColumn);
 
+  let flyerBox_park = new FlyerBox(1262, 539, 61, 139, flyerBoxImg);
+  park.addChild(flyerBox_park);
+
   let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg_off, kioskLinkImg_on);
   park.addChild(kioskLink);
   window.addEventListener("openKiosk", () => { kioskLink.open(); });
@@ -218,6 +230,39 @@ function setupGame () {
   let kioskBuilding = new Kiosk(298, 55, 733, 579, kioskBuildingImg_off, kioskBuildingImg_on);
   kiosk.addChild(kioskBuilding);
   window.addEventListener("openKiosk", () => { kioskBuilding.open(); });
+
+  let newspapers = [];
+
+  let newspaperOne = new Newspaper(549, 446, 79, 37, newspaperImg, "conspiracy-theorist");
+  newspapers.push(newspaperOne);
+
+  let newspaperTwo = new Newspaper(633, 446, 79, 37, newspaperImg, "follower");
+  newspapers.push(newspaperTwo);
+
+  let newspaperThree = new Newspaper(714, 446, 79, 37, newspaperImg, "wannabe-influencer");
+  newspapers.push(newspaperThree);
+
+  let newspaperFour = new Newspaper(798, 446, 79, 37, newspaperImg, "reflective-user");
+  newspapers.push(newspaperFour);
+
+  newspapers.forEach(elem => kiosk.addChild(elem));
+
+  window.addEventListener("openKiosk", () => {
+    newspapers.forEach(elem => {
+      elem.show();
+      elem.enable();
+    });
+  });
+  window.addEventListener("buyNewspaper", (ev) => {
+    newspapers.forEach(elem => { 
+      if(elem.name === ev.detail) elem.hide();
+      elem.disable();
+    });
+  });
+  window.addEventListener("hideNewspapers", () => {
+    console.log("HI");
+    newspapers.forEach(elem => elem.hide());
+  });
 
   let kioskSunshade = new InteractiveObject(859, 240, 500, 400, kioskSunshadeImg);
   kiosk.addChild(kioskSunshade);
@@ -320,6 +365,7 @@ window.addEventListener("pickupFlyer", () => {
 
 window.addEventListener("buyNewspaper", () => {
   newspaperSound.play();
+  setTimeout(() => { registerSound.play() }, 1000);
 });
 
 window.addEventListener("lampClick", () => {
