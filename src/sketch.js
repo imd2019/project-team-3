@@ -354,8 +354,8 @@ function setupGame () {
   let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg);
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
-  let flyer = new Flyer();
-  coffeeHouse.addChild(flyer);
+  let flyerCoffeeHouse = new Flyer(windowWidth, windowHeight, 492, 736, flyerImg);
+  coffeeHouse.addChild(flyerCoffeeHouse);
 
   // global objects
   let mobilePhone = new MobilePhone();
