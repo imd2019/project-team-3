@@ -147,6 +147,14 @@ window.addEventListener("enterView", (ev) => {
   if (ev.detail === "park") {
     if (player.actionDone("demo") || player.actionDone("coffeeHouse")) {
       window.dispatchEvent(new CustomEvent("openKiosk"));
+
+      let rand = floor(random(0, 3));
+      let events = [
+        new CustomEvent("randConspiracyTheorist"),
+        new CustomEvent("randWannabeInfluencer"),
+        new CustomEvent("randFollower"),
+      ]
+      window.dispatchEvent(events[rand]);
     }
     if (player.actionDone("kiosk")) {
       window.dispatchEvent(new CustomEvent("hideNewspapers"));
@@ -414,8 +422,6 @@ window.addEventListener("phoneVibration", (ev) => {
 window.addEventListener("phoneTap", (ev) => {
   phoneTapSound.play();
 });
-
-// let insideStepsSound, outsideStepsSound;
 
 window.addEventListener("enterCoffeeHouse", () => {
   doorSound.play();
