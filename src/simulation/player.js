@@ -14,6 +14,13 @@ export default class Player extends Simulation{
     this.actions[origin][name] = data;
   }
 
+  actionDone(view) {
+    if (view in this.actions) {
+      return true;
+    }
+    return false;
+  }
+
   reset(){
     this.actions = {};
     this.phoneInUse = true;

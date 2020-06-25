@@ -121,8 +121,13 @@ window.addEventListener("addAction", (ev) => {
 let game = new Game(player);
 window.addEventListener("enterView", (ev) => {
   game.enterView(ev.detail);
+  
   if(ev.detail === "bar") {
     doorSound.play();
+  }
+
+  if (ev.detail === "park" && (player.actionDone("demo") || player.actionDone("coffeeHouse"))) {
+    window.dispatchEvent(new CustomEvent("openKiosk"));
   }
 });
 
@@ -175,6 +180,7 @@ function setupGame () {
 
   let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg_off, kioskLinkImg_on);
   park.addChild(kioskLink);
+  window.addEventListener("openKiosk", () => { kioskLink.open(); });
 
   let parkForegnd = new InteractiveObject(2, 228, 3904, 543, parkForegndImg);
   park.addChild(parkForegnd);
@@ -211,6 +217,7 @@ function setupGame () {
 
   let kioskBuilding = new Kiosk(298, 55, 733, 579, kioskBuildingImg_off, kioskBuildingImg_on);
   kiosk.addChild(kioskBuilding);
+  window.addEventListener("openKiosk", () => { kioskBuilding.open(); });
 
   let kioskSunshade = new InteractiveObject(859, 240, 500, 400, kioskSunshadeImg);
   kiosk.addChild(kioskSunshade);
