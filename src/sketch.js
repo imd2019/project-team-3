@@ -199,7 +199,7 @@ function setupGame () {
   let trees = new DisplayObject(-1, 89, 4103, 695, treesImg);
   park.addChild(trees);
 
-  let flyerBox_park = new FlyerBox(1262, 539, 61, 139, flyerBoxImg);
+  let flyerBox_park = new FlyerBox(1262, 539, 61, 139, flyerBoxImg, "park");
   park.addChild(flyerBox_park);
   
   let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg_off, kioskLinkImg_on);
@@ -338,12 +338,25 @@ function setupGame () {
   let demoSign = new DemoSign(790, 668, 116, 51, demoSignImg);
   demo.addChild(demoSign);
 
-  let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg);
+  let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg, "coffeeHouse");
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
   // global objects
   let flyerCoffeeHouse = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg);
   global.addChild(flyerCoffeeHouse);
+
+  let flyerPark = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg);
+  global.addChild(flyerPark);
+
+  window.addEventListener("pickupFlyer", (ev) => {
+    if (ev.detail === "coffeeHouse") {
+      flyerCoffeeHouse.show();
+      flyerCoffeeHouse.enable();
+    } else {
+      flyerPark.show();
+      flyerPark.enable();
+    }
+  });
 
   let mobilePhone = new MobilePhone();
   global.addChild(mobilePhone);
@@ -381,6 +394,10 @@ window.addEventListener("pickupSign", () => {
 });
 
 window.addEventListener("pickupFlyer", () => {
+  flyerSound.play();
+});
+
+window.addEventListener("closeFlyer", () => {
   flyerSound.play();
 });
 

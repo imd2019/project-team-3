@@ -1,15 +1,16 @@
 import Sprite from "../../Sprite.js";
 
 export default class FlyerBox extends Sprite {
-  constructor(x, y, width, height, backgnd) {
-    super(x, y, width, height, backgnd);
+  constructor(x, y, width, height, backgnd, view) {
+    super(x, y, width, height, backgnd, view);
+    this.view = view;
   }
 
   clicked() {
     window.dispatchEvent(new CustomEvent("addAction", {detail: {
-      origin: "coffeeHouse",
+      origin: this.view,
       name: "pickupFlyer",
-      data: {},
+      data: this.view,
     }}));
   }
 }
