@@ -227,7 +227,7 @@ function setupGame () {
   let demoForegnd = new DualBackgndSprite(-160, -6, 2180, 845, demoForegndImg_demo, demoForegndImg_pastDemo);
   demo.addChild(demoForegnd);
 
-  let demoPeople = new DemoPeople(214, 215, 586, 428, demoPeopleImg_left);
+  let demoPeople = new DemoPeople(223, 311, 546, 331, demoPeopleImg_left);
   demo.addChild(demoPeople);
 
   let counterDemoPeople = new DemoPeople(1081, 322, 503, 352, demoPeopleImg_right);
