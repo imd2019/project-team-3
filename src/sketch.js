@@ -22,8 +22,10 @@ import DemoBench from "./simulation/interactiveElements/demoBench.js";
 import FlyerBox from "./simulation/interactiveElements/flyerBox.js";
 import Flyer from "./simulation/interactiveElements/flyer.js";
 import Door from "./simulation/interactiveElements/door.js";
-import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
 import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
+import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
+import PhoneButton from "./simulation/interactiveElements/phoneButton.js";
+import PhoneMenuIcon from "./simulation/interactiveElements/phoneMenuIcon.js";
 import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
 import BarLampBulb from "./simulation/interactiveElements/barLampBulb.js";
 import Kiosk from "./simulation/interactiveElements/kiosk.js";
@@ -40,7 +42,8 @@ let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
-let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
+let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
+let phoneIconImg, phoneOutlineImg, phoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg;
 
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
 
@@ -90,14 +93,21 @@ function preload() {
   flyerImg_coffeeHouse = loadImage("../img/coffeeHouse/2_elements/2_flyer.png");
   flyerImg_park = loadImage("../img/park/7_flyer.png");
   newspaperImg = loadImage("../img/kiosk/3_elements/3_newspaper.png");
-  // mobilePhoneImg = loadImage("");
-  // phoneIconImg = loadImage("");
   streetLampBulbOnImg = loadImage("../img/assets/lamp-on.png");
   streetLampBulbOffImg = loadImage("../img/assets/lamp-off.png");
   doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png");
   kioskBuildingImg_on = loadImage("../img/kiosk/2_building_on.png");
   barArcadeImg = loadImage("../img/bar/2_elements/2_arcade.png");
   barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png", setupGame);
+
+  // smartphone
+  phoneIconImg = loadImage("../img/smartphone/phoneIcon.png");
+  phoneOutlineImg = loadImage("../img/smartphone/phoneOutline.png");
+  phoneOverlayImg = loadImage("../img/smartphone/phoneOverlay.png");
+  phoneBtnImg = loadImage("../img/smartphone/phoneButton.png");
+  homeIconImg = loadImage("../img/smartphone/homeIcon.png");
+  postIconImg = loadImage("../img/smartphone/postIcon.png");
+  msgIconImg = loadImage("../img/smartphone/messageIcon.png");
 
   // animation elements
   demoPeopleImg_left = loadImage("../img/demo/4_people/4_people_left.png");
@@ -395,10 +405,10 @@ function setupGame () {
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
   // global objects
-  let flyerCoffeeHouse = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg_coffeeHouse);
+  let flyerCoffeeHouse = new Flyer(492, 736, flyerImg_coffeeHouse);
   global.addChild(flyerCoffeeHouse);
 
-  let flyerPark = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg_park);
+  let flyerPark = new Flyer(492, 736, flyerImg_park);
   global.addChild(flyerPark);
 
   window.addEventListener("pickupFlyer", (ev) => {
@@ -409,13 +419,54 @@ function setupGame () {
       flyerPark.show();
       flyerPark.enable();
     }
+    player.usePhone(true);
   });
 
-  let mobilePhone = new MobilePhone();
+  window.addEventListener("closeFlyer", () => {
+    player.usePhone(false);
+  });
+
+  let phoneIcon = new PhoneIcon(windowWidth - 150, windowHeight - 200, 112, 168, phoneIconImg);
+  global.addChild(phoneIcon);
+
+  let mobilePhone = new MobilePhone(492, 739, phoneOutlineImg, phoneOverlayImg);
   global.addChild(mobilePhone);
 
-  let phoneIcon = new PhoneIcon();
-  global.addChild(phoneIcon);
+  let phoneButton = new PhoneButton(221, 677, 50, 50, phoneBtnImg);
+  mobilePhone.addChild(phoneButton);
+
+  window.addEventListener("openPhone", () => {
+    mobilePhone.show();
+    mobilePhone.enable();
+    player.usePhone(true);
+  })
+
+  window.addEventListener("closePhone", () => {
+    mobilePhone.hide();
+    mobilePhone.disable();
+    phoneIcon.show();
+    phoneIcon.enable();
+    player.usePhone(false);
+  })
+
+  let homeBtn = new PhoneMenuIcon(43, 610, 79, 50, homeIconImg, "showHome");
+  mobilePhone.addChild(homeBtn);
+  // window.addEventListener("showHome", function () {
+  //   mobilePhone.showHome();
+  // });
+
+  let postBtn = new PhoneMenuIcon(207, 610, 79, 50, postIconImg, "postContent");
+  mobilePhone.addChild(postBtn);
+  // window.addEventListener("postContent", function () {
+  //   mobilePhone.showPost();
+  // });
+
+  let msgBtn = new PhoneMenuIcon(368, 610, 79, 50, msgIconImg, "showMessage");
+  mobilePhone.addChild(msgBtn);
+  // window.addEventListener("showMessage", function () {
+  //   phoneMessage.redraw();
+  //   mobilePhone.showMessage();
+  // });
 }
 
 /* sound events */

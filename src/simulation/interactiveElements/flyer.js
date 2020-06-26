@@ -1,10 +1,12 @@
 import Sprite from "../../Sprite.js";
 
 export default class Flyer extends Sprite {
-  constructor(x, y, width, height, backgnd) {
-    super(x, y, width, height, backgnd);
-    this.visible = false;
-    this.enabled = false;
+  constructor(width, height, backgnd) {
+    let scale = 0.8 * windowHeight / height;
+    super((windowWidth - width * scale)/ 2, (windowHeight - height * scale) / 2, width, height, backgnd);
+    this.scale = scale;
+    this.disable();
+    this.hide();
   }
 
   clicked() {
