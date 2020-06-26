@@ -1,4 +1,4 @@
-import Sprite from "../../sprite.js";
+import Sprite from "../../../sprite.js";
 
 export default class PhoneMenuIcon extends Sprite {
   constructor(x, y, width, height, backgnd, action) {

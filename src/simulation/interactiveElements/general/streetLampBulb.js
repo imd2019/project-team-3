@@ -1,4 +1,4 @@
-import Sprite from "../../Sprite.js";
+import Sprite from "../../../Sprite.js";
 
 export default class StreetLampBulb extends Sprite {
   constructor(x, y, width, height, onImg, offImg) {

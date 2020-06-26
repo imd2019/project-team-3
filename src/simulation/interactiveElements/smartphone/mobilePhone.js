@@ -1,4 +1,4 @@
-import Sprite from "../../sprite.js";
+import Sprite from "../../../sprite.js";
 
 export default class MobilePhone extends Sprite{
   constructor(width, height, backgnd, overlay){

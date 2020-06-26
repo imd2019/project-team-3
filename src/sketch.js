@@ -11,28 +11,28 @@ import InteractiveObject from "./interactiveObject.js";
 import DualBackgndSprite from "./simulation/dualBackgndSprite.js";
 
 // interactive element classes
-import BarLink from "./simulation/interactiveElements/barLink.js";
-import CoffeeHouseLink from "./simulation/interactiveElements/coffeeHouseLink.js";
-import DemoLink from "./simulation/interactiveElements/demoLink.js";
-import KioskLink from "./simulation/interactiveElements/kioskLink.js";
-import ParkLink from "./simulation/interactiveElements/parkLink.js";
+import BarLink from "./simulation/interactiveElements/demo/barLink.js";
+import CoffeeHouseLink from "./simulation/interactiveElements/park/coffeeHouseLink.js";
+import DemoLink from "./simulation/interactiveElements/park/demoLink.js";
+import KioskLink from "./simulation/interactiveElements/park/kioskLink.js";
+import ParkLink from "./simulation/interactiveElements/general/parkLink.js";
 
-import DemoSign from "./simulation/interactiveElements/demoSign.js";
-import DemoBench from "./simulation/interactiveElements/demoBench.js";
-import FlyerBox from "./simulation/interactiveElements/flyerBox.js";
-import Flyer from "./simulation/interactiveElements/flyer.js";
-import Door from "./simulation/interactiveElements/door.js";
-import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
-import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
-import PhoneButton from "./simulation/interactiveElements/phoneButton.js";
-import PhoneMenuIcon from "./simulation/interactiveElements/phoneMenuIcon.js";
-import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
-import BarLampBulb from "./simulation/interactiveElements/barLampBulb.js";
-import Kiosk from "./simulation/interactiveElements/kiosk.js";
-import Arcade from "./simulation/interactiveElements/arcade.js";
-import BarPhone from "./simulation/interactiveElements/barPhone.js";
-import DemoPeople from "./simulation/interactiveElements/demoPeople.js";
-import Newspaper from "./simulation/interactiveElements/newspaper.js";
+import DemoSign from "./simulation/interactiveElements/demo/demoSign.js";
+import DemoBench from "./simulation/interactiveElements/demo/demoBench.js";
+import FlyerBox from "./simulation/interactiveElements/general/flyerBox.js";
+import Flyer from "./simulation/interactiveElements/general/flyer.js";
+import Door from "./simulation/interactiveElements/coffeeHouse/door.js";
+import PhoneIcon from "./simulation/interactiveElements/smartphone/phoneIcon.js";
+import MobilePhone from "./simulation/interactiveElements/smartphone/mobilePhone.js";
+import PhoneButton from "./simulation/interactiveElements/smartphone/phoneButton.js";
+import PhoneMenuIcon from "./simulation/interactiveElements/smartphone/phoneMenuIcon.js";
+import StreetLampBulb from "./simulation/interactiveElements/general/streetLampBulb.js";
+import BarLampBulb from "./simulation/interactiveElements/bar/barLampBulb.js";
+import Kiosk from "./simulation/interactiveElements/kiosk/kiosk.js";
+import Arcade from "./simulation/interactiveElements/bar/arcade.js";
+import BarPhone from "./simulation/interactiveElements/bar/barPhone.js";
+import DemoPeople from "./simulation/interactiveElements/demo/demoPeople.js";
+import Newspaper from "./simulation/interactiveElements/kiosk/newspaper.js";
 
 // load images
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;

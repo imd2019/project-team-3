@@ -1,4 +1,4 @@
-import Sprite from "../../Sprite.js";
+import Sprite from "../../../Sprite.js";
 
 export default class Newspaper extends Sprite {
   constructor(x, y, width, height, backgnd, name) {

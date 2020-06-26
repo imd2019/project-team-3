@@ -1,5 +1,4 @@
-import Sprite from "./streetLampBulb.js";
-import StreetLampBulb from "./streetLampBulb.js";
+import StreetLampBulb from "../general/streetLampBulb.js";
 
 export default class BarLampBulb extends StreetLampBulb {
   constructor(x, y, width, height, onImg, offImg) {

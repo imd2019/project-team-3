@@ -1,4 +1,4 @@
-import DualBackgndSprite from "../dualBackgndSprite.js";
+import DualBackgndSprite from "../../dualBackgndSprite.js";
 
 export default class DemoForegnd extends DualBackgndSprite {
   constructor(x, y, width, height, demoImg, noDemoImg) {

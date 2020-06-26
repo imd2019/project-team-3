@@ -1,4 +1,4 @@
-import Kiosk from "./kiosk.js";
+import Kiosk from "../kiosk/kiosk.js";
 
 export default class KioskLink extends Kiosk {
   constructor(x, y, width, height, closedImg, openedImg) {
