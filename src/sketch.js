@@ -25,6 +25,7 @@ import Door from "./simulation/interactiveElements/door.js";
 import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
 import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
 import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
+import BarLampBulb from "./simulation/interactiveElements/barLampBulb.js";
 import Kiosk from "./simulation/interactiveElements/kiosk.js";
 import Arcade from "./simulation/interactiveElements/arcade.js";
 import BarPhone from "./simulation/interactiveElements/barPhone.js";
@@ -39,7 +40,7 @@ let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
-let doorImg, demoSignImg, flyerBoxImg, flyerImg, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
+let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
 
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
 
@@ -86,7 +87,8 @@ function preload() {
   demoSignImg = loadImage("../img/demo/3_elements/3_sign.png");
   demoBenchImg = loadImage("../img/demo/3_elements/3_bench.png");
   flyerBoxImg = loadImage("../img/assets/flyerbox.png");
-  flyerImg = loadImage("../img/coffeeHouse/2_elements/2_flyer.png");
+  flyerImg_coffeeHouse = loadImage("../img/coffeeHouse/2_elements/2_flyer.png");
+  flyerImg_park = loadImage("../img/park/7_flyer.png");
   newspaperImg = loadImage("../img/kiosk/3_elements/3_newspaper.png");
   // mobilePhoneImg = loadImage("");
   // phoneIconImg = loadImage("");
@@ -308,7 +310,18 @@ function setupGame () {
   let barForegnd = new DisplayObject(0, 0, 1793, 769, barForegndImg);
   bar.addChild(barForegnd);
 
-  let barArcade = new Arcade(1532, 208, 360, 541, barArcadeImg);
+  let barLamp_1 = new BarLampBulb(280, 160, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
+  bar.addChild(barLamp_1);
+
+  let barLamp_2 = new BarLampBulb(1033, 203, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
+  bar.addChild(barLamp_2);
+  barLamp_2.switch();
+
+  let barLamp_3 = new BarLampBulb(1270, 217, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
+  bar.addChild(barLamp_3);
+  barLamp_3.switch();
+
+  let barArcade = new Arcade(1532, 222, 210, 528, barArcadeImg);
   bar.addChild(barArcade);
 
   let barPhone = new BarPhone(357, 356, 22, 8, barPhoneImg);
@@ -382,10 +395,10 @@ function setupGame () {
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
   // global objects
-  let flyerCoffeeHouse = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg);
+  let flyerCoffeeHouse = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg_coffeeHouse);
   global.addChild(flyerCoffeeHouse);
 
-  let flyerPark = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg);
+  let flyerPark = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg_park);
   global.addChild(flyerPark);
 
   window.addEventListener("pickupFlyer", (ev) => {

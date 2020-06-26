@@ -8,8 +8,12 @@ export default class StreetLampBulb extends Sprite {
   }
 
   clicked(){
-      this.on = !this.on;
-      window.dispatchEvent(new CustomEvent("lampClick"));
+    window.dispatchEvent(new CustomEvent("lampClick"));
+    this.switch();
+  }
+
+  switch() {
+    this.on = !this.on;    
   }
 
   draw(){
