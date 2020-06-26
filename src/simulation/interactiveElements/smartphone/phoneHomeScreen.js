@@ -1,11 +1,12 @@
 import Sprite from "../../../sprite.js";
 
 export default class PhoneHomeScreen extends Sprite {
-  constructor(x, y, width, height, backgnd = undefined) {
+  constructor(x, y, width, height, postOverlay, backgnd = undefined) {
     super(x, y, width, height, backgnd);
     this.name = "homeScreen";
     this.pos = 0;
     this.activePosts = [];
+    this.postOverlay = postOverlay;
     this.ds;
     this.post = createGraphics(width, height);
   }
@@ -15,6 +16,7 @@ export default class PhoneHomeScreen extends Sprite {
     fill(220);
     noStroke();
     rect(0, 0, this.width, this.height);
+
     image(this.post, 0, 0, this.width, this.height);
   }
 
@@ -22,11 +24,18 @@ export default class PhoneHomeScreen extends Sprite {
     this.post.clear();
     for (let elem in this.activePosts) {
       this.post.image(
-        this.activePosts[elem],
-        30,
-        2 + elem * 360 + this.pos,
+        this.postOverlay,
+        32.5,
+        2 + elem * 410 + this.pos,
         450,
-        350
+        400
+      );
+      this.post.image(
+        this.activePosts[elem],
+        35,
+        87 + elem * 410 + this.pos,
+        445,
+        250
       );
     }
   }
