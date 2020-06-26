@@ -1,6 +1,6 @@
 import Sprite from "../../../sprite.js";
 
-export default class PhonePost extends Sprite {
+export default class PhonePostScreen extends Sprite {
   constructor(x, y, width, height, backgnd = undefined) {
     super(x, y, width, height, backgnd);
     this.name = "postScreen";

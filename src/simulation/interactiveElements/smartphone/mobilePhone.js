@@ -6,8 +6,40 @@ export default class MobilePhone extends Sprite{
     super((windowWidth - width * scale)/ 2, (windowHeight - height * scale) / 2, width, height, backgnd);
     this.overlay = overlay;
     this.scale = scale;
+    this.currentScreen;
     this.disable();
     this.hide();
+  }
+
+  showScreen(name) {
+    for (let i in this.children) {
+      if (this.children[i].name === name) {
+        this.currentScreen = i;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  display() {
+    if (this.visible) {
+      push();
+      translate(this.x, this.y);
+      rotate(this.rotation);
+      scale(this.scale);
+
+      this.draw();
+
+      for (let i in this.children) {
+        if (this.children[i].name === undefined) {
+          this.children[i].display();
+        } else if (i === this.currentScreen) {
+          this.children[i].display();
+        }
+      }
+
+      pop();
+    }
   }
 
   draw() {

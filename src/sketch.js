@@ -26,6 +26,9 @@ import PhoneIcon from "./simulation/interactiveElements/smartphone/phoneIcon.js"
 import MobilePhone from "./simulation/interactiveElements/smartphone/mobilePhone.js";
 import PhoneButton from "./simulation/interactiveElements/smartphone/phoneButton.js";
 import PhoneMenuIcon from "./simulation/interactiveElements/smartphone/phoneMenuIcon.js";
+import PhoneHomeScreen from "./simulation/interactiveElements/smartphone/phoneHomeScreen.js";
+import PhonePostScreen from "./simulation/interactiveElements/smartphone/phonePostScreen.js";
+import PhoneMessageScreen from "./simulation/interactiveElements/smartphone/phoneMessageScreen.js";
 import StreetLampBulb from "./simulation/interactiveElements/general/streetLampBulb.js";
 import BarLampBulb from "./simulation/interactiveElements/bar/barLampBulb.js";
 import Kiosk from "./simulation/interactiveElements/kiosk/kiosk.js";
@@ -449,23 +452,59 @@ function setupGame () {
     player.usePhone(false);
   })
 
-  let homeBtn = new PhoneMenuIcon(43, 610, 79, 50, homeIconImg, "showHome");
+  let homeBtn = new PhoneMenuIcon(43, 610, 79, 50, homeIconImg, "homeScreen");
   mobilePhone.addChild(homeBtn);
-  // window.addEventListener("showHome", function () {
-  //   mobilePhone.showHome();
-  // });
 
-  let postBtn = new PhoneMenuIcon(207, 610, 79, 50, postIconImg, "postContent");
+  let postBtn = new PhoneMenuIcon(207, 610, 79, 50, postIconImg, "postScreen");
   mobilePhone.addChild(postBtn);
-  // window.addEventListener("postContent", function () {
-  //   mobilePhone.showPost();
+
+  let msgBtn = new PhoneMenuIcon(368, 610, 79, 50, msgIconImg, "messageScreen");
+  mobilePhone.addChild(msgBtn);
+
+  window.addEventListener("showScreen", (ev) => {
+    mobilePhone.showScreen(ev.detail);
+  });
+
+  let homeScreen = new PhoneHomeScreen(18.9, 111.2, 454, 491);
+  mobilePhone.addChild(homeScreen);
+  mobilePhone.showScreen("homeScreen");
+
+  let messageScreen = new PhoneMessageScreen(18.9, 111.2, 554, 491);
+  mobilePhone.addChild(messageScreen);
+
+  let postScreen = new PhonePostScreen(18.9, 111.2, 554, 491);
+  mobilePhone.addChild(postScreen);
+  // window.addEventListener("demoPost", function () {
+  //   phonePost.getPost(socialbookPost1Mirrored);
+  // });
+  // window.addEventListener("newPost", function (ev) {
+  //   postIcon.postIsReady(ev.detail);
+  // });
+  // window.addEventListener("addPost", function () {
+  //   phoneHome.getPost(phonePost.newPost);
+  //   postIcon.reset();
+  //   phonePost.reset();
+  //   phoneHome.redraw();
   // });
 
-  let msgBtn = new PhoneMenuIcon(368, 610, 79, 50, msgIconImg, "showMessage");
-  mobilePhone.addChild(msgBtn);
-  // window.addEventListener("showMessage", function () {
+  // let phoneMessageButtonA = new PhoneMessageButton(30, 490, 200, 50, "A");
+  // phoneMessageButtonA.setUpMessages();
+  // phoneMessage.addChild(phoneMessageButtonA);
+
+  // let phoneMessageButtonB = new PhoneMessageButton(285, 490, 200, 50, "B");
+  // phoneMessageButtonB.setUpMessages();
+  // phoneMessage.addChild(phoneMessageButtonB);
+  // window.addEventListener("endConversation", function () {
+  //   phoneMessageButtonA.endConversation();
+  //   phoneMessageButtonB.endConversation();
+  //   phoneHome.getPost(socialbookPost1);
+  // });
+  // window.addEventListener("updateConversation", function (ev) {
+  //   phoneMessageButtonA.updateMessages();
+  //   phoneMessageButtonB.updateMessages();
+  //   phoneMessage.showConversation(ev.detail);
+  //   phoneMessage.updatePosition();
   //   phoneMessage.redraw();
-  //   mobilePhone.showMessage();
   // });
 }
 
