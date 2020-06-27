@@ -1,22 +1,22 @@
 import Sprite from "../../../sprite.js";
 
 export default class PhoneHomeScreen extends Sprite {
-  constructor(x, y, width, height, postOverlay, backgnd = undefined) {
-    super(x, y, width, height, backgnd);
+  constructor(x, y, width, height, postOverlay) {
+    super(x, y, width, height);
     this.name = "homeScreen";
     this.pos = 0;
     this.activePosts = [];
     this.postOverlay = postOverlay;
-    this.ds;
     this.post = createGraphics(width, height);
   }
 
   draw() {
-    this.windowResized();
+    text("homeScreen", 0, 0);
     fill(220);
     noStroke();
     rect(0, 0, this.width, this.height);
 
+    // createGraphics
     image(this.post, 0, 0, this.width, this.height);
   }
 
@@ -45,21 +45,14 @@ export default class PhoneHomeScreen extends Sprite {
     this.redraw();
   }
 
-  windowResized() {
-    this.ds = windowHeight / height / 2;
-    this.post.width = this.width / this.ds;
-    this.post.height = this.height / this.ds;
-  }
-
-  wheeled(event) {
-    console.log(this.activePosts.length);
+  wheel(ev) {
     if (this.visible) {
       if (this.pos > 0) {
         this.pos = 0;
       } else if (this.pos < -(1 + 340 * this.activePosts.length)) {
         this.pos = -(1 + 340 * this.activePosts.length);
       } else {
-        this.pos += event.delta / 10;
+        this.pos += ev.delta / 10;
         this.redraw();
       }
     }

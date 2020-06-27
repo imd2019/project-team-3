@@ -29,6 +29,7 @@ import PhoneMenuIcon from "./simulation/interactiveElements/smartphone/phoneMenu
 import PhoneHomeScreen from "./simulation/interactiveElements/smartphone/phoneHomeScreen.js";
 import PhonePostScreen from "./simulation/interactiveElements/smartphone/phonePostScreen.js";
 import PhoneMessageScreen from "./simulation/interactiveElements/smartphone/phoneMessageScreen.js";
+import PhoneMessageButton from "./simulation/interactiveElements/smartphone/phoneMessageButton.js";
 import StreetLampBulb from "./simulation/interactiveElements/general/streetLampBulb.js";
 import BarLampBulb from "./simulation/interactiveElements/bar/barLampBulb.js";
 import Kiosk from "./simulation/interactiveElements/kiosk/kiosk.js";
@@ -56,6 +57,12 @@ let phoneMsgSound, phoneVibrationSound, phoneSendSound, phoneTapSound, doorSound
 
 
 function preload() {
+  // fonts
+  window.fonts = {
+    rockwell: loadFont("../style/fonts/rockwell.ttf"),
+    franklinGothic: loadFont("../style/fonts/franklinGothic.ttf")
+  };
+
   // backgnd images
   parkBackgnd = loadImage("../img/park/0_backgnd.png");
   demoBackgnd = loadImage("../img/demo/0_backgnd.png");
@@ -469,11 +476,12 @@ function setupGame () {
   mobilePhone.addChild(homeScreen);
   mobilePhone.showScreen("homeScreen");
 
-  let messageScreen = new PhoneMessageScreen(18.9, 111.2, 554, 491);
+  let postScreen = new PhonePostScreen(18.9, 111.2, 454, 491);
+  mobilePhone.addChild(postScreen);
+
+  let messageScreen = new PhoneMessageScreen(18.9, 111.2, 454, 491);
   mobilePhone.addChild(messageScreen);
 
-  let postScreen = new PhonePostScreen(18.9, 111.2, 554, 491);
-  mobilePhone.addChild(postScreen);
   // window.addEventListener("demoPost", function () {
   //   phonePost.getPost(socialbookPost1Mirrored);
   // });
@@ -487,24 +495,29 @@ function setupGame () {
   //   phoneHome.redraw();
   // });
 
-  // let phoneMessageButtonA = new PhoneMessageButton(30, 490, 200, 50, "A");
-  // phoneMessageButtonA.setUpMessages();
-  // phoneMessage.addChild(phoneMessageButtonA);
+  let msgButton_1 = new PhoneMessageButton(17, 428, 200, 50, "A");
+  msgButton_1.setUpMessages();
+  messageScreen.addChild(msgButton_1);
 
-  // let phoneMessageButtonB = new PhoneMessageButton(285, 490, 200, 50, "B");
-  // phoneMessageButtonB.setUpMessages();
-  // phoneMessage.addChild(phoneMessageButtonB);
+  let msgButton_2 = new PhoneMessageButton(238, 428, 200, 50, "B");
+  msgButton_2.setUpMessages();
+  messageScreen.addChild(msgButton_2);
+
+  console.log("mobilePhone: " + mobilePhone.scale);
+  console.log("messageScreen: " + messageScreen.scale);
+  console.log("msgButton_1: " + msgButton_1.scale);
+  
   // window.addEventListener("endConversation", function () {
   //   phoneMessageButtonA.endConversation();
   //   phoneMessageButtonB.endConversation();
-  //   phoneHome.getPost(socialbookPost1);
+  //   homeScreen.getPost(socialbookPost1);
   // });
   // window.addEventListener("updateConversation", function (ev) {
   //   phoneMessageButtonA.updateMessages();
   //   phoneMessageButtonB.updateMessages();
-  //   phoneMessage.showConversation(ev.detail);
-  //   phoneMessage.updatePosition();
-  //   phoneMessage.redraw();
+  //   messageScreen.showConversation(ev.detail);
+  //   messageScreen.updatePosition();
+  //   messageScreen.redraw();
   // });
 }
 
@@ -580,3 +593,6 @@ window.mousePressed = mousePressed;
 
 function mouseReleased() { game.mouseReleased(); }
 window.mouseReleased = mouseReleased;
+
+function mouseWheel(ev) { game.mouseWheel(ev); }
+window.mouseWheel = mouseWheel;

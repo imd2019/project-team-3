@@ -7,12 +7,10 @@ export default class PhoneMessageButton extends Sprite {
     this.messages = [];
     this.currentMessage;
     this.conversationIndex = 0;
-    this.hovered;
   }
 
   clicked() {
     if (this.currentMessage.conversationEnded) {
-      console.log("conv ended");
       window.dispatchEvent(new CustomEvent("endConversation"));
     }
 
@@ -25,10 +23,7 @@ export default class PhoneMessageButton extends Sprite {
   }
 
   draw() {
-    this.hovered = false;
     if (this.mouseHovered()) {
-      this.hovered = true;
-
       stroke("yellow");
     } else {
       noStroke();
@@ -159,7 +154,7 @@ export default class PhoneMessageButton extends Sprite {
     this.currentMessage = currentMessage;
   }
   endConversation() {
-    this.visible = false;
-    this.enabled = false;
+    this.hide();
+    this.disable();
   }
 }

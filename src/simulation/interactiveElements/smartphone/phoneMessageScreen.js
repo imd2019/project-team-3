@@ -1,24 +1,21 @@
 import Sprite from "../../../sprite.js";
 
 export default class PhoneMessage extends Sprite {
-  constructor(x, y, width, height, backgnd = undefined) {
-    super(x, y, width, height, backgnd);
-
+  constructor(x, y, width, height) {
+    super(x, y, width, height);
     this.name = "messageScreen";
     this.conversation = [];
-    this.visible = false;
     this.pos = 0;
     this.message = createGraphics(width, height);
-    this.ds;
   }
 
   draw() {
-    this.windowResized();
-
-    image(this.message, 0, 0, this.width, this.height);
-
+    text("messageScreen", 0, 0);
     fill(220);
     noStroke();
+    rect(0, 0, this.width, this.height);
+
+    image(this.message, 0, 0, this.width, this.height);
 
     textFont(window.fonts.franklinGothic);
     textSize(16);
@@ -36,12 +33,6 @@ export default class PhoneMessage extends Sprite {
     } else {
       this.redraw();
     }
-  }
-
-  windowResized() {
-    this.ds = windowHeight / height / 2;
-    this.message.width = this.width / this.ds;
-    this.message.height = this.height / this.ds;
   }
 
   redraw() {
@@ -114,7 +105,7 @@ export default class PhoneMessage extends Sprite {
     this.message.textAlign(CENTER, CENTER);
     this.message.fill(170);
     this.message.rect(
-      400,
+      350,
       180 + 180 * this.conversation.length + this.pos,
       80,
       70,
@@ -125,21 +116,21 @@ export default class PhoneMessage extends Sprite {
     this.message.fill(0);
     this.message.text(
       ".  .  .",
-      400,
+      350,
       180 + 180 * this.conversation.length + this.pos,
       80,
       70
     );
   }
 
-  wheeled(event) {
+  wheel(ev) {
     if (this.visible) {
       if (this.pos > 0) {
         this.pos = 0;
       } else if (this.pos < -(1 + 70 * this.conversation.length)) {
         this.pos = -(1 + 70 * this.conversation.length);
       } else {
-        this.pos += event.delta / 10;
+        this.pos += ev.delta / 10;
         this.redraw();
       }
     }
