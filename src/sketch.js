@@ -496,18 +496,18 @@ function setupGame () {
   let messageScreen = new PhoneMessageScreen(18.9, 111.2, 454, 491);
   mobilePhone.addChild(messageScreen);
 
-  window.addEventListener("demoPost", function () {
-    postScreen.setPost(socialbookPost1Mirrored);
-  });
-  window.addEventListener("newPost", function (ev) {
-    postIcon.postIsReady(ev.detail);
-  });
-  window.addEventListener("addPost", function () {
-    homeScreen.setPost(phonePost.newPost);
-    postIcon.reset();
-    postScreen.reset();
-    homeScreen.redraw();
-  });
+  // window.addEventListener("demoPost", function () {
+  //   postScreen.setPost(socialbookPost1Mirrored);
+  // });
+  // window.addEventListener("newPost", function (ev) {
+  //   postIcon.postIsReady(ev.detail);
+  // });
+  // window.addEventListener("addPost", function () {
+  //   homeScreen.setPost(phonePost.newPost);
+  //   postIcon.reset();
+  //   postScreen.reset();
+  //   homeScreen.redraw();
+  // });
 
   let msgButton_1 = new PhoneMessageButton(17, 428, 200, 50, "A");
   msgButton_1.setUpMessages();

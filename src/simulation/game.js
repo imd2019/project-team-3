@@ -49,6 +49,12 @@ export default class Game extends Sprite {
     }
   }
 
+  mouseWheel(ev) {
+    if (this.currentView) {
+      this.children.global.mouseWheel(ev);
+    }
+  }
+
   display() {
     if (this.currentView) {
       this.children[this.currentView].display();

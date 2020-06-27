@@ -48,7 +48,7 @@ export default class Sprite extends InteractiveObject {
 
   wheel(ev) {
     for (let i = this.children.length - 1; i >= 0; i--) {
-      if(this.children[i].mouseWheel(ev)) return true;
+      this.children[i].mouseWheel(ev);
     }
   }
 

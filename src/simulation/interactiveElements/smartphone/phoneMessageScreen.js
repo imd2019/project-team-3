@@ -129,7 +129,7 @@ export default class PhoneMessage extends Sprite {
       } else if (this.pos < -(1 + 70 * this.conversation.length)) {
         this.pos = -(1 + 70 * this.conversation.length);
       } else {
-        this.pos += ev.delta / 10;
+        this.pos -= ev.delta;
         this.redraw();
       }
     }

@@ -49,7 +49,7 @@ export default class PhoneHomeScreen extends Sprite {
       } else if (this.pos < -(1 + 340 * this.activePosts.length)) {
         this.pos = -(1 + 340 * this.activePosts.length);
       } else {
-        this.pos += ev.delta / 10;
+        this.pos -= ev.delta;
         this.redraw();
       }
     }
