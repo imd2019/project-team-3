@@ -10,7 +10,6 @@ export default class PhoneMessage extends Sprite {
   }
 
   draw() {
-    text("messageScreen", 0, 0);
     fill(220);
     noStroke();
     rect(0, 0, this.width, this.height);
@@ -63,12 +62,12 @@ export default class PhoneMessage extends Sprite {
       if (this.conversation[elem].isClicked) {
         this.message.fill(170);
 
-        this.message.rect(200, 180 + 180 * elem + this.pos, 300, 70, 5);
+        this.message.rect(130, 180 + 180 * elem + this.pos, 300, 70, 5);
         this.message.noStroke();
         this.message.fill(0);
         this.message.text(
           this.conversation[elem].conversationText,
-          210,
+          140,
           180 + 180 * elem + this.pos,
           290,
           70

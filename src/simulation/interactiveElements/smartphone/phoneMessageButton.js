@@ -10,16 +10,22 @@ export default class PhoneMessageButton extends Sprite {
   }
 
   clicked() {
-    if (this.currentMessage.conversationEnded) {
-      window.dispatchEvent(new CustomEvent("endConversation"));
+    this.currentMessage.isClicked = true;
+    for (let elem of this.parent.children) {
+      if (elem.name != this.name) elem.updateMessages();
     }
 
-    this.currentMessage.isClicked = true;
-    window.dispatchEvent(
-      new CustomEvent("updateConversation", {
-        detail: this.currentMessage,
-      })
-    );
+    this.parent.showConversation(this.currentMessage);
+    this.parent.updatePosition();
+    this.parent.redraw();
+
+    if (this.currentMessage.conversationEnded) {
+      this.parent.children.forEach( (btn) => {
+        btn.hide();
+        btn.disable();
+      });
+      window.dispatchEvent(new CustomEvent("endConversation"));
+    }
   }
 
   draw() {
@@ -41,10 +47,10 @@ export default class PhoneMessageButton extends Sprite {
     this.setUpMessages();
 
     if (this.conversationIndex > 2 && this.conversationIndex < 4) {
-      this.visible = true;
+      this.show();
       this.enable();
     } else if (this.conversationEnd || this.conversationIndex >= 4) {
-      this.visible = false;
+      this.hide();
       this.disable();
     }
   }
@@ -152,9 +158,5 @@ export default class PhoneMessageButton extends Sprite {
     );
 
     this.currentMessage = currentMessage;
-  }
-  endConversation() {
-    this.hide();
-    this.disable();
   }
 }

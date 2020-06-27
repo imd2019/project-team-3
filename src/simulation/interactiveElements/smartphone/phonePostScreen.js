@@ -10,7 +10,6 @@ export default class PhonePostScreen extends Sprite {
   }
 
   draw() {
-    text("postScreen", 0, 0);
     fill(220);
     noStroke();
     rect(0, 0, this.width, this.height);

@@ -3,46 +3,43 @@ import Sprite from "../../../sprite.js";
 export default class PhoneHomeScreen extends Sprite {
   constructor(x, y, width, height, postOverlay) {
     super(x, y, width, height);
+    this.postOverlay = postOverlay;
     this.name = "homeScreen";
     this.pos = 0;
     this.activePosts = [];
-    this.postOverlay = postOverlay;
-    this.post = createGraphics(width, height);
+    this.posts = createGraphics(width, height);
   }
 
   draw() {
-    text("homeScreen", 0, 0);
     fill(220);
     noStroke();
     rect(0, 0, this.width, this.height);
+    image(this.posts, 0, 0, this.width, this.height);
+  }
 
-    // createGraphics
-    image(this.post, 0, 0, this.width, this.height);
+  setPost(img) {
+    this.activePosts.push(img);
+    this.redraw();
   }
 
   redraw() {
-    this.post.clear();
+    this.posts.clear();
     for (let elem in this.activePosts) {
-      this.post.image(
+      this.posts.image(
         this.postOverlay,
-        32.5,
-        2 + elem * 410 + this.pos,
-        450,
-        400
+        12.5,
+        12.5 + elem * 400 + this.pos,
+        430,
+        382
       );
-      this.post.image(
+      this.posts.image(
         this.activePosts[elem],
-        35,
-        87 + elem * 410 + this.pos,
-        445,
-        250
+        15,
+        93.5 + elem * 400 + this.pos,
+        425,
+        239
       );
     }
-  }
-
-  getPost(img) {
-    this.activePosts.push(img);
-    this.redraw();
   }
 
   wheel(ev) {

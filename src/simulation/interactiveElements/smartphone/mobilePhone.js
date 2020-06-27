@@ -45,7 +45,7 @@ export default class MobilePhone extends Sprite{
   draw() {
     if (this.backgnd != undefined) {
         image(this.backgnd, 0, 0, this.width, this.height);
-        image(this.overlay, 18.9, 24.6, this.width - 2 * 18.9, this.height - 96);
+        image(this.overlay, 18.9, 24.4, this.width - 2 * 18.9, this.height - 96);
       }
   }
 

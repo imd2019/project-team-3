@@ -48,6 +48,7 @@ let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
 let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
 let phoneIconImg, phoneOutlineImg, phoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg;
+let postOverlayImg, postImg_1, postImg_2, postImg_3, postImg_4, postImg_5, postImg_6, postImg_7, postImg_8, postImg_9, postImg_10, postImg_11, postImg_12;
 
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
 
@@ -118,6 +119,19 @@ function preload() {
   homeIconImg = loadImage("../img/smartphone/homeIcon.png");
   postIconImg = loadImage("../img/smartphone/postIcon.png");
   msgIconImg = loadImage("../img/smartphone/messageIcon.png");
+  postOverlayImg = loadImage("../img/smartphone/postOverlay.png");
+  postImg_1 = loadImage("../img/smartphone/posts/post1.png");
+  postImg_2 = loadImage("../img/smartphone/posts/post2.png");
+  // postImg_3 = loadImage("../img/smartphone/posts/post3.png");
+  // postImg_4 = loadImage("../img/smartphone/posts/post4.png");
+  // postImg_5 = loadImage("../img/smartphone/posts/post5.png");
+  // postImg_6 = loadImage("../img/smartphone/posts/post6.png");
+  // postImg_7 = loadImage("../img/smartphone/posts/post7.png");
+  // postImg_8 = loadImage("../img/smartphone/posts/post8.png");
+  // postImg_9 = loadImage("../img/smartphone/posts/post9.png");
+  // postImg_10 = loadImage("../img/smartphone/posts/post10.png");
+  // postImg_11 = loadImage("../img/smartphone/posts/post11.png");
+  // postImg_12 = loadImage("../img/smartphone/posts/post12.png");
 
   // animation elements
   demoPeopleImg_left = loadImage("../img/demo/4_people/4_people_left.png");
@@ -472,7 +486,7 @@ function setupGame () {
     mobilePhone.showScreen(ev.detail);
   });
 
-  let homeScreen = new PhoneHomeScreen(18.9, 111.2, 454, 491);
+  let homeScreen = new PhoneHomeScreen(18.9, 111.2, 454, 491, postOverlayImg);
   mobilePhone.addChild(homeScreen);
   mobilePhone.showScreen("homeScreen");
 
@@ -482,18 +496,18 @@ function setupGame () {
   let messageScreen = new PhoneMessageScreen(18.9, 111.2, 454, 491);
   mobilePhone.addChild(messageScreen);
 
-  // window.addEventListener("demoPost", function () {
-  //   phonePost.getPost(socialbookPost1Mirrored);
-  // });
-  // window.addEventListener("newPost", function (ev) {
-  //   postIcon.postIsReady(ev.detail);
-  // });
-  // window.addEventListener("addPost", function () {
-  //   phoneHome.getPost(phonePost.newPost);
-  //   postIcon.reset();
-  //   phonePost.reset();
-  //   phoneHome.redraw();
-  // });
+  window.addEventListener("demoPost", function () {
+    postScreen.setPost(socialbookPost1Mirrored);
+  });
+  window.addEventListener("newPost", function (ev) {
+    postIcon.postIsReady(ev.detail);
+  });
+  window.addEventListener("addPost", function () {
+    homeScreen.setPost(phonePost.newPost);
+    postIcon.reset();
+    postScreen.reset();
+    homeScreen.redraw();
+  });
 
   let msgButton_1 = new PhoneMessageButton(17, 428, 200, 50, "A");
   msgButton_1.setUpMessages();
@@ -502,23 +516,11 @@ function setupGame () {
   let msgButton_2 = new PhoneMessageButton(238, 428, 200, 50, "B");
   msgButton_2.setUpMessages();
   messageScreen.addChild(msgButton_2);
-
-  console.log("mobilePhone: " + mobilePhone.scale);
-  console.log("messageScreen: " + messageScreen.scale);
-  console.log("msgButton_1: " + msgButton_1.scale);
   
-  // window.addEventListener("endConversation", function () {
-  //   phoneMessageButtonA.endConversation();
-  //   phoneMessageButtonB.endConversation();
-  //   homeScreen.getPost(socialbookPost1);
-  // });
-  // window.addEventListener("updateConversation", function (ev) {
-  //   phoneMessageButtonA.updateMessages();
-  //   phoneMessageButtonB.updateMessages();
-  //   messageScreen.showConversation(ev.detail);
-  //   messageScreen.updatePosition();
-  //   messageScreen.redraw();
-  // });
+  window.addEventListener("endConversation", () => {
+    homeScreen.setPost(postImg_1);
+    homeScreen.setPost(postImg_2);
+  });
 }
 
 /* sound events */
