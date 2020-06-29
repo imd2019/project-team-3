@@ -32,6 +32,7 @@ export default class PhoneVideoPlayer extends Sprite {
   }
 
   clicked() {
+    console.log(this.video);
     this.startVideo();
     this.updatePosition();
     if (!this.isClicked) {

@@ -153,7 +153,7 @@ function preload() {
 
   // video
   videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
-  endVideo = createVideo("../videos/endVideo1.mp4");
+  endVideo = createVideo("../video/endVideo1.mp4");
 
   // sound
   owlSound = loadSound("../sound/ambient/owl.mp3");
