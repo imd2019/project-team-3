@@ -7,7 +7,6 @@ import View from "./simulation/view.js";
 
 // general display classes
 import DisplayObject from "./displayObject.js";
-import InteractiveObject from "./interactiveObject.js";
 import DualBackgndSprite from "./simulation/dualBackgndSprite.js";
 
 // interactive element classes
@@ -32,6 +31,11 @@ import PhonePostButton from "./simulation/interactiveElements/smartphone/phonePo
 import ChoosePostButton from "./simulation/interactiveElements/smartphone/choosePostButton.js";
 import PhoneMessageScreen from "./simulation/interactiveElements/smartphone/phoneMessageScreen.js";
 import PhoneMessageButton from "./simulation/interactiveElements/smartphone/phoneMessageButton.js";
+import PhoneEndScreen from "./simulation/interactiveElements/smartphone/phoneEndScreen.js";
+import PhoneVideoPlayer from "./simulation/interactiveElements/smartphone/phoneVideoPlayer.js";
+import PhoneEndButton from "./simulation/interactiveElements/smartphone/phoneEndButton.js";
+import PhoneMailButton from "./simulation/interactiveElements/smartphone/phoneMailButton.js";
+import RestartButton from "./simulation/interactiveElements/smartphone/restartButton.js";
 import StreetLampBulb from "./simulation/interactiveElements/general/streetLampBulb.js";
 import BarLampBulb from "./simulation/interactiveElements/bar/barLampBulb.js";
 import Kiosk from "./simulation/interactiveElements/kiosk/kiosk.js";
@@ -49,10 +53,15 @@ let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
 let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
-let phoneIconImg, phoneOutlineImg, phoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg;
+let phoneIconImg, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg;
 let postOverlayImg, postImg_1, postImg_2, postImg_3, postImg_4, postImg_5, postImg_6, postImg_7, postImg_8, postImg_9, postImg_10, postImg_11, postImg_12;
 
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
+
+// load videos
+
+let videoOverlayImg;
+let endVideo;
 
 // load soundfiles
 let owlSound, demoSound, citySound, leavesSound, trafficSound, coffeeHouseSound, fountainSound, policeSirenSound, rainSound;
@@ -117,6 +126,7 @@ function preload() {
   phoneIconImg = loadImage("../img/smartphone/phoneIcon.png");
   phoneOutlineImg = loadImage("../img/smartphone/phoneOutline.png");
   phoneOverlayImg = loadImage("../img/smartphone/phoneOverlay.png");
+  brokenPhoneOverlayImg = loadImage("../img/smartphone/brokenPhoneOverlay.png");
   phoneBtnImg = loadImage("../img/smartphone/phoneButton.png");
   homeIconImg = loadImage("../img/smartphone/homeIcon.png");
   postIconImg = loadImage("../img/smartphone/postIcon.png");
@@ -140,6 +150,10 @@ function preload() {
   demoPeopleImg_right = loadImage("../img/demo/4_people/4_people_right.png");
   demoPeopleSignsImg_left = loadImage("../img/demo/4_people/4_signs_left.png");
   demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png", setupGame);
+
+  // video
+  videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
+  endVideo = createVideo("../videos/endVideo1.mp4");
 
   // sound
   owlSound = loadSound("../sound/ambient/owl.mp3");
@@ -544,6 +558,34 @@ function setupGame () {
   window.addEventListener("endConversation", () => {
     homeScreen.setPost(postImg_1);
     homeScreen.setPost(postImg_2);
+  });
+
+  let endScreen = new PhoneEndScreen(18.9, 111.2, 454, 491, brokenPhoneOverlayImg);
+  mobilePhone.addChild(endScreen);
+  mobilePhone.showScreen("endScreen");
+
+  // window.addEventListener("openBrokenPhone", function () {
+  //   mobilePhone.showEnd();
+  // });
+
+  let endBtn = new PhoneEndButton(130, 428, 200, 50);
+  endScreen.addChild(endBtn);
+
+  window.addEventListener("revealRole", () => {
+    endScreen.answer("Verschwörungstheoretiker");
+  });
+
+  let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 219, videoOverlayImg, endVideo);
+  endScreen.addChild(videoPlayer);
+
+  let restartBtn = new RestartButton(238, 428, 200, 50);
+  endScreen.addChild(restartBtn);
+
+  let mailBtn = new PhoneMailButton(17, 428, 200, 50);
+  endScreen.addChild(mailBtn);
+
+  window.addEventListener("restartGame", () => {
+    game.reset();
   });
 }
 
