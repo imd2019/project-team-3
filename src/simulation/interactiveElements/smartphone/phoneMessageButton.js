@@ -11,9 +11,11 @@ export default class PhoneMessageButton extends Sprite {
 
   clicked() {
     this.currentMessage.isClicked = true;
-    for (let elem of this.parent.children) {
-      if (elem.name != this.name) elem.updateMessages();
-    }
+    setTimeout(() => {
+      this.parent.children.forEach( (btn) => {
+        btn.updateMessages();
+      });
+    }, 0); // setTimeout as temporary bugfix - a real fix will need bigger code restructuring
 
     this.parent.showConversation(this.currentMessage);
     this.parent.updatePosition();

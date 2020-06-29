@@ -14,6 +14,8 @@ export default class PhoneMessage extends Sprite {
     noStroke();
     rect(0, 0, this.width, this.height);
 
+    this.mouseScroll();
+
     image(this.message, 0, 0, this.width, this.height);
 
     textFont(window.fonts.franklinGothic);
@@ -25,21 +27,13 @@ export default class PhoneMessage extends Sprite {
     fill(150);
     rect(0, 0, 75, 75);
 
-    if (this.children[0].mouseHovered()) {
-      this.bufferAnimation();
-    } else if (this.children[1].mouseHovered()) {
-      this.bufferAnimation();
-    } else {
-      this.redraw();
-    }
+    this.redraw();
   }
 
   redraw() {
     this.message.clear();
     this.message.fill(220);
     this.message.noStroke();
-
-    this.message.rect(0, 0, this.width, this.height);
 
     this.message.textFont(window.fonts.franklinGothic);
     this.message.textSize(16);
@@ -89,6 +83,10 @@ export default class PhoneMessage extends Sprite {
         70
       );
     }
+
+    if (this.children[0].mouseHovered() || this.children[1].mouseHovered()) {
+      this.bufferAnimation();
+    }
   }
 
   updatePosition() {
@@ -120,6 +118,17 @@ export default class PhoneMessage extends Sprite {
       80,
       70
     );
+  }
+
+  mouseScroll() {
+    let ev = {};
+    if (mouseY < 0.25 * windowHeight) {
+      ev["delta"] = -6;
+      this.wheel(ev);
+    } else if (mouseY > 0.7 * windowHeight) {
+      ev["delta"] = 6;
+      this.wheel(ev);
+    }
   }
 
   wheel(ev) {

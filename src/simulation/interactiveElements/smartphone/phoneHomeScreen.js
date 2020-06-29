@@ -14,6 +14,9 @@ export default class PhoneHomeScreen extends Sprite {
     fill(220);
     noStroke();
     rect(0, 0, this.width, this.height);
+
+    this.mouseScroll();
+
     image(this.posts, 0, 0, this.width, this.height);
   }
 
@@ -24,21 +27,32 @@ export default class PhoneHomeScreen extends Sprite {
 
   redraw() {
     this.posts.clear();
-    for (let elem in this.activePosts) {
+    for (let i in this.activePosts) {
       this.posts.image(
         this.postOverlay,
         12.5,
-        12.5 + elem * 400 + this.pos,
+        12.5 + i * 400 + this.pos,
         430,
         382
       );
       this.posts.image(
-        this.activePosts[elem],
+        this.activePosts[i],
         15,
-        93.5 + elem * 400 + this.pos,
+        15 + i * 400 + this.pos,
         425,
-        239
+        320
       );
+    }
+  }
+
+  mouseScroll() {
+    let ev = {};
+    if (mouseY < 0.25 * windowHeight) {
+      ev["delta"] = -6;
+      this.wheel(ev);
+    } else if (mouseY > 0.7 * windowHeight) {
+      ev["delta"] = 6;
+      this.wheel(ev);
     }
   }
 

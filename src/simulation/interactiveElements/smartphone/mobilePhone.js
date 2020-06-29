@@ -49,23 +49,43 @@ export default class MobilePhone extends Sprite{
       }
   }
 
+
+
   mousePressed() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
-      this.pressed();
+      for (let i in this.children) {
+        if (this.children[i].name === undefined) {
+          this.children[i].mousePressed();
+        } else if (i === this.currentScreen) {
+          this.children[i].mousePressed();
+        }
+      }
       return true;
     }
   }
 
   mouseClicked() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
-      this.clicked();
+      for (let i in this.children) {
+        if (this.children[i].name === undefined) {
+          this.children[i].mouseClicked();
+        } else if (i === this.currentScreen) {
+          this.children[i].mouseClicked();
+        }
+      }
       return true;
     }
   }
 
   mouseReleased() {
     if (this. enabled && this.hitTest(mouseX, mouseY)) {
-      this.released();
+      for (let i in this.children) {
+        if (this.children[i].name === undefined) {
+          this.children[i].mouseReleased();
+        } else if (i === this.currentScreen) {
+          this.children[i].mouseReleased();
+        }
+      }
       return true;
     }
   }

@@ -28,6 +28,8 @@ import PhoneButton from "./simulation/interactiveElements/smartphone/phoneButton
 import PhoneMenuIcon from "./simulation/interactiveElements/smartphone/phoneMenuIcon.js";
 import PhoneHomeScreen from "./simulation/interactiveElements/smartphone/phoneHomeScreen.js";
 import PhonePostScreen from "./simulation/interactiveElements/smartphone/phonePostScreen.js";
+import PhonePostButton from "./simulation/interactiveElements/smartphone/phonePostButton.js";
+import ChoosePostButton from "./simulation/interactiveElements/smartphone/choosePostButton.js";
 import PhoneMessageScreen from "./simulation/interactiveElements/smartphone/phoneMessageScreen.js";
 import PhoneMessageButton from "./simulation/interactiveElements/smartphone/phoneMessageButton.js";
 import StreetLampBulb from "./simulation/interactiveElements/general/streetLampBulb.js";
@@ -417,7 +419,6 @@ function setupGame () {
 
     demoLink_demo.changeBackground();
 
-
     barLink.enable();
     barLink.show();
   });
@@ -473,14 +474,14 @@ function setupGame () {
     player.usePhone(false);
   })
 
-  let homeBtn = new PhoneMenuIcon(43, 610, 79, 50, homeIconImg, "homeScreen");
-  mobilePhone.addChild(homeBtn);
+  let homeScreenBtn = new PhoneMenuIcon(43, 610, 79, 50, homeIconImg, "homeScreen");
+  mobilePhone.addChild(homeScreenBtn);
 
-  let postBtn = new PhoneMenuIcon(207, 610, 79, 50, postIconImg, "postScreen");
-  mobilePhone.addChild(postBtn);
+  let postScreenBtn = new PhoneMenuIcon(207, 610, 79, 50, postIconImg, "postScreen");
+  mobilePhone.addChild(postScreenBtn);
 
-  let msgBtn = new PhoneMenuIcon(368, 610, 79, 50, msgIconImg, "messageScreen");
-  mobilePhone.addChild(msgBtn);
+  let msgScreenBtn = new PhoneMenuIcon(368, 610, 79, 50, msgIconImg, "messageScreen");
+  mobilePhone.addChild(msgScreenBtn);
 
   window.addEventListener("showScreen", (ev) => {
     mobilePhone.showScreen(ev.detail);
@@ -493,21 +494,44 @@ function setupGame () {
   let postScreen = new PhonePostScreen(18.9, 111.2, 454, 491);
   mobilePhone.addChild(postScreen);
 
+  let postButton = new PhonePostButton(165, 428, 125, 50);
+  postScreen.addChild(postButton);
+
+  let choosePostBtn_1 = new ChoosePostButton(17, 428, 125, 50, "A", postImg_1);
+  postScreen.addChild(choosePostBtn_1);
+
+  let choosePostBtn_2 = new ChoosePostButton(165, 428, 125, 50, "B", postImg_2);
+  postScreen.addChild(choosePostBtn_2);
+
+  let choosePostBtn_3 = new ChoosePostButton(313, 428, 125, 50, "C", postImg_1);
+  postScreen.addChild(choosePostBtn_3);
+
+  window.addEventListener("choosePost", () => {
+    choosePostBtn_1.show();
+    choosePostBtn_1.enable();
+    choosePostBtn_2.show();
+    choosePostBtn_2.enable();
+    choosePostBtn_3.show();
+    choosePostBtn_3.enable();
+  });
+
+  window.addEventListener("postChosen", (ev) => {
+    choosePostBtn_1.hide();
+    choosePostBtn_1.disable();
+    choosePostBtn_2.hide();
+    choosePostBtn_2.disable();
+    choosePostBtn_3.hide();
+    choosePostBtn_3.disable();
+    homeScreen.setPost(ev.detail);
+  });
+
+  window.addEventListener("addPost", () => {
+    homeScreen.setPost(postScreen.getPost());
+    homeScreen.redraw();
+  });
+
   let messageScreen = new PhoneMessageScreen(18.9, 111.2, 454, 491);
   mobilePhone.addChild(messageScreen);
-
-  // window.addEventListener("demoPost", function () {
-  //   postScreen.setPost(socialbookPost1Mirrored);
-  // });
-  // window.addEventListener("newPost", function (ev) {
-  //   postIcon.postIsReady(ev.detail);
-  // });
-  // window.addEventListener("addPost", function () {
-  //   homeScreen.setPost(phonePost.newPost);
-  //   postIcon.reset();
-  //   postScreen.reset();
-  //   homeScreen.redraw();
-  // });
 
   let msgButton_1 = new PhoneMessageButton(17, 428, 200, 50, "A");
   msgButton_1.setUpMessages();
