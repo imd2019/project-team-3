@@ -15,7 +15,6 @@ import CoffeeHouseLink from "./simulation/interactiveElements/park/coffeeHouseLi
 import DemoLink from "./simulation/interactiveElements/park/demoLink.js";
 import KioskLink from "./simulation/interactiveElements/park/kioskLink.js";
 import ParkLink from "./simulation/interactiveElements/general/parkLink.js";
-
 import DemoSign from "./simulation/interactiveElements/demo/demoSign.js";
 import DemoBench from "./simulation/interactiveElements/demo/demoBench.js";
 import FlyerBox from "./simulation/interactiveElements/general/flyerBox.js";
@@ -468,7 +467,7 @@ function setupGame () {
   let phoneIcon = new PhoneIcon(windowWidth - 150, windowHeight - 200, 112, 168, phoneIconImg);
   global.addChild(phoneIcon);
 
-  let mobilePhone = new MobilePhone(492, 739, phoneOutlineImg, phoneOverlayImg);
+  let mobilePhone = new MobilePhone(492, 739, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg);
   global.addChild(mobilePhone);
 
   let phoneButton = new PhoneButton(221, 677, 50, 50, phoneBtnImg);
@@ -562,7 +561,15 @@ function setupGame () {
 
   let endScreen = new PhoneEndScreen(18.9, 111.2, 454, 491, brokenPhoneOverlayImg);
   mobilePhone.addChild(endScreen);
-  mobilePhone.showScreen("endScreen");
+
+  window.addEventListener("showEnd", () => {
+    window.dispatchEvent(new CustomEvent("openPhone"));
+    mobilePhone.showScreen("endScreen");
+    mobilePhone.break();
+  });
+
+  // window.dispatchEvent(new CustomEvent("showEnd"));
+
 
   // window.addEventListener("openBrokenPhone", function () {
   //   mobilePhone.showEnd();

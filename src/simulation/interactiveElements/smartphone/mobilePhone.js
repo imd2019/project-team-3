@@ -1,10 +1,12 @@
 import Sprite from "../../../sprite.js";
 
 export default class MobilePhone extends Sprite{
-  constructor(width, height, backgnd, overlay){
+  constructor(width, height, backgnd, overlay, brokenOverlay){
     let scale = 0.8 * windowHeight / height;
     super((windowWidth - width * scale)/ 2, (windowHeight - height * scale) / 2, width, height, backgnd);
     this.overlay = overlay;
+    this.brokenOverlay = brokenOverlay;
+    this.broken = false;
     this.scale = scale;
     this.currentScreen;
     this.disable();
@@ -38,6 +40,10 @@ export default class MobilePhone extends Sprite{
         }
       }
 
+      if (this.broken) {
+        image(this.brokenOverlay, 0, 0, this.width, this.height);
+      } 
+
       pop();
     }
   }
@@ -49,7 +55,9 @@ export default class MobilePhone extends Sprite{
       }
   }
 
-
+  break() {
+    this.broken = true;
+  }
 
   mousePressed() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
