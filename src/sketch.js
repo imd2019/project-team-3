@@ -428,10 +428,17 @@ function setupGame () {
 
   window.addEventListener("joinDemo", (ev) => {
     parkLink_demo.enable();
+    homeScreen.setPost(postImg_2);
+    mobilePhone.showScreen("homeScreen");
+    // play phone message sound and animation
   })
 
   window.addEventListener("watchDemo", () => {
     demoSign.disable();
+    window.dispatchEvent(new CustomEvent("openPhone"));
+    mobilePhone.showScreen("postScreen");
+    window.dispatchEvent(new CustomEvent("choosePost"));
+    phoneButton.disable();
   });
 
   window.addEventListener("endDemo", () => {
@@ -485,6 +492,8 @@ function setupGame () {
   mobilePhone.addChild(phoneButton);
 
   window.addEventListener("openPhone", () => {
+    phoneIcon.hide();
+    phoneIcon.disable();
     mobilePhone.show();
     mobilePhone.enable();
     player.usePhone(true);
@@ -537,6 +546,8 @@ function setupGame () {
     choosePostBtn_2.enable();
     choosePostBtn_3.show();
     choosePostBtn_3.enable();
+    homeScreenBtn.disable();
+    msgScreenBtn.disable();
   });
 
   window.addEventListener("postChosen", (ev) => {
@@ -546,7 +557,11 @@ function setupGame () {
     choosePostBtn_2.disable();
     choosePostBtn_3.hide();
     choosePostBtn_3.disable();
+    homeScreenBtn.enable();
+    msgScreenBtn.enable();
+    phoneButton.enable();
     homeScreen.setPost(ev.detail);
+    mobilePhone.showScreen("homeScreen");
   });
 
   window.addEventListener("addPost", () => {
@@ -573,14 +588,6 @@ function setupGame () {
   let endScreen = new PhoneEndScreen(18.9, 111.2, 454, 491, brokenPhoneOverlayImg);
   mobilePhone.addChild(endScreen);
 
-  window.addEventListener("showEnd", () => {
-    window.dispatchEvent(new CustomEvent("openPhone"));
-    mobilePhone.showScreen("endScreen");
-    mobilePhone.break();
-  });
-
-  // window.dispatchEvent(new CustomEvent("showEnd"));
-
   let endBtn = new PhoneEndButton(130, 428, 200, 50);
   endScreen.addChild(endBtn);
 
@@ -596,6 +603,12 @@ function setupGame () {
 
   let mailBtn = new PhoneMailButton(17, 428, 200, 50);
   endScreen.addChild(mailBtn);
+
+  window.addEventListener("endGame", () => {
+    window.dispatchEvent(new CustomEvent("openPhone"));
+    mobilePhone.showScreen("endScreen");
+    mobilePhone.break();
+  });
 
   window.addEventListener("restartGame", () => {
     game.reset();

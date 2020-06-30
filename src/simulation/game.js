@@ -71,10 +71,11 @@ export default class Game extends Sprite {
   }
 
   reset(){
-    for(let elem in this.children){
+    let children = Object.values(this.children);
+    for (let elem of children) {
       elem.reset();
     }
-    this.currentView = 1;
-    this.player.reset(); 
+    this.player.reset();
+    this.enterView("park");
   }
 }

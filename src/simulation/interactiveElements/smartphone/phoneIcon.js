@@ -7,7 +7,5 @@ export default class PhoneIcon extends InteractiveObject{
 
   clicked() {
     window.dispatchEvent(new CustomEvent("openPhone"));
-    this.disable();
-    this.hide();
   }
 }

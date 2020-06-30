@@ -9,8 +9,6 @@ export default class RestartButton extends Sprite {
 
   clicked() {
     window.dispatchEvent(new CustomEvent("restartGame"));
-    this.hide();
-    this.disable();
   }
 
   draw() {

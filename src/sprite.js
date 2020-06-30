@@ -101,4 +101,13 @@ export default class Sprite extends InteractiveObject {
       this.children.splice(index, 1);
     }
   }
+
+  reset() {
+    this.children.forEach( (child) => {
+      if (typeof this.children.reset === "function") {
+        child.reset();
+      }
+    })
+    this.resetElement();
+  }
 }

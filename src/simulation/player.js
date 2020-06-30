@@ -27,6 +27,6 @@ export default class Player extends Simulation{
 
   reset(){
     this.actions = {};
-    this.phoneInUse = true;
+    this.phoneInUse = false;
   }
 }

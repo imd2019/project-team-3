@@ -13,7 +13,7 @@ export default class PhonePostButton extends Sprite {
     this.enable();
   }
 
-  reset() {
+  resetElement() {
     this.hide();
     this.disable();
   }

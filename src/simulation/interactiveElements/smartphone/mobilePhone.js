@@ -97,4 +97,11 @@ export default class MobilePhone extends Sprite{
       return true;
     }
   }
+
+  resetElement() {
+    this.broken = false;
+    this.showScreen("homeScreen");
+    this.disable();
+    this.hide();
+  }
 }

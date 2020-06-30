@@ -15,7 +15,7 @@ export default class ChoosePostButton extends Sprite {
       window.dispatchEvent(
         new CustomEvent("postChosen", { detail: this.post })
       );
-      parent.redraw();
+      this.parent.redraw();
     }
   }
 

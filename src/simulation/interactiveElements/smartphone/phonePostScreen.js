@@ -33,8 +33,6 @@ export default class PhonePostScreen extends Sprite {
         } else if (this.children[3].mouseHovered()) {
           this.post.clear();
           this.post.image(this.children[3].post, 12.5, 12.5, 430, 382);
-        } else {
-          this.redraw();
         }
       }
     }
@@ -49,7 +47,8 @@ export default class PhonePostScreen extends Sprite {
     }
   }
 
-  reset() {
+  resetElement() {
+    console.log("reset");
     this.newPost = undefined;
     this.postReady = false;
     this.redraw();
