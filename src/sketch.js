@@ -432,16 +432,35 @@ function setupGame () {
 
   window.addEventListener("pickupSign", () => {
     parkLink_demo.disable();
-    demoPeople.enable();
-    counterDemoPeople.enable();
-  })
+
+    if (player.actionDone("coffeeHouse", "invitationAccepted")) {
+      if (player.actionDone("coffeeHouse", "invitationAccepted", true)) {
+        demoPeople.enable();
+      } else {
+        counterDemoPeople.enable();
+      }
+    } else {
+      demoPeople.enable();
+      counterDemoPeople.enable();
+    }
+  });
 
   window.addEventListener("joinDemo", (ev) => {
     parkLink_demo.enable();
-    homeScreen.setPost(postImg_2);
-    mobilePhone.showScreen("homeScreen");
-    // play phone message sound and animation
-  })
+    if (ev.detail === "demo") {
+      setTimeout( () => {
+        homeScreen.setPost(postImg_1);
+        mobilePhone.showScreen("homeScreen");
+        window.dispatchEvent(new CustomEvent("phoneVibration"));
+      }, 8000);
+    } else {
+      setTimeout( () => {
+        homeScreen.setPost(postImg_2);
+        mobilePhone.showScreen("homeScreen");
+        window.dispatchEvent(new CustomEvent("phoneVibration"));
+      }, 8000);
+    }
+  });
 
   window.addEventListener("watchDemo", () => {
     demoSign.disable();
@@ -525,7 +544,7 @@ function setupGame () {
       msgScreenBtn.disable();
       phoneButton.disable();
       window.dispatchEvent(new CustomEvent("phoneVibration"));
-    }, 10000);
+    }, 8000);
   });
 
   window.addEventListener("invitationAccepted", () => {
@@ -595,6 +614,7 @@ function setupGame () {
       setTimeout( () => {
         if (player.actionDone("coffeeHouse", "invitationAccepted", true)) {
           homeScreen.setPost(postImg_1);
+          demoBench.disable();
         } else {
           homeScreen.setPost(postImg_2);
         }
