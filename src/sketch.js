@@ -119,7 +119,7 @@ function preload() {
   doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png");
   kioskBuildingImg_on = loadImage("../img/kiosk/2_building_on.png");
   barArcadeImg = loadImage("../img/bar/2_elements/2_arcade.png");
-  barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png", setupGame);
+  barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png");
 
   // smartphone
   phoneIconImg = loadImage("../img/smartphone/phoneIcon.png");
@@ -148,11 +148,12 @@ function preload() {
   demoPeopleImg_left = loadImage("../img/demo/4_people/4_people_left.png");
   demoPeopleImg_right = loadImage("../img/demo/4_people/4_people_right.png");
   demoPeopleSignsImg_left = loadImage("../img/demo/4_people/4_signs_left.png");
-  demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png", setupGame);
+  demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png");
 
   // video
   videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
   endVideo = createVideo("../video/endVideo1.mp4");
+  endVideo.hide();
 
   // sound
   owlSound = loadSound("../sound/ambient/owl.mp3");
@@ -175,7 +176,7 @@ function preload() {
   registerSound = loadSound("../sound/eventRelated/register.mp3");
   newspaperSound = loadSound("../sound/eventRelated/newspaper.mp3");
   pickupSignSound = loadSound("../sound/eventRelated/pickupSign.mp3");
-  flyerSound = loadSound("../sound/eventRelated/flyer.mp3");
+  flyerSound = loadSound("../sound/eventRelated/flyer.mp3", setupGame);
 }
 window.preload = preload;
 
@@ -568,12 +569,7 @@ function setupGame () {
     mobilePhone.break();
   });
 
-  // window.dispatchEvent(new CustomEvent("showEnd"));
-
-
-  // window.addEventListener("openBrokenPhone", function () {
-  //   mobilePhone.showEnd();
-  // });
+  window.dispatchEvent(new CustomEvent("showEnd"));
 
   let endBtn = new PhoneEndButton(130, 428, 200, 50);
   endScreen.addChild(endBtn);
