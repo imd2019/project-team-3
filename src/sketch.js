@@ -608,6 +608,9 @@ function setupGame () {
     window.dispatchEvent(new CustomEvent("openPhone"));
     mobilePhone.showScreen("endScreen");
     mobilePhone.break();
+    homeScreenBtn.disable();
+    postScreenBtn.disable();
+    msgScreenBtn.disable();
   });
 
   window.addEventListener("restartGame", () => {

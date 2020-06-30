@@ -104,9 +104,7 @@ export default class Sprite extends InteractiveObject {
 
   reset() {
     this.children.forEach( (child) => {
-      if (typeof this.children.reset === "function") {
         child.reset();
-      }
     });
     this.resetElement();
   }
