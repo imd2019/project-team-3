@@ -5,14 +5,15 @@ export default class PhoneMessageButton extends Sprite {
     super(x, y, width, height, backgnd);
     this.name = "messageButton" + name;
     this.messages = [];
-    this.currentMessage;
+    this.currentMessage = undefined;
     this.conversationIndex = 0;
+    this.event = undefined;
   }
 
   clicked() {
     this.currentMessage.isClicked = true;
     setTimeout(() => {
-      this.parent.children.forEach( (btn) => {
+      this.parent.children.forEach((btn) => {
         btn.updateMessages();
       });
     }, 0); // setTimeout as temporary bugfix - a real fix will need bigger code restructuring
@@ -22,12 +23,17 @@ export default class PhoneMessageButton extends Sprite {
     this.parent.redraw();
 
     if (this.currentMessage.conversationEnded) {
-      this.parent.children.forEach( (btn) => {
+      this.parent.children.forEach((btn) => {
         btn.hide();
         btn.disable();
       });
       window.dispatchEvent(new CustomEvent("endConversation"));
     }
+  }
+
+  setEvent() {
+    this.event = this.parent.event;
+    this.setUpMessages();
   }
 
   draw() {
@@ -66,29 +72,61 @@ export default class PhoneMessageButton extends Sprite {
       case 1:
         switch (this.name) {
           case "messageButtonA":
-            conversation = {
-              id: 1,
-              buttonText: "Na klar, schießen Sie los.",
-              conversationText:
-                "Hi. Das wundert mich aber. Worum geht es denn?",
-              conversationAnswer:
-                "Ihr Name ist in Verbindung mit den gerade stattfindenden Demos aufgetaucht. Unterstützen Sie diese?",
-              conversationEnded: false,
-            };
+            switch (this.event) {
+              case "interview":
+                conversation = {
+                  id: 1,
+                  buttonText: "Na klar, schießen Sie los.",
+                  conversationText:
+                    "Hi. Das wundert mich aber. Worum geht es denn?",
+                  conversationAnswer:
+                    "Ihr Name ist in Verbindung mit den gerade stattfindenden Demos aufgetaucht. Unterstützen Sie diese?",
+                  conversationEnded: false,
+                };
+
+                break;
+
+              case "invite":
+                conversation = {
+                  id: 1,
+                  buttonText: "Das klingt ja interessant.",
+                  conversationText:
+                    "Ich bin mir in manchen Dingen tatsächlich unsicher. Vielleicht finde ich hier ja Antworten auf meine Fragen.",
+                  conversationAnswer:
+                    "Du bist damit nicht alleine. Wir alle wurden von den Mainstream-Medien geblendet. Aber damit ist es nun vorbei. Willkommen!",
+                  conversationEnded: true,
+                };
+                break;
+            }
 
             break;
 
           case "messageButtonB":
-            conversation = {
-              id: 1,
-              buttonText: "Kein Interesse.",
-              conversationText:
-                "Von der 'The Daily Whisper' also? Euch beantworte ich keine Fragen!",
-              conversationAnswer:
-                "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
-              conversationEnded: true,
-            };
+            switch (this.event) {
+              case "interview":
+                conversation = {
+                  id: 1,
+                  buttonText: "Kein Interesse.",
+                  conversationText:
+                    "Von der 'The Daily Whisper' also? Euch beantworte ich keine Fragen!",
+                  conversationAnswer:
+                    "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
+                  conversationEnded: true,
+                };
+                break;
 
+              case "invite":
+                conversation = {
+                  id: 1,
+                  buttonText: "Das passiert jetzt nicht wirklich.",
+                  conversationText:
+                    "Ihr kennt also 'die Wahrheit'? Vermutlich zündet ihr auch regelmäßig 5G-Türme auf eurer Suche nach der Wahrheit an.",
+                  conversationAnswer:
+                    "Schafe wie du werden erst verstehen, was um sie herum wirklich passiert, wenn es längst zu spät ist.",
+                  conversationEnded: true,
+                };
+                break;
+            }
             break;
         }
 
