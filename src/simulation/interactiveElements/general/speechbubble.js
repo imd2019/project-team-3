@@ -1,17 +1,13 @@
-import Sprite from "../../Sprite.js";
-import InteractiveObject from "../../interactiveObject.js";
+import DisplayObject from "../../../displayObject.js";
 
-export default class Speechbubble extends InteractiveObject {
+export default class Speechbubble extends DisplayObject {
   constructor(x, y, width, name, direction = "right") {
     super(x, y, width);
     this.height = 25;
     this.direction = direction;
     this.name = "speechbubble" + name;
     this.content = undefined;
-  }
-
-  clicked() {
-    // window.dispatchEvent(new CustomEvent("enterView", { detail: "pong" }));
+    this.hide();
   }
 
   draw() {

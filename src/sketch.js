@@ -17,7 +17,7 @@ import KioskLink from "./simulation/interactiveElements/park/kioskLink.js";
 import ParkLink from "./simulation/interactiveElements/general/parkLink.js";
 import DemoSign from "./simulation/interactiveElements/demo/demoSign.js";
 import DemoBench from "./simulation/interactiveElements/demo/demoBench.js";
-import Speechbubble from "./simulation/interactiveElements/speechbubble.js";
+import Speechbubble from "./simulation/interactiveElements/general/speechbubble.js";
 import FlyerBox from "./simulation/interactiveElements/general/flyerBox.js";
 import Flyer from "./simulation/interactiveElements/general/flyer.js";
 import Door from "./simulation/interactiveElements/coffeeHouse/door.js";
@@ -537,11 +537,11 @@ function setupGame() {
   let demoSignsRight = new DisplayObject(268, 226, 1311, 313, demoPeopleSignsImg_right);
   demo.addChild(demoSignsRight);
 
-  let demoBubbleLeft = new Speechbubble(300, -150, 270, "Demo_1", "left");
-  demoPeople.addChild(demoBubbleLeft);
+  let demoBubble = new Speechbubble(300, -150, 270, "Demo_1", "left");
+  demoPeople.addChild(demoBubble);
 
-  let demoBubbleRight = new Speechbubble(20, -150, 270, "Demo_2");
-  counterDemoPeople.addChild(demoBubbleRight);
+  let counterDemoBubble = new Speechbubble(20, -150, 270, "Demo_2");
+  counterDemoPeople.addChild(counterDemoBubble);
 
   let demoBench = new DemoBench(5, 578, 461, 231, demoBenchImg);
   demo.addChild(demoBench);
@@ -558,17 +558,26 @@ function setupGame() {
     if (player.actionDone("coffeeHouse", "invitationAccepted")) {
       if (player.actionDone("coffeeHouse", "invitationAccepted", true)) {
         demoPeople.enable();
+        demoBubble.show();
       } else {
         counterDemoPeople.enable();
+        counterDemoBubble.show();
       }
     } else {
       demoPeople.enable();
+      demoBubble.show();
       counterDemoPeople.enable();
+      counterDemoBubble.show();
     }
   });
 
   window.addEventListener("joinDemo", (ev) => {
     parkLink_demo.enable();
+    demoBubble.hide();
+    counterDemoBubble.hide();
+    demoPeople.disable();
+    counterDemoPeople.disable();
+
     if (ev.detail === "demo") {
       setTimeout( () => {
         homeScreen.setPost(postImg_1);
