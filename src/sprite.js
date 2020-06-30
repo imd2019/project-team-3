@@ -46,6 +46,12 @@ export default class Sprite extends InteractiveObject {
     return false;
   }
 
+  wheel(ev) {
+    for (let i = this.children.length - 1; i >= 0; i--) {
+      this.children[i].mouseWheel(ev);
+    }
+  }
+
   mousePressed() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
       this.pressed();
@@ -76,8 +82,15 @@ export default class Sprite extends InteractiveObject {
     return false;
   }
 
+  mouseWheel(ev) {
+    if (this. enabled && this.hitTest(mouseX, mouseY)) {
+      this.wheel(ev);
+    }
+  }
+
   addChild(sprite) {
     sprite.parent = this;
+    sprite.calcScale = sprite.scale * this.calcScale;
     this.children.push(sprite);
   }
 

@@ -7,30 +7,41 @@ import View from "./simulation/view.js";
 
 // general display classes
 import DisplayObject from "./displayObject.js";
-import InteractiveObject from "./interactiveObject.js";
 import DualBackgndSprite from "./simulation/dualBackgndSprite.js";
 
 // interactive element classes
-import BarLink from "./simulation/interactiveElements/barLink.js";
-import CoffeeHouseLink from "./simulation/interactiveElements/coffeeHouseLink.js";
-import DemoLink from "./simulation/interactiveElements/demoLink.js";
-import KioskLink from "./simulation/interactiveElements/kioskLink.js";
-import ParkLink from "./simulation/interactiveElements/parkLink.js";
-
-import DemoSign from "./simulation/interactiveElements/demoSign.js";
-import DemoBench from "./simulation/interactiveElements/demoBench.js";
-import FlyerBox from "./simulation/interactiveElements/flyerBox.js";
-import Flyer from "./simulation/interactiveElements/flyer.js";
-import Door from "./simulation/interactiveElements/door.js";
-import MobilePhone from "./simulation/interactiveElements/mobilePhone.js";
-import PhoneIcon from "./simulation/interactiveElements/phoneIcon.js";
-import StreetLampBulb from "./simulation/interactiveElements/streetLampBulb.js";
-import BarLampBulb from "./simulation/interactiveElements/barLampBulb.js";
-import Kiosk from "./simulation/interactiveElements/kiosk.js";
-import Arcade from "./simulation/interactiveElements/arcade.js";
-import BarPhone from "./simulation/interactiveElements/barPhone.js";
-import DemoPeople from "./simulation/interactiveElements/demoPeople.js";
-import Newspaper from "./simulation/interactiveElements/newspaper.js";
+import BarLink from "./simulation/interactiveElements/demo/barLink.js";
+import CoffeeHouseLink from "./simulation/interactiveElements/park/coffeeHouseLink.js";
+import DemoLink from "./simulation/interactiveElements/park/demoLink.js";
+import KioskLink from "./simulation/interactiveElements/park/kioskLink.js";
+import ParkLink from "./simulation/interactiveElements/general/parkLink.js";
+import DemoSign from "./simulation/interactiveElements/demo/demoSign.js";
+import DemoBench from "./simulation/interactiveElements/demo/demoBench.js";
+import FlyerBox from "./simulation/interactiveElements/general/flyerBox.js";
+import Flyer from "./simulation/interactiveElements/general/flyer.js";
+import Door from "./simulation/interactiveElements/coffeeHouse/door.js";
+import PhoneIcon from "./simulation/interactiveElements/smartphone/phoneIcon.js";
+import MobilePhone from "./simulation/interactiveElements/smartphone/mobilePhone.js";
+import PhoneButton from "./simulation/interactiveElements/smartphone/phoneButton.js";
+import PhoneMenuIcon from "./simulation/interactiveElements/smartphone/phoneMenuIcon.js";
+import PhoneHomeScreen from "./simulation/interactiveElements/smartphone/phoneHomeScreen.js";
+import PhonePostScreen from "./simulation/interactiveElements/smartphone/phonePostScreen.js";
+import PhonePostButton from "./simulation/interactiveElements/smartphone/phonePostButton.js";
+import ChoosePostButton from "./simulation/interactiveElements/smartphone/choosePostButton.js";
+import PhoneMessageScreen from "./simulation/interactiveElements/smartphone/phoneMessageScreen.js";
+import PhoneMessageButton from "./simulation/interactiveElements/smartphone/phoneMessageButton.js";
+import PhoneEndScreen from "./simulation/interactiveElements/smartphone/phoneEndScreen.js";
+import PhoneVideoPlayer from "./simulation/interactiveElements/smartphone/phoneVideoPlayer.js";
+import PhoneEndButton from "./simulation/interactiveElements/smartphone/phoneEndButton.js";
+import PhoneMailButton from "./simulation/interactiveElements/smartphone/phoneMailButton.js";
+import RestartButton from "./simulation/interactiveElements/smartphone/restartButton.js";
+import StreetLampBulb from "./simulation/interactiveElements/general/streetLampBulb.js";
+import BarLampBulb from "./simulation/interactiveElements/bar/barLampBulb.js";
+import Kiosk from "./simulation/interactiveElements/kiosk/kiosk.js";
+import Arcade from "./simulation/interactiveElements/bar/arcade.js";
+import BarPhone from "./simulation/interactiveElements/bar/barPhone.js";
+import DemoPeople from "./simulation/interactiveElements/demo/demoPeople.js";
+import Newspaper from "./simulation/interactiveElements/kiosk/newspaper.js";
 
 // load images
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
@@ -40,9 +51,16 @@ let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
-let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, mobilePhoneImg, phoneIconImg, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
+let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
+let phoneIconImg, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg;
+let postOverlayImg, postImg_1, postImg_2, postImg_3, postImg_4, postImg_5, postImg_6, postImg_7, postImg_8, postImg_9, postImg_10, postImg_11, postImg_12;
 
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
+
+// load videos
+
+let videoOverlayImg;
+let endVideo;
 
 // load soundfiles
 let owlSound, demoSound, citySound, leavesSound, trafficSound, coffeeHouseSound, fountainSound, policeSirenSound, rainSound;
@@ -50,6 +68,12 @@ let phoneMsgSound, phoneVibrationSound, phoneSendSound, phoneTapSound, doorSound
 
 
 function preload() {
+  // fonts
+  window.fonts = {
+    rockwell: loadFont("../style/fonts/rockwell.ttf"),
+    franklinGothic: loadFont("../style/fonts/franklinGothic.ttf")
+  };
+
   // backgnd images
   parkBackgnd = loadImage("../img/park/0_backgnd.png");
   demoBackgnd = loadImage("../img/demo/0_backgnd.png");
@@ -90,20 +114,46 @@ function preload() {
   flyerImg_coffeeHouse = loadImage("../img/coffeeHouse/2_elements/2_flyer.png");
   flyerImg_park = loadImage("../img/park/7_flyer.png");
   newspaperImg = loadImage("../img/kiosk/3_elements/3_newspaper.png");
-  // mobilePhoneImg = loadImage("");
-  // phoneIconImg = loadImage("");
   streetLampBulbOnImg = loadImage("../img/assets/lamp-on.png");
   streetLampBulbOffImg = loadImage("../img/assets/lamp-off.png");
   doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png");
   kioskBuildingImg_on = loadImage("../img/kiosk/2_building_on.png");
   barArcadeImg = loadImage("../img/bar/2_elements/2_arcade.png");
-  barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png", setupGame);
+  barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png");
+
+  // smartphone
+  phoneIconImg = loadImage("../img/smartphone/phoneIcon.png");
+  phoneOutlineImg = loadImage("../img/smartphone/phoneOutline.png");
+  phoneOverlayImg = loadImage("../img/smartphone/phoneOverlay.png");
+  brokenPhoneOverlayImg = loadImage("../img/smartphone/brokenPhoneOverlay.png");
+  phoneBtnImg = loadImage("../img/smartphone/phoneButton.png");
+  homeIconImg = loadImage("../img/smartphone/homeIcon.png");
+  postIconImg = loadImage("../img/smartphone/postIcon.png");
+  msgIconImg = loadImage("../img/smartphone/messageIcon.png");
+  postOverlayImg = loadImage("../img/smartphone/postOverlay.png");
+  postImg_1 = loadImage("../img/smartphone/posts/post1.png");
+  postImg_2 = loadImage("../img/smartphone/posts/post2.png");
+  // postImg_3 = loadImage("../img/smartphone/posts/post3.png");
+  // postImg_4 = loadImage("../img/smartphone/posts/post4.png");
+  // postImg_5 = loadImage("../img/smartphone/posts/post5.png");
+  // postImg_6 = loadImage("../img/smartphone/posts/post6.png");
+  // postImg_7 = loadImage("../img/smartphone/posts/post7.png");
+  // postImg_8 = loadImage("../img/smartphone/posts/post8.png");
+  // postImg_9 = loadImage("../img/smartphone/posts/post9.png");
+  // postImg_10 = loadImage("../img/smartphone/posts/post10.png");
+  // postImg_11 = loadImage("../img/smartphone/posts/post11.png");
+  // postImg_12 = loadImage("../img/smartphone/posts/post12.png");
 
   // animation elements
   demoPeopleImg_left = loadImage("../img/demo/4_people/4_people_left.png");
   demoPeopleImg_right = loadImage("../img/demo/4_people/4_people_right.png");
   demoPeopleSignsImg_left = loadImage("../img/demo/4_people/4_signs_left.png");
-  demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png", setupGame);
+  demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png");
+
+  // video
+  videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
+  endVideo = createVideo("../video/endVideo1.mp4");
+  endVideo.hide();
 
   // sound
   owlSound = loadSound("../sound/ambient/owl.mp3");
@@ -126,7 +176,7 @@ function preload() {
   registerSound = loadSound("../sound/eventRelated/register.mp3");
   newspaperSound = loadSound("../sound/eventRelated/newspaper.mp3");
   pickupSignSound = loadSound("../sound/eventRelated/pickupSign.mp3");
-  flyerSound = loadSound("../sound/eventRelated/flyer.mp3");
+  flyerSound = loadSound("../sound/eventRelated/flyer.mp3", setupGame);
 }
 window.preload = preload;
 
@@ -383,7 +433,6 @@ function setupGame () {
 
     demoLink_demo.changeBackground();
 
-
     barLink.enable();
     barLink.show();
   });
@@ -395,10 +444,10 @@ function setupGame () {
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
   // global objects
-  let flyerCoffeeHouse = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg_coffeeHouse);
+  let flyerCoffeeHouse = new Flyer(492, 736, flyerImg_coffeeHouse);
   global.addChild(flyerCoffeeHouse);
 
-  let flyerPark = new Flyer(windowWidth / 2 - 246, windowHeight / 2 - 368, 492, 736, flyerImg_park);
+  let flyerPark = new Flyer(492, 736, flyerImg_park);
   global.addChild(flyerPark);
 
   window.addEventListener("pickupFlyer", (ev) => {
@@ -409,13 +458,138 @@ function setupGame () {
       flyerPark.show();
       flyerPark.enable();
     }
+    player.usePhone(true);
   });
 
-  let mobilePhone = new MobilePhone();
+  window.addEventListener("closeFlyer", () => {
+    player.usePhone(false);
+  });
+
+  let phoneIcon = new PhoneIcon(windowWidth - 150, windowHeight - 200, 112, 168, phoneIconImg);
+  global.addChild(phoneIcon);
+
+  let mobilePhone = new MobilePhone(492, 739, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg);
   global.addChild(mobilePhone);
 
-  let phoneIcon = new PhoneIcon();
-  global.addChild(phoneIcon);
+  let phoneButton = new PhoneButton(221, 677, 50, 50, phoneBtnImg);
+  mobilePhone.addChild(phoneButton);
+
+  window.addEventListener("openPhone", () => {
+    mobilePhone.show();
+    mobilePhone.enable();
+    player.usePhone(true);
+  })
+
+  window.addEventListener("closePhone", () => {
+    mobilePhone.hide();
+    mobilePhone.disable();
+    phoneIcon.show();
+    phoneIcon.enable();
+    player.usePhone(false);
+  })
+
+  let homeScreenBtn = new PhoneMenuIcon(43, 610, 79, 50, homeIconImg, "homeScreen");
+  mobilePhone.addChild(homeScreenBtn);
+
+  let postScreenBtn = new PhoneMenuIcon(207, 610, 79, 50, postIconImg, "postScreen");
+  mobilePhone.addChild(postScreenBtn);
+
+  let msgScreenBtn = new PhoneMenuIcon(368, 610, 79, 50, msgIconImg, "messageScreen");
+  mobilePhone.addChild(msgScreenBtn);
+
+  window.addEventListener("showScreen", (ev) => {
+    mobilePhone.showScreen(ev.detail);
+  });
+
+  let homeScreen = new PhoneHomeScreen(18.9, 111.2, 454, 491, postOverlayImg);
+  mobilePhone.addChild(homeScreen);
+  mobilePhone.showScreen("homeScreen");
+
+  let postScreen = new PhonePostScreen(18.9, 111.2, 454, 491);
+  mobilePhone.addChild(postScreen);
+
+  let postButton = new PhonePostButton(165, 428, 125, 50);
+  postScreen.addChild(postButton);
+
+  let choosePostBtn_1 = new ChoosePostButton(17, 428, 125, 50, "A", postImg_1);
+  postScreen.addChild(choosePostBtn_1);
+
+  let choosePostBtn_2 = new ChoosePostButton(165, 428, 125, 50, "B", postImg_2);
+  postScreen.addChild(choosePostBtn_2);
+
+  let choosePostBtn_3 = new ChoosePostButton(313, 428, 125, 50, "C", postImg_1);
+  postScreen.addChild(choosePostBtn_3);
+
+  window.addEventListener("choosePost", () => {
+    choosePostBtn_1.show();
+    choosePostBtn_1.enable();
+    choosePostBtn_2.show();
+    choosePostBtn_2.enable();
+    choosePostBtn_3.show();
+    choosePostBtn_3.enable();
+  });
+
+  window.addEventListener("postChosen", (ev) => {
+    choosePostBtn_1.hide();
+    choosePostBtn_1.disable();
+    choosePostBtn_2.hide();
+    choosePostBtn_2.disable();
+    choosePostBtn_3.hide();
+    choosePostBtn_3.disable();
+    homeScreen.setPost(ev.detail);
+  });
+
+  window.addEventListener("addPost", () => {
+    homeScreen.setPost(postScreen.getPost());
+    homeScreen.redraw();
+  });
+
+  let messageScreen = new PhoneMessageScreen(18.9, 111.2, 454, 491);
+  mobilePhone.addChild(messageScreen);
+
+  let msgButton_1 = new PhoneMessageButton(17, 428, 200, 50, "A");
+  msgButton_1.setUpMessages();
+  messageScreen.addChild(msgButton_1);
+
+  let msgButton_2 = new PhoneMessageButton(238, 428, 200, 50, "B");
+  msgButton_2.setUpMessages();
+  messageScreen.addChild(msgButton_2);
+  
+  window.addEventListener("endConversation", () => {
+    homeScreen.setPost(postImg_1);
+    homeScreen.setPost(postImg_2);
+  });
+
+  let endScreen = new PhoneEndScreen(18.9, 111.2, 454, 491, brokenPhoneOverlayImg);
+  mobilePhone.addChild(endScreen);
+
+  window.addEventListener("showEnd", () => {
+    window.dispatchEvent(new CustomEvent("openPhone"));
+    mobilePhone.showScreen("endScreen");
+    mobilePhone.break();
+  });
+
+  window.dispatchEvent(new CustomEvent("showEnd"));
+
+  let endBtn = new PhoneEndButton(130, 428, 200, 50);
+  endScreen.addChild(endBtn);
+
+  window.addEventListener("revealRole", () => {
+    endScreen.answer("Verschwörungstheoretiker");
+  });
+
+  let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 219, videoOverlayImg, endVideo);
+  endScreen.addChild(videoPlayer);
+
+  let restartBtn = new RestartButton(238, 428, 200, 50);
+  endScreen.addChild(restartBtn);
+
+  let mailBtn = new PhoneMailButton(17, 428, 200, 50);
+  endScreen.addChild(mailBtn);
+
+  window.addEventListener("restartGame", () => {
+    game.reset();
+  });
 }
 
 /* sound events */
@@ -490,3 +664,6 @@ window.mousePressed = mousePressed;
 
 function mouseReleased() { game.mouseReleased(); }
 window.mouseReleased = mouseReleased;
+
+function mouseWheel(ev) { game.mouseWheel(ev); }
+window.mouseWheel = mouseWheel;

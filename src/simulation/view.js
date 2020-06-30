@@ -6,6 +6,7 @@ export default class View extends Sprite {
     this.name = name;
     this.alreadyEntered = false;
     this.scale = windowHeight / height;
+    this.calcScale = this.scale;
     this.x = (windowWidth / 2) - ((width * this.scale) / 2);
   }
 

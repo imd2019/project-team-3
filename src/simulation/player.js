@@ -21,6 +21,10 @@ export default class Player extends Simulation{
     return false;
   }
 
+  usePhone(bool) {
+    this.phoneInUse = bool;
+  }
+
   reset(){
     this.actions = {};
     this.phoneInUse = true;

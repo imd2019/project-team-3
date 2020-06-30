@@ -27,7 +27,7 @@ export default class Game extends Sprite {
 
   mousePressed() {
     if (this.currentView) {
-      if (!this.children.global.mousePressed()) {
+      if (!this.children.global.mousePressed() && !this.player.phoneInUse) {
         this.children[this.currentView].mousePressed();
       }
     }
@@ -35,7 +35,7 @@ export default class Game extends Sprite {
 
   mouseClicked() {
     if (this.currentView) {
-      if (!this.children.global.mouseClicked()) {
+      if (!this.children.global.mouseClicked() && !this.player.phoneInUse) {
         this.children[this.currentView].mouseClicked();
       }
     }
@@ -43,8 +43,15 @@ export default class Game extends Sprite {
 
   mouseReleased() {
     if (this.currentView) {
-      this.children.global.mouseReleased();
-      this.children[this.currentView].mouseReleased();
+      if (!this.children.global.mouseReleased() && !this.player.phoneInUse) {
+        this.children[this.currentView].mouseReleased();
+      }
+    }
+  }
+
+  mouseWheel(ev) {
+    if (this.currentView) {
+      this.children.global.mouseWheel(ev);
     }
   }
 
@@ -54,14 +61,12 @@ export default class Game extends Sprite {
       this.children.global.display();
     }
 
-    if(!this.player.phoneInUse) {
-      if (mouseX >= windowWidth - 150) {
-        if (mouseX >= windowWidth - 50) this.moveView("right", 3);
-        else this.moveView("right", 1);
-      } else if (mouseX <= 150) {
-        if(mouseX <= 50) this.moveView("left", 3);
-        else this.moveView("left", 1);
-      }
+    if (mouseX >= windowWidth - 150) {
+      if (mouseX >= windowWidth - 50) this.moveView("right", 3);
+      else this.moveView("right", 1);
+    } else if (mouseX <= 150) {
+      if(mouseX <= 50) this.moveView("left", 3);
+      else this.moveView("left", 1);
     }
   }
 

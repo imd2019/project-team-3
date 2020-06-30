@@ -5,6 +5,7 @@ export default class InteractiveObject extends DisplayObject {
     super(x, y, width, height, backgnd);
     this.parent = undefined;
     this.enabled = true;
+    this.calcScale = this.scale;
   }
   enable(){
     this.enabled = true;
@@ -28,12 +29,9 @@ export default class InteractiveObject extends DisplayObject {
     while (e != undefined) {
       let vt = createVector(e.x, e.y);
       if (e.parent != undefined) {
-        vt.mult(e.parent.scale);
+        vt.mult(e.parent.calcScale);
       }
-      let vr = p5.Vector.fromAngle(e.rotation);
-      let v = p5.Vector.sub(vt, vr);
-
-      m = p5.Vector.sub(m, v);
+      m = p5.Vector.sub(m, vt);
       s *= e.scale;
 
       e = e.parent;
@@ -78,6 +76,8 @@ export default class InteractiveObject extends DisplayObject {
 
   released() {}
 
+  wheel() {}
+
   mousePressed() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
       this.pressed();
@@ -107,6 +107,12 @@ export default class InteractiveObject extends DisplayObject {
       return true;
     } else {
       return false;
+    }
+  }
+
+  mouseWheel(ev) {
+    if (this.enabled && this.hitTest(mouseX, mouseY)) {
+      this.wheel(ev);
     }
   }
 }
