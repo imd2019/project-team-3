@@ -4,12 +4,9 @@ export default class View extends Sprite {
   constructor(name, width, height, backgnd){
     super(0, 0, width, height, backgnd);
     this.name = name;
-    if (name != "park") {
-      this.alreadyEntered = false;
-    } else {
-      this.alreadyEntered = true;
-    }
+    this.alreadyEntered = false;
     this.scale = windowHeight / height;
+    this.calcScale = this.scale;
     this.x = (windowWidth / 2) - ((width * this.scale) / 2);
   }
 
@@ -43,6 +40,7 @@ export default class View extends Sprite {
           }
         } else {
           if (this.x < - 3.5 * speed) {
+            this.moveSound();
             this.x += 3.5 * speed;
           }
         }
@@ -66,6 +64,7 @@ export default class View extends Sprite {
         }
         } else {
           if (this.x > windowWidth - this.width * this.scale) {
+            this.moveSound();
             this.x -= 3.5 * speed;
           }
         }
@@ -74,7 +73,7 @@ export default class View extends Sprite {
   }
 
   moveSound() {
-    if (this != "bar") {
+    if (this.name != "bar") {
       window.dispatchEvent(new CustomEvent("walkOutside"));
     } else {
       window.dispatchEvent(new CustomEvent("walkInside"));
@@ -82,32 +81,27 @@ export default class View extends Sprite {
   }
 
   mousePressed() {
-    for (let elem of this.children) {
-      elem.mousePressed();
+    for (let i = this.children.length - 1; i >= 0; i--) {
+      if(this.children[i].mousePressed()) return true;
     }
+    return false;
   }
 
   mouseClicked() {
-    for (let elem of this.children) {
-      elem.mouseClicked();
+    for (let i = this.children.length - 1; i >= 0; i--) {
+      if(this.children[i].mouseClicked()) return true;
     }
+    return false;
   }
 
   mouseReleased() {
-    for (let elem of this.children) {
-      elem.mouseReleased();
+    for (let i = this.children.length - 1; i >= 0; i--) {
+      if(this.children[i].mouseReleased()) return true;
     }
+    return false;
   }
 
-  reset() {
-    if (this.name != "park") {
-      this.alreadyEntered = false;
-    }
-    for (elem of this.children) {
-      if(elem.enabled === false)
-        elem.enabled = true;
-      if (elem.visible === false)
-        elem.visible = true;
-    }
+  resetElement() {
+    this.alreadyEntered = false;
   }
 }

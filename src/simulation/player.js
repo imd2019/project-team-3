@@ -4,7 +4,7 @@ export default class Player extends Simulation{
   constructor(){
     super();
     this.actions = {};
-    this.phoneInUse = true;
+    this.phoneInUse = false;
   }
 
   addAction(origin, name, data){
@@ -14,8 +14,23 @@ export default class Player extends Simulation{
     this.actions[origin][name] = data;
   }
 
+  actionDone(view, action = undefined, data = undefined) {
+    if (view in this.actions) {
+      if ((action === undefined && data === undefined) || (action in this.actions[view] && data === undefined)) {
+        return true;
+      } else {
+        return this.actions[view][action];
+      }
+    }
+    return false;
+  }
+
+  usePhone(bool) {
+    this.phoneInUse = bool;
+  }
+
   reset(){
     this.actions = {};
-    this.phoneInUse = true;
+    this.phoneInUse = false;
   }
 }

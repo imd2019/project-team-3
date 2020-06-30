@@ -2,12 +2,10 @@ import DisplayObject from "./displayObject.js";
 
 export default class InteractiveObject extends DisplayObject {
   constructor(x, y, width, height, backgnd = undefined) {
-    super(x, y);
-    this.width = width;
-    this.height = height;
-    this.backgnd = backgnd;
+    super(x, y, width, height, backgnd);
     this.parent = undefined;
     this.enabled = true;
+    this.calcScale = this.scale;
   }
   enable(){
     this.enabled = true;
@@ -24,29 +22,24 @@ export default class InteractiveObject extends DisplayObject {
   }
 
   hitTest(x, y) {
-    let p = this.parent;
-    let dx = 0;
-    let dy = 0;
+    let e = this;
+    let m = createVector(x, y);
     let s = 1;
 
-    while (p != undefined) {
-      if (p.parent != undefined) {
-        dx += p.x * p.parent.scale;
-        dy += p.y * p.parent.scale;
-        s *= p.scale;
-      } else {
-        dx += p.x;
-        dy += p.y;
+    while (e != undefined) {
+      let vt = createVector(e.x, e.y);
+      if (e.parent != undefined) {
+        vt.mult(e.parent.calcScale);
       }
+      m = p5.Vector.sub(m, vt);
+      s *= e.scale;
 
-      p = p.parent;
+      e = e.parent;
     }
 
     return (
-      x > this.x * s + dx &&
-      x < this.x * s + dx + this.width * s &&
-      y > this.y * s + dy &&
-      y < this.y * s + dy + this.height * s
+      m.x > 0 && m.x < this.width * s &&
+      m.y > 0 && m.y < this.height * s
     );
   }
 
@@ -56,22 +49,30 @@ export default class InteractiveObject extends DisplayObject {
 
   released() {}
 
+  wheel() {}
+
   mousePressed() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
       this.pressed();
+      return true;
     }
+    return false;
   }
 
   mouseClicked() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
       this.clicked();
+      return true;
     }
+    return false;
   }
 
   mouseReleased() {
     if (this. enabled && this.hitTest(mouseX, mouseY)) {
       this.released();
+      return true;
     }
+    return false;
   }
 
   mouseHovered() {
@@ -81,4 +82,16 @@ export default class InteractiveObject extends DisplayObject {
       return false;
     }
   }
+
+  mouseWheel(ev) {
+    if (this.enabled && this.hitTest(mouseX, mouseY)) {
+      this.wheel(ev);
+    }
+  }
+
+  reset() {
+    this.resetElement();
+  }
+
+  resetElement() {}
 }
