@@ -19,7 +19,7 @@ import ParkLink from "./simulation/interactiveElements/parkLink.js";
 
 import DemoSign from "./simulation/interactiveElements/demoSign.js";
 import DemoBench from "./simulation/interactiveElements/demoBench.js";
-import Speechbubble from "./simulation/interactiveElements/demoSign.js";
+import Speechbubble from "./simulation/interactiveElements/speechbubble.js";
 
 import FlyerBox from "./simulation/interactiveElements/flyerBox.js";
 import Flyer from "./simulation/interactiveElements/flyer.js";
@@ -316,6 +316,12 @@ function setupGame() {
   );
   park.addChild(streetLamp_9);
 
+  //Zufallsevents
+
+  //Bubbles
+  // let influencerBubble = new Speechbubble( , , 300, "Influencer");
+  // let conspircaryBubble = new Speechbubble( , , 300, "Conspiracy");
+
   let kioskTrees = new InteractiveObject(0, 0, 1792, 768, kioskTreesImg);
   kiosk.addChild(kioskTrees);
 
@@ -449,6 +455,12 @@ function setupGame() {
     demoPeopleSignsImg_right
   );
   demo.addChild(demoSignsRight);
+
+  let demoBubbleLeft = new Speechbubble(300, -150, 270, "Demo_1", "left");
+  demoPeople.addChild(demoBubbleLeft);
+
+  let demoBubbleRight = new Speechbubble(20, -150, 270, "Demo_2");
+  counterDemoPeople.addChild(demoBubbleRight);
 
   let demoBench = new DemoBench(5, 578, 461, 231, demoBenchImg);
   demo.addChild(demoBench);
