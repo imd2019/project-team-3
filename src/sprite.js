@@ -107,7 +107,7 @@ export default class Sprite extends InteractiveObject {
       if (typeof this.children.reset === "function") {
         child.reset();
       }
-    })
+    });
     this.resetElement();
   }
 }

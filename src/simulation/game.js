@@ -70,7 +70,7 @@ export default class Game extends Sprite {
     }
   }
 
-  reset(){
+  reset() {
     let children = Object.values(this.children);
     for (let elem of children) {
       elem.reset();

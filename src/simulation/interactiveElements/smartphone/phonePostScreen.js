@@ -48,7 +48,6 @@ export default class PhonePostScreen extends Sprite {
   }
 
   resetElement() {
-    console.log("reset");
     this.newPost = undefined;
     this.postReady = false;
     this.redraw();
