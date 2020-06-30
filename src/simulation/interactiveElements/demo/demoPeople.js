@@ -11,7 +11,7 @@ export default class DemoPeople extends Sprite {
     window.dispatchEvent(new CustomEvent("addAction", {detail: {
       origin: "demo",
       name: "joinDemo",
-      data: this.view,
+      data: this.type,
     }}));
   }
 }

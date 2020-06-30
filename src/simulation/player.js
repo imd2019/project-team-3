@@ -14,9 +14,11 @@ export default class Player extends Simulation{
     this.actions[origin][name] = data;
   }
 
-  actionDone(view) {
+  actionDone(view, action = undefined) {
     if (view in this.actions) {
-      return true;
+      if (action === undefined || acion in this.actions[view]) {
+        return true;
+      }
     }
     return false;
   }

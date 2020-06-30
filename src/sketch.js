@@ -216,6 +216,16 @@ window.addEventListener("enterView", (ev) => {
       window.dispatchEvent(new CustomEvent("endDemo"));
     }
   }
+
+  if (ev.detail === "coffeeHouse") {
+    if (player.actionDone("demo", "joinDemo")) {
+      window.dispatchEvent(new CustomEvent("addAction", {detail: {
+        origin: "coffeeHouse",
+        name: "groupInvitation",
+        data: {},
+      }}));
+    }
+  }
 });
 
 function setupGame () {
@@ -457,6 +467,22 @@ function setupGame () {
   let door_coffeeHouse = new Door(1300, 379, 128, 214, doorImg);
   coffeeHouse.addChild(door_coffeeHouse);
 
+  window.addEventListener("groupInvitation", () => {
+    setTimeout( () => {
+      mobilePhone.showScreen("messageScreen");
+      window.dispatchEvent(new CustomEvent("phoneVibration"));
+    }, 10000);
+  });
+
+  window.addEventListener("enterCoffeeHouse", () => {
+    if (player.actionDone("demo", "joinDemo") || player.actionDone("coffeeHouse", "groupInvitation")) {
+      setTimeout(() => {
+        mobilePhone.showScreen("messageScreen");
+        window.dispatchEvent(new CustomEvent("phoneVibration"));
+      }, 5000);
+    }
+  });
+
   let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg, "coffeeHouse");
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
@@ -471,6 +497,11 @@ function setupGame () {
     if (ev.detail === "coffeeHouse") {
       flyerCoffeeHouse.show();
       flyerCoffeeHouse.enable();
+      window.dispatchEvent(new CustomEvent("addAction", {detail: {
+        origin: "coffeeHouse",
+        name: "groupInvitation",
+        data: {},
+      }}));
     } else {
       flyerPark.show();
       flyerPark.enable();
