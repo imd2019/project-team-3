@@ -76,17 +76,6 @@ export default class PhoneMessageButton extends Sprite {
       case 1:
         switch (this.name) {
           case "messageButtonA":
-<<<<<<< HEAD
-            conversation = {
-              id: 1,
-              buttonText: "Na klar, schießen Sie los.",
-              conversationText:
-                "Hi. Das wundert mich aber. Worum geht es denn?",
-              conversationAnswer:
-                "Ihr Name ist in Verbindung mit den gerade stattfindenden Demos aufgetaucht. Unterstützen Sie diese?",
-              conversationEnded: false,
-            };
-=======
             switch (this.event) {
               case "interview":
                 conversation = {
@@ -113,7 +102,6 @@ export default class PhoneMessageButton extends Sprite {
                 };
                 break;
             }
->>>>>>> smartphone-implementation
 
             break;
 
