@@ -1,4 +1,4 @@
-let sketch = new p5()
+let sketch = new p5();
 
 function setup() {
   sketch.createCanvas(windowWidth, windowHeight);
