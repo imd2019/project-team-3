@@ -50,7 +50,7 @@ let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
-let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
+let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, kioskLinkNewspapersImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
 let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
 let phoneIconImg, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg;
 let postOverlayImg, postImg_1, postImg_2, postImg_3, postImg_4, postImg_5, postImg_6, postImg_7, postImg_8, postImg_9, postImg_10, postImg_11, postImg_12;
@@ -105,6 +105,7 @@ function preload() {
   demoLinkSignsRightImg = loadImage("../img/park/4_interactionSpaces/4_demo-signs-2.png");
   kioskLinkImg_on = loadImage("../img/park/4_interactionSpaces/4_kiosk_open.png");
   kioskLinkImg_off = loadImage("../img/park/4_interactionSpaces/4_kiosk_closed.png");
+  kioskLinkNewspapersImg = loadImage("../img/park/4_interactionSpaces/4_newspapers.png");
   parkLinkImg_kiosk = loadImage("../img/kiosk/4_interactionSpaces/4_advertisingColumn.png");
   parkLinkImg_demo = loadImage("../img/demo/1_interactionSpaces/1_park.png");
   parkLinkImg_coffeeHouse = loadImage("../img/coffeeHouse/3_interactionSpaces/3_park.png");
@@ -268,7 +269,15 @@ function setupGame () {
   
   let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg_off, kioskLinkImg_on);
   park.addChild(kioskLink);
-  window.addEventListener("openKiosk", () => { kioskLink.open(); });
+
+  let kioskLinkNewspapers = new DisplayObject(271, 452, 205, 24, kioskLinkNewspapersImg);
+  park.addChild(kioskLinkNewspapers);
+  kioskLinkNewspapers.hide();
+
+  window.addEventListener("openKiosk", () => { 
+    kioskLink.open();
+    kioskLinkNewspapers.show();
+  });
 
   let parkForegnd = new DisplayObject(2, 228, 3904, 543, parkForegndImg);
   park.addChild(parkForegnd);
@@ -337,6 +346,7 @@ function setupGame () {
   });
   window.addEventListener("hideNewspapers", () => {
     newspapers.forEach(elem => elem.hide());
+    kioskLinkNewspapers.hide();
   });
 
   let kioskSunshade = new DisplayObject(859, 240, 500, 400, kioskSunshadeImg);
@@ -569,7 +579,7 @@ function setupGame () {
     mobilePhone.break();
   });
 
-  window.dispatchEvent(new CustomEvent("showEnd"));
+  // window.dispatchEvent(new CustomEvent("showEnd"));
 
   let endBtn = new PhoneEndButton(130, 428, 200, 50);
   endScreen.addChild(endBtn);
