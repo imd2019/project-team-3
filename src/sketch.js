@@ -467,22 +467,73 @@ function setupGame () {
   let door_coffeeHouse = new Door(1300, 379, 128, 214, doorImg);
   coffeeHouse.addChild(door_coffeeHouse);
 
-  window.addEventListener("groupInvitation", () => {
-    setTimeout( () => {
-      mobilePhone.showScreen("messageScreen");
-      window.dispatchEvent(new CustomEvent("phoneVibration"));
-    }, 10000);
-  });
-
   window.addEventListener("enterCoffeeHouse", () => {
     if (player.actionDone("demo", "joinDemo") || player.actionDone("coffeeHouse", "groupInvitation")) {
       setTimeout(() => {
         messageScreen.setEvent("interview");
         mobilePhone.showScreen("messageScreen");
+        homeScreenBtn.disable();
+        postScreenBtn.disable();
+        msgScreenBtn.disable();
+        phoneButton.disable();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 5000);
     }
   });
+  
+  window.addEventListener("interviewAccepted", () => {
+    if (!player.actionDone("coffeeHouse", "interviewAccepted", true)) {
+      homeScreenBtn.enable();
+      postScreenBtn.enable();
+      msgScreenBtn.enable();
+      phoneButton.enable();
+
+      setTimeout( () => {
+        homeScreen.setPost(postImg_1);
+        messageScreen.reset();
+        window.dispatchEvent(new CustomEvent("phoneVibration"));
+      }, 3000);
+    }
+  });
+
+  window.addEventListener("statementDefended", () => {
+    if (player.actionDone("coffeeHouse", "statementDefended", true)) {
+      setTimeout( () => {
+        homeScreen.setPost(postImg_2);
+        messageScreen.reset();
+        window.dispatchEvent(new CustomEvent("phoneVibration"));
+      }, 3000);
+    } else {
+      setTimeout( () => {
+        homeScreen.setPost(postImg_1);
+        messageScreen.reset();
+        window.dispatchEvent(new CustomEvent("phoneVibration"));
+      }, 3000);
+    }
+    homeScreenBtn.enable();
+    postScreenBtn.enable();
+    msgScreenBtn.enable();
+    phoneButton.enable();
+  })
+
+  window.addEventListener("groupInvitation", () => {
+    setTimeout( () => {
+      messageScreen.setEvent("invite");
+      mobilePhone.showScreen("messageScreen");
+      homeScreenBtn.disable();
+      postScreenBtn.disable();
+      msgScreenBtn.disable();
+      phoneButton.disable();
+      window.dispatchEvent(new CustomEvent("phoneVibration"));
+    }, 10000);
+  });
+
+  window.addEventListener("invitationAccepted", () => {
+    homeScreenBtn.enable();
+    postScreenBtn.enable();
+    msgScreenBtn.enable();
+    phoneButton.enable();
+  })
 
   let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg, "coffeeHouse");
   coffeeHouse.addChild(flyerBox_coffeeHouse);
@@ -498,11 +549,13 @@ function setupGame () {
     if (ev.detail === "coffeeHouse") {
       flyerCoffeeHouse.show();
       flyerCoffeeHouse.enable();
-      window.dispatchEvent(new CustomEvent("addAction", {detail: {
-        origin: "coffeeHouse",
-        name: "groupInvitation",
-        data: {},
-      }}));
+      if (!player.actionDone("coffeeHouse", "groupInvitation")) {
+        window.dispatchEvent(new CustomEvent("addAction", {detail: {
+          origin: "coffeeHouse",
+          name: "groupInvitation",
+          data: {},
+        }}));
+      }
     } else {
       flyerPark.show();
       flyerPark.enable();
@@ -537,7 +590,26 @@ function setupGame () {
     phoneIcon.show();
     phoneIcon.enable();
     player.usePhone(false);
+
+    if (player.actionDone("coffeeHouse", "invitationAccepted") && !player.actionDone("coffeeHouse", "invitationPostWatched")) {
+      setTimeout( () => {
+        if (player.actionDone("coffeeHouse", "invitationAccepted", true)) {
+          homeScreen.setPost(postImg_1);
+        } else {
+          homeScreen.setPost(postImg_2);
+        }
+        mobilePhone.showScreen("homeScreen");
+        messageScreen.reset();
+        window.dispatchEvent(new CustomEvent("phoneVibration"));
+        window.dispatchEvent(new CustomEvent("addAction", {detail: {
+          origin: "coffeeHouse",
+          name: "invitationPostWatched",
+          data: {},
+        }}));
+      }, 5000);
+    }
   })
+
 
   let homeScreenBtn = new PhoneMenuIcon(43, 610, 79, 50, homeIconImg, "homeScreen");
   mobilePhone.addChild(homeScreenBtn);
@@ -605,11 +677,9 @@ function setupGame () {
   mobilePhone.addChild(messageScreen);
 
   let msgButton_1 = new PhoneMessageButton(17, 428, 200, 50, "A");
-  msgButton_1.setUpMessages();
   messageScreen.addChild(msgButton_1);
 
   let msgButton_2 = new PhoneMessageButton(238, 428, 200, 50, "B");
-  msgButton_2.setUpMessages();
   messageScreen.addChild(msgButton_2);
   
   window.addEventListener("endConversation", () => {

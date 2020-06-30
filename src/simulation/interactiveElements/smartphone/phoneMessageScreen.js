@@ -6,6 +6,7 @@ export default class PhoneMessage extends Sprite {
     this.name = "messageScreen";
     this.conversation = [];
     this.pos = 0;
+    this.event = undefined;
     this.message = createGraphics(width, height);
   }
 
@@ -134,6 +135,13 @@ export default class PhoneMessage extends Sprite {
     this.conversation.push(conv);
   }
 
+  setEvent(event) {
+    this.event = event;
+    for (let elem of this.children) {
+      elem.setEvent();
+    }
+  }
+
   bufferAnimation() {
     this.message.textAlign(CENTER, CENTER);
     this.message.fill(170);
@@ -178,5 +186,12 @@ export default class PhoneMessage extends Sprite {
         this.redraw();
       }
     }
+  }
+
+  resetElement() {
+    this.event = undefined;
+    this.conversation = [];
+    this.pos = 0;
+    this.redraw();
   }
 }

@@ -5,8 +5,8 @@ export default class PhoneMessageButton extends Sprite {
     super(x, y, width, height, backgnd);
     this.name = "messageButton" + name;
     this.messages = [];
-    this.currentMessage;
     this.conversationIndex = 0;
+    this.currentMessage = undefined;
     this.event = undefined;
     this.disable();
     this.hide();
@@ -29,7 +29,11 @@ export default class PhoneMessageButton extends Sprite {
         btn.hide();
         btn.disable();
       });
-      window.dispatchEvent(new CustomEvent("endConversation"));
+      window.dispatchEvent(new CustomEvent("addAction", {detail: {
+        origin: this.currentMessage.actionOrigin,
+        name: this.currentMessage.actionName,
+        data: this.currentMessage.actionData,
+      }}));
     }
   }
 
@@ -68,9 +72,8 @@ export default class PhoneMessageButton extends Sprite {
   }
 
   setUpMessages() {
-    this.conversationIndex++;
-
     let conversation;
+    this.conversationIndex++;
 
     switch (this.conversationIndex) {
       case 1:
@@ -87,9 +90,7 @@ export default class PhoneMessageButton extends Sprite {
                     "Ihr Name ist in Verbindung mit den gerade stattfindenden Demos aufgetaucht. Unterstützen Sie diese?",
                   conversationEnded: false,
                 };
-
                 break;
-
               case "invite":
                 conversation = {
                   id: 1,
@@ -102,25 +103,42 @@ export default class PhoneMessageButton extends Sprite {
                 };
                 break;
             }
-
             break;
-
           case "messageButtonB":
-            conversation = {
-              id: 1,
-              buttonText: "Kein Interesse.",
-              conversationText:
-                "Von der 'The Daily Whisper' also? Euch beantworte ich keine Fragen!",
-              conversationAnswer:
-                "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
-              conversationEnded: true,
-            };
+            switch (this.event) {
+              case "interview":
+                conversation = {
+                  id: 1,
+                  buttonText: "Kein Interesse.",
+                  conversationText:
+                    "Von der 'The Daily Whisper' also? Euch beantworte ich keine Fragen!",
+                  conversationAnswer:
+                    "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
+                  conversationEnded: true,
+                  actionOrigin: "coffeeHouse",
+                  actionName: "interviewAccepted",
+                  actionData: true,
+                };
+                break;
 
+              case "invite":
+                conversation = {
+                  id: 1,
+                  buttonText: "Das passiert jetzt nicht wirklich.",
+                  conversationText:
+                    "Ihr kennt also 'die Wahrheit'? Vermutlich zündet ihr auch regelmäßig 5G-Türme auf eurer Suche nach der Wahrheit an.",
+                  conversationAnswer:
+                    "Schafe wie du werden erst verstehen, was um sie herum wirklich passiert, wenn es längst zu spät ist.",
+                  conversationEnded: true,
+                  actionOrigin: "coffeeHouse",
+                  actionName: "invitationAccepted",
+                  actionData: false,
+                };
+                break;
+            }
             break;
         }
-
         break;
-
       case 2:
         switch (this.name) {
           case "messageButtonA":
@@ -147,12 +165,13 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Damit wirst du vom Schaf zum Wolf. Willkommen!",
                   conversationEnded: true,
+                  actionOrigin: "coffeeHouse",
+                  actionName: "invitationAccepted",
+                  actionData: true,
                 };
                 break;
             }
-
             break;
-
           case "messageButtonB":
             switch (this.event) {
               case "interview":
@@ -165,9 +184,7 @@ export default class PhoneMessageButton extends Sprite {
                     "Sie stellen sich also damit auf die Seite der Gegendemonstranten?",
                   conversationEnded: false,
                 };
-
                 break;
-
               case "invite":
                 conversation = {
                   id: 2,
@@ -177,15 +194,15 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Die Mainstream-Medien verbreiten nur Lügen und Fake News. Dir ist nicht mehr zu helfen.",
                   conversationEnded: true,
+                  actionOrigin: "coffeeHouse",
+                  actionName: "invitationAccepted",
+                  actionData: false,
                 };
                 break;
             }
-
             break;
         }
-
         break;
-
       case 3:
         switch (this.name) {
           case "messageButtonA":
@@ -198,6 +215,9 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
                   conversationEnded: true,
+                  actionOrigin: "coffeeHouse",
+                  actionName: "statementDefended",
+                  actionData: true,
                 };
                 break;
             }
@@ -212,13 +232,16 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
                   conversationEnded: true,
+                  actionOrigin: "coffeeHouse",
+                  actionName: "statementDefended",
+                  actionData: false,
                 };
-
                 break;
             }
-
             break;
         }
+        break;
+      default:
         break;
     }
 
@@ -234,5 +257,14 @@ export default class PhoneMessageButton extends Sprite {
     );
 
     this.currentMessage = currentMessage;
+  }
+
+  resetElement() {
+    this.messages = [];
+    this.conversationIndex = 0;
+    this.currentMessage = undefined;
+    this.event = undefined;
+    this.disable();
+    this.hide();
   }
 }
