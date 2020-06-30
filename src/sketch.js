@@ -729,6 +729,11 @@ function setupGame() {
   let door_coffeeHouse = new Door(1300, 379, 128, 214, doorImg);
   coffeeHouse.addChild(door_coffeeHouse);
 
+  window.addEventListener("enterCoffeeHouse", () => {
+    messageScreen.setEvent("interview");
+    doorSound.play();
+  });
+
   let flyerBox_coffeeHouse = new FlyerBox(
     601,
     445,

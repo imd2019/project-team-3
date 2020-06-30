@@ -51,11 +51,9 @@ export default class PhoneMessage extends Sprite {
         30,
         90 + this.pos,
         290,
-        60
+        70
       );
-    }
-
-    if (this.event === "invite") {
+    } else if (this.event === "invite") {
       this.message.textFont(window.fonts.franklinGothic);
       this.message.textSize(16);
       this.message.textAlign(LEFT, CENTER);
@@ -66,11 +64,28 @@ export default class PhoneMessage extends Sprite {
       this.message.noStroke();
       this.message.fill(0);
       this.message.text(
-        "Wie wir sehen konnten, bist du auch auf der Suche. Trete uns auf Socialbook bei und werfe deine Augenbinde ab. An diesem Ort gibt es nichts als die Wahrheit.",
+        "Wie wir sehen konnten, bist du auch auf der Suche. Trete unserer Gruppe bei. An diesem Ort gibt es nichts als die Wahrheit.",
         30,
         90 + this.pos,
         290,
-        60
+        70
+      );
+    } else {
+      this.message.textFont(window.fonts.franklinGothic);
+      this.message.textSize(16);
+      this.message.textAlign(LEFT, CENTER);
+
+      // this.message.fill(200);
+      // this.message.rect(20, 90 + this.pos, 300, 70, 5);
+
+      this.message.noStroke();
+      this.message.fill(0);
+      this.message.text(
+        "Du hast keine neuen Nachrichten.",
+        30,
+        90 + this.pos,
+        290,
+        70
       );
     }
 
