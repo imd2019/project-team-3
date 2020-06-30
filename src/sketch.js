@@ -477,6 +477,7 @@ function setupGame () {
   window.addEventListener("enterCoffeeHouse", () => {
     if (player.actionDone("demo", "joinDemo") || player.actionDone("coffeeHouse", "groupInvitation")) {
       setTimeout(() => {
+        messageScreen.setEvent("interview");
         mobilePhone.showScreen("messageScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 5000);

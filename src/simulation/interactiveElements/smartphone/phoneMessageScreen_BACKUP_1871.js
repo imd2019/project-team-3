@@ -35,14 +35,24 @@ export default class PhoneMessage extends Sprite {
     this.message.fill(220);
     this.message.noStroke();
 
-    if (this.event === "interview") {
-      this.message.textFont(window.fonts.franklinGothic);
-      this.message.textSize(16);
-      this.message.textAlign(LEFT, CENTER);
+    this.message.textFont(window.fonts.franklinGothic);
+    this.message.textSize(16);
+    this.message.textAlign(LEFT, CENTER);
 
-      this.message.fill(200);
-      this.message.rect(20, 90 + this.pos, 300, 70, 5);
+    this.message.fill(200);
+    this.message.rect(20, 90 + this.pos, 300, 70, 5);
 
+<<<<<<< HEAD
+    this.message.noStroke();
+    this.message.fill(0);
+    this.message.text(
+      "Hallo, ich bin Journalist bei der 'The Daily Whisper' und hätte ein paar Fragen.",
+      30,
+      90 + this.pos,
+      290,
+      60
+    );
+=======
       this.message.noStroke();
       this.message.fill(0);
       this.message.text(
@@ -87,6 +97,7 @@ export default class PhoneMessage extends Sprite {
         70
       );
     }
+>>>>>>> smartphone-implementation
 
     for (let elem in this.conversation) {
       if (this.conversation[elem].isClicked) {

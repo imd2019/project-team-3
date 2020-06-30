@@ -7,6 +7,9 @@ export default class PhoneMessageButton extends Sprite {
     this.messages = [];
     this.currentMessage;
     this.conversationIndex = 0;
+    this.event = undefined;
+    this.disable();
+    this.hide();
   }
 
   clicked() {
@@ -28,6 +31,13 @@ export default class PhoneMessageButton extends Sprite {
       });
       window.dispatchEvent(new CustomEvent("endConversation"));
     }
+  }
+
+  setEvent() {
+    this.event = this.parent.event;
+    this.show();
+    this.enable();
+    this.setUpMessages();
   }
 
   draw() {
@@ -66,6 +76,7 @@ export default class PhoneMessageButton extends Sprite {
       case 1:
         switch (this.name) {
           case "messageButtonA":
+<<<<<<< HEAD
             conversation = {
               id: 1,
               buttonText: "Na klar, schießen Sie los.",
@@ -75,6 +86,34 @@ export default class PhoneMessageButton extends Sprite {
                 "Ihr Name ist in Verbindung mit den gerade stattfindenden Demos aufgetaucht. Unterstützen Sie diese?",
               conversationEnded: false,
             };
+=======
+            switch (this.event) {
+              case "interview":
+                conversation = {
+                  id: 1,
+                  buttonText: "Na klar, schießen Sie los.",
+                  conversationText:
+                    "Hi. Das wundert mich aber. Worum geht es denn?",
+                  conversationAnswer:
+                    "Ihr Name ist in Verbindung mit den gerade stattfindenden Demos aufgetaucht. Unterstützen Sie diese?",
+                  conversationEnded: false,
+                };
+
+                break;
+
+              case "invite":
+                conversation = {
+                  id: 1,
+                  buttonText: "Das klingt ja interessant.",
+                  conversationText:
+                    "Ich bin mir in manchen Dingen tatsächlich unsicher. Vielleicht finde ich hier ja Antworten auf meine Fragen.",
+                  conversationAnswer:
+                    "Du bist damit nicht alleine. Du wurdest von den Mainstream-Medien geblendet. Aber damit ist es nun vorbei.",
+                  conversationEnded: false,
+                };
+                break;
+            }
+>>>>>>> smartphone-implementation
 
             break;
 
@@ -97,25 +136,63 @@ export default class PhoneMessageButton extends Sprite {
       case 2:
         switch (this.name) {
           case "messageButtonA":
-            conversation = {
-              id: 2,
-              buttonText: "Option A 2",
-              conversationText:
-                "Ich bin zur zweiten ID gesprungen. Blablablabla",
-              conversationAnswer: "095382503928503289 3509853029052303529",
-              conversationEnded: false,
-            };
+            switch (this.event) {
+              case "interview":
+                conversation = {
+                  id: 2,
+                  buttonText: "Pro-Demo.",
+                  conversationText:
+                    "In meinen Augen stehen die Demonstranten für die richtige Sache ein.",
+                  conversationAnswer:
+                    "Sie wollen also damit sagen, sie unterstützen die Aussagen und Handlungen dieser Gruppe?",
+                  conversationEnded: false,
+                };
+
+                break;
+
+              case "invite":
+                conversation = {
+                  id: 2,
+                  buttonText: "Der Gruppe beitreten.",
+                  conversationText:
+                    "Ich bin eurer Gruppe auf Socialbook beigetreten. ",
+                  conversationAnswer:
+                    "Damit wirst du vom Schaf zum Wolf. Willkommen!",
+                  conversationEnded: true,
+                };
+                break;
+            }
 
             break;
+
           case "messageButtonB":
-            conversation = {
-              id: 2,
-              buttonText: "Option B 2",
-              conversationText:
-                "Ich bin zur zweiten ID gesprungen. Blablablabla",
-              conversationAnswer: "..!..",
-              conversationEnded: false,
-            };
+            switch (this.event) {
+              case "interview":
+                conversation = {
+                  id: 2,
+                  buttonText: "Pro-Gegendemo.",
+                  conversationText:
+                    "Ich finde es wichtig, was die Gegendemonstranten leisten. ",
+                  conversationAnswer:
+                    "Sie stellen sich also damit auf die Seite der Gegendemonstranten?",
+                  conversationEnded: false,
+                };
+
+                break;
+
+              case "invite":
+                conversation = {
+                  id: 2,
+                  buttonText: "Anders überlegen.",
+                  conversationText:
+                    "Ich glaube, ich sollte mich vorher erstmal informieren, was ihr so tut. ",
+                  conversationAnswer:
+                    "Die Mainstream-Medien verbreiten nur Lügen und Fake News. Dir ist nicht mehr zu helfen.",
+                  conversationEnded: true,
+                };
+                break;
+            }
+
             break;
         }
 
@@ -124,24 +201,33 @@ export default class PhoneMessageButton extends Sprite {
       case 3:
         switch (this.name) {
           case "messageButtonA":
-            conversation = {
-              id: 3,
-              buttonText: "Option A 3",
-              conversationText: "Ich bin zur ID 3 gesprungen. Blablablabla",
-              conversationAnswer: "lolololloll",
-              conversationEnded: false,
-            };
-
+            switch (this.event) {
+              case "interview":
+                conversation = {
+                  id: 3,
+                  buttonText: "Aussage verteidigen.",
+                  conversationText: "Ich bleibe bei dem, was ich gesagt habe.",
+                  conversationAnswer:
+                    "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
+                  conversationEnded: true,
+                };
+                break;
+            }
             break;
           case "messageButtonB":
-            conversation = {
-              id: 3,
-              buttonText: "Option B 3",
-              conversationText:
-                "Ich bin zur dritten ID gesprungen. Blablablabla",
-              conversationAnswer: "roplkasdlpaspdlaspd",
-              conversationEnded: false,
-            };
+            switch (this.event) {
+              case "interview":
+                conversation = {
+                  id: 3,
+                  buttonText: "Aussage revidieren",
+                  conversationText: "Das habe ich so nicht gesagt!",
+                  conversationAnswer:
+                    "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
+                  conversationEnded: true,
+                };
+
+                break;
+            }
 
             break;
         }

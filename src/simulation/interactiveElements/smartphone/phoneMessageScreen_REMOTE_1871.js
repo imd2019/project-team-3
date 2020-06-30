@@ -7,6 +7,7 @@ export default class PhoneMessage extends Sprite {
     this.conversation = [];
     this.pos = 0;
     this.message = createGraphics(width, height);
+    this.event = undefined;
   }
 
   draw() {
@@ -132,6 +133,13 @@ export default class PhoneMessage extends Sprite {
   showConversation(textNode) {
     let conv = textNode;
     this.conversation.push(conv);
+  }
+
+  setEvent(event) {
+    this.event = event;
+    for (let elem of this.children) {
+      elem.setEvent();
+    }
   }
 
   bufferAnimation() {

@@ -35,58 +35,22 @@ export default class PhoneMessage extends Sprite {
     this.message.fill(220);
     this.message.noStroke();
 
-    if (this.event === "interview") {
-      this.message.textFont(window.fonts.franklinGothic);
-      this.message.textSize(16);
-      this.message.textAlign(LEFT, CENTER);
+    this.message.textFont(window.fonts.franklinGothic);
+    this.message.textSize(16);
+    this.message.textAlign(LEFT, CENTER);
 
-      this.message.fill(200);
-      this.message.rect(20, 90 + this.pos, 300, 70, 5);
+    this.message.fill(200);
+    this.message.rect(20, 90 + this.pos, 300, 70, 5);
 
-      this.message.noStroke();
-      this.message.fill(0);
-      this.message.text(
-        "Hallo, ich bin Journalist bei der 'The Daily Whisper' und hätte ein paar Fragen.",
-        30,
-        90 + this.pos,
-        290,
-        70
-      );
-    } else if (this.event === "invite") {
-      this.message.textFont(window.fonts.franklinGothic);
-      this.message.textSize(16);
-      this.message.textAlign(LEFT, CENTER);
-
-      this.message.fill(200);
-      this.message.rect(20, 90 + this.pos, 300, 70, 5);
-
-      this.message.noStroke();
-      this.message.fill(0);
-      this.message.text(
-        "Wie wir sehen konnten, bist du auch auf der Suche. Trete unserer Gruppe bei. An diesem Ort gibt es nichts als die Wahrheit.",
-        30,
-        90 + this.pos,
-        290,
-        70
-      );
-    } else {
-      this.message.textFont(window.fonts.franklinGothic);
-      this.message.textSize(16);
-      this.message.textAlign(LEFT, CENTER);
-
-      // this.message.fill(200);
-      // this.message.rect(20, 90 + this.pos, 300, 70, 5);
-
-      this.message.noStroke();
-      this.message.fill(0);
-      this.message.text(
-        "Du hast keine neuen Nachrichten.",
-        30,
-        90 + this.pos,
-        290,
-        70
-      );
-    }
+    this.message.noStroke();
+    this.message.fill(0);
+    this.message.text(
+      "Hallo, ich bin Journalist bei der 'The Daily Whisper' und hätte ein paar Fragen.",
+      30,
+      90 + this.pos,
+      290,
+      60
+    );
 
     for (let elem in this.conversation) {
       if (this.conversation[elem].isClicked) {
