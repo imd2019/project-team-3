@@ -143,10 +143,11 @@ export default class PhoneMessageButton extends Sprite {
               case "interview":
                 conversation = {
                   id: 2,
-                  buttonText: "Option A 2",
+                  buttonText: "Pro-Demo.",
                   conversationText:
-                    "Ich bin zur zweiten ID gesprungen. Blablablabla",
-                  conversationAnswer: "095382503928503289 3509853029052303529",
+                    "In meinen Augen stehen die Demonstranten für die richtige Sache ein.",
+                  conversationAnswer:
+                    "Sie wollen also damit sagen, sie unterstützen die Aussagen und Handlungen dieser Gruppe?",
                   conversationEnded: false,
                 };
 
@@ -172,10 +173,11 @@ export default class PhoneMessageButton extends Sprite {
               case "interview":
                 conversation = {
                   id: 2,
-                  buttonText: "Option B 2",
+                  buttonText: "Pro-Gegendemo.",
                   conversationText:
-                    "Ich bin zur zweiten ID gesprungen. Blablablabla",
-                  conversationAnswer: "..!..",
+                    "Ich finde es wichtig, was die Gegendemonstranten leisten. ",
+                  conversationAnswer:
+                    "Sie stellen sich also damit auf die Seite der Gegendemonstranten?",
                   conversationEnded: false,
                 };
 
@@ -206,9 +208,10 @@ export default class PhoneMessageButton extends Sprite {
               case "interview":
                 conversation = {
                   id: 3,
-                  buttonText: "Option A 3",
-                  conversationText: "Ich bin zur ID 3 gesprungen. Blablablabla",
-                  conversationAnswer: "lolololloll",
+                  buttonText: "Aussage verteidigen.",
+                  conversationText: "Ich bleibe bei dem, was ich gesagt habe.",
+                  conversationAnswer:
+                    "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
                   conversationEnded: true,
                 };
                 break;
@@ -219,10 +222,10 @@ export default class PhoneMessageButton extends Sprite {
               case "interview":
                 conversation = {
                   id: 3,
-                  buttonText: "Option B 3",
-                  conversationText:
-                    "Ich bin zur dritten ID gesprungen. Blablablabla",
-                  conversationAnswer: "roplkasdlpaspdlaspd",
+                  buttonText: "Aussage revidieren",
+                  conversationText: "Das habe ich so nicht gesagt!",
+                  conversationAnswer:
+                    "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
                   conversationEnded: true,
                 };
 
