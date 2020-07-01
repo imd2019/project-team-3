@@ -70,6 +70,23 @@ export default class PhoneMessage extends Sprite {
         290,
         70
       );
+    } else if (this.event === "friendMessage") {
+      this.message.textFont(window.fonts.franklinGothic);
+      this.message.textSize(16);
+      this.message.textAlign(LEFT, CENTER);
+
+      this.message.fill(200);
+      this.message.rect(20, 90 + this.pos, 300, 70, 5);
+
+      this.message.noStroke();
+      this.message.fill(0);
+      this.message.text(
+        "Ich muss mit dir reden. Wir treffen uns in der Bar.",
+        30,
+        90 + this.pos,
+        290,
+        70
+      );
     } else {
       this.message.textFont(window.fonts.franklinGothic);
       this.message.textSize(16);

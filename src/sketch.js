@@ -614,6 +614,9 @@ function setupGame() {
 
     barLink.enable();
     barLink.show();
+
+    messageScreen.setEvent("friendMessage");
+    window.dispatchEvent(new CustomEvent("phoneVibration"));
   });
 
   let door_coffeeHouse = new Door(1300, 379, 128, 214, doorImg);
