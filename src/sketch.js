@@ -7,7 +7,6 @@ import View from "./simulation/view.js";
 
 // general display classes
 import DisplayObject from "./displayObject.js";
-import DualBackgndSprite from "./simulation/dualBackgndSprite.js";
 
 // interactive element classes
 import BarLink from "./simulation/interactiveElements/demo/barLink.js";
@@ -43,6 +42,7 @@ import Arcade from "./simulation/interactiveElements/bar/arcade.js";
 import BarPhone from "./simulation/interactiveElements/bar/barPhone.js";
 import DemoPeople from "./simulation/interactiveElements/demo/demoPeople.js";
 import Newspaper from "./simulation/interactiveElements/kiosk/newspaper.js";
+import DemoForegnd from "./simulation/interactiveElements/demo/demoForegnd.js";
 
 // load images
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
@@ -55,7 +55,7 @@ let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
-let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, kioskLinkNewspapersImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
+let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg_on, demoLinkBarImg_off, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, kioskLinkNewspapersImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
 let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
 let phoneIconImg, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg;
 let postOverlayImg, postImg_demoJoined, postImg_counterDemoJoined, postImg_watchedProDemo, postImg_watchedProCounterDemo, postImg_watchedProNone, postImg_groupInvitationAccepted, postImg_groupInvitationDenied, postImg_interviewDenied, postImg_interviewDefend, postImg_interviewRevoke, postImg_11, postImg_12, postImg_13;
@@ -105,7 +105,8 @@ function preload() {
   coffeeHouseLinkImg = loadImage(
     "../img/park/4_interactionSpaces/4_coffeeHouse.png"
   );
-  demoLinkBarImg = loadImage("../img/park/4_interactionSpaces/4_demo-bar.png");
+  demoLinkBarImg_on = loadImage("../img/park/4_interactionSpaces/4_demo-bar_on.png");
+  demoLinkBarImg_off = loadImage("../img/park/4_interactionSpaces/4_demo-bar_off.png");
   demoLinkDemoImg_demo = loadImage("../img/park/4_interactionSpaces/4_demo-demo.png");
   demoLinkDemoImg_noDemo = loadImage("../img/park/4_interactionSpaces/4_demo-pastDemo.png");
   demoLinkSignsLeftImg = loadImage("../img/park/4_interactionSpaces/4_demo-signs-1.png");
@@ -178,8 +179,8 @@ function preload() {
   phoneVibrationSound = loadSound("../sound/eventRelated/phoneVibration.mp3");
   phoneTapSound = loadSound("../sound/eventRelated/phoneTap.mp3");
   doorSound = loadSound("../sound/eventRelated/door.mp3");
-  // insideStepsSound_fast = loadSound("../sound/eventRelated/insideSteps_fast.mp3");
-  // insideStepsSound_slow = loadSound("../sound/eventRelated/insideSteps_flow.mp3");
+  insideStepsSound_fast = loadSound("../sound/eventRelated/insideSteps_fast.mp3");
+  insideStepsSound_slow = loadSound("../sound/eventRelated/insideSteps_slow.mp3");
   outsideStepsSound_fast = loadSound("../sound/eventRelated/outsideSteps_fast.mp3");
   outsideStepsSound_slow = loadSound("../sound/eventRelated/outsideSteps_slow.mp3");
   lampClickSound = loadSound("../sound/eventRelated/lampClick.mp3");
@@ -223,6 +224,9 @@ window.addEventListener("enterView", (ev) => {
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
       window.dispatchEvent(new CustomEvent("endDemo"));
+    }
+    if (player.actionDone("demo") && player.actionDone("coffeeHouse") && player.actionDone("kiosk")) {
+      window.dispatchEvent(new CustomEvent("friendMessage"));
     }
   }
 
@@ -271,19 +275,13 @@ function setupGame() {
   let street = new DisplayObject(1598, 345, 2125, 308, streetImg);
   park.addChild(street);
 
-  let demoLink_bar = new DemoLink(1936, 338, 188, 132, demoLinkBarImg);
+  let demoLink_bar = new DemoLink(1936, 338, 188, 132, demoLinkBarImg_off, demoLinkBarImg_on);
   park.addChild(demoLink_bar);
 
-  let demoLink_demo = new DemoLink(1788, 425, 470, 117, demoLinkDemoImg_demo, demoLinkSignsLeftImg, demoLinkSignsRightImg, demoLinkDemoImg_noDemo);
+  let demoLink_demo = new DemoLink(1788, 425, 470, 117, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg);
   park.addChild(demoLink_demo);
 
-  let coffeeHouseLink = new CoffeeHouseLink(
-    3353,
-    352,
-    208,
-    129,
-    coffeeHouseLinkImg
-  );
+  let coffeeHouseLink = new CoffeeHouseLink(3353, 352, 208, 129, coffeeHouseLinkImg);
   park.addChild(coffeeHouseLink);
 
   let trees = new DisplayObject(-1, 89, 4103, 695, treesImg);
@@ -307,94 +305,31 @@ function setupGame() {
   let parkForegnd = new DisplayObject(2, 228, 3904, 543, parkForegndImg);
   park.addChild(parkForegnd);
 
-  let streetLamp_1 = new StreetLampBulb(
-    496,
-    336,
-    39,
-    17,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLamp_1 = new StreetLampBulb(496, 336, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_1);
 
-  let streetLamp_2 = new StreetLampBulb(
-    1012,
-    250,
-    35,
-    15,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLamp_2 = new StreetLampBulb(1012, 250, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_2);
 
-  let streetLamp_3 = new StreetLampBulb(
-    1450,
-    294,
-    35,
-    15,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLamp_3 = new StreetLampBulb(1450, 294, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_3);
 
-  let streetLamp_4 = new StreetLampBulb(
-    1756,
-    292,
-    35,
-    15,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLamp_4 = new StreetLampBulb(1756, 292, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_4);
 
-  let streetLamp_5 = new StreetLampBulb(
-    2565,
-    288,
-    35,
-    15,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLamp_5 = new StreetLampBulb(2565, 288, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_5);
 
-  let streetLamp_6 = new StreetLampBulb(
-    2872,
-    286,
-    35,
-    15,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLamp_6 = new StreetLampBulb(2872, 286, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_6);
 
-  let streetLamp_7 = new StreetLampBulb(
-    3488,
-    395,
-    24,
-    10,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLamp_7 = new StreetLampBulb(3488, 395, 24, 10, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_7);
 
-  let streetLamp_8 = new StreetLampBulb(
-    3605,
-    394,
-    16,
-    7,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLamp_8 = new StreetLampBulb(3605, 394, 16, 7, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_8);
 
-  let streetLamp_9 = new StreetLampBulb(
-    3736,
-    370,
-    39,
-    17,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLamp_9 = new StreetLampBulb(3736, 370, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_9);
 
   // random events
@@ -406,14 +341,7 @@ function setupGame() {
   let kioskTrees = new DisplayObject(0, 0, 1792, 768, kioskTreesImg);
   kiosk.addChild(kioskTrees);
 
-  let kioskBuilding = new Kiosk(
-    298,
-    55,
-    733,
-    579,
-    kioskBuildingImg_off,
-    kioskBuildingImg_on
-  );
+  let kioskBuilding = new Kiosk(298, 55, 733, 579, kioskBuildingImg_off, kioskBuildingImg_on);
   kiosk.addChild(kioskBuilding);
   window.addEventListener("openKiosk", () => { kioskBuilding.open(); });
 
@@ -459,26 +387,13 @@ function setupGame() {
   let parkLink_kiosk = new ParkLink(1506, 300, 131, 145, parkLinkImg_kiosk);
   kiosk.addChild(parkLink_kiosk);
 
-  let streetLamp_coffeeHouse = new StreetLampBulb(
-    280,
-    63,
-    37,
-    16,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLamp_coffeeHouse = new StreetLampBulb(280, 63, 37, 16, streetLampBulbOnImg, streetLampBulbOffImg);
   coffeeHouse.addChild(streetLamp_coffeeHouse);
 
   let coffeeHouseForegnd = new DisplayObject(0, 0, 1792, 768, coffeeHouseForegndImg);
   coffeeHouse.addChild(coffeeHouseForegnd);
 
-  let parkLink_coffeeHouse = new ParkLink(
-    129,
-    123,
-    241,
-    57,
-    parkLinkImg_coffeeHouse
-  );
+  let parkLink_coffeeHouse = new ParkLink(129, 123, 241, 57, parkLinkImg_coffeeHouse);
   coffeeHouse.addChild(parkLink_coffeeHouse);
 
   let barForegnd = new DisplayObject(0, 0, 1793, 769, barForegndImg);
@@ -501,27 +416,13 @@ function setupGame() {
   let barPhone = new BarPhone(357, 356, 22, 8, barPhoneImg);
   bar.addChild(barPhone);
 
-  let streetLampDemo_1 = new StreetLampBulb(
-    614,
-    34,
-    17,
-    8,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLampDemo_1 = new StreetLampBulb(614, 34, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
   demo.addChild(streetLampDemo_1);
 
-  let streetLampDemo_2 = new StreetLampBulb(
-    1333,
-    31,
-    17,
-    8,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let streetLampDemo_2 = new StreetLampBulb(1333, 31, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
   demo.addChild(streetLampDemo_2);
 
-  let demoForegnd = new DualBackgndSprite(-160, -6, 2180, 845, demoForegndImg_demo, demoForegndImg_pastDemo);
+  let demoForegnd = new DemoForegnd(-160, -6, 2180, 845, demoForegndImg_demo, demoForegndImg_pastDemo);
   demo.addChild(demoForegnd);
 
   let barLink = new BarLink(1091, 137, 147, 228, barLinkImg);
@@ -556,6 +457,7 @@ function setupGame() {
 
   window.addEventListener("pickupSign", () => {
     parkLink_demo.disable();
+    demoBench.disable();
 
     if (player.actionDone("coffeeHouse", "invitationAccepted")) {
       if (player.actionDone("coffeeHouse", "invitationAccepted", true)) {
@@ -610,13 +512,17 @@ function setupGame() {
     demoSignsLeft.hide();
     demoSignsRight.hide();
 
-    demoLink_demo.changeBackground();
-
-    barLink.enable();
+    demoLink_demo.endDemo();
+    demoLink_bar.endDemo();
     barLink.show();
+  });
 
-    messageScreen.setEvent("friendMessage");
-    window.dispatchEvent(new CustomEvent("phoneVibration"));
+  window.addEventListener("friendMessage", () => {
+    setTimeout( () => {
+      barLink.enable();
+      messageScreen.setEvent("friendMessage");
+      window.dispatchEvent(new CustomEvent("phoneVibration"));
+    }, 2000);
   });
 
   let door_coffeeHouse = new Door(1300, 379, 128, 214, doorImg);
@@ -930,13 +836,13 @@ window.addEventListener("walkOutsideSlow", () => {
 });
 
 window.addEventListener("walkInsideFast", () => {
-  if (!insideStepsSound_fast.isPlaying()) {
+  if (!insideStepsSound_fast.isPlaying() && !insideStepsSound_slow.isPlaying()) {
     insideStepsSound_fast.play();
   }
 });
 
 window.addEventListener("walkInsideSlow", () => {
-  if (!insideStepsSound_slow.isPlaying()) {
+  if (!insideStepsSound_slow.isPlaying() && !insideStepsSound_fast.isPlaying()) {
     insideStepsSound_slow.play();
   }
 });

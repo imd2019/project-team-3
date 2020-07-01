@@ -17,5 +17,6 @@ export default class DemoPeople extends Sprite {
 
   resetElement() {
     this.enable();
+    this.show();
   }
 }

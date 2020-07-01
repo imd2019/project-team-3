@@ -1,7 +1,7 @@
 import Sprite from "../../../sprite.js";
 
 export default class DemoLink extends Sprite {
-  constructor(x, y, width, height, backgnd, signsLeft, signsRight, noDemo) {
+  constructor(x, y, width, height, backgnd, noDemo, signsLeft = undefined, signsRight = undefined) {
     super(x, y, width, height, backgnd);
     this.signsLeft = signsLeft;
     this.signsRight = signsRight;
@@ -11,9 +11,9 @@ export default class DemoLink extends Sprite {
     this.demo = true;
   }
 
-  changeBackground(){
-    this.demo = !this.demo;
-}
+  endDemo() {
+    this.demo = false;
+  }
 
   clicked() {
     window.dispatchEvent(new CustomEvent("enterView", { detail: "demo" }));

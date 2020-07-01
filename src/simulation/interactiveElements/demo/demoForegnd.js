@@ -1,13 +1,13 @@
-import DualBackgndSprite from "../../dualBackgndSprite.js";
+import Sprite from "../../../sprite.js";
 
-export default class DemoForegnd extends DualBackgndSprite {
+export default class DemoForegnd extends Sprite {
   constructor(x, y, width, height, demoImg, noDemoImg) {
     super(x, y, width, height, demoImg);
     this.noDemoImg = noDemoImg;
     this.demo = true;
   }
 
-  changeBackground(){
+  changeBackgnd() {
       this.demo = !this.demo;
   }
 

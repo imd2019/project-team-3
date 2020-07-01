@@ -118,5 +118,6 @@ export default class View extends Sprite {
 
   resetElement() {
     this.alreadyEntered = false;
+    this.x = (windowWidth / 2) - ((width * this.scale) / 2);
   }
 }
