@@ -8,6 +8,7 @@ export default class PhoneHomeScreen extends Sprite {
     this.pos = 0;
     this.activePosts = [];
     this.posts = createGraphics(width, height);
+    this.postSet = false;
   }
 
   draw() {
@@ -22,11 +23,26 @@ export default class PhoneHomeScreen extends Sprite {
 
   setPost(img) {
     this.activePosts.push(img);
+    this.postSet = true;
     this.redraw();
   }
 
   redraw() {
     this.posts.clear();
+    if (!this.postSet) {
+      this.posts.noStroke();
+      this.posts.textSize(20);
+      this.posts.textAlign(LEFT, CENTER);
+      this.posts.textFont(window.fonts.franklinGothic);
+      this.posts.fill(0);
+      this.posts.text(
+        "In deiner Timeline gibt es gerade nichts zu sehen.",
+        30,
+        30,
+        400,
+        105
+      );
+    }
     for (let i in this.activePosts) {
       this.posts.image(
         this.postOverlay,

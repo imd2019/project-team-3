@@ -16,7 +16,7 @@ export default class PhoneMessageButton extends Sprite {
     window.dispatchEvent(new CustomEvent("phoneSendMsg"));
     this.currentMessage.isClicked = true;
     setTimeout(() => {
-      this.parent.children.forEach( (btn) => {
+      this.parent.children.forEach((btn) => {
         btn.updateMessages();
       });
     }, 0); // setTimeout as temporary bugfix - a real fix will need bigger code restructuring
@@ -26,16 +26,27 @@ export default class PhoneMessageButton extends Sprite {
     this.parent.redraw();
 
     if (this.currentMessage.conversationEnded) {
-      this.parent.children.forEach( (btn) => {
+      this.parent.children.forEach((btn) => {
         btn.hide();
         btn.disable();
       });
-      window.dispatchEvent(new CustomEvent("addAction", {detail: {
-        origin: this.currentMessage.actionOrigin,
-        name: this.currentMessage.actionName,
-        data: this.currentMessage.actionData,
-      }}));
     }
+    if (
+      this.currentMessage.conversationEnded ||
+      this.currentMessage.demoChosen
+    ) {
+      console.log("dispatchEvent");
+      window.dispatchEvent(
+        new CustomEvent("addAction", {
+          detail: {
+            origin: this.currentMessage.actionOrigin,
+            name: this.currentMessage.actionName,
+            data: this.currentMessage.actionData,
+          },
+        })
+      );
+    }
+    console.log(this.currentMessage.siteChosen);
   }
 
   setEvent() {
@@ -47,7 +58,7 @@ export default class PhoneMessageButton extends Sprite {
 
   draw() {
     if (this.mouseHovered()) {
-      stroke("yellow");
+      stroke(255, 165, 0);
     } else {
       noStroke();
     }
@@ -103,6 +114,17 @@ export default class PhoneMessageButton extends Sprite {
                   conversationEnded: false,
                 };
                 break;
+              case "friendMessage":
+                conversation = {
+                  id: 1,
+                  buttonText: "Wer bist du?",
+                  conversationText:
+                    "Kennen wir uns etwa? Wieso schreibst du mir?",
+                  conversationAnswer:
+                    "Komm einfach zum 14qm. Du wirst es verstehen, sobald du dort angekommen bist.",
+                  conversationEnded: true,
+                };
+                break;
             }
             break;
           case "messageButtonB":
@@ -136,6 +158,17 @@ export default class PhoneMessageButton extends Sprite {
                   actionData: false,
                 };
                 break;
+              case "friendMessage":
+                conversation = {
+                  id: 1,
+                  buttonText: "Welche Bar?",
+                  conversationText:
+                    "Von welcher Bar sprichst du? Kennen wir uns etwa?",
+                  conversationAnswer:
+                    "Ich bin ein alter Freund. Komm so schnell du kannst zum 14qm.",
+                  conversationEnded: true,
+                };
+                break;
             }
             break;
         }
@@ -153,10 +186,12 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Sie wollen also damit sagen, sie unterstützen die Aussagen und Handlungen dieser Gruppe?",
                   conversationEnded: false,
+                  demoChosen: true,
+                  actionOrigin: "coffeeHouse",
+                  actionName: "proDemo",
+                  actionData: true,
                 };
-
                 break;
-
               case "invite":
                 conversation = {
                   id: 2,
@@ -184,6 +219,10 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Sie stellen sich also damit auf die Seite der Gegendemonstranten?",
                   conversationEnded: false,
+                  demoChosen: true,
+                  actionOrigin: "coffeeHouse",
+                  actionName: "proDemo",
+                  actionData: false,
                 };
                 break;
               case "invite":
@@ -228,7 +267,7 @@ export default class PhoneMessageButton extends Sprite {
               case "interview":
                 conversation = {
                   id: 3,
-                  buttonText: "Aussage revidieren",
+                  buttonText: "Aussage revidieren.",
                   conversationText: "Das habe ich so nicht gesagt!",
                   conversationAnswer:
                     "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
