@@ -9,6 +9,7 @@ export default class PhoneMailButton extends Sprite {
   }
 
   clicked() {
+    window.dispatchEvent(new CustomEvent("tapPhone"));
     window.dispatchEvent(new CustomEvent("getInfo"));
     this.hide();
     this.disable();

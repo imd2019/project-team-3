@@ -6,6 +6,7 @@ export default class ParkLink extends Sprite {
   }
 
   clicked() {
+    window.dispatchEvent(new CustomEvent("streetsignClick"));
     window.dispatchEvent(new CustomEvent("enterView", { detail: "park" }));
   }
 }

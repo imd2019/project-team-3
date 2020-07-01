@@ -6,6 +6,7 @@ export default class PhoneButton extends Sprite {
   }
 
   clicked() {
+    window.dispatchEvent(new CustomEvent("phoneTap"));
     window.dispatchEvent(new CustomEvent("closePhone"));
   }
 }

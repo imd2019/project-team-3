@@ -11,9 +11,8 @@ export default class ChoosePostButton extends Sprite {
 
   clicked() {
     if (this.enabled) {
-      window.dispatchEvent(
-        new CustomEvent("postChosen", { detail: this.post })
-      );
+      window.dispatchEvent(new CustomEvent("phoneSendMsg"));
+      window.dispatchEvent(new CustomEvent("postChosen", { detail: this.post }));
       this.parent.redraw();
     }
   }

@@ -68,8 +68,8 @@ let videoOverlayImg;
 let endVideo;
 
 // load soundfiles
-let owlSound, demoSound, citySound, leavesSound, trafficSound, coffeeHouseSound, fountainSound, policeSirenSound, rainSound;
-let phoneMsgSound, phoneVibrationSound, phoneTapSound, doorSound, insideStepsSound_fast, insideStepsSound_slow, outsideStepsSound_fast, outsideStepsSound_slow, lampClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound;
+let owlSound, demoSound, citySound, leavesSound, coffeeHouseSound, coffeeHouseMusicSound, fountainSound, policeSirenSound, demoBenchSound;
+let phoneMsgSound, phoneVibrationSound, phoneTapSound, doorSound, insideStepsSound_fast, insideStepsSound_slow, outsideStepsSound_fast, outsideStepsSound_slow, lampClickSound, streetsignClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound;
 
 
 function preload() {
@@ -168,13 +168,11 @@ function preload() {
   // sound
   owlSound = loadSound("../sound/ambient/owl.mp3");
   demoSound = loadSound("../sound/ambient/demo.mp3");
-  citySound = loadSound("../sound/ambient/city.mp3");
   leavesSound = loadSound("../sound/ambient/leaves.mp3");
-  trafficSound = loadSound("../sound/ambient/traffic.mp3");
   coffeeHouseSound = loadSound("../sound/ambient/coffeeHouse.mp3");
+  coffeeHouseMusicSound = loadSound("../sound/ambient/coffeeHouseMusic.mp3");
   fountainSound = loadSound("../sound/ambient/fountain.mp3");
   policeSirenSound = loadSound("../sound/ambient/policeSiren.mp3");
-  rainSound = loadSound("../sound/ambient/rain.mp3");
   phoneMsgSound = loadSound("../sound/eventRelated/phoneMsg.mp3");
   phoneVibrationSound = loadSound("../sound/eventRelated/phoneVibration.mp3");
   phoneTapSound = loadSound("../sound/eventRelated/phoneTap.mp3");
@@ -184,10 +182,13 @@ function preload() {
   outsideStepsSound_fast = loadSound("../sound/eventRelated/outsideSteps_fast.mp3");
   outsideStepsSound_slow = loadSound("../sound/eventRelated/outsideSteps_slow.mp3");
   lampClickSound = loadSound("../sound/eventRelated/lampClick.mp3");
+  streetsignClickSound = loadSound("../sound/eventRelated/streetsignClick.mp3");
   registerSound = loadSound("../sound/eventRelated/register.mp3");
   newspaperSound = loadSound("../sound/eventRelated/newspaper.mp3");
   pickupSignSound = loadSound("../sound/eventRelated/pickupSign.mp3");
-  flyerSound = loadSound("../sound/eventRelated/flyer.mp3", setupGame);
+  flyerSound = loadSound("../sound/eventRelated/flyer.mp3");
+  demoBenchSound = loadSound("../sound/eventRelated/benchSitdown.mp3");
+  citySound = loadSound("../sound/ambient/city.mp3", setupGame);
 }
 window.preload = preload;
 
@@ -202,12 +203,45 @@ window.addEventListener("addAction", (ev) => {
 let game = new Game(player);
 window.addEventListener("enterView", (ev) => {
   game.enterView(ev.detail);
+  citySound.loop();
+  leavesSound.loop();
+  fountainSound.loop();
+  owlSound.loop();
+  demoSound.loop();
   
   if(ev.detail === "bar") {
     doorSound.play();
+    citySound.fade(0, 1);
+    phoneVibrationSound.loop();
+    phoneVibrationSound.setVolume(0.3);
+
+    window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
+  }
+
+  if(ev.detail === "demo") {
+    citySound.fade(0.2, 2);
+    leavesSound.fade(0, 1);
+    owlSound.fade(0, 1);
+    if (!player.actionDone("demo", "endDemo")) {
+      demoSound.fade(0.2, 1);
+      setTimeout( () => {
+        policeSirenSound.play();
+        policeSirenSound.setVolume(0.4);
+        policeSirenSound.fade(0, 7.5);
+      }, 1500);
+    }
+  }
+
+  if(ev.detail === "kiosk") {
+    demoSound.fade(0, 1);
   }
 
   if (ev.detail === "park") {
+    citySound.fade(0.05);
+    leavesSound.fade(0.3, 1);
+    fountainSound.fade(0, 2);
+    owlSound.fade(0.05, 1);
+    demoSound.fade(0.02, 1);
     if (player.actionDone("demo") || player.actionDone("coffeeHouse")) {
       window.dispatchEvent(new CustomEvent("openKiosk"));
 
@@ -223,7 +257,12 @@ window.addEventListener("enterView", (ev) => {
       window.dispatchEvent(new CustomEvent("hideNewspapers"));
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
-      window.dispatchEvent(new CustomEvent("endDemo"));
+
+      window.dispatchEvent(new CustomEvent("addAction", {detail: {
+        origin: "demo",
+        name: "endDemo",
+        data: {},
+      }}));
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse") && player.actionDone("kiosk")) {
       window.dispatchEvent(new CustomEvent("friendMessage"));
@@ -231,6 +270,11 @@ window.addEventListener("enterView", (ev) => {
   }
 
   if (ev.detail === "coffeeHouse") {
+    citySound.fade(0.1, 2);
+    leavesSound.fade(0.6, 2);
+    fountainSound.fade(0.06, 2);
+    owlSound.fade(0, 1);
+    demoSound.fade(0, 1);
     if (player.actionDone("demo", "joinDemo")) {
       window.dispatchEvent(new CustomEvent("addAction", {detail: {
         origin: "coffeeHouse",
@@ -245,7 +289,8 @@ function setupGame() {
   // views
   let park = new View("park", 4098, 768, parkBackgnd);
   game.addView(park);
-  game.enterView("park");
+  window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
+  // game.enterView("park");
 
   let kiosk = new View("kiosk", 1792, 768, parkBackgnd);
   game.addView(kiosk);
@@ -506,7 +551,7 @@ function setupGame() {
   });
 
   window.addEventListener("endDemo", () => {
-    demoForegnd.changeBackgnd();
+    demoForegnd.endDemo();
     demoPeople.hide();
     counterDemoPeople.hide();
     demoSignsLeft.hide();
@@ -515,6 +560,9 @@ function setupGame() {
     demoLink_demo.endDemo();
     demoLink_bar.endDemo();
     barLink.show();
+
+    demoSound.fade(0, 1);
+    demoSound.stop();
   });
 
   window.addEventListener("friendMessage", () => {
@@ -631,6 +679,16 @@ function setupGame() {
   let phoneIcon = new PhoneIcon(windowWidth - 150, windowHeight - 200, 112, 168, phoneIconImg);
   global.addChild(phoneIcon);
 
+  window.addEventListener("hidePhoneIcon", () => {
+    phoneIcon.hide();
+    phoneIcon.disable();
+  });
+
+  window.addEventListener("showPhoneIcon", () => {
+    phoneIcon.show();
+    phoneIcon.enable();
+  });
+
   let mobilePhone = new MobilePhone(492, 739, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg);
   global.addChild(mobilePhone);
 
@@ -638,20 +696,16 @@ function setupGame() {
   mobilePhone.addChild(phoneButton);
 
   window.addEventListener("openPhone", () => {
-    window.dispatchEvent(new CustomEvent("phoneTap"));
-    phoneIcon.hide();
-    phoneIcon.disable();
+    window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
     mobilePhone.show();
     mobilePhone.enable();
     player.usePhone(true);
-  })
+  });
 
   window.addEventListener("closePhone", () => {
-    window.dispatchEvent(new CustomEvent("phoneTap"));
     mobilePhone.hide();
     mobilePhone.disable();
-    phoneIcon.show();
-    phoneIcon.enable();
+    window.dispatchEvent(new CustomEvent("showPhoneIcon"));
     player.usePhone(false);
 
     if (player.actionDone("coffeeHouse", "invitationAccepted") && !player.actionDone("coffeeHouse", "invitationPostWatched")) {
@@ -672,7 +726,7 @@ function setupGame() {
         }}));
       }, 5000);
     }
-  })
+  });
 
 
   let homeScreenBtn = new PhoneMenuIcon(43, 610, 79, 50, homeIconImg, "homeScreen");
@@ -767,6 +821,7 @@ function setupGame() {
   endScreen.addChild(mailBtn);
 
   window.addEventListener("endGame", () => {
+    phoneVibrationSound.stop();
     window.dispatchEvent(new CustomEvent("openPhone"));
     mobilePhone.showScreen("endScreen");
     mobilePhone.break();
@@ -778,17 +833,36 @@ function setupGame() {
   window.addEventListener("restartGame", () => {
     game.reset();
   });
+
+  // sound
+  outsideStepsSound_fast.setVolume(0.3);
+  outsideStepsSound_slow.setVolume(0.3);
+  insideStepsSound_fast.setVolume(0.2);
+  insideStepsSound_slow.setVolume(0.2);
+  flyerSound.setVolume(0.3);
+  streetsignClickSound.setVolume(0.7);
+  pickupSignSound.setVolume(0.8);
+  phoneVibrationSound.setVolume(1.3);
+  phoneMsgSound.setVolume(0.4);
+  phoneTapSound.setVolume(0.5);
+  newspaperSound.setVolume(0.3);
+  fountainSound.setVolume(0);
+  owlSound.setVolume(0.05);
+  demoSound.setVolume(0.02);
+  doorSound.setVolume(0.3);
+  coffeeHouseSound.setVolume(0.7);
+  coffeeHouseMusicSound.setVolume(0.15);
+  lampClickSound.setVolume(0.6);
+  registerSound.setVolume(0.7);
+  citySound.setVolume(0.05);
+  demoBenchSound.setVolume(0.6);
 }
 
 /* sound events */
 
-window.addEventListener("phoneReceiveMsg", () => {
+window.addEventListener("phoneSendMsg", () => {
   phoneMsgSound.play();
 } );
-
-// window.addEventListener("phoneSendMsg", () => {
-//   phoneSendSound.play();
-// });
 
 window.addEventListener("phoneVibration", () => {
   phoneVibrationSound.play();  
@@ -799,7 +873,29 @@ window.addEventListener("phoneTap", () => {
 });
 
 window.addEventListener("enterCoffeeHouse", () => {
+  fountainSound.fade(0, 1);
+  citySound.fade(0, 1);
+  leavesSound.fade(0, 1);
+
   doorSound.play();
+  setTimeout( () => {
+    coffeeHouseSound.play();
+    coffeeHouseMusicSound.play();
+  }, 800);
+  setTimeout( () => {
+    coffeeHouseSound.fade(0, 1);
+    coffeeHouseMusicSound.fade(0, 1);
+  }, 10000);
+  setTimeout( () => {
+    doorSound.play();
+    citySound.fade(0.1, 2);
+    leavesSound.fade(0.6, 2);
+    fountainSound.fade(0.06, 2);
+  }, 10500);
+  setTimeout( () => {
+    coffeeHouseSound.stop();
+    coffeeHouseMusicSound.stop();
+  }, 12500);
 });
 
 window.addEventListener("pickupSign", () => {
@@ -821,6 +917,18 @@ window.addEventListener("buyNewspaper", () => {
 
 window.addEventListener("lampClick", () => {
   lampClickSound.play();
+});
+
+window.addEventListener("tapPhone", () => {
+  phoneTapSound.play();
+});
+
+window.addEventListener("streetsignClick", () => {
+  streetsignClickSound.play();
+});
+
+window.addEventListener("benchSitdown", () => {
+  demoBenchSound.play();
 });
 
 window.addEventListener("walkOutsideFast", () => {

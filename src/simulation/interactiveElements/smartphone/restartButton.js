@@ -9,6 +9,7 @@ export default class RestartButton extends Sprite {
   }
 
   clicked() {
+    window.dispatchEvent(new CustomEvent("tapPhone"));
     window.dispatchEvent(new CustomEvent("restartGame"));
   }
 

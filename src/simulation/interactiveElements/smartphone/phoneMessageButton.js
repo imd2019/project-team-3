@@ -13,6 +13,7 @@ export default class PhoneMessageButton extends Sprite {
   }
 
   clicked() {
+    window.dispatchEvent(new CustomEvent("phoneSendMsg"));
     this.currentMessage.isClicked = true;
     setTimeout(() => {
       this.parent.children.forEach( (btn) => {

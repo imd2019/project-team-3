@@ -7,8 +7,8 @@ export default class DemoForegnd extends Sprite {
     this.demo = true;
   }
 
-  changeBackgnd() {
-      this.demo = !this.demo;
+  endDemo() {
+      this.demo = false;
   }
 
   draw(){

@@ -7,6 +7,7 @@ export default class DemoBench extends Sprite {
 
   clicked() {
     this.disable();
+    window.dispatchEvent(new CustomEvent("benchSitdown"));
     window.dispatchEvent(new CustomEvent("addAction", { detail: {
       origin: "demo",
       name: "watchDemo",

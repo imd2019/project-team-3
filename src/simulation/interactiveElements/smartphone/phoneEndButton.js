@@ -8,6 +8,7 @@ export default class PhoneEndButton extends Sprite {
   }
 
   clicked() {
+    window.dispatchEvent(new CustomEvent("tapPhone"));
     window.dispatchEvent(new CustomEvent("revealRole"));
     this.hide();
     this.disable();
