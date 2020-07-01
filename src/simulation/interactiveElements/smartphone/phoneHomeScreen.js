@@ -68,4 +68,10 @@ export default class PhoneHomeScreen extends Sprite {
       }
     }
   }
+
+  resetElement() {
+    this.pos = 0;
+    this.activePosts = [];
+    this.redraw();
+  }
 }

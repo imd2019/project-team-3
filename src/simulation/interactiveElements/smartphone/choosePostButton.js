@@ -4,10 +4,9 @@ export default class ChoosePostButton extends Sprite {
   constructor(x, y, width, height, name, post) {
     super(x, y, width, height);
     this.name = name;
+    this.post = post;
     this.hide();
     this.disable();
-    this.textNode;
-    this.post = post;
   }
 
   clicked() {
@@ -42,5 +41,10 @@ export default class ChoosePostButton extends Sprite {
     noStroke();
     fill("black");
     text(textNode, 0, 0, this.width, this.height);
+  }
+
+  resetElement() {
+    this.hide();
+    this.disable();
   }
 }

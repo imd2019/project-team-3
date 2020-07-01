@@ -6,9 +6,9 @@ export default class MobilePhone extends Sprite{
     super((windowWidth - width * scale)/ 2, (windowHeight - height * scale) / 2, width, height, backgnd);
     this.overlay = overlay;
     this.brokenOverlay = brokenOverlay;
-    this.broken = false;
     this.scale = scale;
-    this.currentScreen;
+    this.broken = false;
+    this.currentScreen = undefined;
     this.disable();
     this.hide();
   }

@@ -14,4 +14,9 @@ export default class Flyer extends Sprite {
     this.hide();
     window.dispatchEvent(new CustomEvent("closeFlyer"));
   }
+
+  resetElement() {
+    this.disable();
+    this.hide();
+  }
 }

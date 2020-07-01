@@ -28,4 +28,9 @@ export default class PhoneEndButton extends Sprite {
     fill("black");
     text("Wer bin ich?", 0, 0, this.width, this.height);
   }
+
+  resetElement() {
+    this.enable();
+    this.show();
+  }
 }

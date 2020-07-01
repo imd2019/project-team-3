@@ -4,7 +4,7 @@ export default class DemoPeople extends Sprite {
   constructor(x, y, width, height, backgnd, type) {
     super(x, y, width, height, backgnd);
     this.type = type;
-    this.enabled = false;
+    this.disable();
   }
 
   clicked() {
@@ -13,5 +13,9 @@ export default class DemoPeople extends Sprite {
       name: "joinDemo",
       data: this.type,
     }}));
+  }
+
+  resetElement() {
+    this.enable();
   }
 }

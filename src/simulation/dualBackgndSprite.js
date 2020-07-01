@@ -22,4 +22,8 @@ export default class DualBackgndSprite extends Sprite {
       image(this.backgnd_2, 0, 0, this.width, this.height);
     }
   }
+
+  resetElement() {
+    this.on = true;
+  }
 }

@@ -84,4 +84,9 @@ export default class Speechbubble extends DisplayObject {
     }
     this.content = bubble.text;
   }
+
+  resetElement() {
+    this.content = undefined;
+    this.hide();
+  }
 }

@@ -4,14 +4,13 @@ export default class PhoneVideoPlayer extends Sprite {
   constructor(x, y, width, height, backgnd, video) {
     super(x, y, width, height, backgnd);
     this.video = video;
-    // this.video.size(this.width);
     this.video.hide();
-    this.hide();
-    this.disable();
     this.screen = undefined;
     this.pos = undefined;
     this.isClicked = false;
     this.videoSet = false;
+    this.hide();
+    this.disable();
   }
 
   draw() {
@@ -44,5 +43,15 @@ export default class PhoneVideoPlayer extends Sprite {
 
   updatePosition() {
     this.parent.pos = -175;
+  }
+
+  resetElement() {
+    this.video.hide();
+    this.screen = undefined;
+    this.pos = undefined;
+    this.isClicked = false;
+    this.videoSet = false;
+    this.hide();
+    this.disable();
   }
 }

@@ -13,11 +13,6 @@ export default class PhonePostButton extends Sprite {
     this.enable();
   }
 
-  resetElement() {
-    this.hide();
-    this.disable();
-  }
-
   clicked() {
     window.dispatchEvent(new CustomEvent("addPost"));
     this.reset();
@@ -37,5 +32,10 @@ export default class PhonePostButton extends Sprite {
     noStroke();
     fill("black");
     text("Post", 0, 0, this.width, this.height);
+  }
+
+  resetElement() {
+    this.hide();
+    this.disable();
   }
 }

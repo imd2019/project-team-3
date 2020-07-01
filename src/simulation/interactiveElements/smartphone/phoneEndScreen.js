@@ -6,7 +6,7 @@ export default class PhoneEndScreen extends Sprite {
     this.name = "endScreen";
     this.overlay = overlay;
     this.answered = false;
-    this.role;
+    this.role = undefined;
     this.pos = 0.1;
     this.message = createGraphics(width, height);
   }
@@ -144,5 +144,12 @@ export default class PhoneEndScreen extends Sprite {
         this.redraw();
       }
     }
+  }
+
+  resetElement() {
+    this.answered = false;
+    this.role = undefined;
+    this.pos = 0.1;
+    this.redraw();
   }
 }

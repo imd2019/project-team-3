@@ -5,6 +5,7 @@ export default class RestartButton extends Sprite {
     super(x, y, width, height);
     this.name = "restartButton";
     this.hide();
+    this.disable();
   }
 
   clicked() {
@@ -25,5 +26,10 @@ export default class RestartButton extends Sprite {
     noStroke();
     fill("black");
     text("Nochmal probieren", 0, 0, this.width, this.height);
+  }
+
+  resetElement() {
+    this.hide();
+    this.disable();
   }
 }

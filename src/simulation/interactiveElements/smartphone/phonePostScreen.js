@@ -47,12 +47,6 @@ export default class PhonePostScreen extends Sprite {
     }
   }
 
-  resetElement() {
-    this.newPost = undefined;
-    this.postReady = false;
-    this.redraw();
-  }
-
   setPost(img) {
     this.newPost = img;
     this.postReady = true;
@@ -61,5 +55,11 @@ export default class PhonePostScreen extends Sprite {
 
   getPost() {
     return this.newPost;
+  }
+
+  resetElement() {
+    this.newPost = undefined;
+    this.postReady = false;
+    this.redraw();
   }
 }

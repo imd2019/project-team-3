@@ -30,4 +30,8 @@ export default class StreetLampBulb extends Sprite {
       image(this.offImg, 0, 0, this.width, this.height);
     }
   }
+
+  resetElement() {
+    this.on = true;
+  }
 }

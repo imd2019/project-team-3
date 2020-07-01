@@ -13,4 +13,8 @@ export default class DemoBench extends Sprite {
       data: {}
     }}));
   }
+
+  resetElement() {
+    this.enable();
+  }
 }

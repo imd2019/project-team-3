@@ -18,4 +18,8 @@ export default class DemoForegnd extends DualBackgndSprite {
       image(this.noDemoImg, 0, 0, this.width, this.height);
     }
   }
+
+  resetElement() {
+    this.demo = true;
+  }
 }

@@ -13,4 +13,8 @@ export default class Door extends Sprite {
         data: {},
     }}));
   }
+
+  resetElement() {
+    this.enable();
+  }
 }

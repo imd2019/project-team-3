@@ -4,8 +4,8 @@ export default class Newspaper extends Sprite {
   constructor(x, y, width, height, backgnd, name) {
     super(x, y, width, height, backgnd);
     this.name = name;
-    this.visible = false;
-    this.enabled = false;
+    this.hide();
+    this.disable();
   }
 
   clicked() {
@@ -14,5 +14,10 @@ export default class Newspaper extends Sprite {
       name: "buyNewspaper",
       data: this.name
     }}));
+  }
+
+  resetElement() {
+    this.hide();
+    this.disable();
   }
 }

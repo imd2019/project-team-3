@@ -32,5 +32,8 @@ export default class Player extends Simulation{
   reset(){
     this.actions = {};
     this.phoneInUse = false;
+    this.manipulativity = 0.5;
+    this.reflectivity = 0.5;
+    this.attentionseeking = 0.5;
   }
 }

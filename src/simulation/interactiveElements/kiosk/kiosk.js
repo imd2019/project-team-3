@@ -18,4 +18,8 @@ export default class Kiosk extends Sprite {
       image(this.backgnd, 0, 0, this.width, this.height);
     }
   }
+
+  resetElement() {
+    this.opened = false;
+  }
 }

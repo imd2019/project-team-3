@@ -4,6 +4,7 @@ export default class PhoneMailButton extends Sprite {
   constructor(x, y, width, height) {
     super(x, y, width, height);
     this.name = "mailButton";
+    this.disable();
     this.hide();
   }
 
@@ -27,5 +28,10 @@ export default class PhoneMailButton extends Sprite {
     noStroke();
     fill("black");
     text("Mehr Informationen", 0, 0, this.width, this.height);
+  }
+
+  resetElement() {
+    this.disable();
+    this.hide();
   }
 }

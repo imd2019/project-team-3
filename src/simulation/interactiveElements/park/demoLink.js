@@ -37,4 +37,10 @@ export default class DemoLink extends Sprite {
       }
     }
   }
+
+  resetElement() {
+    this.counter = 0;
+    this.steps = 0.3;
+    this.demo = true;
+  }
 }
