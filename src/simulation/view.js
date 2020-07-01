@@ -23,8 +23,11 @@ export default class View extends Sprite {
       case "left":
         if (this.name === "park") {
           if (this.children[6].x * this.scale < Math.abs(this.x) - 6 * speed) {
-            this.moveSound();
-
+            if (speed === 3) {
+              this.moveSound("Fast");
+            } else {
+              this.moveSound("Slow");
+            }
             // moon
             this.children[0].x += 1 * speed;
             // city
@@ -40,7 +43,11 @@ export default class View extends Sprite {
           }
         } else {
           if (this.x < - 3.5 * speed) {
-            this.moveSound();
+            if (speed === 3) {
+              this.moveSound("Fast");
+            } else {
+              this.moveSound("Slow");
+            }
             this.x += 3.5 * speed;
           }
         }
@@ -48,7 +55,11 @@ export default class View extends Sprite {
       case "right":
         if (this.name === "park") {
           if (this.children[6].x * this.scale > this.x + 6 * speed) {
-            this.moveSound();
+            if (speed === 3) {
+              this.moveSound("Fast");
+            } else {
+              this.moveSound("Slow");
+            }
             // moon
             this.children[0].x -= 1 * speed;          
             // city
@@ -64,7 +75,11 @@ export default class View extends Sprite {
         }
         } else {
           if (this.x > windowWidth - this.width * this.scale) {
-            this.moveSound();
+            if (speed === 3) {
+              this.moveSound("Fast");
+            } else {
+              this.moveSound("Slow");
+            }
             this.x -= 3.5 * speed;
           }
         }
@@ -72,11 +87,11 @@ export default class View extends Sprite {
     }
   }
 
-  moveSound() {
+  moveSound(speed) {
     if (this.name != "bar") {
-      window.dispatchEvent(new CustomEvent("walkOutside"));
+      window.dispatchEvent(new CustomEvent("walkOutside" + speed));
     } else {
-      window.dispatchEvent(new CustomEvent("walkInside"));
+      window.dispatchEvent(new CustomEvent("walkInside" + speed));
     }
   }
 

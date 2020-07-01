@@ -58,7 +58,7 @@ let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, kioskLinkNewspapersImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
 let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
 let phoneIconImg, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg;
-let postOverlayImg, postImg_1, postImg_2, postImg_3, postImg_4, postImg_5, postImg_6, postImg_7, postImg_8, postImg_9, postImg_10, postImg_11, postImg_12;
+let postOverlayImg, postImg_demoJoined, postImg_counterDemoJoined, postImg_watchedProDemo, postImg_watchedProCounterDemo, postImg_watchedProNone, postImg_groupInvitationAccepted, postImg_groupInvitationDenied, postImg_interviewDenied, postImg_interviewDefend, postImg_interviewRevoke, postImg_11, postImg_12, postImg_13;
 
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
 
@@ -69,7 +69,7 @@ let endVideo;
 
 // load soundfiles
 let owlSound, demoSound, citySound, leavesSound, trafficSound, coffeeHouseSound, fountainSound, policeSirenSound, rainSound;
-let phoneMsgSound, phoneVibrationSound, phoneSendSound, phoneTapSound, doorSound, insideStepsSound, outsideStepsSound, lampClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound;
+let phoneMsgSound, phoneVibrationSound, phoneTapSound, doorSound, insideStepsSound_fast, insideStepsSound_slow, outsideStepsSound_fast, outsideStepsSound_slow, lampClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound;
 
 
 function preload() {
@@ -139,18 +139,19 @@ function preload() {
   postIconImg = loadImage("../img/smartphone/postIcon.png");
   msgIconImg = loadImage("../img/smartphone/messageIcon.png");
   postOverlayImg = loadImage("../img/smartphone/postOverlay.png");
-  postImg_1 = loadImage("../img/smartphone/posts/post1.png");
-  postImg_2 = loadImage("../img/smartphone/posts/post2.png");
-  // postImg_3 = loadImage("../img/smartphone/posts/post3.png");
-  // postImg_4 = loadImage("../img/smartphone/posts/post4.png");
-  // postImg_5 = loadImage("../img/smartphone/posts/post5.png");
-  // postImg_6 = loadImage("../img/smartphone/posts/post6.png");
-  // postImg_7 = loadImage("../img/smartphone/posts/post7.png");
-  // postImg_8 = loadImage("../img/smartphone/posts/post8.png");
-  // postImg_9 = loadImage("../img/smartphone/posts/post9.png");
-  // postImg_10 = loadImage("../img/smartphone/posts/post10.png");
+  postImg_demoJoined = loadImage("../img/smartphone/posts/postImg_demoJoined.png");
+  postImg_counterDemoJoined = loadImage("../img/smartphone/posts/postImg_counterDemoJoined.png");
+  postImg_watchedProDemo = loadImage("../img/smartphone/posts/postImg_watchedProDemo.png");
+  postImg_watchedProCounterDemo = loadImage("../img/smartphone/posts/postImg_watchedProCounterDemo.png");
+  postImg_watchedProNone = loadImage("../img/smartphone/posts/postImg_watchedProNone.png");
+  postImg_groupInvitationAccepted = loadImage("../img/smartphone/posts/postImg_groupInvitationAccepted.png");
+  postImg_groupInvitationDenied = loadImage("../img/smartphone/posts/postImg_groupInvitationDenied.png");
+  postImg_interviewDenied = loadImage("../img/smartphone/posts/postImg_interviewDenied.png");
+  postImg_interviewDefend = loadImage("../img/smartphone/posts/postImg_interviewDefend.png");
+  postImg_interviewRevoke = loadImage("../img/smartphone/posts/postImg_interviewRevoke.png");
   // postImg_11 = loadImage("../img/smartphone/posts/post11.png");
   // postImg_12 = loadImage("../img/smartphone/posts/post12.png");
+  // postImg_13 = loadImage("../img/smartphone/posts/post13.png");
 
   // animation elements
   demoPeopleImg_left = loadImage("../img/demo/4_people/4_people_left.png");
@@ -175,11 +176,12 @@ function preload() {
   rainSound = loadSound("../sound/ambient/rain.mp3");
   phoneMsgSound = loadSound("../sound/eventRelated/phoneMsg.mp3");
   phoneVibrationSound = loadSound("../sound/eventRelated/phoneVibration.mp3");
-  phoneSendSound = loadSound("../sound/eventRelated/phoneSendMsg.mp3");
   phoneTapSound = loadSound("../sound/eventRelated/phoneTap.mp3");
   doorSound = loadSound("../sound/eventRelated/door.mp3");
-  insideStepsSound = loadSound("../sound/eventRelated/insideSteps.mp3");
-  outsideStepsSound = loadSound("../sound/eventRelated/outsideSteps.mp3");
+  // insideStepsSound_fast = loadSound("../sound/eventRelated/insideSteps_fast.mp3");
+  // insideStepsSound_slow = loadSound("../sound/eventRelated/insideSteps_flow.mp3");
+  outsideStepsSound_fast = loadSound("../sound/eventRelated/outsideSteps_fast.mp3");
+  outsideStepsSound_slow = loadSound("../sound/eventRelated/outsideSteps_slow.mp3");
   lampClickSound = loadSound("../sound/eventRelated/lampClick.mp3");
   registerSound = loadSound("../sound/eventRelated/register.mp3");
   newspaperSound = loadSound("../sound/eventRelated/newspaper.mp3");
@@ -525,7 +527,7 @@ function setupGame() {
   let barLink = new BarLink(1091, 137, 147, 228, barLinkImg);
   demo.addChild(barLink);
 
-  let demoPeople = new DemoPeople(223, 311, 546, 331, demoPeopleImg_left, "demo");
+  let demoPeople = new DemoPeople(223, 281, 546, 362, demoPeopleImg_left, "demo");
   demo.addChild(demoPeople);
 
   let counterDemoPeople = new DemoPeople(1081, 322, 503, 352, demoPeopleImg_right, "counterDemo");
@@ -580,13 +582,13 @@ function setupGame() {
 
     if (ev.detail === "demo") {
       setTimeout( () => {
-        homeScreen.setPost(postImg_1);
+        homeScreen.setPost(postImg_demoJoined);
         mobilePhone.showScreen("homeScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 8000);
     } else {
       setTimeout( () => {
-        homeScreen.setPost(postImg_2);
+        homeScreen.setPost(postImg_counterDemoJoined);
         mobilePhone.showScreen("homeScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 8000);
@@ -639,7 +641,7 @@ function setupGame() {
       phoneButton.enable();
 
       setTimeout( () => {
-        homeScreen.setPost(postImg_1);
+        homeScreen.setPost(postImg_interviewDenied);
         messageScreen.reset();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 3000);
@@ -649,13 +651,13 @@ function setupGame() {
   window.addEventListener("statementDefended", () => {
     if (player.actionDone("coffeeHouse", "statementDefended", true)) {
       setTimeout( () => {
-        homeScreen.setPost(postImg_2);
+        homeScreen.setPost(postImg_interviewDefend);
         messageScreen.reset();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 3000);
     } else {
       setTimeout( () => {
-        homeScreen.setPost(postImg_1);
+        homeScreen.setPost(postImg_interviewRevoke);
         messageScreen.reset();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 3000);
@@ -727,6 +729,7 @@ function setupGame() {
   mobilePhone.addChild(phoneButton);
 
   window.addEventListener("openPhone", () => {
+    window.dispatchEvent(new CustomEvent("phoneTap"));
     phoneIcon.hide();
     phoneIcon.disable();
     mobilePhone.show();
@@ -735,6 +738,7 @@ function setupGame() {
   })
 
   window.addEventListener("closePhone", () => {
+    window.dispatchEvent(new CustomEvent("phoneTap"));
     mobilePhone.hide();
     mobilePhone.disable();
     phoneIcon.show();
@@ -744,10 +748,10 @@ function setupGame() {
     if (player.actionDone("coffeeHouse", "invitationAccepted") && !player.actionDone("coffeeHouse", "invitationPostWatched")) {
       setTimeout( () => {
         if (player.actionDone("coffeeHouse", "invitationAccepted", true)) {
-          homeScreen.setPost(postImg_1);
+          homeScreen.setPost(postImg_groupInvitationAccepted);
           demoBench.disable();
         } else {
-          homeScreen.setPost(postImg_2);
+          homeScreen.setPost(postImg_groupInvitationDenied);
         }
         mobilePhone.showScreen("homeScreen");
         messageScreen.reset();
@@ -772,6 +776,7 @@ function setupGame() {
   mobilePhone.addChild(msgScreenBtn);
 
   window.addEventListener("showScreen", (ev) => {
+    window.dispatchEvent(new CustomEvent("phoneTap"));
     mobilePhone.showScreen(ev.detail);
   });
 
@@ -785,13 +790,13 @@ function setupGame() {
   let postButton = new PhonePostButton(165, 428, 125, 50);
   postScreen.addChild(postButton);
 
-  let choosePostBtn_1 = new ChoosePostButton(17, 428, 125, 50, "A", postImg_1);
+  let choosePostBtn_1 = new ChoosePostButton(17, 428, 125, 50, "A", postImg_watchedProDemo);
   postScreen.addChild(choosePostBtn_1);
 
-  let choosePostBtn_2 = new ChoosePostButton(165, 428, 125, 50, "B", postImg_2);
+  let choosePostBtn_2 = new ChoosePostButton(165, 428, 125, 50, "B", postImg_watchedProCounterDemo);
   postScreen.addChild(choosePostBtn_2);
 
-  let choosePostBtn_3 = new ChoosePostButton(313, 428, 125, 50, "C", postImg_1);
+  let choosePostBtn_3 = new ChoosePostButton(313, 428, 125, 50, "C", postImg_watchedProNone);
   postScreen.addChild(choosePostBtn_3);
 
   window.addEventListener("choosePost", () => {
@@ -832,11 +837,6 @@ function setupGame() {
 
   let msgButton_2 = new PhoneMessageButton(238, 428, 200, 50, "B");
   messageScreen.addChild(msgButton_2);
-  
-  window.addEventListener("endConversation", () => {
-    homeScreen.setPost(postImg_1);
-    homeScreen.setPost(postImg_2);
-  });
 
   let endScreen = new PhoneEndScreen(18.9, 111.2, 454, 491, brokenPhoneOverlayImg);
   mobilePhone.addChild(endScreen);
@@ -873,19 +873,19 @@ function setupGame() {
 
 /* sound events */
 
-window.addEventListener("phoneReceiveMsg", (ev) => {
+window.addEventListener("phoneReceiveMsg", () => {
   phoneMsgSound.play();
 } );
 
-window.addEventListener("phoneSendMsg", (ev) => {
-  phoneSendSound.play();
-});
+// window.addEventListener("phoneSendMsg", () => {
+//   phoneSendSound.play();
+// });
 
-window.addEventListener("phoneVibration", (ev) => {
+window.addEventListener("phoneVibration", () => {
   phoneVibrationSound.play();  
 });
 
-window.addEventListener("phoneTap", (ev) => {
+window.addEventListener("phoneTap", () => {
   phoneTapSound.play();
 });
 
@@ -914,15 +914,27 @@ window.addEventListener("lampClick", () => {
   lampClickSound.play();
 });
 
-window.addEventListener("walkOutside", () => {
-  if (!outsideStepsSound.isPlaying()) {
-    outsideStepsSound.play();
+window.addEventListener("walkOutsideFast", () => {
+  if (!outsideStepsSound_fast.isPlaying() && !outsideStepsSound_slow.isPlaying()) {
+    outsideStepsSound_fast.play();
   }
 });
 
-window.addEventListener("walkInside", () => {
-  if (!insideStepsSound.isPlaying()) {
-    insideStepsSound.play();
+window.addEventListener("walkOutsideSlow", () => {
+  if (!outsideStepsSound_slow.isPlaying() && !outsideStepsSound_fast.isPlaying()) {
+    outsideStepsSound_slow.play();
+  }
+});
+
+window.addEventListener("walkInsideFast", () => {
+  if (!insideStepsSound_fast.isPlaying()) {
+    insideStepsSound_fast.play();
+  }
+});
+
+window.addEventListener("walkInsideSlow", () => {
+  if (!insideStepsSound_slow.isPlaying()) {
+    insideStepsSound_slow.play();
   }
 });
 
