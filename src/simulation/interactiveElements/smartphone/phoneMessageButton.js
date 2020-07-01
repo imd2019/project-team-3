@@ -57,7 +57,7 @@ export default class PhoneMessageButton extends Sprite {
 
   draw() {
     if (this.mouseHovered()) {
-      stroke("yellow");
+      stroke(255, 165, 0);
     } else {
       noStroke();
     }
@@ -266,7 +266,7 @@ export default class PhoneMessageButton extends Sprite {
               case "interview":
                 conversation = {
                   id: 3,
-                  buttonText: "Aussage revidieren",
+                  buttonText: "Aussage revidieren.",
                   conversationText: "Das habe ich so nicht gesagt!",
                   conversationAnswer:
                     "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",

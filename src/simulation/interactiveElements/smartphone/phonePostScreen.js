@@ -13,7 +13,7 @@ export default class PhonePostScreen extends Sprite {
     fill(220);
     noStroke();
     rect(0, 0, this.width, this.height);
-
+    this.redraw();
     if (this.postReady) {
       for (let elem of this.children) {
         if (elem.name === "postButton") {
@@ -44,6 +44,13 @@ export default class PhonePostScreen extends Sprite {
     this.post.clear();
     if (this.postReady) {
       this.post.image(this.newPost, 12.5, 12.5, 430, 382);
+    } else {
+      this.post.noStroke();
+      this.post.textSize(20);
+      this.post.textAlign(LEFT, CENTER);
+      this.post.textFont(window.fonts.franklinGothic);
+      this.post.fill(0);
+      this.post.text("Es gibt gerade nichts zu posten.", 30, 20, 330, 105);
     }
   }
 

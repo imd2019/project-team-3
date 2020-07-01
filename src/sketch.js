@@ -84,7 +84,10 @@ let phoneIconImg,
   phoneBtnImg,
   homeIconImg,
   msgIconImg,
-  postIconImg;
+  postIconImg,
+  userIconImg,
+  journalistIconImg,
+  conspiracyIconImg;
 let postOverlayImg,
   postImg_demoJoined,
   postImg_counterDemoJoined,
@@ -218,6 +221,9 @@ function preload() {
   homeIconImg = loadImage("../img/smartphone/homeIcon.png");
   postIconImg = loadImage("../img/smartphone/postIcon.png");
   msgIconImg = loadImage("../img/smartphone/messageIcon.png");
+  userIconImg = loadImage("../img/smartphone/userIcon.png");
+  journalistIconImg = loadImage("../img/smartphone/journalistIcon.png");
+  conspiracyIconImg = loadImage("../img/smartphone/conspiracyIcon.png");
   postOverlayImg = loadImage("../img/smartphone/postOverlay.png");
   postImg_demoJoined = loadImage(
     "../img/smartphone/posts/postImg_demoJoined.png"
@@ -1022,30 +1028,30 @@ function setupGame() {
   });
 
   let homeScreenBtn = new PhoneMenuIcon(
-    43,
-    610,
-    79,
-    50,
+    67,
+    615,
+    65,
+    41,
     homeIconImg,
     "homeScreen"
   );
   mobilePhone.addChild(homeScreenBtn);
 
   let postScreenBtn = new PhoneMenuIcon(
-    207,
-    610,
-    79,
-    50,
+    220,
+    618,
+    55,
+    35,
     postIconImg,
     "postScreen"
   );
   mobilePhone.addChild(postScreenBtn);
 
   let msgScreenBtn = new PhoneMenuIcon(
-    368,
-    610,
-    79,
-    50,
+    360,
+    615,
+    65,
+    41,
     msgIconImg,
     "messageScreen"
   );
@@ -1126,7 +1132,15 @@ function setupGame() {
     homeScreen.redraw();
   });
 
-  let messageScreen = new PhoneMessageScreen(18.9, 111.2, 454, 491);
+  let messageScreen = new PhoneMessageScreen(
+    18.9,
+    111.2,
+    454,
+    491,
+    userIconImg,
+    journalistIconImg,
+    conspiracyIconImg
+  );
   mobilePhone.addChild(messageScreen);
 
   let msgButton_1 = new PhoneMessageButton(17, 428, 200, 50, "A");

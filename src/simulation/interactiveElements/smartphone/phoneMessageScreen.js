@@ -1,9 +1,12 @@
 import Sprite from "../../../sprite.js";
 
 export default class PhoneMessage extends Sprite {
-  constructor(x, y, width, height) {
+  constructor(x, y, width, height, user, journalist, conspiracy) {
     super(x, y, width, height);
     this.name = "messageScreen";
+    this.user = user;
+    this.journalist = journalist;
+    this.conspiracy = conspiracy;
     this.conversation = [];
     this.pos = 0;
     this.event = undefined;
@@ -23,10 +26,21 @@ export default class PhoneMessage extends Sprite {
     textSize(16);
     textAlign(LEFT, CENTER);
 
+    rect(0, 0, this.width, 80);
+
+    if (this.event === "interview") {
+      image(this.journalist, 20, 20);
+    } else if (this.event === "invite") {
+      image(this.conspiracy, 20, 20);
+    } else {
+      image(this.user, 20, 20);
+    }
+
     fill(100);
-    rect(0, 0, this.width, 75);
-    fill(150);
-    rect(0, 0, 75, 75);
+
+    rect(100, 71, this.width - 115, 4);
+    // fill(150);
+    // rect(0, 0, 75, 75);
 
     this.redraw();
   }
@@ -35,90 +49,68 @@ export default class PhoneMessage extends Sprite {
     this.message.clear();
     this.message.fill(220);
     this.message.noStroke();
+    this.message.textSize(20);
+    this.message.textAlign(LEFT, CENTER);
+    this.message.textFont(window.fonts.franklinGothic);
 
     if (this.event === "interview") {
-      this.message.textFont(window.fonts.franklinGothic);
-      this.message.textSize(16);
-      this.message.textAlign(LEFT, CENTER);
-
       this.message.fill(200);
-      this.message.rect(20, 90 + this.pos, 300, 70, 5);
+      this.message.rect(20, 100 + this.pos, 330, 130, 5);
 
       this.message.noStroke();
       this.message.fill(0);
       this.message.text(
         "Hallo, ich bin Journalist bei der 'The Daily Whisper' und hätte ein paar Fragen.",
-        30,
-        90 + this.pos,
-        290,
-        70
+        35,
+        105 + this.pos,
+        315,
+        115
       );
     } else if (this.event === "invite") {
-      this.message.textFont(window.fonts.franklinGothic);
-      this.message.textSize(16);
-      this.message.textAlign(LEFT, CENTER);
-
       this.message.fill(200);
-      this.message.rect(20, 90 + this.pos, 300, 70, 5);
+      this.message.rect(20, 100 + this.pos, 330, 130, 5);
 
       this.message.noStroke();
       this.message.fill(0);
       this.message.text(
         "Wie wir sehen konnten, bist du auch auf der Suche. Trete unserer Gruppe bei. An diesem Ort gibt es nichts als die Wahrheit.",
-        30,
-        90 + this.pos,
-        290,
-        70
+        35,
+        105 + this.pos,
+        315,
+        115
       );
     } else if (this.event === "friendMessage") {
-      this.message.textFont(window.fonts.franklinGothic);
-      this.message.textSize(16);
-      this.message.textAlign(LEFT, CENTER);
-
       this.message.fill(200);
-      this.message.rect(20, 90 + this.pos, 300, 70, 5);
+      this.message.rect(20, 100 + this.pos, 330, 130, 5);
 
       this.message.noStroke();
       this.message.fill(0);
       this.message.text(
         "Ich muss mit dir reden. Wir treffen uns in der Bar.",
-        30,
-        90 + this.pos,
-        290,
-        70
+        35,
+        105 + this.pos,
+        315,
+        115
       );
     } else {
-      this.message.textFont(window.fonts.franklinGothic);
-      this.message.textSize(16);
-      this.message.textAlign(LEFT, CENTER);
-
-      // this.message.fill(200);
-      // this.message.rect(20, 90 + this.pos, 300, 70, 5);
-
       this.message.noStroke();
       this.message.fill(0);
-      this.message.text(
-        "Du hast keine neuen Nachrichten.",
-        30,
-        90 + this.pos,
-        290,
-        70
-      );
+      this.message.text("Du hast keine neuen Nachrichten.", 30, 90, 330, 105);
     }
 
     for (let elem in this.conversation) {
       if (this.conversation[elem].isClicked) {
         this.message.fill(170);
 
-        this.message.rect(130, 180 + 180 * elem + this.pos, 300, 70, 5);
+        this.message.rect(90, 250 + 300 * elem + this.pos, 330, 130, 5);
         this.message.noStroke();
         this.message.fill(0);
         this.message.text(
           this.conversation[elem].conversationText,
-          140,
-          180 + 180 * elem + this.pos,
-          290,
-          70
+          105,
+          250 + 300 * elem + this.pos,
+          320,
+          120
         );
       }
     }
@@ -126,15 +118,15 @@ export default class PhoneMessage extends Sprite {
     for (let elem in this.conversation) {
       this.message.fill(200);
 
-      this.message.rect(20, 270 + 180 * elem + this.pos, 300, 70, 5);
+      this.message.rect(20, 400 + 300 * elem + this.pos, 330, 130, 5);
       this.message.noStroke();
       this.message.fill(0);
       this.message.text(
         this.conversation[elem].conversationAnswer,
-        30,
-        270 + 180 * elem + this.pos,
-        290,
-        70
+        35,
+        400 + 300 * elem + this.pos,
+        320,
+        120
       );
     }
 
@@ -166,7 +158,7 @@ export default class PhoneMessage extends Sprite {
     this.message.fill(170);
     this.message.rect(
       350,
-      180 + 180 * this.conversation.length + this.pos,
+      250 + 300 * this.conversation.length + this.pos,
       80,
       70,
       5
@@ -177,7 +169,7 @@ export default class PhoneMessage extends Sprite {
     this.message.text(
       ".  .  .",
       350,
-      180 + 180 * this.conversation.length + this.pos,
+      250 + 300 * this.conversation.length + this.pos,
       80,
       70
     );
@@ -198,8 +190,8 @@ export default class PhoneMessage extends Sprite {
     if (this.visible) {
       if (this.pos > 0) {
         this.pos = 0;
-      } else if (this.pos < -(1 + 70 * this.conversation.length)) {
-        this.pos = -(1 + 70 * this.conversation.length);
+      } else if (this.pos < -(1 + 220 * this.conversation.length)) {
+        this.pos = -(1 + 220 * this.conversation.length);
       } else {
         this.pos -= ev.delta;
         this.redraw();
