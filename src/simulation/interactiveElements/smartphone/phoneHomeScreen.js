@@ -44,20 +44,8 @@ export default class PhoneHomeScreen extends Sprite {
       );
     }
     for (let i in this.activePosts) {
-      this.posts.image(
-        this.postOverlay,
-        12.5,
-        12.5 + i * 400 + this.pos,
-        430,
-        382
-      );
-      this.posts.image(
-        this.activePosts[i],
-        15,
-        15 + i * 400 + this.pos,
-        425,
-        320
-      );
+      this.posts.image(this.postOverlay, 12.5, 12.5 + i * 400 + this.pos, 430, 382);
+      this.posts.image(this.activePosts[i], 15, 15 + i * 400 + this.pos, 425, 320);
     }
   }
 

@@ -105,29 +105,16 @@ export default class PhoneMessage extends Sprite {
         this.message.rect(90, 250 + 300 * elem + this.pos, 330, 130, 5);
         this.message.noStroke();
         this.message.fill(0);
-        this.message.text(
-          this.conversation[elem].conversationText,
-          105,
-          250 + 300 * elem + this.pos,
-          320,
-          120
-        );
+        this.message.text(this.conversation[elem].conversationText, 105, 250 + 300 * elem + this.pos, 320, 120);
       }
     }
 
     for (let elem in this.conversation) {
       this.message.fill(200);
-
       this.message.rect(20, 400 + 300 * elem + this.pos, 330, 130, 5);
       this.message.noStroke();
       this.message.fill(0);
-      this.message.text(
-        this.conversation[elem].conversationAnswer,
-        35,
-        400 + 300 * elem + this.pos,
-        320,
-        120
-      );
+      this.message.text(this.conversation[elem].conversationAnswer, 35, 400 + 300 * elem + this.pos, 320, 120);
     }
 
     if (this.children[0].mouseHovered() || this.children[1].mouseHovered()) {
@@ -156,23 +143,11 @@ export default class PhoneMessage extends Sprite {
   bufferAnimation() {
     this.message.textAlign(CENTER, CENTER);
     this.message.fill(170);
-    this.message.rect(
-      350,
-      250 + 300 * this.conversation.length + this.pos,
-      80,
-      70,
-      5
-    );
+    this.message.rect(350, 250 + 300 * this.conversation.length + this.pos, 80, 70, 5);
 
     this.message.noStroke();
     this.message.fill(0);
-    this.message.text(
-      ".  .  .",
-      350,
-      250 + 300 * this.conversation.length + this.pos,
-      80,
-      70
-    );
+    this.message.text(".  .  .", 350, 250 + 300 * this.conversation.length + this.pos, 80, 70);
   }
 
   mouseScroll() {
