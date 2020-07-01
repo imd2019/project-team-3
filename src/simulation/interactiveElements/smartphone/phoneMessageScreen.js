@@ -154,6 +154,8 @@ export default class PhoneMessage extends Sprite {
 
   setEvent(event) {
     this.event = event;
+    console.log(event);
+
     for (let elem of this.children) {
       elem.setEvent();
     }

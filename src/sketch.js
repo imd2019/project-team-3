@@ -55,12 +55,55 @@ let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
-let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, kioskLinkNewspapersImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
-let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
-let phoneIconImg, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg;
-let postOverlayImg, postImg_demoJoined, postImg_counterDemoJoined, postImg_watchedProDemo, postImg_watchedProCounterDemo, postImg_watchedProNone, postImg_groupInvitationAccepted, postImg_groupInvitationDenied, postImg_interviewDenied, postImg_interviewDefend, postImg_interviewRevoke, postImg_11, postImg_12, postImg_13;
+let barLinkImg,
+  coffeeHouseLinkImg,
+  demoLinkBarImg,
+  demoLinkDemoImg_demo,
+  demoLinkDemoImg_noDemo,
+  demoLinkSignsLeftImg,
+  demoLinkSignsRightImg,
+  kioskLinkImg_on,
+  kioskLinkImg_off,
+  kioskLinkNewspapersImg,
+  parkLinkImg_kiosk,
+  parkLinkImg_demo,
+  parkLinkImg_coffeeHouse;
+let doorImg,
+  demoSignImg,
+  flyerBoxImg,
+  flyerImg_coffeeHouse,
+  flyerImg_park,
+  streetLampBulbOnImg,
+  streetLampBulbOffImg,
+  demoBenchImg,
+  newspaperImg;
+let phoneIconImg,
+  phoneOutlineImg,
+  phoneOverlayImg,
+  brokenPhoneOverlayImg,
+  phoneBtnImg,
+  homeIconImg,
+  msgIconImg,
+  postIconImg;
+let postOverlayImg,
+  postImg_demoJoined,
+  postImg_counterDemoJoined,
+  postImg_watchedProDemo,
+  postImg_watchedProCounterDemo,
+  postImg_watchedProNone,
+  postImg_groupInvitationAccepted,
+  postImg_groupInvitationDenied,
+  postImg_interviewDenied,
+  postImg_interviewDefend,
+  postImg_interviewRevoke,
+  postImg_11,
+  postImg_12,
+  postImg_13;
 
-let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
+let demoPeopleImg_left,
+  demoPeopleImg_right,
+  demoPeopleSignsImg_left,
+  demoPeopleSignsImg_right;
 
 // load videos
 
@@ -68,15 +111,34 @@ let videoOverlayImg;
 let endVideo;
 
 // load soundfiles
-let owlSound, demoSound, citySound, leavesSound, trafficSound, coffeeHouseSound, fountainSound, policeSirenSound, rainSound;
-let phoneMsgSound, phoneVibrationSound, phoneTapSound, doorSound, insideStepsSound_fast, insideStepsSound_slow, outsideStepsSound_fast, outsideStepsSound_slow, lampClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound;
-
+let owlSound,
+  demoSound,
+  citySound,
+  leavesSound,
+  trafficSound,
+  coffeeHouseSound,
+  fountainSound,
+  policeSirenSound,
+  rainSound;
+let phoneMsgSound,
+  phoneVibrationSound,
+  phoneTapSound,
+  doorSound,
+  insideStepsSound_fast,
+  insideStepsSound_slow,
+  outsideStepsSound_fast,
+  outsideStepsSound_slow,
+  lampClickSound,
+  registerSound,
+  newspaperSound,
+  pickupSignSound,
+  flyerSound;
 
 function preload() {
   // fonts
   window.fonts = {
     rockwell: loadFont("../style/fonts/rockwell.ttf"),
-    franklinGothic: loadFont("../style/fonts/franklinGothic.ttf")
+    franklinGothic: loadFont("../style/fonts/franklinGothic.ttf"),
   };
 
   // backgnd images
@@ -106,16 +168,34 @@ function preload() {
     "../img/park/4_interactionSpaces/4_coffeeHouse.png"
   );
   demoLinkBarImg = loadImage("../img/park/4_interactionSpaces/4_demo-bar.png");
-  demoLinkDemoImg_demo = loadImage("../img/park/4_interactionSpaces/4_demo-demo.png");
-  demoLinkDemoImg_noDemo = loadImage("../img/park/4_interactionSpaces/4_demo-pastDemo.png");
-  demoLinkSignsLeftImg = loadImage("../img/park/4_interactionSpaces/4_demo-signs-1.png");
-  demoLinkSignsRightImg = loadImage("../img/park/4_interactionSpaces/4_demo-signs-2.png");
-  kioskLinkImg_on = loadImage("../img/park/4_interactionSpaces/4_kiosk_open.png");
-  kioskLinkImg_off = loadImage("../img/park/4_interactionSpaces/4_kiosk_closed.png");
-  kioskLinkNewspapersImg = loadImage("../img/park/4_interactionSpaces/4_newspapers.png");
-  parkLinkImg_kiosk = loadImage("../img/kiosk/4_interactionSpaces/4_advertisingColumn.png");
+  demoLinkDemoImg_demo = loadImage(
+    "../img/park/4_interactionSpaces/4_demo-demo.png"
+  );
+  demoLinkDemoImg_noDemo = loadImage(
+    "../img/park/4_interactionSpaces/4_demo-pastDemo.png"
+  );
+  demoLinkSignsLeftImg = loadImage(
+    "../img/park/4_interactionSpaces/4_demo-signs-1.png"
+  );
+  demoLinkSignsRightImg = loadImage(
+    "../img/park/4_interactionSpaces/4_demo-signs-2.png"
+  );
+  kioskLinkImg_on = loadImage(
+    "../img/park/4_interactionSpaces/4_kiosk_open.png"
+  );
+  kioskLinkImg_off = loadImage(
+    "../img/park/4_interactionSpaces/4_kiosk_closed.png"
+  );
+  kioskLinkNewspapersImg = loadImage(
+    "../img/park/4_interactionSpaces/4_newspapers.png"
+  );
+  parkLinkImg_kiosk = loadImage(
+    "../img/kiosk/4_interactionSpaces/4_advertisingColumn.png"
+  );
   parkLinkImg_demo = loadImage("../img/demo/1_interactionSpaces/1_park.png");
-  parkLinkImg_coffeeHouse = loadImage("../img/coffeeHouse/3_interactionSpaces/3_park.png");
+  parkLinkImg_coffeeHouse = loadImage(
+    "../img/coffeeHouse/3_interactionSpaces/3_park.png"
+  );
   demoSignImg = loadImage("../img/demo/3_elements/3_sign.png");
   demoBenchImg = loadImage("../img/demo/3_elements/3_bench.png");
   flyerBoxImg = loadImage("../img/assets/flyerbox.png");
@@ -139,16 +219,36 @@ function preload() {
   postIconImg = loadImage("../img/smartphone/postIcon.png");
   msgIconImg = loadImage("../img/smartphone/messageIcon.png");
   postOverlayImg = loadImage("../img/smartphone/postOverlay.png");
-  postImg_demoJoined = loadImage("../img/smartphone/posts/postImg_demoJoined.png");
-  postImg_counterDemoJoined = loadImage("../img/smartphone/posts/postImg_counterDemoJoined.png");
-  postImg_watchedProDemo = loadImage("../img/smartphone/posts/postImg_watchedProDemo.png");
-  postImg_watchedProCounterDemo = loadImage("../img/smartphone/posts/postImg_watchedProCounterDemo.png");
-  postImg_watchedProNone = loadImage("../img/smartphone/posts/postImg_watchedProNone.png");
-  postImg_groupInvitationAccepted = loadImage("../img/smartphone/posts/postImg_groupInvitationAccepted.png");
-  postImg_groupInvitationDenied = loadImage("../img/smartphone/posts/postImg_groupInvitationDenied.png");
-  postImg_interviewDenied = loadImage("../img/smartphone/posts/postImg_interviewDenied.png");
-  postImg_interviewDefend = loadImage("../img/smartphone/posts/postImg_interviewDefend.png");
-  postImg_interviewRevoke = loadImage("../img/smartphone/posts/postImg_interviewRevoke.png");
+  postImg_demoJoined = loadImage(
+    "../img/smartphone/posts/postImg_demoJoined.png"
+  );
+  postImg_counterDemoJoined = loadImage(
+    "../img/smartphone/posts/postImg_counterDemoJoined.png"
+  );
+  postImg_watchedProDemo = loadImage(
+    "../img/smartphone/posts/postImg_watchedProDemo.png"
+  );
+  postImg_watchedProCounterDemo = loadImage(
+    "../img/smartphone/posts/postImg_watchedProCounterDemo.png"
+  );
+  postImg_watchedProNone = loadImage(
+    "../img/smartphone/posts/postImg_watchedProNone.png"
+  );
+  postImg_groupInvitationAccepted = loadImage(
+    "../img/smartphone/posts/postImg_groupInvitationAccepted.png"
+  );
+  postImg_groupInvitationDenied = loadImage(
+    "../img/smartphone/posts/postImg_groupInvitationDenied.png"
+  );
+  postImg_interviewDenied = loadImage(
+    "../img/smartphone/posts/postImg_interviewDenied.png"
+  );
+  postImg_interviewDefend = loadImage(
+    "../img/smartphone/posts/postImg_interviewDefend.png"
+  );
+  postImg_interviewRevoke = loadImage(
+    "../img/smartphone/posts/postImg_interviewRevoke.png"
+  );
   // postImg_11 = loadImage("../img/smartphone/posts/post11.png");
   // postImg_12 = loadImage("../img/smartphone/posts/post12.png");
   // postImg_13 = loadImage("../img/smartphone/posts/post13.png");
@@ -157,7 +257,9 @@ function preload() {
   demoPeopleImg_left = loadImage("../img/demo/4_people/4_people_left.png");
   demoPeopleImg_right = loadImage("../img/demo/4_people/4_people_right.png");
   demoPeopleSignsImg_left = loadImage("../img/demo/4_people/4_signs_left.png");
-  demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png");
+  demoPeopleSignsImg_right = loadImage(
+    "../img/demo/4_people/4_signs_right.png"
+  );
 
   // video
   videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
@@ -180,8 +282,12 @@ function preload() {
   doorSound = loadSound("../sound/eventRelated/door.mp3");
   // insideStepsSound_fast = loadSound("../sound/eventRelated/insideSteps_fast.mp3");
   // insideStepsSound_slow = loadSound("../sound/eventRelated/insideSteps_flow.mp3");
-  outsideStepsSound_fast = loadSound("../sound/eventRelated/outsideSteps_fast.mp3");
-  outsideStepsSound_slow = loadSound("../sound/eventRelated/outsideSteps_slow.mp3");
+  outsideStepsSound_fast = loadSound(
+    "../sound/eventRelated/outsideSteps_fast.mp3"
+  );
+  outsideStepsSound_slow = loadSound(
+    "../sound/eventRelated/outsideSteps_slow.mp3"
+  );
   lampClickSound = loadSound("../sound/eventRelated/lampClick.mp3");
   registerSound = loadSound("../sound/eventRelated/register.mp3");
   newspaperSound = loadSound("../sound/eventRelated/newspaper.mp3");
@@ -194,15 +300,17 @@ window.preload = preload;
 
 let player = new Player();
 window.addEventListener("addAction", (ev) => {
-  window.dispatchEvent(new CustomEvent(ev.detail.name, { detail: ev.detail.data }));
+  window.dispatchEvent(
+    new CustomEvent(ev.detail.name, { detail: ev.detail.data })
+  );
   player.addAction(ev.detail.origin, ev.detail.name, ev.detail.data);
 });
 
 let game = new Game(player);
 window.addEventListener("enterView", (ev) => {
   game.enterView(ev.detail);
-  
-  if(ev.detail === "bar") {
+
+  if (ev.detail === "bar") {
     doorSound.play();
   }
 
@@ -215,7 +323,7 @@ window.addEventListener("enterView", (ev) => {
         new CustomEvent("randConspiracyTheorist"),
         new CustomEvent("randWannabeInfluencer"),
         new CustomEvent("randFollower"),
-      ]
+      ];
       window.dispatchEvent(events[rand]);
     }
     if (player.actionDone("kiosk")) {
@@ -228,11 +336,15 @@ window.addEventListener("enterView", (ev) => {
 
   if (ev.detail === "coffeeHouse") {
     if (player.actionDone("demo", "joinDemo")) {
-      window.dispatchEvent(new CustomEvent("addAction", {detail: {
-        origin: "coffeeHouse",
-        name: "groupInvitation",
-        data: {},
-      }}));
+      window.dispatchEvent(
+        new CustomEvent("addAction", {
+          detail: {
+            origin: "coffeeHouse",
+            name: "groupInvitation",
+            data: {},
+          },
+        })
+      );
     }
   }
 });
@@ -274,7 +386,16 @@ function setupGame() {
   let demoLink_bar = new DemoLink(1936, 338, 188, 132, demoLinkBarImg);
   park.addChild(demoLink_bar);
 
-  let demoLink_demo = new DemoLink(1788, 425, 470, 117, demoLinkDemoImg_demo, demoLinkSignsLeftImg, demoLinkSignsRightImg, demoLinkDemoImg_noDemo);
+  let demoLink_demo = new DemoLink(
+    1788,
+    425,
+    470,
+    117,
+    demoLinkDemoImg_demo,
+    demoLinkSignsLeftImg,
+    demoLinkSignsRightImg,
+    demoLinkDemoImg_noDemo
+  );
   park.addChild(demoLink_demo);
 
   let coffeeHouseLink = new CoffeeHouseLink(
@@ -291,15 +412,28 @@ function setupGame() {
 
   let flyerBox_park = new FlyerBox(1262, 539, 61, 139, flyerBoxImg, "park");
   park.addChild(flyerBox_park);
-  
-  let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg_off, kioskLinkImg_on);
+
+  let kioskLink = new KioskLink(
+    108,
+    206,
+    681,
+    377,
+    kioskLinkImg_off,
+    kioskLinkImg_on
+  );
   park.addChild(kioskLink);
 
-  let kioskLinkNewspapers = new DisplayObject(271, 452, 205, 24, kioskLinkNewspapersImg);
+  let kioskLinkNewspapers = new DisplayObject(
+    271,
+    452,
+    205,
+    24,
+    kioskLinkNewspapersImg
+  );
   park.addChild(kioskLinkNewspapers);
   kioskLinkNewspapers.hide();
 
-  window.addEventListener("openKiosk", () => { 
+  window.addEventListener("openKiosk", () => {
     kioskLink.open();
     kioskLinkNewspapers.show();
   });
@@ -415,38 +549,61 @@ function setupGame() {
     kioskBuildingImg_on
   );
   kiosk.addChild(kioskBuilding);
-  window.addEventListener("openKiosk", () => { kioskBuilding.open(); });
+  window.addEventListener("openKiosk", () => {
+    kioskBuilding.open();
+  });
 
   let newspapers = [];
 
-  let newspaperOne = new Newspaper(549, 446, 79, 37, newspaperImg, "conspiracy-theorist");
+  let newspaperOne = new Newspaper(
+    549,
+    446,
+    79,
+    37,
+    newspaperImg,
+    "conspiracy-theorist"
+  );
   newspapers.push(newspaperOne);
 
   let newspaperTwo = new Newspaper(633, 446, 79, 37, newspaperImg, "follower");
   newspapers.push(newspaperTwo);
 
-  let newspaperThree = new Newspaper(714, 446, 79, 37, newspaperImg, "wannabe-influencer");
+  let newspaperThree = new Newspaper(
+    714,
+    446,
+    79,
+    37,
+    newspaperImg,
+    "wannabe-influencer"
+  );
   newspapers.push(newspaperThree);
 
-  let newspaperFour = new Newspaper(798, 446, 79, 37, newspaperImg, "reflective-user");
+  let newspaperFour = new Newspaper(
+    798,
+    446,
+    79,
+    37,
+    newspaperImg,
+    "reflective-user"
+  );
   newspapers.push(newspaperFour);
 
-  newspapers.forEach(elem => kiosk.addChild(elem));
+  newspapers.forEach((elem) => kiosk.addChild(elem));
 
   window.addEventListener("openKiosk", () => {
-    newspapers.forEach(elem => {
+    newspapers.forEach((elem) => {
       elem.show();
       elem.enable();
     });
   });
   window.addEventListener("buyNewspaper", (ev) => {
-    newspapers.forEach(elem => { 
-      if(elem.name === ev.detail) elem.hide();
+    newspapers.forEach((elem) => {
+      if (elem.name === ev.detail) elem.hide();
       elem.disable();
     });
   });
   window.addEventListener("hideNewspapers", () => {
-    newspapers.forEach(elem => elem.hide());
+    newspapers.forEach((elem) => elem.hide());
     kioskLinkNewspapers.hide();
   });
 
@@ -469,7 +626,13 @@ function setupGame() {
   );
   coffeeHouse.addChild(streetLamp_coffeeHouse);
 
-  let coffeeHouseForegnd = new DisplayObject(0, 0, 1792, 768, coffeeHouseForegndImg);
+  let coffeeHouseForegnd = new DisplayObject(
+    0,
+    0,
+    1792,
+    768,
+    coffeeHouseForegndImg
+  );
   coffeeHouse.addChild(coffeeHouseForegnd);
 
   let parkLink_coffeeHouse = new ParkLink(
@@ -484,14 +647,35 @@ function setupGame() {
   let barForegnd = new DisplayObject(0, 0, 1793, 769, barForegndImg);
   bar.addChild(barForegnd);
 
-  let barLamp_1 = new BarLampBulb(280, 160, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
+  let barLamp_1 = new BarLampBulb(
+    280,
+    160,
+    74,
+    32,
+    streetLampBulbOnImg,
+    streetLampBulbOffImg
+  );
   bar.addChild(barLamp_1);
 
-  let barLamp_2 = new BarLampBulb(1033, 203, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
+  let barLamp_2 = new BarLampBulb(
+    1033,
+    203,
+    74,
+    32,
+    streetLampBulbOnImg,
+    streetLampBulbOffImg
+  );
   bar.addChild(barLamp_2);
   barLamp_2.switch();
 
-  let barLamp_3 = new BarLampBulb(1270, 217, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
+  let barLamp_3 = new BarLampBulb(
+    1270,
+    217,
+    74,
+    32,
+    streetLampBulbOnImg,
+    streetLampBulbOffImg
+  );
   bar.addChild(barLamp_3);
   barLamp_3.switch();
 
@@ -521,22 +705,55 @@ function setupGame() {
   );
   demo.addChild(streetLampDemo_2);
 
-  let demoForegnd = new DualBackgndSprite(-160, -6, 2180, 845, demoForegndImg_demo, demoForegndImg_pastDemo);
+  let demoForegnd = new DualBackgndSprite(
+    -160,
+    -6,
+    2180,
+    845,
+    demoForegndImg_demo,
+    demoForegndImg_pastDemo
+  );
   demo.addChild(demoForegnd);
 
   let barLink = new BarLink(1091, 137, 147, 228, barLinkImg);
   demo.addChild(barLink);
 
-  let demoPeople = new DemoPeople(223, 281, 546, 362, demoPeopleImg_left, "demo");
+  let demoPeople = new DemoPeople(
+    223,
+    281,
+    546,
+    362,
+    demoPeopleImg_left,
+    "demo"
+  );
   demo.addChild(demoPeople);
 
-  let counterDemoPeople = new DemoPeople(1081, 322, 503, 352, demoPeopleImg_right, "counterDemo");
+  let counterDemoPeople = new DemoPeople(
+    1081,
+    322,
+    503,
+    352,
+    demoPeopleImg_right,
+    "counterDemo"
+  );
   demo.addChild(counterDemoPeople);
 
-  let demoSignsLeft = new DisplayObject(214, 215, 1315, 322, demoPeopleSignsImg_left);
+  let demoSignsLeft = new DisplayObject(
+    214,
+    215,
+    1315,
+    322,
+    demoPeopleSignsImg_left
+  );
   demo.addChild(demoSignsLeft);
 
-  let demoSignsRight = new DisplayObject(268, 226, 1311, 313, demoPeopleSignsImg_right);
+  let demoSignsRight = new DisplayObject(
+    268,
+    226,
+    1311,
+    313,
+    demoPeopleSignsImg_right
+  );
   demo.addChild(demoSignsRight);
 
   let demoBubble = new Speechbubble(300, -150, 270, "Demo_1", "left");
@@ -581,13 +798,13 @@ function setupGame() {
     counterDemoPeople.disable();
 
     if (ev.detail === "demo") {
-      setTimeout( () => {
+      setTimeout(() => {
         homeScreen.setPost(postImg_demoJoined);
         mobilePhone.showScreen("homeScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 8000);
     } else {
-      setTimeout( () => {
+      setTimeout(() => {
         homeScreen.setPost(postImg_counterDemoJoined);
         mobilePhone.showScreen("homeScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
@@ -623,7 +840,10 @@ function setupGame() {
   coffeeHouse.addChild(door_coffeeHouse);
 
   window.addEventListener("enterCoffeeHouse", () => {
-    if (player.actionDone("demo", "joinDemo") || player.actionDone("coffeeHouse", "groupInvitation")) {
+    if (
+      player.actionDone("demo", "joinDemo") ||
+      player.actionDone("coffeeHouse", "groupInvitation")
+    ) {
       setTimeout(() => {
         messageScreen.setEvent("interview");
         mobilePhone.showScreen("messageScreen");
@@ -635,7 +855,7 @@ function setupGame() {
       }, 5000);
     }
   });
-  
+
   window.addEventListener("interviewAccepted", () => {
     if (!player.actionDone("coffeeHouse", "interviewAccepted", true)) {
       homeScreenBtn.enable();
@@ -643,7 +863,7 @@ function setupGame() {
       msgScreenBtn.enable();
       phoneButton.enable();
 
-      setTimeout( () => {
+      setTimeout(() => {
         homeScreen.setPost(postImg_interviewDenied);
         messageScreen.reset();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
@@ -652,27 +872,30 @@ function setupGame() {
   });
 
   window.addEventListener("statementDefended", () => {
-    if (player.actionDone("coffeeHouse", "statementDefended", true)) {
-      setTimeout( () => {
-        homeScreen.setPost(postImg_interviewDefend);
-        messageScreen.reset();
-        window.dispatchEvent(new CustomEvent("phoneVibration"));
-      }, 3000);
-    } else {
-      setTimeout( () => {
+    setTimeout(() => {
+      if (player.actionDone("coffeeHouse", "statementDefended", true)) {
+        if (player.actionDone("coffeeHouse", "proDemo", true)) {
+          homeScreen.setPost(postImg_interviewDefend);
+        } else {
+          homeScreen.setPost(postImg_interviewRevoke);
+        }
+      } else if (player.actionDone("coffeeHouse", "proDemo", true)) {
         homeScreen.setPost(postImg_interviewRevoke);
-        messageScreen.reset();
-        window.dispatchEvent(new CustomEvent("phoneVibration"));
-      }, 3000);
-    }
+      } else {
+        homeScreen.setPost(postImg_interviewDefend);
+      }
+      messageScreen.reset();
+      window.dispatchEvent(new CustomEvent("phoneVibration"));
+    }, 3000);
+
     homeScreenBtn.enable();
     postScreenBtn.enable();
     msgScreenBtn.enable();
     phoneButton.enable();
-  })
+  });
 
   window.addEventListener("groupInvitation", () => {
-    setTimeout( () => {
+    setTimeout(() => {
       messageScreen.setEvent("invite");
       mobilePhone.showScreen("messageScreen");
       homeScreenBtn.disable();
@@ -688,9 +911,16 @@ function setupGame() {
     postScreenBtn.enable();
     msgScreenBtn.enable();
     phoneButton.enable();
-  })
+  });
 
-  let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg, "coffeeHouse");
+  let flyerBox_coffeeHouse = new FlyerBox(
+    601,
+    445,
+    61,
+    139,
+    flyerBoxImg,
+    "coffeeHouse"
+  );
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
   // global objects
@@ -705,11 +935,15 @@ function setupGame() {
       flyerCoffeeHouse.show();
       flyerCoffeeHouse.enable();
       if (!player.actionDone("coffeeHouse", "groupInvitation")) {
-        window.dispatchEvent(new CustomEvent("addAction", {detail: {
-          origin: "coffeeHouse",
-          name: "groupInvitation",
-          data: {},
-        }}));
+        window.dispatchEvent(
+          new CustomEvent("addAction", {
+            detail: {
+              origin: "coffeeHouse",
+              name: "groupInvitation",
+              data: {},
+            },
+          })
+        );
       }
     } else {
       flyerPark.show();
@@ -722,10 +956,22 @@ function setupGame() {
     player.usePhone(false);
   });
 
-  let phoneIcon = new PhoneIcon(windowWidth - 150, windowHeight - 200, 112, 168, phoneIconImg);
+  let phoneIcon = new PhoneIcon(
+    windowWidth - 150,
+    windowHeight - 200,
+    112,
+    168,
+    phoneIconImg
+  );
   global.addChild(phoneIcon);
 
-  let mobilePhone = new MobilePhone(492, 739, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg);
+  let mobilePhone = new MobilePhone(
+    492,
+    739,
+    phoneOutlineImg,
+    phoneOverlayImg,
+    brokenPhoneOverlayImg
+  );
   global.addChild(mobilePhone);
 
   let phoneButton = new PhoneButton(221, 677, 50, 50, phoneBtnImg);
@@ -738,7 +984,7 @@ function setupGame() {
     mobilePhone.show();
     mobilePhone.enable();
     player.usePhone(true);
-  })
+  });
 
   window.addEventListener("closePhone", () => {
     window.dispatchEvent(new CustomEvent("phoneTap"));
@@ -748,8 +994,11 @@ function setupGame() {
     phoneIcon.enable();
     player.usePhone(false);
 
-    if (player.actionDone("coffeeHouse", "invitationAccepted") && !player.actionDone("coffeeHouse", "invitationPostWatched")) {
-      setTimeout( () => {
+    if (
+      player.actionDone("coffeeHouse", "invitationAccepted") &&
+      !player.actionDone("coffeeHouse", "invitationPostWatched")
+    ) {
+      setTimeout(() => {
         if (player.actionDone("coffeeHouse", "invitationAccepted", true)) {
           homeScreen.setPost(postImg_groupInvitationAccepted);
           demoBench.disable();
@@ -759,23 +1008,47 @@ function setupGame() {
         mobilePhone.showScreen("homeScreen");
         messageScreen.reset();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
-        window.dispatchEvent(new CustomEvent("addAction", {detail: {
-          origin: "coffeeHouse",
-          name: "invitationPostWatched",
-          data: {},
-        }}));
+        window.dispatchEvent(
+          new CustomEvent("addAction", {
+            detail: {
+              origin: "coffeeHouse",
+              name: "invitationPostWatched",
+              data: {},
+            },
+          })
+        );
       }, 5000);
     }
-  })
+  });
 
-
-  let homeScreenBtn = new PhoneMenuIcon(43, 610, 79, 50, homeIconImg, "homeScreen");
+  let homeScreenBtn = new PhoneMenuIcon(
+    43,
+    610,
+    79,
+    50,
+    homeIconImg,
+    "homeScreen"
+  );
   mobilePhone.addChild(homeScreenBtn);
 
-  let postScreenBtn = new PhoneMenuIcon(207, 610, 79, 50, postIconImg, "postScreen");
+  let postScreenBtn = new PhoneMenuIcon(
+    207,
+    610,
+    79,
+    50,
+    postIconImg,
+    "postScreen"
+  );
   mobilePhone.addChild(postScreenBtn);
 
-  let msgScreenBtn = new PhoneMenuIcon(368, 610, 79, 50, msgIconImg, "messageScreen");
+  let msgScreenBtn = new PhoneMenuIcon(
+    368,
+    610,
+    79,
+    50,
+    msgIconImg,
+    "messageScreen"
+  );
   mobilePhone.addChild(msgScreenBtn);
 
   window.addEventListener("showScreen", (ev) => {
@@ -793,13 +1066,34 @@ function setupGame() {
   let postButton = new PhonePostButton(165, 428, 125, 50);
   postScreen.addChild(postButton);
 
-  let choosePostBtn_1 = new ChoosePostButton(17, 428, 125, 50, "A", postImg_watchedProDemo);
+  let choosePostBtn_1 = new ChoosePostButton(
+    17,
+    428,
+    125,
+    50,
+    "A",
+    postImg_watchedProDemo
+  );
   postScreen.addChild(choosePostBtn_1);
 
-  let choosePostBtn_2 = new ChoosePostButton(165, 428, 125, 50, "B", postImg_watchedProCounterDemo);
+  let choosePostBtn_2 = new ChoosePostButton(
+    165,
+    428,
+    125,
+    50,
+    "B",
+    postImg_watchedProCounterDemo
+  );
   postScreen.addChild(choosePostBtn_2);
 
-  let choosePostBtn_3 = new ChoosePostButton(313, 428, 125, 50, "C", postImg_watchedProNone);
+  let choosePostBtn_3 = new ChoosePostButton(
+    313,
+    428,
+    125,
+    50,
+    "C",
+    postImg_watchedProNone
+  );
   postScreen.addChild(choosePostBtn_3);
 
   window.addEventListener("choosePost", () => {
@@ -841,7 +1135,13 @@ function setupGame() {
   let msgButton_2 = new PhoneMessageButton(238, 428, 200, 50, "B");
   messageScreen.addChild(msgButton_2);
 
-  let endScreen = new PhoneEndScreen(18.9, 111.2, 454, 491, brokenPhoneOverlayImg);
+  let endScreen = new PhoneEndScreen(
+    18.9,
+    111.2,
+    454,
+    491,
+    brokenPhoneOverlayImg
+  );
   mobilePhone.addChild(endScreen);
 
   let endBtn = new PhoneEndButton(130, 428, 200, 50);
@@ -851,7 +1151,14 @@ function setupGame() {
     endScreen.answer("Verschwörungstheoretiker");
   });
 
-  let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 219, videoOverlayImg, endVideo);
+  let videoPlayer = new PhoneVideoPlayer(
+    30,
+    335,
+    390,
+    219,
+    videoOverlayImg,
+    endVideo
+  );
   endScreen.addChild(videoPlayer);
 
   let restartBtn = new RestartButton(238, 428, 200, 50);
@@ -878,14 +1185,14 @@ function setupGame() {
 
 window.addEventListener("phoneReceiveMsg", () => {
   phoneMsgSound.play();
-} );
+});
 
 // window.addEventListener("phoneSendMsg", () => {
 //   phoneSendSound.play();
 // });
 
 window.addEventListener("phoneVibration", () => {
-  phoneVibrationSound.play();  
+  phoneVibrationSound.play();
 });
 
 window.addEventListener("phoneTap", () => {
@@ -910,7 +1217,9 @@ window.addEventListener("closeFlyer", () => {
 
 window.addEventListener("buyNewspaper", () => {
   newspaperSound.play();
-  setTimeout(() => { registerSound.play() }, 500);
+  setTimeout(() => {
+    registerSound.play();
+  }, 500);
 });
 
 window.addEventListener("lampClick", () => {
@@ -918,13 +1227,19 @@ window.addEventListener("lampClick", () => {
 });
 
 window.addEventListener("walkOutsideFast", () => {
-  if (!outsideStepsSound_fast.isPlaying() && !outsideStepsSound_slow.isPlaying()) {
+  if (
+    !outsideStepsSound_fast.isPlaying() &&
+    !outsideStepsSound_slow.isPlaying()
+  ) {
     outsideStepsSound_fast.play();
   }
 });
 
 window.addEventListener("walkOutsideSlow", () => {
-  if (!outsideStepsSound_slow.isPlaying() && !outsideStepsSound_fast.isPlaying()) {
+  if (
+    !outsideStepsSound_slow.isPlaying() &&
+    !outsideStepsSound_fast.isPlaying()
+  ) {
     outsideStepsSound_slow.play();
   }
 });
@@ -960,8 +1275,12 @@ function mousePressed() {
 }
 window.mousePressed = mousePressed;
 
-function mouseReleased() { game.mouseReleased(); }
+function mouseReleased() {
+  game.mouseReleased();
+}
 window.mouseReleased = mouseReleased;
 
-function mouseWheel(ev) { game.mouseWheel(ev); }
+function mouseWheel(ev) {
+  game.mouseWheel(ev);
+}
 window.mouseWheel = mouseWheel;
