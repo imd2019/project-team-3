@@ -7,6 +7,7 @@ import View from "./simulation/view.js";
 
 // general display classes
 import DisplayObject from "./displayObject.js";
+import AnimatedDisplayObject from "./animatedDisplayObject.js";
 import ColorScreen from "./colorScreen.js";
 
 // interactive element classes
@@ -524,10 +525,10 @@ function setupGame() {
   let counterDemoPeople = new DemoPeople(1081, 322, 503, 352, demoPeopleImg_right, "counterDemo");
   demo.addChild(counterDemoPeople);
 
-  let demoSignsLeft = new DisplayObject(214, 215, 1315, 322, demoPeopleSignsImg_left);
+  let demoSignsLeft = new AnimatedDisplayObject(214, 215, 1315, 322, demoPeopleSignsImg_left);
   demo.addChild(demoSignsLeft);
 
-  let demoSignsRight = new DisplayObject(268, 226, 1311, 313, demoPeopleSignsImg_right);
+  let demoSignsRight = new AnimatedDisplayObject(268, 226, 1311, 313, demoPeopleSignsImg_right);
   demo.addChild(demoSignsRight);
 
   animate.addAnimation("moveDemoSigns_left", demoSignsLeft, "y", demoSignsLeft.saveY - 5, demoSignsLeft.saveY + 5, 0.5, "ease-in-out-quad");
