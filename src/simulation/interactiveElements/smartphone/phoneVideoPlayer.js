@@ -32,7 +32,7 @@ export default class PhoneVideoPlayer extends Sprite {
 
   setVideo() {
     if (this.parent.role === "Verschwörungstheoretiker") {
-      this.video = this.videos[3];
+      this.video = this.videos[0];
     }
   }
 
