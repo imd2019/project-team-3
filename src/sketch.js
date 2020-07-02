@@ -362,23 +362,10 @@ function setupGame() {
   let flyerBox_park = new FlyerBox(1262, 539, 61, 139, flyerBoxImg, "park");
   park.addChild(flyerBox_park);
 
-  let kioskLink = new KioskLink(
-    108,
-    206,
-    681,
-    377,
-    kioskLinkImg_off,
-    kioskLinkImg_on
-  );
+  let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg_off, kioskLinkImg_on);
   park.addChild(kioskLink);
 
-  let kioskLinkNewspapers = new DisplayObject(
-    271,
-    452,
-    205,
-    24,
-    kioskLinkNewspapersImg
-  );
+  let kioskLinkNewspapers = new DisplayObject(271, 452, 205, 24, kioskLinkNewspapersImg);
   park.addChild(kioskLinkNewspapers);
   kioskLinkNewspapers.hide();
 
@@ -390,32 +377,43 @@ function setupGame() {
   let parkForegnd = new DisplayObject(2, 228, 3904, 543, parkForegndImg);
   park.addChild(parkForegnd);
 
+  let streetLamps = [];
+
   let streetLamp_1 = new StreetLampBulb(496, 336, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_1);
+  streetLamps.push(streetLamp_1);
 
   let streetLamp_2 = new StreetLampBulb(1012, 250, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_2);
+  streetLamps.push(streetLamp_2);
 
   let streetLamp_3 = new StreetLampBulb(1450, 294, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_3);
+  streetLamps.push(streetLamp_3);
 
   let streetLamp_4 = new StreetLampBulb(1756, 292, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_4);
+  streetLamps.push(streetLamp_4);
 
   let streetLamp_5 = new StreetLampBulb(2565, 288, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_5);
+  streetLamps.push(streetLamp_5);
 
   let streetLamp_6 = new StreetLampBulb(2872, 286, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_6);
+  streetLamps.push(streetLamp_6);
 
   let streetLamp_7 = new StreetLampBulb(3488, 395, 24, 10, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_7);
+  streetLamps.push(streetLamp_7);
 
   let streetLamp_8 = new StreetLampBulb(3605, 394, 16, 7, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_8);
+  streetLamps.push(streetLamp_8);
 
   let streetLamp_9 = new StreetLampBulb(3736, 370, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_9);
+  streetLamps.push(streetLamp_9);
 
   // random events
 
@@ -497,14 +495,9 @@ function setupGame() {
 
   let streetLamp_coffeeHouse = new StreetLampBulb(280, 63, 37, 16, streetLampBulbOnImg, streetLampBulbOffImg);
   coffeeHouse.addChild(streetLamp_coffeeHouse);
+  streetLamps.push(streetLamp_coffeeHouse);
 
-  let coffeeHouseForegnd = new DisplayObject(
-    0,
-    0,
-    1792,
-    768,
-    coffeeHouseForegndImg
-  );
+  let coffeeHouseForegnd = new DisplayObject(0, 0, 1792, 768, coffeeHouseForegndImg);
   coffeeHouse.addChild(coffeeHouseForegnd);
 
   let parkLink_coffeeHouse = new ParkLink(129, 123, 241, 57, parkLinkImg_coffeeHouse);
@@ -513,35 +506,15 @@ function setupGame() {
   let barForegnd = new DisplayObject(0, 0, 1793, 769, barForegndImg);
   bar.addChild(barForegnd);
 
-  let barLamp_1 = new BarLampBulb(
-    280,
-    160,
-    74,
-    32,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let barLamp_1 = new BarLampBulb(280, 160, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
   bar.addChild(barLamp_1);
+  streetLamps.push(barLamp_1);
 
-  let barLamp_2 = new BarLampBulb(
-    1033,
-    203,
-    74,
-    32,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let barLamp_2 = new BarLampBulb(1033, 203, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
   bar.addChild(barLamp_2);
   barLamp_2.switch();
 
-  let barLamp_3 = new BarLampBulb(
-    1270,
-    217,
-    74,
-    32,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let barLamp_3 = new BarLampBulb(1270, 217, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
   bar.addChild(barLamp_3);
   barLamp_3.switch();
 
@@ -553,9 +526,25 @@ function setupGame() {
 
   let streetLampDemo_1 = new StreetLampBulb(614, 34, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
   demo.addChild(streetLampDemo_1);
+  streetLamps.push(streetLampDemo_1);
 
   let streetLampDemo_2 = new StreetLampBulb(1333, 31, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
   demo.addChild(streetLampDemo_2);
+  streetLamps.push(streetLampDemo_2);
+
+  // lamps flickering
+  setInterval( () => {
+    for (let elem of streetLamps) {
+      if (!floor(random(0, 10)) && elem.x > 0 && elem.x < windowWidth && elem.parent.name === game.currentView) {
+        elem.switch();
+        lampClickSound.setVolume(0.2);
+        lampClickSound.play();
+        setTimeout( () => {
+          elem.switch();
+        }, 100 * floor(random(1, 2)));
+      }
+    }
+  }, 1000)
 
   let demoForegnd = new DemoForegnd(-160, -6, 2180, 845, demoForegndImg_demo, demoForegndImg_pastDemo);
   demo.addChild(demoForegnd);
@@ -1140,6 +1129,7 @@ window.addEventListener("buyNewspaper", () => {
 });
 
 window.addEventListener("lampClick", () => {
+  lampClickSound.setVolume(0.6);
   lampClickSound.play();
 });
 
