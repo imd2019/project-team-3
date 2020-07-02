@@ -416,37 +416,16 @@ function setupGame() {
 
   let newspapers = [];
 
-  let newspaperOne = new Newspaper(
-    549,
-    446,
-    79,
-    37,
-    newspaperImg,
-    "conspiracy-theorist"
-  );
+  let newspaperOne = new Newspaper(549, 446, 79, 37, newspaperImg, "conspiracy-theorist");
   newspapers.push(newspaperOne);
 
   let newspaperTwo = new Newspaper(633, 446, 79, 37, newspaperImg, "follower");
   newspapers.push(newspaperTwo);
 
-  let newspaperThree = new Newspaper(
-    714,
-    446,
-    79,
-    37,
-    newspaperImg,
-    "wannabe-influencer"
-  );
+  let newspaperThree = new Newspaper(714, 446, 79, 37, newspaperImg, "wannabe-influencer");
   newspapers.push(newspaperThree);
 
-  let newspaperFour = new Newspaper(
-    798,
-    446,
-    79,
-    37,
-    newspaperImg,
-    "reflective-user"
-  );
+  let newspaperFour = new Newspaper(798, 446, 79, 37, newspaperImg, "reflective-user");
   newspapers.push(newspaperFour);
 
   newspapers.forEach((elem) => kiosk.addChild(elem));
@@ -539,42 +518,16 @@ function setupGame() {
   let barLink = new BarLink(1091, 137, 147, 228, barLinkImg);
   demo.addChild(barLink);
 
-  let demoPeople = new DemoPeople(
-    223,
-    281,
-    546,
-    362,
-    demoPeopleImg_left,
-    "demo"
-  );
+  let demoPeople = new DemoPeople(223, 281, 546, 362, demoPeopleImg_left, "demo");
   demo.addChild(demoPeople);
 
-  let counterDemoPeople = new DemoPeople(
-    1081,
-    322,
-    503,
-    352,
-    demoPeopleImg_right,
-    "counterDemo"
-  );
+  let counterDemoPeople = new DemoPeople(1081, 322, 503, 352, demoPeopleImg_right, "counterDemo");
   demo.addChild(counterDemoPeople);
 
-  let demoSignsLeft = new DisplayObject(
-    214,
-    215,
-    1315,
-    322,
-    demoPeopleSignsImg_left
-  );
+  let demoSignsLeft = new DisplayObject(214, 215, 1315, 322, demoPeopleSignsImg_left);
   demo.addChild(demoSignsLeft);
 
-  let demoSignsRight = new DisplayObject(
-    268,
-    226,
-    1311,
-    313,
-    demoPeopleSignsImg_right
-  );
+  let demoSignsRight = new DisplayObject(268, 226, 1311, 313, demoPeopleSignsImg_right);
   demo.addChild(demoSignsRight);
 
   let demoBubble = new Speechbubble(300, -150, 270, "Demo_1", "left");
@@ -836,18 +789,32 @@ function setupGame() {
   let phoneButton = new PhoneButton(221, 677, 50, 50, phoneBtnImg);
   mobilePhone.addChild(phoneButton);
 
+  let phoneIconX = phoneIcon.x;
+  let phoneIconY = phoneIcon.y;
+  animate.addAnimation("moveToCenter_h", phoneIcon, "x", phoneIconX, mobilePhone.x, 1, "ease-out-quad");
+  animate.addAnimation("moveToCenter_v", phoneIcon, "y", phoneIconY, mobilePhone.y, 1, "ease-out-quad");
+  animate.addAnimation("scaleToPhoneSize", phoneIcon, "scale", phoneIcon.scale, mobilePhone.scale * (mobilePhone.height / phoneIcon.height), 1, "linear");
+
   window.addEventListener("openPhone", () => {
-    window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
-    mobilePhone.show();
-    mobilePhone.enable();
+    animate.start("moveToCenter_h");
+    animate.start("moveToCenter_v");
+    animate.start("scaleToPhoneSize", false, () => {
+      window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
+      mobilePhone.show();
+      mobilePhone.enable();
+    });
     player.usePhone(true);
   });
 
   window.addEventListener("closePhone", () => {
+    window.dispatchEvent(new CustomEvent("showPhoneIcon"));
     mobilePhone.hide();
     mobilePhone.disable();
-    window.dispatchEvent(new CustomEvent("showPhoneIcon"));
     player.usePhone(false);
+
+    animate.start("moveToCenter_h", true);
+    animate.start("moveToCenter_v", true);
+    animate.start("scaleToPhoneSize", true);
 
     if (
       player.actionDone("coffeeHouse", "invitationAccepted") &&
@@ -876,34 +843,13 @@ function setupGame() {
     }
   });
 
-  let homeScreenBtn = new PhoneMenuIcon(
-    67,
-    615,
-    65,
-    41,
-    homeIconImg,
-    "homeScreen"
-  );
+  let homeScreenBtn = new PhoneMenuIcon(67, 615, 65, 41, homeIconImg, "homeScreen");
   mobilePhone.addChild(homeScreenBtn);
 
-  let postScreenBtn = new PhoneMenuIcon(
-    220,
-    618,
-    55,
-    35,
-    postIconImg,
-    "postScreen"
-  );
+  let postScreenBtn = new PhoneMenuIcon(220, 618, 55, 35, postIconImg, "postScreen");
   mobilePhone.addChild(postScreenBtn);
 
-  let msgScreenBtn = new PhoneMenuIcon(
-    360,
-    615,
-    65,
-    41,
-    msgIconImg,
-    "messageScreen"
-  );
+  let msgScreenBtn = new PhoneMenuIcon(360, 615, 65, 41, msgIconImg, "messageScreen");
   mobilePhone.addChild(msgScreenBtn);
 
   window.addEventListener("showScreen", (ev) => {
@@ -921,34 +867,13 @@ function setupGame() {
   let postButton = new PhonePostButton(165, 428, 125, 50);
   postScreen.addChild(postButton);
 
-  let choosePostBtn_1 = new ChoosePostButton(
-    17,
-    428,
-    125,
-    50,
-    "A",
-    postImg_watchedProDemo
-  );
+  let choosePostBtn_1 = new ChoosePostButton(17, 428, 125, 50, "A", postImg_watchedProDemo);
   postScreen.addChild(choosePostBtn_1);
 
-  let choosePostBtn_2 = new ChoosePostButton(
-    165,
-    428,
-    125,
-    50,
-    "B",
-    postImg_watchedProCounterDemo
-  );
+  let choosePostBtn_2 = new ChoosePostButton(165, 428, 125, 50, "B", postImg_watchedProCounterDemo);
   postScreen.addChild(choosePostBtn_2);
 
-  let choosePostBtn_3 = new ChoosePostButton(
-    313,
-    428,
-    125,
-    50,
-    "C",
-    postImg_watchedProNone
-  );
+  let choosePostBtn_3 = new ChoosePostButton(313, 428, 125, 50, "C", postImg_watchedProNone);
   postScreen.addChild(choosePostBtn_3);
 
   window.addEventListener("choosePost", () => {
@@ -981,15 +906,7 @@ function setupGame() {
     homeScreen.redraw();
   });
 
-  let messageScreen = new PhoneMessageScreen(
-    18.9,
-    111.2,
-    454,
-    491,
-    userIconImg,
-    journalistIconImg,
-    conspiracyIconImg
-  );
+  let messageScreen = new PhoneMessageScreen(18.9, 111.2, 454, 491, userIconImg, journalistIconImg, conspiracyIconImg);
   mobilePhone.addChild(messageScreen);
 
   let msgButton_1 = new PhoneMessageButton(17, 428, 200, 50, "A");
@@ -998,13 +915,7 @@ function setupGame() {
   let msgButton_2 = new PhoneMessageButton(238, 428, 200, 50, "B");
   messageScreen.addChild(msgButton_2);
 
-  let endScreen = new PhoneEndScreen(
-    18.9,
-    111.2,
-    454,
-    491,
-    brokenPhoneOverlayImg
-  );
+  let endScreen = new PhoneEndScreen(18.9, 111.2, 454, 491, brokenPhoneOverlayImg);
   mobilePhone.addChild(endScreen);
 
   let endBtn = new PhoneEndButton(130, 428, 200, 50);

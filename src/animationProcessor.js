@@ -99,7 +99,14 @@ export default class AnimationProcessor {
     if (!reversed) {
       this.animate(a.target, a.param, a.startValue, a.endValue, a.duration, a.easing, a.delay, a.repeat, callback);
     } else {
-      this.animate(a.target, a.param, a.endValue, a.startValue, a.duration, a.easing, a.delay, a.repeat, callback);
+      let reversedEasing;
+      if(!a.easing.includes("in-out")) {
+        reversedEasing = a.easing.replace("-in", "-out");
+        if (reversedEasing === a.easing) {
+          reversedEasing = a.easing.replace("-out", "-in");
+        }
+      }
+      this.animate(a.target, a.param, a.endValue, a.startValue, a.duration, reversedEasing, a.delay, a.repeat, callback);
     }
 
   }
