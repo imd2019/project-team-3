@@ -335,7 +335,7 @@ function setupGame() {
   let demoLink_bar = new DemoLink(1936, 338, 188, 132, demoLinkBarImg_off, demoLinkBarImg_on);
   park.addChild(demoLink_bar);
 
-  let demoLink_demo = new DemoLink(1633, 332, 666, 176, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg);
+  let demoLink_demo = new DemoLink(1633, 372, 666, 176, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg);
   park.addChild(demoLink_demo);
 
   let coffeeHouseLink = new CoffeeHouseLink(3353, 352, 208, 129, coffeeHouseLinkImg);
