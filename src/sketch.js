@@ -11,6 +11,8 @@ import AnimatedDisplayObject from "./animatedDisplayObject.js";
 import ColorScreen from "./colorScreen.js";
 
 // interactive element classes
+import InfoSection from "./titlescreen/infoSection.js";
+import TitleScreenButton from "./titlescreen/titleScreenButton.js";
 import BarLink from "./simulation/interactiveElements/demo/barLink.js";
 import CoffeeHouseLink from "./simulation/interactiveElements/park/coffeeHouseLink.js";
 import DemoLink from "./simulation/interactiveElements/park/demoLink.js";
@@ -51,6 +53,7 @@ import DemoForegnd from "./simulation/interactiveElements/demo/demoForegnd.js";
 import AnimationProcessor from "./animationProcessor.js";
 
 // load images
+let titleScreenImg;
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
 let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
 let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
@@ -88,6 +91,7 @@ function preload() {
   barBackgnd = loadImage("../img/bar/0_backgnd.png");
 
   // layers
+  titleScreenImg = loadImage("../img/titlescreen/titlescreenimg.png");
   moonImg = loadImage("../img/park/1_moon.png");
   cityImg = loadImage("../img/park/2_city.png");
   streetImg = loadImage("../img/park/3_street.png");
@@ -192,6 +196,7 @@ function preload() {
   flyerSound = loadSound("../sound/eventRelated/flyer.mp3");
   demoBenchSound = loadSound("../sound/eventRelated/benchSitdown.mp3");
   citySound = loadSound("../sound/ambient/city.mp3", setupGame);
+  buttonSound = loadSound("../sound/eventRelated/nutton.mp3");
 }
 window.preload = preload;
 
@@ -300,9 +305,14 @@ let animate = new AnimationProcessor(30);
 
 function setupGame() {
   // views
+  let titlescreen = new View("titlescreen", windowWidth, windowHeight);
+  game.addView(titlescreen);
+  game.enterView("titlescreen");
+
+  // let titleScreenBeckground = new Color
+
   let park = new View("park", 4098, 768, parkBackgnd);
   game.addView(park);
-  window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
 
   let kiosk = new View("kiosk", 1792, 768, parkBackgnd);
   game.addView(kiosk);

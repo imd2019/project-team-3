@@ -1,10 +1,7 @@
 import DisplayObject from "../displayObject.js";
 
-export default class TsInfo extends DisplayObject {
-  constructor(
-    x,
-    y,
-    width,
+export default class InfoSection extends DisplayObject {
+  constructor(x, y, width,
     height,
     colour,
     text,
