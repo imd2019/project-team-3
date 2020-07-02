@@ -789,11 +789,9 @@ function setupGame() {
   let phoneButton = new PhoneButton(221, 677, 50, 50, phoneBtnImg);
   mobilePhone.addChild(phoneButton);
 
-  let phoneIconX = phoneIcon.x;
-  let phoneIconY = phoneIcon.y;
-  animate.addAnimation("moveToCenter_h", phoneIcon, "x", phoneIconX, mobilePhone.x, 0.6, "linear");
-  animate.addAnimation("moveToCenter_v", phoneIcon, "y", phoneIconY, mobilePhone.y, 0.6, "ease-in-quad");
-  animate.addAnimation("scaleToPhoneSize", phoneIcon, "scale", phoneIcon.scale, mobilePhone.scale * (mobilePhone.height / phoneIcon.height), 0.6, "ease-in-quad");
+  animate.addAnimation("moveToCenter_h", phoneIcon, "x", phoneIcon.saveX, mobilePhone.x, 0.6, "linear");
+  animate.addAnimation("moveToCenter_v", phoneIcon, "y", phoneIcon.saveY, mobilePhone.y, 0.6, "ease-in-quad");
+  animate.addAnimation("scaleToPhoneSize", phoneIcon, "scale", phoneIcon.saveScale, mobilePhone.scale * (mobilePhone.height / phoneIcon.height), 0.6, "ease-in-quad");
 
   window.addEventListener("openPhone", () => {
     animate.start("moveToCenter_h");

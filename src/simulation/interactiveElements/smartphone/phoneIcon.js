@@ -4,6 +4,9 @@ export default class PhoneIcon extends InteractiveObject{
   constructor(x, y, width, height, backgnd){
     super(x, y, width, height, backgnd);
     this.rotationAngle = 0;
+    this.saveX = this.x;
+    this.saveY = this.y;
+    this.saveScale = this.scale;
   }
 
   draw() {
@@ -24,5 +27,8 @@ export default class PhoneIcon extends InteractiveObject{
   resetElement() {
     this.show();
     this.enable();
+    this.x = this.saveX;
+    this.y = this.saveY;
+    this.scale = this.saveScale;
   }
 }
