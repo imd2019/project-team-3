@@ -76,6 +76,7 @@ export default class Game extends Sprite {
       elem.reset();
     }
     this.player.reset();
-    this.enterView("park");
+    window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
+    window.dispatchEvent(new CustomEvent("soundReset"));
   }
 }

@@ -57,7 +57,7 @@ let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg_on, demoLinkBarImg_off, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, kioskLinkNewspapersImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
 let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
-let phoneIconImg, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg;
+let phoneIconImg, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg, userIconImg, journalistIconImg, conspiracyIconImg;
 let postOverlayImg, postImg_demoJoined, postImg_counterDemoJoined, postImg_watchedProDemo, postImg_watchedProCounterDemo, postImg_watchedProNone, postImg_groupInvitationAccepted, postImg_groupInvitationDenied, postImg_interviewDenied, postImg_interviewDefend, postImg_interviewRevoke, postImg_11, postImg_12, postImg_13;
 
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
@@ -232,11 +232,6 @@ window.addEventListener("addAction", (ev) => {
 let game = new Game(player);
 window.addEventListener("enterView", (ev) => {
   game.enterView(ev.detail);
-  citySound.loop();
-  leavesSound.loop();
-  fountainSound.loop();
-  owlSound.loop();
-  demoSound.loop();
   
   if(ev.detail === "bar") {
     doorSound.play();
@@ -323,7 +318,6 @@ function setupGame() {
   let park = new View("park", 4098, 768, parkBackgnd);
   game.addView(park);
   window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
-  // game.enterView("park");
 
   let kiosk = new View("kiosk", 1792, 768, parkBackgnd);
   game.addView(kiosk);
@@ -1048,28 +1042,42 @@ function setupGame() {
     game.reset();
   });
 
-  // sound
-  outsideStepsSound_fast.setVolume(0.3);
-  outsideStepsSound_slow.setVolume(0.3);
-  insideStepsSound_fast.setVolume(0.2);
-  insideStepsSound_slow.setVolume(0.2);
-  flyerSound.setVolume(0.3);
-  streetsignClickSound.setVolume(0.7);
-  pickupSignSound.setVolume(0.8);
-  phoneVibrationSound.setVolume(1.3);
-  phoneMsgSound.setVolume(0.4);
-  phoneTapSound.setVolume(0.5);
-  newspaperSound.setVolume(0.3);
-  fountainSound.setVolume(0);
-  owlSound.setVolume(0.05);
-  demoSound.setVolume(0.02);
-  doorSound.setVolume(0.3);
-  coffeeHouseSound.setVolume(0.7);
-  coffeeHouseMusicSound.setVolume(0.15);
-  lampClickSound.setVolume(0.6);
-  registerSound.setVolume(0.7);
-  citySound.setVolume(0.05);
-  demoBenchSound.setVolume(0.6);
+  // sound setup
+  window.addEventListener("soundReset", () => {
+    if (!citySound.isLooping()) {
+      citySound.loop();
+      leavesSound.loop();
+      fountainSound.loop();
+      owlSound.loop();
+    }
+    if (!demoSound.isLooping()) {
+      demoSound.loop();
+    }
+
+    outsideStepsSound_fast.setVolume(0.3);
+    outsideStepsSound_slow.setVolume(0.3);
+    insideStepsSound_fast.setVolume(0.2);
+    insideStepsSound_slow.setVolume(0.2);
+    flyerSound.setVolume(0.3);
+    streetsignClickSound.setVolume(0.7);
+    pickupSignSound.setVolume(0.8);
+    phoneVibrationSound.setVolume(1.3);
+    phoneMsgSound.setVolume(0.4);
+    phoneTapSound.setVolume(0.5);
+    newspaperSound.setVolume(0.3);
+    fountainSound.setVolume(0);
+    owlSound.setVolume(0.05);
+    demoSound.setVolume(0.02);
+    doorSound.setVolume(0.3);
+    coffeeHouseSound.setVolume(0.7);
+    coffeeHouseMusicSound.setVolume(0.15);
+    lampClickSound.setVolume(0.6);
+    registerSound.setVolume(0.7);
+    citySound.setVolume(0.05);
+    demoBenchSound.setVolume(0.6);
+  });
+
+  window.dispatchEvent(new CustomEvent("soundReset"));
 }
 
 /* sound events */
