@@ -7,6 +7,7 @@ import View from "./simulation/view.js";
 
 // general display classes
 import DisplayObject from "./displayObject.js";
+import ColorScreen from "./colorScreen.js";
 
 // interactive element classes
 import BarLink from "./simulation/interactiveElements/demo/barLink.js";
@@ -209,7 +210,12 @@ window.addEventListener("addAction", (ev) => {
 
 let game = new Game(player);
 window.addEventListener("enterView", (ev) => {
-  game.enterView(ev.detail);
+  animate.start("fadeOut", false, () => {
+    animate.start("fadeOut", true);
+  });
+  setTimeout( () => {
+    game.enterView(ev.detail);
+  }, 600);
   
   if(ev.detail === "bar") {
     doorSound.play();
@@ -516,10 +522,9 @@ function setupGame() {
   // lamps flickering
   setInterval( () => {
     for (let elem of streetLamps) {
-      if ((elem.parent.name === "bar" && !floor(random(0, 3))) || (
-        !floor(random(0, 10)) && elem.x > 0 && elem.x < windowWidth && elem.parent.name === game.currentView)) {
+      if ((elem.parent.name === "bar" && !floor(random(0, 3))) || 
+      (elem.parent.name === game.currentView && elem.x > 0 && elem.x < windowWidth && !floor(random(0, 10)))) {
         elem.switch();
-        lampClickSound.setVolume(0.2);
         lampClickSound.play();
         setTimeout( () => {
           elem.switch();
@@ -664,10 +669,7 @@ function setupGame() {
   coffeeHouse.addChild(door_coffeeHouse);
 
   window.addEventListener("enterCoffeeHouse", () => {
-    if (
-      player.actionDone("demo", "joinDemo") ||
-      player.actionDone("coffeeHouse", "groupInvitation")
-    ) {
+    if (player.actionDone("demo", "joinDemo") || player.actionDone("coffeeHouse", "groupInvitation")) {
       setTimeout(() => {
         messageScreen.setEvent("interview");
         mobilePhone.showScreen("messageScreen");
@@ -678,6 +680,38 @@ function setupGame() {
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 5000);
     }
+
+    lampClickSound.fade(0, 1);
+    fountainSound.fade(0, 1);
+    citySound.fade(0, 1);
+    leavesSound.fade(0, 1);
+    doorSound.play();
+  
+    coffeeHouse.disable();
+    animate.start("fadeOut");
+  
+    setTimeout( () => {
+      coffeeHouseSound.play();
+      coffeeHouseMusicSound.play();
+    }, 800);
+    setTimeout( () => {
+      coffeeHouseSound.fade(0, 1);
+      coffeeHouseMusicSound.fade(0, 1);
+    }, 10000);
+    setTimeout( () => {
+      doorSound.play();
+      citySound.fade(0.1, 2);
+      leavesSound.fade(0.6, 2);
+      fountainSound.fade(0.06, 2);
+      lampClickSound.fade(0.2, 2);
+      animate.start("fadeOut", true, () => {
+        coffeeHouse.enable();
+      });
+    }, 10500);
+    setTimeout( () => {
+      coffeeHouseSound.stop();
+      coffeeHouseMusicSound.stop();
+    }, 12500);
   });
 
   window.addEventListener("interviewAccepted", () => {
@@ -1004,6 +1038,11 @@ function setupGame() {
     game.reset();
   });
 
+  let fadeScreen = new ColorScreen(0, 0, windowWidth, windowHeight, color("#000000"), 0);
+  global.addChild(fadeScreen);
+
+  animate.addAnimation("fadeOut", fadeScreen, "opacity", 0, 1, 0.6, "ease-in-out-quad");
++
   // sound setup
   window.addEventListener("soundReset", () => {
     if (!citySound.isLooping()) {
@@ -1090,32 +1129,6 @@ window.addEventListener("phoneTap", () => {
   phoneTapSound.play();
 });
 
-window.addEventListener("enterCoffeeHouse", () => {
-  fountainSound.fade(0, 1);
-  citySound.fade(0, 1);
-  leavesSound.fade(0, 1);
-
-  doorSound.play();
-  setTimeout( () => {
-    coffeeHouseSound.play();
-    coffeeHouseMusicSound.play();
-  }, 800);
-  setTimeout( () => {
-    coffeeHouseSound.fade(0, 1);
-    coffeeHouseMusicSound.fade(0, 1);
-  }, 10000);
-  setTimeout( () => {
-    doorSound.play();
-    citySound.fade(0.1, 2);
-    leavesSound.fade(0.6, 2);
-    fountainSound.fade(0.06, 2);
-  }, 10500);
-  setTimeout( () => {
-    coffeeHouseSound.stop();
-    coffeeHouseMusicSound.stop();
-  }, 12500);
-});
-
 window.addEventListener("pickupSign", () => {
   pickupSignSound.play();
 });
@@ -1136,8 +1149,9 @@ window.addEventListener("buyNewspaper", () => {
 });
 
 window.addEventListener("lampClick", () => {
-  lampClickSound.setVolume(0.6);
   lampClickSound.play();
+  lampClickSound.setVolume(0.6);
+  lampClickSound.fade(0.2, 0.3);
 });
 
 window.addEventListener("tapPhone", () => {

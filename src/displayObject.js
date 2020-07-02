@@ -46,5 +46,7 @@ export default class DisplayObject extends EventDispatcher {
 
   mouseReleased() { return false; }
 
+  mouseWheel(ev) { }
+
   reset() {}
 }
