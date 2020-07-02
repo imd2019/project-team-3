@@ -163,7 +163,7 @@ export default class PhoneMessageButton extends Sprite {
                   id: 1,
                   buttonText: "Welche Bar?",
                   conversationText:
-                    "Von welcher Bar sprichst du? Kennen wir uns etwa?",
+                    "Von welcher Bar sprichst du denn? Kennen wir uns etwa?",
                   conversationAnswer:
                     "Ich bin ein alter Freund. Komm so schnell du kannst zum 14qm.",
                   conversationEnded: true,

@@ -1,10 +1,10 @@
 import Sprite from "../../../sprite.js";
 
 export default class PhoneVideoPlayer extends Sprite {
-  constructor(x, y, width, height, backgnd, video) {
+  constructor(x, y, width, height, backgnd, videos) {
     super(x, y, width, height, backgnd);
-    this.video = video;
-    this.video.hide();
+    this.videos = videos;
+    this.video = undefined;
     this.screen = undefined;
     this.pos = undefined;
     this.isClicked = false;
@@ -18,9 +18,21 @@ export default class PhoneVideoPlayer extends Sprite {
     this.screen = this.parent.message;
     this.pos = this.parent.pos;
 
-    this.screen.image(this.video, 30, 335 + this.pos, this.width, this.height);
+    this.screen.image(this.video, 30, 500 + this.pos, this.width, this.height);
     if (!this.isClicked) {
-      this.screen.image(this.backgnd, 30, 335 + this.pos, this.width, this.height);
+      this.screen.image(
+        this.backgnd,
+        30,
+        500 + this.pos,
+        this.width,
+        this.height
+      );
+    }
+  }
+
+  setVideo() {
+    if (this.parent.role === "Verschwörungstheoretiker") {
+      this.video = this.videos[3];
     }
   }
 
@@ -43,7 +55,7 @@ export default class PhoneVideoPlayer extends Sprite {
   }
 
   updatePosition() {
-    this.parent.pos = -175;
+    this.parent.pos = -290;
   }
 
   resetElement() {
