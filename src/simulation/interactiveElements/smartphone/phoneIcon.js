@@ -7,6 +7,8 @@ export default class PhoneIcon extends InteractiveObject{
     this.saveX = this.x;
     this.saveY = this.y;
     this.saveScale = this.scale;
+    this.hide();
+    this.disable();
   }
 
   draw() {

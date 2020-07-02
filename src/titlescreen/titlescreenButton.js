@@ -1,72 +1,47 @@
 import InteractiveObject from "../interactiveObject.js";
 
 export default class TitleScreenButton extends InteractiveObject {
-  constructor(
-    x,
-    y,
-    width,
-    height,
-    colour = color(0, 255, 0),
-    text,
-    textcolour = color(0, 0, 255),
-    textaccentcolour = color(255, 0, 0),
-    font,
-    ev,
-    on,
-    evTimerLamp
-  ) {
+  constructor(x, y, width, height, text, font, textColor, accentColor, action) {
     super(x, y, width, height);
-    this.colour = colour;
     this.text = text;
-    this.textcolour = textcolour;
-    this.textaccentcolour = textaccentcolour;
-    this.maincolour = this.textcolour;
     this.font = font;
-    this.on = on = true;
-    this.xw = 0;
-    this.ev = ev;
-    this.ableToUse = false;
-    this.evTimerLamp = evTimerLamp = 0;
+    this.textColor = textColor;
+    this.accentColor = accentColor;
+    this.action = action;
+    this.dx = 0;
+    this.playSound = true;
   }
+
   draw() {
     noStroke();
-    fill(this.colour);
-    rect(this.xw, 0, this.width, this.height);
-    fill(this.maincolour);
+    textAlign(LEFT, TOP);
     textSize(this.height);
     textFont(this.font);
-    text(this.text, this.xw, 0, this.width + this.xw, this.height);
-    // console.log(this.ableToUse);
+    this.width = textWidth(this.text) + this.dx;
 
-    if (this.ableToUse == true) {
-      //Lampe flackern lassen
-      this.evTimerLamp++;
-      if (this.evTimerLamp >= random(100, 5000)) {
-        window.dispatchEvent(new CustomEvent("lampFlickering"));
-        this.evTimerLamp = 0;
-      }
-      //Buttonstuff
+    if (this.enabled) {
       if (this.mouseHovered()) {
-        this.maincolour = this.textaccentcolour;
-        this.xw = 10;
+        fill(this.accentColor);
+        this.dx = 10;
 
-        if (this.on === true) {
-          window.dispatchEvent(new CustomEvent("buttonClick"));
+        if (this.playSound) {
+          window.dispatchEvent(new CustomEvent("playButtonSound"));
+          this.playSound = false;
         }
-        this.on = false;
       } else {
-        this.xw = 0;
-        this.maincolour = this.textcolour;
-        this.on = true;
+        this.dx = 0;
+        this.playSound = true;
+        fill(this.textColor);
       }
     }
-  }
-  clicked() {
-    if (this.ableToUse === true) {
-      window.dispatchEvent(new CustomEvent(this.ev, { detail: this.ev }));
-      window.dispatchEvent(new CustomEvent("buttonClick"));
 
-      // console.log(this.ev);
+    text(this.text, this.dx, 0);
+  }
+
+  clicked() {
+    if (this.enabled) {
+      window.dispatchEvent(new CustomEvent(this.action));
+      window.dispatchEvent(new CustomEvent("playButtonSound"));
     }
   }
 }
