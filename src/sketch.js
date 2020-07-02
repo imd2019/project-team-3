@@ -51,11 +51,7 @@ import AnimationProcessor from "./animationProcessor.js";
 
 // load images
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
-let kioskTreesImg,
-  kioskBuildingImg_on,
-  kioskBuildingImg_off,
-  kioskTrashcanImg,
-  kioskSunshadeImg;
+let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
 let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
@@ -338,7 +334,7 @@ function setupGame() {
   let demoLink_bar = new DemoLink(1936, 338, 188, 132, demoLinkBarImg_off, demoLinkBarImg_on);
   park.addChild(demoLink_bar);
 
-  let demoLink_demo = new DemoLink(1788, 425, 470, 117, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg);
+  let demoLink_demo = new DemoLink(1633, 332, 666, 176, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg);
   park.addChild(demoLink_demo);
 
   let coffeeHouseLink = new CoffeeHouseLink(3353, 352, 208, 129, coffeeHouseLinkImg);
