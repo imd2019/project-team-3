@@ -1,6 +1,6 @@
 import EventDispatcher from "./eventDispatcher.js"
 
-export default class DisplayObject extends EventDispatcher { 
+export default class AnimatedDisplayObject extends EventDispatcher { 
   constructor(x, y, width, height, backgnd = undefined) {
     super();
     this.x = x;
@@ -11,6 +11,10 @@ export default class DisplayObject extends EventDispatcher {
     this.scale = 1;
     this.rotation = 0;
     this.visible = true;
+
+    this.saveX = this.x;
+    this.saveY = this.y;
+    this.saveScale = this.scale;
   }
 
   draw() {
@@ -48,5 +52,9 @@ export default class DisplayObject extends EventDispatcher {
 
   mouseWheel(ev) { }
 
-  reset() {  }
+  reset() {
+    this.x = this.saveX;
+    this.y = this.saveY;
+    this.scale = this.saveScale;
+  }
 }

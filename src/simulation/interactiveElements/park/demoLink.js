@@ -24,8 +24,8 @@ export default class DemoLink extends Sprite {
       if (this.demo) {
         image(this.backgnd, 0, 0, this.width, this.height);
         if (this.signsLeft != undefined) {
-          image(this.signsLeft, 20, this.counter - 25, 435, 89);
-          image(this.signsRight, 20, -this.counter - 25, 434, 105);
+          image(this.signsLeft, 160, this.counter + 25, 435, 89);
+          image(this.signsRight, 170, -this.counter + 25, 434, 105);
   
           this.counter += this.steps;
           if (this.counter >= 7 || this.counter <= 0) {

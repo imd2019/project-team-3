@@ -7,6 +7,8 @@ import View from "./simulation/view.js";
 
 // general display classes
 import DisplayObject from "./displayObject.js";
+import AnimatedDisplayObject from "./animatedDisplayObject.js";
+import ColorScreen from "./colorScreen.js";
 
 // interactive element classes
 import BarLink from "./simulation/interactiveElements/demo/barLink.js";
@@ -44,13 +46,13 @@ import DemoPeople from "./simulation/interactiveElements/demo/demoPeople.js";
 import Newspaper from "./simulation/interactiveElements/kiosk/newspaper.js";
 import DemoForegnd from "./simulation/interactiveElements/demo/demoForegnd.js";
 
+// utillity classes
+
+import AnimationProcessor from "./animationProcessor.js";
+
 // load images
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
-let kioskTreesImg,
-  kioskBuildingImg_on,
-  kioskBuildingImg_off,
-  kioskTrashcanImg,
-  kioskSunshadeImg;
+let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
 let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
@@ -102,9 +104,7 @@ function preload() {
 
   // interactive elements
   barLinkImg = loadImage("../img/demo/1_interactionSpaces/1_door.png");
-  coffeeHouseLinkImg = loadImage(
-    "../img/park/4_interactionSpaces/4_coffeeHouse.png"
-  );
+  coffeeHouseLinkImg = loadImage("../img/park/4_interactionSpaces/4_coffeeHouse.png");
   demoLinkBarImg_on = loadImage("../img/park/4_interactionSpaces/4_demo-bar_on.png");
   demoLinkBarImg_off = loadImage("../img/park/4_interactionSpaces/4_demo-bar_off.png");
   demoLinkDemoImg_demo = loadImage("../img/park/4_interactionSpaces/4_demo-demo.png");
@@ -116,9 +116,7 @@ function preload() {
   kioskLinkNewspapersImg = loadImage("../img/park/4_interactionSpaces/4_newspapers.png");
   parkLinkImg_kiosk = loadImage("../img/kiosk/4_interactionSpaces/4_advertisingColumn.png");
   parkLinkImg_demo = loadImage("../img/demo/1_interactionSpaces/1_park.png");
-  parkLinkImg_coffeeHouse = loadImage(
-    "../img/coffeeHouse/3_interactionSpaces/3_park.png"
-  );
+  parkLinkImg_coffeeHouse = loadImage("../img/coffeeHouse/3_interactionSpaces/3_park.png");
   demoSignImg = loadImage("../img/demo/3_elements/3_sign.png");
   demoBenchImg = loadImage("../img/demo/3_elements/3_bench.png");
   flyerBoxImg = loadImage("../img/assets/flyerbox.png");
@@ -145,36 +143,16 @@ function preload() {
   journalistIconImg = loadImage("../img/smartphone/journalistIcon.png");
   conspiracyIconImg = loadImage("../img/smartphone/conspiracyIcon.png");
   postOverlayImg = loadImage("../img/smartphone/postOverlay.png");
-  postImg_demoJoined = loadImage(
-    "../img/smartphone/posts/postImg_demoJoined.png"
-  );
-  postImg_counterDemoJoined = loadImage(
-    "../img/smartphone/posts/postImg_counterDemoJoined.png"
-  );
-  postImg_watchedProDemo = loadImage(
-    "../img/smartphone/posts/postImg_watchedProDemo.png"
-  );
-  postImg_watchedProCounterDemo = loadImage(
-    "../img/smartphone/posts/postImg_watchedProCounterDemo.png"
-  );
-  postImg_watchedProNone = loadImage(
-    "../img/smartphone/posts/postImg_watchedProNone.png"
-  );
-  postImg_groupInvitationAccepted = loadImage(
-    "../img/smartphone/posts/postImg_groupInvitationAccepted.png"
-  );
-  postImg_groupInvitationDenied = loadImage(
-    "../img/smartphone/posts/postImg_groupInvitationDenied.png"
-  );
-  postImg_interviewDenied = loadImage(
-    "../img/smartphone/posts/postImg_interviewDenied.png"
-  );
-  postImg_interviewDefend = loadImage(
-    "../img/smartphone/posts/postImg_interviewDefend.png"
-  );
-  postImg_interviewRevoke = loadImage(
-    "../img/smartphone/posts/postImg_interviewRevoke.png"
-  );
+  postImg_demoJoined = loadImage("../img/smartphone/posts/postImg_demoJoined.png");
+  postImg_counterDemoJoined = loadImage("../img/smartphone/posts/postImg_counterDemoJoined.png");
+  postImg_watchedProDemo = loadImage("../img/smartphone/posts/postImg_watchedProDemo.png");
+  postImg_watchedProCounterDemo = loadImage("../img/smartphone/posts/postImg_watchedProCounterDemo.png");
+  postImg_watchedProNone = loadImage("../img/smartphone/posts/postImg_watchedProNone.png");
+  postImg_groupInvitationAccepted = loadImage("../img/smartphone/posts/postImg_groupInvitationAccepted.png");
+  postImg_groupInvitationDenied = loadImage("../img/smartphone/posts/postImg_groupInvitationDenied.png");
+  postImg_interviewDenied = loadImage("../img/smartphone/posts/postImg_interviewDenied.png");
+  postImg_interviewDefend = loadImage("../img/smartphone/posts/postImg_interviewDefend.png");
+  postImg_interviewRevoke = loadImage("../img/smartphone/posts/postImg_interviewRevoke.png");
   // postImg_11 = loadImage("../img/smartphone/posts/post11.png");
   // postImg_12 = loadImage("../img/smartphone/posts/post12.png");
   // postImg_13 = loadImage("../img/smartphone/posts/post13.png");
@@ -183,9 +161,7 @@ function preload() {
   demoPeopleImg_left = loadImage("../img/demo/4_people/4_people_left.png");
   demoPeopleImg_right = loadImage("../img/demo/4_people/4_people_right.png");
   demoPeopleSignsImg_left = loadImage("../img/demo/4_people/4_signs_left.png");
-  demoPeopleSignsImg_right = loadImage(
-    "../img/demo/4_people/4_signs_right.png"
-  );
+  demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png");
 
   // video
   videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
@@ -231,15 +207,18 @@ window.addEventListener("addAction", (ev) => {
 
 let game = new Game(player);
 window.addEventListener("enterView", (ev) => {
-  game.enterView(ev.detail);
+  animate.start("fadeOut", false, () => {
+    animate.start("fadeOut", true);
+  });
+  setTimeout( () => {
+    game.enterView(ev.detail);
+  }, 1000);
   
   if(ev.detail === "bar") {
     doorSound.play();
     citySound.fade(0, 1);
-    phoneVibrationSound.loop();
-    phoneVibrationSound.setVolume(0.3);
-
     window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
+    window.dispatchEvent(new CustomEvent("barPhoneVibration"));
   }
 
   if(ev.detail === "demo") {
@@ -247,6 +226,7 @@ window.addEventListener("enterView", (ev) => {
     leavesSound.fade(0, 1);
     owlSound.fade(0, 1);
     if (!player.actionDone("demo", "endDemo")) {
+      window.dispatchEvent(new CustomEvent("startDemoAnimation"));
       demoSound.fade(0.2, 1);
       setTimeout( () => {
         policeSirenSound.play();
@@ -266,6 +246,9 @@ window.addEventListener("enterView", (ev) => {
     fountainSound.fade(0, 2);
     owlSound.fade(0.05, 1);
     demoSound.fade(0.02, 1);
+    
+    window.dispatchEvent(new CustomEvent("stoppDemoAnimation"));
+
     if (player.actionDone("demo") || player.actionDone("coffeeHouse")) {
       window.dispatchEvent(new CustomEvent("openKiosk"));
 
@@ -313,6 +296,8 @@ window.addEventListener("enterView", (ev) => {
   }
 });
 
+let animate = new AnimationProcessor(30);
+
 function setupGame() {
   // views
   let park = new View("park", 4098, 768, parkBackgnd);
@@ -350,7 +335,7 @@ function setupGame() {
   let demoLink_bar = new DemoLink(1936, 338, 188, 132, demoLinkBarImg_off, demoLinkBarImg_on);
   park.addChild(demoLink_bar);
 
-  let demoLink_demo = new DemoLink(1788, 425, 470, 117, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg);
+  let demoLink_demo = new DemoLink(1633, 372, 666, 176, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg);
   park.addChild(demoLink_demo);
 
   let coffeeHouseLink = new CoffeeHouseLink(3353, 352, 208, 129, coffeeHouseLinkImg);
@@ -362,23 +347,10 @@ function setupGame() {
   let flyerBox_park = new FlyerBox(1262, 539, 61, 139, flyerBoxImg, "park");
   park.addChild(flyerBox_park);
 
-  let kioskLink = new KioskLink(
-    108,
-    206,
-    681,
-    377,
-    kioskLinkImg_off,
-    kioskLinkImg_on
-  );
+  let kioskLink = new KioskLink(108, 206, 681, 377, kioskLinkImg_off, kioskLinkImg_on);
   park.addChild(kioskLink);
 
-  let kioskLinkNewspapers = new DisplayObject(
-    271,
-    452,
-    205,
-    24,
-    kioskLinkNewspapersImg
-  );
+  let kioskLinkNewspapers = new DisplayObject(271, 452, 205, 24, kioskLinkNewspapersImg);
   park.addChild(kioskLinkNewspapers);
   kioskLinkNewspapers.hide();
 
@@ -390,32 +362,43 @@ function setupGame() {
   let parkForegnd = new DisplayObject(2, 228, 3904, 543, parkForegndImg);
   park.addChild(parkForegnd);
 
+  let streetLamps = [];
+
   let streetLamp_1 = new StreetLampBulb(496, 336, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_1);
+  streetLamps.push(streetLamp_1);
 
   let streetLamp_2 = new StreetLampBulb(1012, 250, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_2);
+  streetLamps.push(streetLamp_2);
 
   let streetLamp_3 = new StreetLampBulb(1450, 294, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_3);
+  streetLamps.push(streetLamp_3);
 
   let streetLamp_4 = new StreetLampBulb(1756, 292, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_4);
+  streetLamps.push(streetLamp_4);
 
   let streetLamp_5 = new StreetLampBulb(2565, 288, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_5);
+  streetLamps.push(streetLamp_5);
 
   let streetLamp_6 = new StreetLampBulb(2872, 286, 35, 15, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_6);
+  streetLamps.push(streetLamp_6);
 
   let streetLamp_7 = new StreetLampBulb(3488, 395, 24, 10, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_7);
+  streetLamps.push(streetLamp_7);
 
   let streetLamp_8 = new StreetLampBulb(3605, 394, 16, 7, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_8);
+  streetLamps.push(streetLamp_8);
 
   let streetLamp_9 = new StreetLampBulb(3736, 370, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_9);
+  streetLamps.push(streetLamp_9);
 
   // random events
 
@@ -434,37 +417,16 @@ function setupGame() {
 
   let newspapers = [];
 
-  let newspaperOne = new Newspaper(
-    549,
-    446,
-    79,
-    37,
-    newspaperImg,
-    "conspiracy-theorist"
-  );
+  let newspaperOne = new Newspaper(549, 446, 79, 37, newspaperImg, "conspiracy-theorist");
   newspapers.push(newspaperOne);
 
   let newspaperTwo = new Newspaper(633, 446, 79, 37, newspaperImg, "follower");
   newspapers.push(newspaperTwo);
 
-  let newspaperThree = new Newspaper(
-    714,
-    446,
-    79,
-    37,
-    newspaperImg,
-    "wannabe-influencer"
-  );
+  let newspaperThree = new Newspaper(714, 446, 79, 37, newspaperImg, "wannabe-influencer");
   newspapers.push(newspaperThree);
 
-  let newspaperFour = new Newspaper(
-    798,
-    446,
-    79,
-    37,
-    newspaperImg,
-    "reflective-user"
-  );
+  let newspaperFour = new Newspaper(798, 446, 79, 37, newspaperImg, "reflective-user");
   newspapers.push(newspaperFour);
 
   newspapers.forEach((elem) => kiosk.addChild(elem));
@@ -497,14 +459,9 @@ function setupGame() {
 
   let streetLamp_coffeeHouse = new StreetLampBulb(280, 63, 37, 16, streetLampBulbOnImg, streetLampBulbOffImg);
   coffeeHouse.addChild(streetLamp_coffeeHouse);
+  streetLamps.push(streetLamp_coffeeHouse);
 
-  let coffeeHouseForegnd = new DisplayObject(
-    0,
-    0,
-    1792,
-    768,
-    coffeeHouseForegndImg
-  );
+  let coffeeHouseForegnd = new DisplayObject(0, 0, 1792, 768, coffeeHouseForegndImg);
   coffeeHouse.addChild(coffeeHouseForegnd);
 
   let parkLink_coffeeHouse = new ParkLink(129, 123, 241, 57, parkLinkImg_coffeeHouse);
@@ -513,35 +470,15 @@ function setupGame() {
   let barForegnd = new DisplayObject(0, 0, 1793, 769, barForegndImg);
   bar.addChild(barForegnd);
 
-  let barLamp_1 = new BarLampBulb(
-    280,
-    160,
-    74,
-    32,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let barLamp_1 = new BarLampBulb(280, 160, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
   bar.addChild(barLamp_1);
+  streetLamps.push(barLamp_1);
 
-  let barLamp_2 = new BarLampBulb(
-    1033,
-    203,
-    74,
-    32,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let barLamp_2 = new BarLampBulb(1033, 203, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
   bar.addChild(barLamp_2);
   barLamp_2.switch();
 
-  let barLamp_3 = new BarLampBulb(
-    1270,
-    217,
-    74,
-    32,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let barLamp_3 = new BarLampBulb(1270, 217, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
   bar.addChild(barLamp_3);
   barLamp_3.switch();
 
@@ -551,11 +488,30 @@ function setupGame() {
   let barPhone = new BarPhone(357, 356, 22, 8, barPhoneImg);
   bar.addChild(barPhone);
 
+  animate.addAnimation("barPhoneVibrate_1", barPhone, "rotationAngle", 0, 0.05, 0.025);
+  animate.addAnimation("barPhoneVibrate_2", barPhone, "rotationAngle", 0.05, -0.05, 0.05);
+
   let streetLampDemo_1 = new StreetLampBulb(614, 34, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
   demo.addChild(streetLampDemo_1);
+  streetLamps.push(streetLampDemo_1);
 
   let streetLampDemo_2 = new StreetLampBulb(1333, 31, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
   demo.addChild(streetLampDemo_2);
+  streetLamps.push(streetLampDemo_2);
+
+  // lamps flickering
+  setInterval( () => {
+    for (let elem of streetLamps) {
+      if ((elem.parent.name === "bar" && !floor(random(0, 3))) || 
+      (elem.parent.name === game.currentView && elem.x > 0 && elem.x < windowWidth && !floor(random(0, 10)))) {
+        elem.switch();
+        lampClickSound.play();
+        setTimeout( () => {
+          elem.switch();
+        }, 100 * floor(random(1, 2)));
+      }
+    }
+  }, 1000)
 
   let demoForegnd = new DemoForegnd(-160, -6, 2180, 845, demoForegndImg_demo, demoForegndImg_pastDemo);
   demo.addChild(demoForegnd);
@@ -563,43 +519,45 @@ function setupGame() {
   let barLink = new BarLink(1091, 137, 147, 228, barLinkImg);
   demo.addChild(barLink);
 
-  let demoPeople = new DemoPeople(
-    223,
-    281,
-    546,
-    362,
-    demoPeopleImg_left,
-    "demo"
-  );
+  let demoPeople = new DemoPeople(223, 281, 546, 362, demoPeopleImg_left, "demo");
   demo.addChild(demoPeople);
 
-  let counterDemoPeople = new DemoPeople(
-    1081,
-    322,
-    503,
-    352,
-    demoPeopleImg_right,
-    "counterDemo"
-  );
+  let counterDemoPeople = new DemoPeople(1081, 322, 503, 352, demoPeopleImg_right, "counterDemo");
   demo.addChild(counterDemoPeople);
 
-  let demoSignsLeft = new DisplayObject(
-    214,
-    215,
-    1315,
-    322,
-    demoPeopleSignsImg_left
-  );
+  let demoSignsLeft = new AnimatedDisplayObject(214, 215, 1315, 322, demoPeopleSignsImg_left);
   demo.addChild(demoSignsLeft);
 
-  let demoSignsRight = new DisplayObject(
-    268,
-    226,
-    1311,
-    313,
-    demoPeopleSignsImg_right
-  );
+  let demoSignsRight = new AnimatedDisplayObject(268, 226, 1311, 313, demoPeopleSignsImg_right);
   demo.addChild(demoSignsRight);
+
+  animate.addAnimation("moveDemoSigns_left", demoSignsLeft, "y", demoSignsLeft.saveY - 5, demoSignsLeft.saveY + 5, 0.5, "ease-in-out-quad");
+  animate.addAnimation("moveDemoSigns_right", demoSignsRight, "y", demoSignsRight.saveY - 5, demoSignsRight.saveY + 5, 0.5, "ease-in-out-quad");
+
+  let demoAnimation_left;
+  let demoAnimation_right;
+
+  window.addEventListener("startDemoAnimation", () => {
+    demoAnimation_left = setInterval( () => {
+      animate.start("moveDemoSigns_left", false, () => {
+        console.log(demoSignsLeft.y);
+        animate.start("moveDemoSigns_left", true);
+      });
+    }, 1000);
+
+    demoAnimation_right = setInterval( () => {
+      setTimeout( () => {
+        animate.start("moveDemoSigns_right", false, () => {
+          animate.start("moveDemoSigns_right", true);
+        });
+      }, 400);
+    }, 1000);
+  });
+
+  window.addEventListener("stoppDemoAnimation", () => { 
+    clearInterval(demoAnimation_left);
+    clearInterval(demoAnimation_right);
+  });
 
   let demoBubble = new Speechbubble(300, -150, 270, "Demo_1", "left");
   demoPeople.addChild(demoBubble);
@@ -693,10 +651,7 @@ function setupGame() {
   coffeeHouse.addChild(door_coffeeHouse);
 
   window.addEventListener("enterCoffeeHouse", () => {
-    if (
-      player.actionDone("demo", "joinDemo") ||
-      player.actionDone("coffeeHouse", "groupInvitation")
-    ) {
+    if (player.actionDone("demo", "joinDemo") || player.actionDone("coffeeHouse", "groupInvitation")) {
       setTimeout(() => {
         messageScreen.setEvent("interview");
         mobilePhone.showScreen("messageScreen");
@@ -707,6 +662,38 @@ function setupGame() {
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 5000);
     }
+
+    lampClickSound.fade(0, 1);
+    fountainSound.fade(0, 1);
+    citySound.fade(0, 1);
+    leavesSound.fade(0, 1);
+    doorSound.play();
+  
+    coffeeHouse.disable();
+    animate.start("fadeOut");
+  
+    setTimeout( () => {
+      coffeeHouseSound.play();
+      coffeeHouseMusicSound.play();
+    }, 800);
+    setTimeout( () => {
+      coffeeHouseSound.fade(0, 1);
+      coffeeHouseMusicSound.fade(0, 1);
+    }, 10000);
+    setTimeout( () => {
+      doorSound.play();
+      citySound.fade(0.1, 2);
+      leavesSound.fade(0.6, 2);
+      fountainSound.fade(0.06, 2);
+      lampClickSound.fade(0.2, 2);
+      animate.start("fadeOut", true, () => {
+        coffeeHouse.enable();
+      });
+    }, 10500);
+    setTimeout( () => {
+      coffeeHouseSound.stop();
+      coffeeHouseMusicSound.stop();
+    }, 12500);
   });
 
   window.addEventListener("interviewAccepted", () => {
@@ -809,13 +796,7 @@ function setupGame() {
     player.usePhone(false);
   });
 
-  let phoneIcon = new PhoneIcon(
-    windowWidth - 150,
-    windowHeight - 200,
-    112,
-    168,
-    phoneIconImg
-  );
+  let phoneIcon = new PhoneIcon(windowWidth - 150, windowHeight - 200, 112, 168, phoneIconImg);
   global.addChild(phoneIcon);
 
   window.addEventListener("hidePhoneIcon", () => {
@@ -828,24 +809,39 @@ function setupGame() {
     phoneIcon.enable();
   });
 
+  animate.addAnimation("phoneVibrate_1", phoneIcon, "rotationAngle", 0, 0.05, 0.025);
+  animate.addAnimation("phoneVibrate_2", phoneIcon, "rotationAngle", 0.05, -0.05, 0.05);
+
   let mobilePhone = new MobilePhone(492, 739, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg);
   global.addChild(mobilePhone);
 
   let phoneButton = new PhoneButton(221, 677, 50, 50, phoneBtnImg);
   mobilePhone.addChild(phoneButton);
 
+  animate.addAnimation("moveToCenter_h", phoneIcon, "x", phoneIcon.saveX, mobilePhone.x, 0.6, "linear");
+  animate.addAnimation("moveToCenter_v", phoneIcon, "y", phoneIcon.saveY, mobilePhone.y, 0.6, "ease-in-quad");
+  animate.addAnimation("scaleToPhoneSize", phoneIcon, "scale", phoneIcon.saveScale, mobilePhone.scale * (mobilePhone.height / phoneIcon.height), 0.6, "ease-in-quad");
+
   window.addEventListener("openPhone", () => {
-    window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
-    mobilePhone.show();
-    mobilePhone.enable();
+    animate.start("moveToCenter_h");
+    animate.start("moveToCenter_v");
+    animate.start("scaleToPhoneSize", false, () => {
+      window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
+      mobilePhone.show();
+      mobilePhone.enable();
+    });
     player.usePhone(true);
   });
 
   window.addEventListener("closePhone", () => {
+    window.dispatchEvent(new CustomEvent("showPhoneIcon"));
     mobilePhone.hide();
     mobilePhone.disable();
-    window.dispatchEvent(new CustomEvent("showPhoneIcon"));
     player.usePhone(false);
+
+    animate.start("moveToCenter_h", true);
+    animate.start("moveToCenter_v", true);
+    animate.start("scaleToPhoneSize", true);
 
     if (
       player.actionDone("coffeeHouse", "invitationAccepted") &&
@@ -874,34 +870,13 @@ function setupGame() {
     }
   });
 
-  let homeScreenBtn = new PhoneMenuIcon(
-    67,
-    615,
-    65,
-    41,
-    homeIconImg,
-    "homeScreen"
-  );
+  let homeScreenBtn = new PhoneMenuIcon(67, 615, 65, 41, homeIconImg, "homeScreen");
   mobilePhone.addChild(homeScreenBtn);
 
-  let postScreenBtn = new PhoneMenuIcon(
-    220,
-    618,
-    55,
-    35,
-    postIconImg,
-    "postScreen"
-  );
+  let postScreenBtn = new PhoneMenuIcon(220, 618, 55, 35, postIconImg, "postScreen");
   mobilePhone.addChild(postScreenBtn);
 
-  let msgScreenBtn = new PhoneMenuIcon(
-    360,
-    615,
-    65,
-    41,
-    msgIconImg,
-    "messageScreen"
-  );
+  let msgScreenBtn = new PhoneMenuIcon(360, 615, 65, 41, msgIconImg, "messageScreen");
   mobilePhone.addChild(msgScreenBtn);
 
   window.addEventListener("showScreen", (ev) => {
@@ -919,34 +894,13 @@ function setupGame() {
   let postButton = new PhonePostButton(165, 428, 125, 50);
   postScreen.addChild(postButton);
 
-  let choosePostBtn_1 = new ChoosePostButton(
-    17,
-    428,
-    125,
-    50,
-    "A",
-    postImg_watchedProDemo
-  );
+  let choosePostBtn_1 = new ChoosePostButton(17, 428, 125, 50, "A", postImg_watchedProDemo);
   postScreen.addChild(choosePostBtn_1);
 
-  let choosePostBtn_2 = new ChoosePostButton(
-    165,
-    428,
-    125,
-    50,
-    "B",
-    postImg_watchedProCounterDemo
-  );
+  let choosePostBtn_2 = new ChoosePostButton(165, 428, 125, 50, "B", postImg_watchedProCounterDemo);
   postScreen.addChild(choosePostBtn_2);
 
-  let choosePostBtn_3 = new ChoosePostButton(
-    313,
-    428,
-    125,
-    50,
-    "C",
-    postImg_watchedProNone
-  );
+  let choosePostBtn_3 = new ChoosePostButton(313, 428, 125, 50, "C", postImg_watchedProNone);
   postScreen.addChild(choosePostBtn_3);
 
   window.addEventListener("choosePost", () => {
@@ -979,15 +933,7 @@ function setupGame() {
     homeScreen.redraw();
   });
 
-  let messageScreen = new PhoneMessageScreen(
-    18.9,
-    111.2,
-    454,
-    491,
-    userIconImg,
-    journalistIconImg,
-    conspiracyIconImg
-  );
+  let messageScreen = new PhoneMessageScreen(18.9, 111.2, 454, 491, userIconImg, journalistIconImg, conspiracyIconImg);
   mobilePhone.addChild(messageScreen);
 
   let msgButton_1 = new PhoneMessageButton(17, 428, 200, 50, "A");
@@ -996,13 +942,7 @@ function setupGame() {
   let msgButton_2 = new PhoneMessageButton(238, 428, 200, 50, "B");
   messageScreen.addChild(msgButton_2);
 
-  let endScreen = new PhoneEndScreen(
-    18.9,
-    111.2,
-    454,
-    491,
-    brokenPhoneOverlayImg
-  );
+  let endScreen = new PhoneEndScreen(18.9, 111.2, 454, 491, brokenPhoneOverlayImg);
   mobilePhone.addChild(endScreen);
 
   let endBtn = new PhoneEndButton(130, 428, 200, 50);
@@ -1012,14 +952,7 @@ function setupGame() {
     endScreen.answer("Verschwörungstheoretiker");
   });
 
-  let videoPlayer = new PhoneVideoPlayer(
-    30,
-    335,
-    390,
-    219,
-    videoOverlayImg,
-    endVideo
-  );
+  let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 219, videoOverlayImg, endVideo);
   endScreen.addChild(videoPlayer);
 
   let restartBtn = new RestartButton(238, 428, 200, 50);
@@ -1030,6 +963,7 @@ function setupGame() {
 
   window.addEventListener("endGame", () => {
     phoneVibrationSound.stop();
+    clearInterval(barPhoneVibrate);
     window.dispatchEvent(new CustomEvent("openPhone"));
     mobilePhone.showScreen("endScreen");
     mobilePhone.break();
@@ -1042,6 +976,11 @@ function setupGame() {
     game.reset();
   });
 
+  let fadeScreen = new ColorScreen(0, 0, windowWidth, windowHeight, color("#000000"), 0);
+  global.addChild(fadeScreen);
+
+  animate.addAnimation("fadeOut", fadeScreen, "opacity", 0, 1, 1, "ease-in-out-quad");
++
   // sound setup
   window.addEventListener("soundReset", () => {
     if (!citySound.isLooping()) {
@@ -1088,36 +1027,44 @@ window.addEventListener("phoneSendMsg", () => {
 
 window.addEventListener("phoneVibration", () => {
   phoneVibrationSound.play();
+
+  animate.start("phoneVibrate_1", false, () => {
+    let count = 0;
+    let interval = setInterval( () => {
+      animate.start("phoneVibrate_2", false, () => {
+        if (count < 18) {
+          animate.start("phoneVibrate_2", true);          
+        } else {
+          animate.start("phoneVibrate_2", true, () => {
+            animate.start("phoneVibrate_1", false);
+          });
+        }
+      });
+      count++;
+      if (count > 18) {
+        clearInterval(interval);
+      }
+    }, 100);
+  });
+});
+
+let barPhoneVibrate;
+
+window.addEventListener("barPhoneVibration", () => {
+  phoneVibrationSound.loop();
+  phoneVibrationSound.setVolume(0.3);
+
+  animate.start("barPhoneVibrate_1", false, () => {
+    barPhoneVibrate = setInterval( () => {
+      animate.start("barPhoneVibrate_2", false, () => {
+        animate.start("barPhoneVibrate_2", true);
+      });
+    }, 100);
+  });
 });
 
 window.addEventListener("phoneTap", () => {
   phoneTapSound.play();
-});
-
-window.addEventListener("enterCoffeeHouse", () => {
-  fountainSound.fade(0, 1);
-  citySound.fade(0, 1);
-  leavesSound.fade(0, 1);
-
-  doorSound.play();
-  setTimeout( () => {
-    coffeeHouseSound.play();
-    coffeeHouseMusicSound.play();
-  }, 800);
-  setTimeout( () => {
-    coffeeHouseSound.fade(0, 1);
-    coffeeHouseMusicSound.fade(0, 1);
-  }, 10000);
-  setTimeout( () => {
-    doorSound.play();
-    citySound.fade(0.1, 2);
-    leavesSound.fade(0.6, 2);
-    fountainSound.fade(0.06, 2);
-  }, 10500);
-  setTimeout( () => {
-    coffeeHouseSound.stop();
-    coffeeHouseMusicSound.stop();
-  }, 12500);
 });
 
 window.addEventListener("pickupSign", () => {
@@ -1141,6 +1088,8 @@ window.addEventListener("buyNewspaper", () => {
 
 window.addEventListener("lampClick", () => {
   lampClickSound.play();
+  lampClickSound.setVolume(0.6);
+  lampClickSound.fade(0.2, 0.3);
 });
 
 window.addEventListener("tapPhone", () => {
