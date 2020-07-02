@@ -11,6 +11,8 @@ import AnimatedDisplayObject from "./animatedDisplayObject.js";
 import ColorScreen from "./colorScreen.js";
 
 // interactive element classes
+import InfoBox from "./titlescreen/infoBox.js";
+import TitleScreenButton from "./titlescreen/titleScreenButton.js";
 import BarLink from "./simulation/interactiveElements/demo/barLink.js";
 import CoffeeHouseLink from "./simulation/interactiveElements/park/coffeeHouseLink.js";
 import DemoLink from "./simulation/interactiveElements/park/demoLink.js";
@@ -51,6 +53,7 @@ import DemoForegnd from "./simulation/interactiveElements/demo/demoForegnd.js";
 import AnimationProcessor from "./animationProcessor.js";
 
 // load images
+let titleScreenImg;
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
 let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
 let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
@@ -71,8 +74,7 @@ let endVideo;
 
 // load soundfiles
 let owlSound, demoSound, citySound, leavesSound, coffeeHouseSound, coffeeHouseMusicSound, fountainSound, policeSirenSound, demoBenchSound;
-let phoneMsgSound, phoneVibrationSound, phoneTapSound, doorSound, insideStepsSound_fast, insideStepsSound_slow, outsideStepsSound_fast, outsideStepsSound_slow, lampClickSound, streetsignClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound;
-
+let phoneMsgSound, phoneVibrationSound, phoneTapSound, doorSound, insideStepsSound_fast, insideStepsSound_slow, outsideStepsSound_fast, outsideStepsSound_slow, lampClickSound, streetsignClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound, buttonSound;
 
 function preload() {
   // fonts
@@ -88,6 +90,7 @@ function preload() {
   barBackgnd = loadImage("../img/bar/0_backgnd.png");
 
   // layers
+  titleScreenImg = loadImage("../img/titlescreen/titlescreenimg.png");
   moonImg = loadImage("../img/park/1_moon.png");
   cityImg = loadImage("../img/park/2_city.png");
   streetImg = loadImage("../img/park/3_street.png");
@@ -191,6 +194,7 @@ function preload() {
   pickupSignSound = loadSound("../sound/eventRelated/pickupSign.mp3");
   flyerSound = loadSound("../sound/eventRelated/flyer.mp3");
   demoBenchSound = loadSound("../sound/eventRelated/benchSitdown.mp3");
+  buttonSound = loadSound("../sound/eventRelated/button.mp3");
   citySound = loadSound("../sound/ambient/city.mp3", setupGame);
 }
 window.preload = preload;
@@ -300,9 +304,12 @@ let animate = new AnimationProcessor(30);
 
 function setupGame() {
   // views
+  let titleScreen = new View("titlescreen", windowWidth, windowHeight);
+  game.addView(titleScreen);
+  game.enterView("titlescreen");
+
   let park = new View("park", 4098, 768, parkBackgnd);
   game.addView(park);
-  window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
 
   let kiosk = new View("kiosk", 1792, 768, parkBackgnd);
   game.addView(kiosk);
@@ -320,6 +327,105 @@ function setupGame() {
   game.addView(global);
 
   // display objects & interactive objects
+
+  let titleScreenBackground = new ColorScreen(0, 0, windowWidth, windowHeight, color("#512109"));
+  titleScreen.addChild(titleScreenBackground);
+
+  let titleScreenStreet = new ColorScreen(0, windowHeight * 0.48, windowWidth, windowHeight - windowHeight * 0.48, color("#000000"));
+  titleScreen.addChild(titleScreenStreet);
+
+  let startGameBtn = new TitleScreenButton(
+    windowWidth / 20 + 40, windowHeight / 3, 
+    0, 20, 
+    "Spiel starten", 
+    window.fonts.rockwell,
+    color("#8b4726"),
+    color("#ffa500"),
+    "startGame"
+  );
+  titleScreen.addChild(startGameBtn);
+  
+  let settingsBtn = new TitleScreenButton(
+    windowWidth / 20 + 40, windowHeight / 3 + 40, 
+    0, 20,
+    "Steuerung",
+    window.fonts.rockwell,
+    color("#8b4726"),
+    color("#ffa500"),
+    "showInstructions"
+  );
+  titleScreen.addChild(settingsBtn);
+
+  let aboutUsBtn = new TitleScreenButton(
+    windowWidth / 20 + 40, windowHeight / 3 + 80, 
+    0, 20,
+    "Über uns",
+    window.fonts.rockwell,
+    color("#8b4726"),
+    color("#ffa500"),
+    "showAboutUs"
+  );
+  titleScreen.addChild(aboutUsBtn);
+
+  window.addEventListener("startGame", () => {
+    if (!citySound.isLooping()) {
+      citySound.loop();
+      leavesSound.loop();
+      fountainSound.loop();
+      owlSound.loop();
+    }
+    if (!demoSound.isLooping()) {
+      demoSound.loop();
+    }
+    window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
+    setTimeout( () => {
+      phoneIcon.show();
+      phoneIcon.enable();
+    }, 1000);
+  });
+
+  let titleScreenImage = new DisplayObject(windowWidth * 0.15 + 8, windowHeight * 0.15 - 25, 593 * 1.3, 403 * 1.3, titleScreenImg);
+  titleScreen.addChild(titleScreenImage);
+
+  let streetLamps = [];
+
+  let titleScreenLampBulb = new StreetLampBulb(windowWidth * 0.15, windowHeight * 0.15, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg
+  );
+  titleScreen.addChild(titleScreenLampBulb);
+  streetLamps.push(titleScreenLampBulb);
+
+  let instructionBox = new InfoBox(
+    windowWidth * 0.15 + 300, windowHeight * 0.15 - 25,
+    windowWidth / 2, windowHeight / 2 - 50,
+    "Steuerung:",
+    window.fonts.rockwell,
+    "Bewege die Maus nach links oder rechts, um dich umzuschauen. Fahre mit der Maus über Objekte, wenn Sie interaktiv sind, wird sich dein Mauszeiger verändern.",
+    window.fonts.franklinGothic,
+    color("#ffa500"),
+  );
+  titleScreen.addChild(instructionBox);
+
+  let aboutUsBox = new InfoBox(
+    windowWidth * 0.15 + 300, windowHeight * 0.15 - 25,
+    windowWidth / 2, windowHeight / 2 - 50,
+    "Über uns:",
+    window.fonts.rockwell,
+    "Wir sind Florian, Luisa, Max und Lars aus dem 2. Semesters des Studiengangs Interactive Media Design. Social Whispers ist unser gemeinsames Semesterprojekt. Es simuliert die Verbreitung von Informationen in sozialen Medien und soll Nutzenden dabei helfen, Informationen im Internet differenzierter zu betrachten. Wir möchten sie dazu anregen, sich Informationen immer aus mehreren, seriösen Quellen einholen.",
+    window.fonts.franklinGothic,
+    color("#ffa500"),
+  );
+  titleScreen.addChild(aboutUsBox);
+
+  window.addEventListener("showInstructions", () => {
+    instructionBox.show();
+    aboutUsBox.hide();
+  });
+
+  window.addEventListener("showAboutUs", () => {
+    aboutUsBox.show();
+    instructionBox.hide();
+  });
+
   let moon_park = new DisplayObject(2086, 25, 213, 212, moonImg);
   park.addChild(moon_park);
 
@@ -361,8 +467,6 @@ function setupGame() {
 
   let parkForegnd = new DisplayObject(2, 228, 3904, 543, parkForegndImg);
   park.addChild(parkForegnd);
-
-  let streetLamps = [];
 
   let streetLamp_1 = new StreetLampBulb(496, 336, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_1);
@@ -502,13 +606,13 @@ function setupGame() {
   // lamps flickering
   setInterval( () => {
     for (let elem of streetLamps) {
-      if ((elem.parent.name === "bar" && !floor(random(0, 3))) || 
+      if (((elem.parent.name === "bar" || elem.parent.name === "titlescreen") && !floor(random(0, 3))) || 
       (elem.parent.name === game.currentView && elem.x > 0 && elem.x < windowWidth && !floor(random(0, 10)))) {
         elem.switch();
         lampClickSound.play();
         setTimeout( () => {
           elem.switch();
-        }, 100 * floor(random(1, 2)));
+        }, 100 * ceil(random(0, 2)));
       }
     }
   }, 1000)
@@ -976,50 +1080,48 @@ function setupGame() {
     game.reset();
   });
 
-  let fadeScreen = new ColorScreen(0, 0, windowWidth, windowHeight, color("#000000"), 0);
+  let fadeScreen = new ColorScreen(0, 0, windowWidth, windowHeight, color("#000000"));
   global.addChild(fadeScreen);
 
   animate.addAnimation("fadeOut", fadeScreen, "opacity", 0, 1, 1, "ease-in-out-quad");
-+
+  animate.start("fadeOut", true);
+
   // sound setup
+  outsideStepsSound_fast.setVolume(0.3);
+  outsideStepsSound_slow.setVolume(0.3);
+  insideStepsSound_fast.setVolume(0.2);
+  insideStepsSound_slow.setVolume(0.2);
+  flyerSound.setVolume(0.3);
+  streetsignClickSound.setVolume(0.7);
+  pickupSignSound.setVolume(0.8);
+  phoneVibrationSound.setVolume(1.3);
+  phoneMsgSound.setVolume(0.4);
+  phoneTapSound.setVolume(0.5);
+  newspaperSound.setVolume(0.3);
+  fountainSound.setVolume(0);
+  owlSound.setVolume(0.05);
+  demoSound.setVolume(0.02);
+  doorSound.setVolume(0.3);
+  coffeeHouseSound.setVolume(0.7);
+  coffeeHouseMusicSound.setVolume(0.15);
+  lampClickSound.setVolume(0.2);
+  registerSound.setVolume(0.7);
+  citySound.setVolume(0.05);
+  demoBenchSound.setVolume(0.6);
+
   window.addEventListener("soundReset", () => {
-    if (!citySound.isLooping()) {
-      citySound.loop();
-      leavesSound.loop();
-      fountainSound.loop();
-      owlSound.loop();
-    }
-    if (!demoSound.isLooping()) {
-      demoSound.loop();
-    }
 
-    outsideStepsSound_fast.setVolume(0.3);
-    outsideStepsSound_slow.setVolume(0.3);
-    insideStepsSound_fast.setVolume(0.2);
-    insideStepsSound_slow.setVolume(0.2);
-    flyerSound.setVolume(0.3);
-    streetsignClickSound.setVolume(0.7);
-    pickupSignSound.setVolume(0.8);
     phoneVibrationSound.setVolume(1.3);
-    phoneMsgSound.setVolume(0.4);
-    phoneTapSound.setVolume(0.5);
-    newspaperSound.setVolume(0.3);
-    fountainSound.setVolume(0);
-    owlSound.setVolume(0.05);
     demoSound.setVolume(0.02);
-    doorSound.setVolume(0.3);
-    coffeeHouseSound.setVolume(0.7);
-    coffeeHouseMusicSound.setVolume(0.15);
-    lampClickSound.setVolume(0.6);
-    registerSound.setVolume(0.7);
     citySound.setVolume(0.05);
-    demoBenchSound.setVolume(0.6);
   });
-
-  window.dispatchEvent(new CustomEvent("soundReset"));
 }
 
 /* sound events */
+
+window.addEventListener("playButtonSound", () => {
+  buttonSound.play();
+});
 
 window.addEventListener("phoneSendMsg", () => {
   phoneMsgSound.play();
