@@ -12,7 +12,6 @@ export default class Player extends Simulation{
         this.actions[origin] = {};
     }
     this.actions[origin][name] = data;
-    console.log(this.actions);
   }
 
   actionDone(view, action = undefined, data = undefined) {

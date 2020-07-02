@@ -83,7 +83,12 @@ export default class Simulation{
             }
         }
     }
-}
+  }
+  changeParameters(m, r, a){
+    this.changeAttentionseeking(a);
+    this.changeManipulativity(m);
+    this.changeReflectivity(r);
+  }
 
   changeManipulativity(steps){
     this.manipulativity += 0.1 * steps;

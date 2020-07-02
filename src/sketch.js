@@ -43,6 +43,7 @@ import BarPhone from "./simulation/interactiveElements/bar/barPhone.js";
 import DemoPeople from "./simulation/interactiveElements/demo/demoPeople.js";
 import Newspaper from "./simulation/interactiveElements/kiosk/newspaper.js";
 import DemoForegnd from "./simulation/interactiveElements/demo/demoForegnd.js";
+import Simulation from "./simulation/simulation.js";
 
 // load images
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
@@ -220,6 +221,8 @@ function preload() {
 window.preload = preload;
 
 /* setup */
+
+
 
 let player = new Player();
 window.addEventListener("addAction", (ev) => {
@@ -619,6 +622,8 @@ function setupGame() {
   window.addEventListener("pickupSign", () => {
     parkLink_demo.disable();
     demoBench.disable();
+  
+
 
     if (player.actionDone("coffeeHouse", "invitationAccepted")) {
       if (player.actionDone("coffeeHouse", "invitationAccepted", true)) {
@@ -1009,7 +1014,7 @@ function setupGame() {
   endScreen.addChild(endBtn);
 
   window.addEventListener("revealRole", () => {
-    endScreen.answer("Verschwörungstheoretiker");
+    endScreen.answer(player.getPersona());
   });
 
   let videoPlayer = new PhoneVideoPlayer(
@@ -1185,10 +1190,98 @@ window.addEventListener("walkInsideSlow", () => {
   }
 });
 
+/* parameter changes */
+
+window.addEventListener("pickupSign", () => {
+  player.changeParameters(0, 0, 1);
+});
+
+window.addEventListener("joinDemo", (ev) => {
+  if(ev.detail === "demo"){
+    player.changeParameters(1, (-1), 0);
+  }else{
+    player.changeParameters(0, 1, 0);
+  }
+});
+
+window.addEventListener("watchDemo", () => {
+  player.changeParameters((-1), 0, 0);
+});
+
+window.addEventListener("postChosen", (ev) => {
+  switch (ev.detail){
+    case postImg_watchedProDemo:
+      player.changeParameters(1, (-1), 0);
+      break;
+    case postImg_watchedProCounterDemo:
+      player.changeParameters(0, 1, 0);
+      break;
+    case postImg_watchedProNone:
+      player.changeParameters(0, 0, 1);
+      break;
+  }
+});
+
+window.addEventListener("pickupFlyer", (ev) => {
+  if (ev.detail === "coffeeHouse") {
+    player.changeParameters(0, 1, 0);
+  } 
+});
+
+window.addEventListener("groupInvitation", () => {
+  if(player.actionDone("coffeeHouse", "invitationAccepted", true)){
+    player.changeParameters(0, (-2), 0);
+  }else{
+    player.changeParameters(0, 1, 0);
+  }
+});
+
+window.addEventListener("interviewAccepted", () => {
+  if(!player.actionDone("coffeeHouse", "interviewAccepted", true)){
+    player.changeParameters(0, 0, (-1));
+  }
+  else{
+    player.changeParameters(0, 0, 1);
+  }
+});
+
+window.addEventListener("statementDefended", () => {
+  if (player.actionDone("coffeeHouse", "statementDefended", true)) {
+    if (player.actionDone("coffeeHouse", "proDemo", true)) {
+      player.changeParameters(1, (-1), 1);
+    } else {
+      player.changeParameters(0, 1, 0);
+    }
+  } else if (player.actionDone("coffeeHouse", "proDemo", true)) {
+    player.changeParameters(0, 0, 1);
+  } else {
+    player.changeParameters(1, (-1), 1);
+  }
+});
+
+window.addEventListener("buyNewspaper", (ev) => {
+  switch (ev.detail){
+    case "conspiracy-theorist":
+      player.changeParameters(1, (-1), (-1));
+      break;
+    case "wannnabe-influencer":
+      player.changeParameters(0, 0, 1);
+      break;
+    case "reflective-user":
+      player.changeParameters((-1), 1, 0);
+      break;
+    case "follower":
+      player.changeParameters(0, (-1), 1);
+  }
+});
+
+
+
 /* display */
 
 function draw() {
   game.display();
+  console.log(player.getPersona());
 }
 window.draw = draw;
 
