@@ -5,16 +5,6 @@ export default class BarPhone extends Sprite {
     super(x, y, width, height, backgnd);
   }
 
-  draw() {
-    push();
-    translate(this.width / 2, this.height / 2);
-    rotate(this.rotationAngle);
-    if (this.backgnd != undefined) {
-      image(this.backgnd, -(this.width / 2), -(this.height / 2), this.width, this.height);
-    }
-    pop();
-  }
-
   clicked() {
     window.dispatchEvent(new CustomEvent("endGame"));
   }

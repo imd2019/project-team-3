@@ -55,7 +55,11 @@ import AnimationProcessor from "./animationProcessor.js";
 // load images
 let titleScreenImg;
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
-let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
+let kioskTreesImg,
+  kioskBuildingImg_on,
+  kioskBuildingImg_off,
+  kioskTrashcanImg,
+  kioskSunshadeImg;
 let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
@@ -119,7 +123,9 @@ function preload() {
   kioskLinkNewspapersImg = loadImage("../img/park/4_interactionSpaces/4_newspapers.png");
   parkLinkImg_kiosk = loadImage("../img/kiosk/4_interactionSpaces/4_advertisingColumn.png");
   parkLinkImg_demo = loadImage("../img/demo/1_interactionSpaces/1_park.png");
-  parkLinkImg_coffeeHouse = loadImage("../img/coffeeHouse/3_interactionSpaces/3_park.png");
+  parkLinkImg_coffeeHouse = loadImage(
+    "../img/coffeeHouse/3_interactionSpaces/3_park.png"
+  );
   demoSignImg = loadImage("../img/demo/3_elements/3_sign.png");
   demoBenchImg = loadImage("../img/demo/3_elements/3_bench.png");
   flyerBoxImg = loadImage("../img/assets/flyerbox.png");
@@ -200,6 +206,8 @@ function preload() {
 window.preload = preload;
 
 /* setup */
+
+
 
 let player = new Player();
 window.addEventListener("addAction", (ev) => {
@@ -310,6 +318,7 @@ function setupGame() {
 
   let park = new View("park", 4098, 768, parkBackgnd);
   game.addView(park);
+  window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
 
   let kiosk = new View("kiosk", 1792, 768, parkBackgnd);
   game.addView(kiosk);
@@ -327,7 +336,6 @@ function setupGame() {
   game.addView(global);
 
   // display objects & interactive objects
-
   let titleScreenBackground = new ColorScreen(0, 0, windowWidth, windowHeight, color("#512109"));
   titleScreen.addChild(titleScreenBackground);
 
@@ -616,6 +624,9 @@ function setupGame() {
       }
     }
   }, 1000)
+
+  let demoForegnd = new DemoForegnd(-160, -6, 2180, 845, demoForegndImg_demo, demoForegndImg_pastDemo);
+  demo.addChild(demoForegnd);
 
   let demoForegnd = new DemoForegnd(-160, -6, 2180, 845, demoForegndImg_demo, demoForegndImg_pastDemo);
   demo.addChild(demoForegnd);
@@ -1233,6 +1244,91 @@ window.addEventListener("walkInsideFast", () => {
 window.addEventListener("walkInsideSlow", () => {
   if (!insideStepsSound_slow.isPlaying() && !insideStepsSound_fast.isPlaying()) {
     insideStepsSound_slow.play();
+  }
+});
+
+/* parameter changes */
+
+window.addEventListener("pickupSign", () => {
+  player.changeParameters(0, 0, 1);
+});
+
+window.addEventListener("joinDemo", (ev) => {
+  if(ev.detail === "demo"){
+    player.changeParameters(1, (-1), 0);
+  }else{
+    player.changeParameters(0, 1, 0);
+  }
+});
+
+window.addEventListener("watchDemo", () => {
+  player.changeParameters((-1), 0, 0);
+});
+
+window.addEventListener("postChosen", (ev) => {
+  switch (ev.detail){
+    case postImg_watchedProDemo:
+      player.changeParameters(1, (-1), 0);
+      break;
+    case postImg_watchedProCounterDemo:
+      player.changeParameters(0, 1, 0);
+      break;
+    case postImg_watchedProNone:
+      player.changeParameters(0, 0, 1);
+      break;
+  }
+});
+
+window.addEventListener("pickupFlyer", (ev) => {
+  if (ev.detail === "coffeeHouse") {
+    player.changeParameters(0, 1, 0);
+  } 
+});
+
+window.addEventListener("groupInvitation", () => {
+  if(player.actionDone("coffeeHouse", "invitationAccepted", true)){
+    player.changeParameters(0, (-2), 0);
+  }else{
+    player.changeParameters(0, 1, 0);
+  }
+});
+
+window.addEventListener("interviewAccepted", () => {
+  if(!player.actionDone("coffeeHouse", "interviewAccepted", true)){
+    player.changeParameters(0, 0, (-1));
+  }
+  else{
+    player.changeParameters(0, 0, 1);
+  }
+});
+
+window.addEventListener("statementDefended", () => {
+  if (player.actionDone("coffeeHouse", "statementDefended", true)) {
+    if (player.actionDone("coffeeHouse", "proDemo", true)) {
+      player.changeParameters(1, (-1), 1);
+    } else {
+      player.changeParameters(0, 1, 0);
+    }
+  } else if (player.actionDone("coffeeHouse", "proDemo", true)) {
+    player.changeParameters(0, 0, 1);
+  } else {
+    player.changeParameters(1, (-1), 1);
+  }
+});
+
+window.addEventListener("buyNewspaper", (ev) => {
+  switch (ev.detail){
+    case "conspiracy-theorist":
+      player.changeParameters(1, (-1), (-1));
+      break;
+    case "wannnabe-influencer":
+      player.changeParameters(0, 0, 1);
+      break;
+    case "reflective-user":
+      player.changeParameters((-1), 1, 0);
+      break;
+    case "follower":
+      player.changeParameters(0, (-1), 1);
   }
 });
 
