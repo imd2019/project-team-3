@@ -17,6 +17,10 @@ export default class DemoLink extends Sprite {
 
   clicked() {
     window.dispatchEvent(new CustomEvent("enterView", { detail: "demo" }));
+    this.disable();
+    setTimeout( () => {
+      this.enable();
+    }, 1000);
   }
 
   draw() {

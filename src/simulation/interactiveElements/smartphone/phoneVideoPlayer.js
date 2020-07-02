@@ -32,7 +32,6 @@ export default class PhoneVideoPlayer extends Sprite {
 
   clicked() {
     window.dispatchEvent(new CustomEvent("tapPhone"));
-    console.log(this.video);
     this.startVideo();
     this.updatePosition();
     if (!this.isClicked) {

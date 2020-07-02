@@ -7,5 +7,9 @@ export default class CoffeeHouseLink extends Sprite {
 
   clicked() {
     window.dispatchEvent(new CustomEvent("enterView", { detail: "coffeeHouse" }));
+    this.disable();
+    setTimeout( () => {
+      this.enable();
+    }, 1000);
   }
 }

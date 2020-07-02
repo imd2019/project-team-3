@@ -43,7 +43,7 @@ export default class PhonePostScreen extends Sprite {
   redraw() {
     this.post.clear();
     if (this.postReady) {
-      this.post.image(this.newPost, 12.5, 12.5, 430, 382);
+      this.post.image(this.newPost, 12.5, 12.5, 430, 324);
     } else {
       this.post.noStroke();
       this.post.textSize(20);

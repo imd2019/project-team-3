@@ -9,6 +9,10 @@ export default class BarLink extends Sprite {
 
   clicked() {
     window.dispatchEvent(new CustomEvent("enterView", { detail: "bar" }));
+    this.disable();
+    setTimeout( () => {
+      this.enable();
+    }, 1000);
   }
 
   resetElement() {

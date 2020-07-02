@@ -27,10 +27,12 @@ export default class PhoneIcon extends InteractiveObject{
   }
 
   resetElement() {
-    this.show();
-    this.enable();
     this.x = this.saveX;
     this.y = this.saveY;
     this.scale = this.saveScale;
+    setTimeout( () => {
+      this.show();
+      this.enable();
+    }, 1000);
   }
 }
