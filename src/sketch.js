@@ -215,7 +215,7 @@ window.addEventListener("enterView", (ev) => {
   });
   setTimeout( () => {
     game.enterView(ev.detail);
-  }, 600);
+  }, 1000);
   
   if(ev.detail === "bar") {
     doorSound.play();
@@ -229,6 +229,7 @@ window.addEventListener("enterView", (ev) => {
     leavesSound.fade(0, 1);
     owlSound.fade(0, 1);
     if (!player.actionDone("demo", "endDemo")) {
+      window.dispatchEvent(new CustomEvent("startDemoAnimation"));
       demoSound.fade(0.2, 1);
       setTimeout( () => {
         policeSirenSound.play();
@@ -248,6 +249,9 @@ window.addEventListener("enterView", (ev) => {
     fountainSound.fade(0, 2);
     owlSound.fade(0.05, 1);
     demoSound.fade(0.02, 1);
+    
+    window.dispatchEvent(new CustomEvent("stoppDemoAnimation"));
+
     if (player.actionDone("demo") || player.actionDone("coffeeHouse")) {
       window.dispatchEvent(new CustomEvent("openKiosk"));
 
@@ -529,6 +533,34 @@ function setupGame() {
 
   let demoSignsRight = new DisplayObject(268, 226, 1311, 313, demoPeopleSignsImg_right);
   demo.addChild(demoSignsRight);
+
+  animate.addAnimation("moveDemoSigns_left", demoSignsLeft, "y", demoSignsLeft.saveY - 5, demoSignsLeft.saveY + 5, 0.5, "ease-in-out-quad");
+  animate.addAnimation("moveDemoSigns_right", demoSignsRight, "y", demoSignsRight.saveY - 5, demoSignsRight.saveY + 5, 0.5, "ease-in-out-quad");
+
+  let demoAnimation_left;
+  let demoAnimation_right;
+
+  window.addEventListener("startDemoAnimation", () => {
+    demoAnimation_left = setInterval( () => {
+      animate.start("moveDemoSigns_left", false, () => {
+        console.log(demoSignsLeft.y);
+        animate.start("moveDemoSigns_left", true);
+      });
+    }, 1000);
+
+    demoAnimation_right = setInterval( () => {
+      setTimeout( () => {
+        animate.start("moveDemoSigns_right", false, () => {
+          animate.start("moveDemoSigns_right", true);
+        });
+      }, 400);
+    }, 1000);
+  });
+
+  window.addEventListener("stoppDemoAnimation", () => { 
+    clearInterval(demoAnimation_left);
+    clearInterval(demoAnimation_right);
+  });
 
   let demoBubble = new Speechbubble(300, -150, 270, "Demo_1", "left");
   demoPeople.addChild(demoBubble);
@@ -950,7 +982,7 @@ function setupGame() {
   let fadeScreen = new ColorScreen(0, 0, windowWidth, windowHeight, color("#000000"), 0);
   global.addChild(fadeScreen);
 
-  animate.addAnimation("fadeOut", fadeScreen, "opacity", 0, 1, 0.6, "ease-in-out-quad");
+  animate.addAnimation("fadeOut", fadeScreen, "opacity", 0, 1, 1, "ease-in-out-quad");
 +
   // sound setup
   window.addEventListener("soundReset", () => {
