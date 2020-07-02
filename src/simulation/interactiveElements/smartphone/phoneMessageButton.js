@@ -35,7 +35,6 @@ export default class PhoneMessageButton extends Sprite {
       this.currentMessage.conversationEnded ||
       this.currentMessage.demoChosen
     ) {
-      console.log("dispatchEvent");
       window.dispatchEvent(
         new CustomEvent("addAction", {
           detail: {
@@ -46,7 +45,6 @@ export default class PhoneMessageButton extends Sprite {
         })
       );
     }
-    console.log(this.currentMessage.siteChosen);
   }
 
   setEvent() {

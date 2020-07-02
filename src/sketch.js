@@ -44,6 +44,10 @@ import DemoPeople from "./simulation/interactiveElements/demo/demoPeople.js";
 import Newspaper from "./simulation/interactiveElements/kiosk/newspaper.js";
 import DemoForegnd from "./simulation/interactiveElements/demo/demoForegnd.js";
 
+// utillity classes
+
+import AnimationProcessor from "./animationProcessor.js";
+
 // load images
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
 let kioskTreesImg,
@@ -102,9 +106,7 @@ function preload() {
 
   // interactive elements
   barLinkImg = loadImage("../img/demo/1_interactionSpaces/1_door.png");
-  coffeeHouseLinkImg = loadImage(
-    "../img/park/4_interactionSpaces/4_coffeeHouse.png"
-  );
+  coffeeHouseLinkImg = loadImage("../img/park/4_interactionSpaces/4_coffeeHouse.png");
   demoLinkBarImg_on = loadImage("../img/park/4_interactionSpaces/4_demo-bar_on.png");
   demoLinkBarImg_off = loadImage("../img/park/4_interactionSpaces/4_demo-bar_off.png");
   demoLinkDemoImg_demo = loadImage("../img/park/4_interactionSpaces/4_demo-demo.png");
@@ -116,9 +118,7 @@ function preload() {
   kioskLinkNewspapersImg = loadImage("../img/park/4_interactionSpaces/4_newspapers.png");
   parkLinkImg_kiosk = loadImage("../img/kiosk/4_interactionSpaces/4_advertisingColumn.png");
   parkLinkImg_demo = loadImage("../img/demo/1_interactionSpaces/1_park.png");
-  parkLinkImg_coffeeHouse = loadImage(
-    "../img/coffeeHouse/3_interactionSpaces/3_park.png"
-  );
+  parkLinkImg_coffeeHouse = loadImage("../img/coffeeHouse/3_interactionSpaces/3_park.png");
   demoSignImg = loadImage("../img/demo/3_elements/3_sign.png");
   demoBenchImg = loadImage("../img/demo/3_elements/3_bench.png");
   flyerBoxImg = loadImage("../img/assets/flyerbox.png");
@@ -145,36 +145,16 @@ function preload() {
   journalistIconImg = loadImage("../img/smartphone/journalistIcon.png");
   conspiracyIconImg = loadImage("../img/smartphone/conspiracyIcon.png");
   postOverlayImg = loadImage("../img/smartphone/postOverlay.png");
-  postImg_demoJoined = loadImage(
-    "../img/smartphone/posts/postImg_demoJoined.png"
-  );
-  postImg_counterDemoJoined = loadImage(
-    "../img/smartphone/posts/postImg_counterDemoJoined.png"
-  );
-  postImg_watchedProDemo = loadImage(
-    "../img/smartphone/posts/postImg_watchedProDemo.png"
-  );
-  postImg_watchedProCounterDemo = loadImage(
-    "../img/smartphone/posts/postImg_watchedProCounterDemo.png"
-  );
-  postImg_watchedProNone = loadImage(
-    "../img/smartphone/posts/postImg_watchedProNone.png"
-  );
-  postImg_groupInvitationAccepted = loadImage(
-    "../img/smartphone/posts/postImg_groupInvitationAccepted.png"
-  );
-  postImg_groupInvitationDenied = loadImage(
-    "../img/smartphone/posts/postImg_groupInvitationDenied.png"
-  );
-  postImg_interviewDenied = loadImage(
-    "../img/smartphone/posts/postImg_interviewDenied.png"
-  );
-  postImg_interviewDefend = loadImage(
-    "../img/smartphone/posts/postImg_interviewDefend.png"
-  );
-  postImg_interviewRevoke = loadImage(
-    "../img/smartphone/posts/postImg_interviewRevoke.png"
-  );
+  postImg_demoJoined = loadImage("../img/smartphone/posts/postImg_demoJoined.png");
+  postImg_counterDemoJoined = loadImage("../img/smartphone/posts/postImg_counterDemoJoined.png");
+  postImg_watchedProDemo = loadImage("../img/smartphone/posts/postImg_watchedProDemo.png");
+  postImg_watchedProCounterDemo = loadImage("../img/smartphone/posts/postImg_watchedProCounterDemo.png");
+  postImg_watchedProNone = loadImage("../img/smartphone/posts/postImg_watchedProNone.png");
+  postImg_groupInvitationAccepted = loadImage("../img/smartphone/posts/postImg_groupInvitationAccepted.png");
+  postImg_groupInvitationDenied = loadImage("../img/smartphone/posts/postImg_groupInvitationDenied.png");
+  postImg_interviewDenied = loadImage("../img/smartphone/posts/postImg_interviewDenied.png");
+  postImg_interviewDefend = loadImage("../img/smartphone/posts/postImg_interviewDefend.png");
+  postImg_interviewRevoke = loadImage("../img/smartphone/posts/postImg_interviewRevoke.png");
   // postImg_11 = loadImage("../img/smartphone/posts/post11.png");
   // postImg_12 = loadImage("../img/smartphone/posts/post12.png");
   // postImg_13 = loadImage("../img/smartphone/posts/post13.png");
@@ -183,9 +163,7 @@ function preload() {
   demoPeopleImg_left = loadImage("../img/demo/4_people/4_people_left.png");
   demoPeopleImg_right = loadImage("../img/demo/4_people/4_people_right.png");
   demoPeopleSignsImg_left = loadImage("../img/demo/4_people/4_signs_left.png");
-  demoPeopleSignsImg_right = loadImage(
-    "../img/demo/4_people/4_signs_right.png"
-  );
+  demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png");
 
   // video
   videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
@@ -236,10 +214,8 @@ window.addEventListener("enterView", (ev) => {
   if(ev.detail === "bar") {
     doorSound.play();
     citySound.fade(0, 1);
-    phoneVibrationSound.loop();
-    phoneVibrationSound.setVolume(0.3);
-
     window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
+    window.dispatchEvent(new CustomEvent("barPhoneVibration"));
   }
 
   if(ev.detail === "demo") {
@@ -312,6 +288,8 @@ window.addEventListener("enterView", (ev) => {
     }
   }
 });
+
+let animate = new AnimationProcessor(30);
 
 function setupGame() {
   // views
@@ -524,6 +502,9 @@ function setupGame() {
   let barPhone = new BarPhone(357, 356, 22, 8, barPhoneImg);
   bar.addChild(barPhone);
 
+  animate.addAnimation("barPhoneVibrate_1", barPhone, "rotationAngle", 0, 0.05, 0.025);
+  animate.addAnimation("barPhoneVibrate_2", barPhone, "rotationAngle", 0.05, -0.05, 0.05);
+
   let streetLampDemo_1 = new StreetLampBulb(614, 34, 17, 8, streetLampBulbOnImg, streetLampBulbOffImg);
   demo.addChild(streetLampDemo_1);
   streetLamps.push(streetLampDemo_1);
@@ -535,7 +516,8 @@ function setupGame() {
   // lamps flickering
   setInterval( () => {
     for (let elem of streetLamps) {
-      if (!floor(random(0, 10)) && elem.x > 0 && elem.x < windowWidth && elem.parent.name === game.currentView) {
+      if ((elem.parent.name === "bar" && !floor(random(0, 3))) || (
+        !floor(random(0, 10)) && elem.x > 0 && elem.x < windowWidth && elem.parent.name === game.currentView)) {
         elem.switch();
         lampClickSound.setVolume(0.2);
         lampClickSound.play();
@@ -798,13 +780,7 @@ function setupGame() {
     player.usePhone(false);
   });
 
-  let phoneIcon = new PhoneIcon(
-    windowWidth - 150,
-    windowHeight - 200,
-    112,
-    168,
-    phoneIconImg
-  );
+  let phoneIcon = new PhoneIcon(windowWidth - 150, windowHeight - 200, 112, 168, phoneIconImg);
   global.addChild(phoneIcon);
 
   window.addEventListener("hidePhoneIcon", () => {
@@ -816,6 +792,9 @@ function setupGame() {
     phoneIcon.show();
     phoneIcon.enable();
   });
+
+  animate.addAnimation("phoneVibrate_1", phoneIcon, "rotationAngle", 0, 0.05, 0.025);
+  animate.addAnimation("phoneVibrate_2", phoneIcon, "rotationAngle", 0.05, -0.05, 0.05);
 
   let mobilePhone = new MobilePhone(492, 739, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg);
   global.addChild(mobilePhone);
@@ -1001,14 +980,7 @@ function setupGame() {
     endScreen.answer("Verschwörungstheoretiker");
   });
 
-  let videoPlayer = new PhoneVideoPlayer(
-    30,
-    335,
-    390,
-    219,
-    videoOverlayImg,
-    endVideo
-  );
+  let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 219, videoOverlayImg, endVideo);
   endScreen.addChild(videoPlayer);
 
   let restartBtn = new RestartButton(238, 428, 200, 50);
@@ -1019,6 +991,7 @@ function setupGame() {
 
   window.addEventListener("endGame", () => {
     phoneVibrationSound.stop();
+    clearInterval(barPhoneVibrate);
     window.dispatchEvent(new CustomEvent("openPhone"));
     mobilePhone.showScreen("endScreen");
     mobilePhone.break();
@@ -1077,6 +1050,40 @@ window.addEventListener("phoneSendMsg", () => {
 
 window.addEventListener("phoneVibration", () => {
   phoneVibrationSound.play();
+
+  animate.start("phoneVibrate_1", false, () => {
+    let count = 0;
+    let interval = setInterval( () => {
+      animate.start("phoneVibrate_2", false, () => {
+        if (count < 18) {
+          animate.start("phoneVibrate_2", true);          
+        } else {
+          animate.start("phoneVibrate_2", true, () => {
+            animate.start("phoneVibrate_1", false);
+          });
+        }
+      });
+      count++;
+      if (count > 18) {
+        clearInterval(interval);
+      }
+    }, 100);
+  });
+});
+
+let barPhoneVibrate;
+
+window.addEventListener("barPhoneVibration", () => {
+  phoneVibrationSound.loop();
+  phoneVibrationSound.setVolume(0.3);
+
+  animate.start("barPhoneVibrate_1", false, () => {
+    barPhoneVibrate = setInterval( () => {
+      animate.start("barPhoneVibrate_2", false, () => {
+        animate.start("barPhoneVibrate_2", true);
+      });
+    }, 100);
+  });
 });
 
 window.addEventListener("phoneTap", () => {

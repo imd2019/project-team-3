@@ -69,11 +69,11 @@ export default class AnimationProcessor {
     delete this.animations[name];
   }
 
-  // addAnimationChain(name, ...args) {
+  // addAnimationChain(name, delay = 0, repeat = 0, callback = undefined, ...args) {
   //   if (name in this.animations) {
   //     return false;
   //   }
-  //   this.animations[name] = () => {
+  //   this.animations[name] = function () {
   //     this.chainAnimations( ...args);
   //   };
   // }
@@ -86,6 +86,7 @@ export default class AnimationProcessor {
   //     if (!(elem in this.animations)) {
   //       continue;
   //     }
+  //     this.an
   //     this.animations[elem].call();
   //   }
   // }
