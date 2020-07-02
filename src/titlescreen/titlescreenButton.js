@@ -1,6 +1,6 @@
 import InteractiveObject from "../interactiveObject.js";
 
-export default class TitlescreenButton extends InteractiveObject {
+export default class TitleScreenButton extends InteractiveObject {
   constructor(
     x,
     y,

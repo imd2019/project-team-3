@@ -9,6 +9,8 @@ import View from "./simulation/view.js";
 import DisplayObject from "./displayObject.js";
 
 // interactive element classes
+import InfoSection from "./titlescreen/infoSection.js";
+import TitleScreenButton from "./titlescreen/titleScreenButton.js";
 import BarLink from "./simulation/interactiveElements/demo/barLink.js";
 import CoffeeHouseLink from "./simulation/interactiveElements/park/coffeeHouseLink.js";
 import DemoLink from "./simulation/interactiveElements/park/demoLink.js";
@@ -45,12 +47,9 @@ import Newspaper from "./simulation/interactiveElements/kiosk/newspaper.js";
 import DemoForegnd from "./simulation/interactiveElements/demo/demoForegnd.js";
 
 // load images
+let titleScreenImg;
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
-let kioskTreesImg,
-  kioskBuildingImg_on,
-  kioskBuildingImg_off,
-  kioskTrashcanImg,
-  kioskSunshadeImg;
+let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
 let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
@@ -86,6 +85,7 @@ function preload() {
   barBackgnd = loadImage("../img/bar/0_backgnd.png");
 
   // layers
+  titleScreenImg = loadImage("../img/titlescreen/titlescreenimg.png");
   moonImg = loadImage("../img/park/1_moon.png");
   cityImg = loadImage("../img/park/2_city.png");
   streetImg = loadImage("../img/park/3_street.png");
@@ -102,9 +102,7 @@ function preload() {
 
   // interactive elements
   barLinkImg = loadImage("../img/demo/1_interactionSpaces/1_door.png");
-  coffeeHouseLinkImg = loadImage(
-    "../img/park/4_interactionSpaces/4_coffeeHouse.png"
-  );
+  coffeeHouseLinkImg = loadImage("../img/park/4_interactionSpaces/4_coffeeHouse.png");
   demoLinkBarImg_on = loadImage("../img/park/4_interactionSpaces/4_demo-bar_on.png");
   demoLinkBarImg_off = loadImage("../img/park/4_interactionSpaces/4_demo-bar_off.png");
   demoLinkDemoImg_demo = loadImage("../img/park/4_interactionSpaces/4_demo-demo.png");
@@ -116,9 +114,7 @@ function preload() {
   kioskLinkNewspapersImg = loadImage("../img/park/4_interactionSpaces/4_newspapers.png");
   parkLinkImg_kiosk = loadImage("../img/kiosk/4_interactionSpaces/4_advertisingColumn.png");
   parkLinkImg_demo = loadImage("../img/demo/1_interactionSpaces/1_park.png");
-  parkLinkImg_coffeeHouse = loadImage(
-    "../img/coffeeHouse/3_interactionSpaces/3_park.png"
-  );
+  parkLinkImg_coffeeHouse = loadImage("../img/coffeeHouse/3_interactionSpaces/3_park.png");
   demoSignImg = loadImage("../img/demo/3_elements/3_sign.png");
   demoBenchImg = loadImage("../img/demo/3_elements/3_bench.png");
   flyerBoxImg = loadImage("../img/assets/flyerbox.png");
@@ -145,36 +141,16 @@ function preload() {
   journalistIconImg = loadImage("../img/smartphone/journalistIcon.png");
   conspiracyIconImg = loadImage("../img/smartphone/conspiracyIcon.png");
   postOverlayImg = loadImage("../img/smartphone/postOverlay.png");
-  postImg_demoJoined = loadImage(
-    "../img/smartphone/posts/postImg_demoJoined.png"
-  );
-  postImg_counterDemoJoined = loadImage(
-    "../img/smartphone/posts/postImg_counterDemoJoined.png"
-  );
-  postImg_watchedProDemo = loadImage(
-    "../img/smartphone/posts/postImg_watchedProDemo.png"
-  );
-  postImg_watchedProCounterDemo = loadImage(
-    "../img/smartphone/posts/postImg_watchedProCounterDemo.png"
-  );
-  postImg_watchedProNone = loadImage(
-    "../img/smartphone/posts/postImg_watchedProNone.png"
-  );
-  postImg_groupInvitationAccepted = loadImage(
-    "../img/smartphone/posts/postImg_groupInvitationAccepted.png"
-  );
-  postImg_groupInvitationDenied = loadImage(
-    "../img/smartphone/posts/postImg_groupInvitationDenied.png"
-  );
-  postImg_interviewDenied = loadImage(
-    "../img/smartphone/posts/postImg_interviewDenied.png"
-  );
-  postImg_interviewDefend = loadImage(
-    "../img/smartphone/posts/postImg_interviewDefend.png"
-  );
-  postImg_interviewRevoke = loadImage(
-    "../img/smartphone/posts/postImg_interviewRevoke.png"
-  );
+  postImg_demoJoined = loadImage("../img/smartphone/posts/postImg_demoJoined.png");
+  postImg_counterDemoJoined = loadImage("../img/smartphone/posts/postImg_counterDemoJoined.png");
+  postImg_watchedProDemo = loadImage("../img/smartphone/posts/postImg_watchedProDemo.png");
+  postImg_watchedProCounterDemo = loadImage("../img/smartphone/posts/postImg_watchedProCounterDemo.png");
+  postImg_watchedProNone = loadImage("../img/smartphone/posts/postImg_watchedProNone.png");
+  postImg_groupInvitationAccepted = loadImage("../img/smartphone/posts/postImg_groupInvitationAccepted.png");
+  postImg_groupInvitationDenied = loadImage("../img/smartphone/posts/postImg_groupInvitationDenied.png");
+  postImg_interviewDenied = loadImage("../img/smartphone/posts/postImg_interviewDenied.png");
+  postImg_interviewDefend = loadImage("../img/smartphone/posts/postImg_interviewDefend.png");
+  postImg_interviewRevoke = loadImage("../img/smartphone/posts/postImg_interviewRevoke.png");
   // postImg_11 = loadImage("../img/smartphone/posts/post11.png");
   // postImg_12 = loadImage("../img/smartphone/posts/post12.png");
   // postImg_13 = loadImage("../img/smartphone/posts/post13.png");
@@ -183,9 +159,7 @@ function preload() {
   demoPeopleImg_left = loadImage("../img/demo/4_people/4_people_left.png");
   demoPeopleImg_right = loadImage("../img/demo/4_people/4_people_right.png");
   demoPeopleSignsImg_left = loadImage("../img/demo/4_people/4_signs_left.png");
-  demoPeopleSignsImg_right = loadImage(
-    "../img/demo/4_people/4_signs_right.png"
-  );
+  demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png");
 
   // video
   videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
@@ -216,6 +190,7 @@ function preload() {
   flyerSound = loadSound("../sound/eventRelated/flyer.mp3");
   demoBenchSound = loadSound("../sound/eventRelated/benchSitdown.mp3");
   citySound = loadSound("../sound/ambient/city.mp3", setupGame);
+  buttonSound = loadSound("../sound/eventRelated/nutton.mp3");
 }
 window.preload = preload;
 
@@ -315,9 +290,14 @@ window.addEventListener("enterView", (ev) => {
 
 function setupGame() {
   // views
+  let titlescreen = new View("titlescreen", windowWidth, windowHeight);
+  game.addView(titlescreen);
+  game.enterView("titlescreen");
+
+  // let titleScreenBeckground = new Color
+
   let park = new View("park", 4098, 768, parkBackgnd);
   game.addView(park);
-  window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
 
   let kiosk = new View("kiosk", 1792, 768, parkBackgnd);
   game.addView(kiosk);
