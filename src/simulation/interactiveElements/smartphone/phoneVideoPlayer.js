@@ -71,7 +71,7 @@ export default class PhoneVideoPlayer extends Sprite {
 
     return (
       m.x > 0 && m.x < this.width * s &&
-      m.y > this.pos + 60 && m.y < this.height * s + this.pos + 60
+      m.y > this.pos + 100 && m.y < this.height * s + this.pos + 100
     );
   }
 
