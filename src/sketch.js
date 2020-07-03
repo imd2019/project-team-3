@@ -56,11 +56,7 @@ import AnimationProcessor from "./animationProcessor.js";
 // load images
 let titleScreenImg;
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
-let kioskTreesImg,
-  kioskBuildingImg_on,
-  kioskBuildingImg_off,
-  kioskTrashcanImg,
-  kioskSunshadeImg;
+let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
 let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
@@ -75,8 +71,7 @@ let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeople
 // load videos
 
 let videoOverlayImg;
-let startVideo;
-let endVideo;
+let startVideo, endVideo, reflectiveUserVideo, wannabeInfluencerVideo, followerVideo, conspiracyTheoristVideo;
 
 // load soundfiles
 let owlSound, demoSound, citySound, leavesSound, coffeeHouseSound, coffeeHouseMusicSound, fountainSound, policeSirenSound, demoBenchSound;
@@ -175,12 +170,20 @@ function preload() {
   demoPeopleSignsImg_right = loadImage("../img/demo/4_people/4_signs_right.png");
 
   // video
+  videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
+
   startVideo = createVideo("../video/startVideo.mp4");
   startVideo.hide();
+  reflectiveUserVideo = createVideo("../video/reflectiveUser.mp4");
+  reflectiveUserVideo.hide();
+  conspiracyTheoristVideo	= createVideo("../video/conspiracyTheorist.mp4");
+  conspiracyTheoristVideo.hide();
+  followerVideo = createVideo("../video/follower.mp4");
+  followerVideo.hide();
+  wannabeInfluencerVideo = createVideo("../video/wannabeInfluencer.mp4");
+  wannabeInfluencerVideo.hide();
 
-  videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
-  endVideo = createVideo("../video/endVideo1.mp4");
-  endVideo.hide();
+  endVideo = [reflectiveUserVideo, conspiracyTheoristVideo, followerVideo, wannabeInfluencerVideo];
 
   // sound
   owlSound = loadSound("../sound/ambient/owl.mp3");
@@ -245,14 +248,14 @@ window.addEventListener("enterView", (ev) => {
     }, 1000);
   }
 
-  if(ev.detail === "demo") {
+  if (ev.detail === "demo") {
     citySound.fade(0.2, 2);
     leavesSound.fade(0, 1);
     owlSound.fade(0, 1);
     if (!player.actionDone("demo", "endDemo")) {
       window.dispatchEvent(new CustomEvent("startDemoAnimation"));
       demoSound.fade(0.2, 1);
-      setTimeout( () => {
+      setTimeout(() => {
         policeSirenSound.play();
         policeSirenSound.setVolume(0.4);
         policeSirenSound.fade(0, 7.5);
@@ -260,7 +263,7 @@ window.addEventListener("enterView", (ev) => {
     }
   }
 
-  if(ev.detail === "kiosk") {
+  if (ev.detail === "kiosk") {
     demoSound.fade(0, 1);
   }
 
@@ -275,7 +278,7 @@ window.addEventListener("enterView", (ev) => {
 
     if (player.actionDone("demo") || player.actionDone("coffeeHouse")) {
       window.dispatchEvent(new CustomEvent("openKiosk"));
-
+      
       let rand = floor(random(0, 3));
       let events = [
         new CustomEvent("randConspiracyTheorist"),
@@ -288,7 +291,6 @@ window.addEventListener("enterView", (ev) => {
       window.dispatchEvent(new CustomEvent("hideNewspapers"));
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
-
       setTimeout( () => {
         window.dispatchEvent(new CustomEvent("addAction", {detail: {
           origin: "demo",
@@ -297,7 +299,11 @@ window.addEventListener("enterView", (ev) => {
         }}));  
       }, 1000);
     }
-    if (player.actionDone("demo") && player.actionDone("coffeeHouse") && player.actionDone("kiosk")) {
+    if (
+      player.actionDone("demo") &&
+      player.actionDone("coffeeHouse") &&
+      player.actionDone("kiosk")
+    ) {
       window.dispatchEvent(new CustomEvent("friendMessage"));
     }
   }
@@ -648,7 +654,6 @@ function setupGame() {
   demo.addChild(streetLampDemo_2);
   streetLamps.push(streetLampDemo_2);
 
-  // lamps flickering
   setInterval( () => {
     for (let elem of streetLamps) {
       if (((elem.parent.name === "bar" || elem.parent.name === "titlescreen") && !floor(random(0, 3))) || 
@@ -790,7 +795,7 @@ function setupGame() {
   });
 
   window.addEventListener("friendMessage", () => {
-    setTimeout( () => {
+    setTimeout(() => {
       barLink.enable();
       messageScreen.setEvent("friendMessage");
       mobilePhone.showScreen("messageScreen");
@@ -1096,6 +1101,7 @@ function setupGame() {
 
   window.addEventListener("revealRole", () => {
     endScreen.answer("Verschwörungstheoretiker");
+    videoPlayer.setVideo();
   });
 
   let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 219, videoOverlayImg, endVideo);
@@ -1271,13 +1277,19 @@ window.addEventListener("walkOutsideSlow", () => {
 });
 
 window.addEventListener("walkInsideFast", () => {
-  if (!insideStepsSound_fast.isPlaying() && !insideStepsSound_slow.isPlaying()) {
+  if (
+    !insideStepsSound_fast.isPlaying() &&
+    !insideStepsSound_slow.isPlaying()
+  ) {
     insideStepsSound_fast.play();
   }
 });
 
 window.addEventListener("walkInsideSlow", () => {
-  if (!insideStepsSound_slow.isPlaying() && !insideStepsSound_fast.isPlaying()) {
+  if (
+    !insideStepsSound_slow.isPlaying() &&
+    !insideStepsSound_fast.isPlaying()
+  ) {
     insideStepsSound_slow.play();
   }
 });

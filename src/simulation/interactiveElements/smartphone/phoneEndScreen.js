@@ -15,20 +15,20 @@ export default class PhoneEndScreen extends Sprite {
     fill(220);
     noStroke();
     rect(0, 0, this.width, this.height);
-  
+
     this.mouseScroll();
-  
+
     image(this.message, 0, 0, this.width, this.height);
-  
+
     textFont(window.fonts.franklinGothic);
     textSize(16);
     textAlign(LEFT, CENTER);
-  
+
     fill(100);
     rect(0, 0, this.width, 75);
     fill(150);
     rect(0, 0, 75, 75);
-  
+
     this.redraw();
   }
 
@@ -43,38 +43,38 @@ export default class PhoneEndScreen extends Sprite {
     this.message.noStroke();
 
     this.message.textFont(window.fonts.franklinGothic);
-    this.message.textSize(16);
+    this.message.textSize(20);
     this.message.textAlign(LEFT, CENTER);
 
     this.message.fill(200);
-    this.message.rect(20, 90 + this.pos, 300, 70, 5);
+    this.message.rect(20, 100 + this.pos, 330, 130, 5);
 
     this.message.noStroke();
     this.message.fill(1);
     this.message.text(
-      "Es war eine langer Tag, mein Freund. \nWie ich sehe, bist du nun einer von uns.",
-      30,
-      85 + this.pos,
-      290,
-      60
+      "Es war eine langer Tag, mein Freund. Wie ich sehe, bist du nun einer von uns.",
+      35,
+      105 + this.pos,
+      315,
+      115
     );
 
     if (this.answered) {
       this.message.fill(170);
-      this.message.rect(130, 180 + this.pos, 300, 70, 5);
+      this.message.rect(90, 250 + this.pos, 330, 130, 5);
       this.message.noStroke();
       this.message.fill(0);
       this.message.text(
         "Hast du mir geschrieben? Wovon sprichst du? Weißt du wer ich bin?",
-        140,
-        180 + this.pos,
-        290,
-        70
+        105,
+        250 + this.pos,
+        320,
+        120
       );
 
       this.message.fill(200);
 
-      this.message.rect(20, 270 + this.pos, 410, 350, 5);
+      this.message.rect(20, 400 + this.pos, 410, 400, 5);
       this.message.noStroke();
       this.message.fill(0);
       this.message.text(
@@ -82,10 +82,10 @@ export default class PhoneEndScreen extends Sprite {
           " " +
           this.role +
           ".",
-        30,
-        255 + this.pos,
-        475,
-        70
+        35,
+        380 + this.pos,
+        400,
+        120
       );
       this.children[1].draw();
     }
