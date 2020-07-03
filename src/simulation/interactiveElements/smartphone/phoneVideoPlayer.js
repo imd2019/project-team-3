@@ -31,9 +31,21 @@ export default class PhoneVideoPlayer extends Sprite {
   }
 
   setVideo() {
-    if (this.parent.role === "Verschwörungstheoretiker") {
-      this.video = this.videos[0];
+    switch (this.parent.role) {
+      case "Reflektierter Nutzer":
+        this.video = this.videos[0];
+        break;
+      case "Verschwörungstheoretiker":
+        this.video = this.videos[1];
+        break;
+      case "Mitläufer":
+        this.video = this.videos[2];
+        break;
+      case "Möchtegern-Influencer":
+        this.video = this.videos[3];
+        break;
     }
+    this.videoSet = true;
   }
 
   startVideo() {

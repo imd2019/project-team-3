@@ -112,7 +112,12 @@ let demoPeopleImg_left,
 // load videos
 
 let videoOverlayImg;
-let endVideo, reflectiveUser, wannabeInfluencer, follower, conspiracyTheorist;
+let startVideo,
+  endVideo,
+  reflectiveUserVideo,
+  wannabeInfluencerVideo,
+  followerVideo,
+  conspiracyTheoristVideo;
 
 // load soundfiles
 let owlSound,
@@ -137,7 +142,8 @@ let phoneMsgSound,
   registerSound,
   newspaperSound,
   pickupSignSound,
-  flyerSound;
+  flyerSound,
+  buttonSound;
 
 function preload() {
   // fonts
@@ -276,16 +282,24 @@ function preload() {
 
   // video
   videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
-  reflectiveUser = createVideo("../video/reflectiveUser.mp4");
-  reflectiveUser.hide();
-  conspiracyTheorist = createVideo("../video/conspiracyTheorist.mp4");
-  conspiracyTheorist.hide();
-  follower = createVideo("../video/follower.mp4");
-  follower.hide();
-  wannabeInfluencer = createVideo("../video/wannabeInfluencer.mp4");
-  wannabeInfluencer.hide();
-  endVideo = [reflectiveUser, conspiracyTheorist, follower, wannabeInfluencer];
-  console.log(endVideo);
+
+  startVideo = createVideo("../video/startVideo.mp4");
+  startVideo.hide();
+  reflectiveUserVideo = createVideo("../video/reflectiveUser.mp4");
+  reflectiveUserVideo.hide();
+  conspiracyTheoristVideo = createVideo("../video/conspiracyTheorist.mp4");
+  conspiracyTheoristVideo.hide();
+  followerVideo = createVideo("../video/follower.mp4");
+  followerVideo.hide();
+  wannabeInfluencerVideo = createVideo("../video/wannabeInfluencer.mp4");
+  wannabeInfluencerVideo.hide();
+
+  endVideo = [
+    reflectiveUserVideo,
+    conspiracyTheoristVideo,
+    followerVideo,
+    wannabeInfluencerVideo,
+  ];
 
   // sound
   owlSound = loadSound("../sound/ambient/owl.mp3");
@@ -318,7 +332,12 @@ function preload() {
   pickupSignSound = loadSound("../sound/eventRelated/pickupSign.mp3");
   flyerSound = loadSound("../sound/eventRelated/flyer.mp3");
   demoBenchSound = loadSound("../sound/eventRelated/benchSitdown.mp3");
-  citySound = loadSound("../sound/ambient/city.mp3", setupGame);
+  buttonSound = loadSound("../sound/eventRelated/button.mp3");
+  citySound = loadSound("../sound/ambient/city.mp3");
+  coffeeHouseMusicSound = loadSound(
+    "../sound/ambient/coffeeHouseMusic.mp3",
+    setupGame
+  );
 }
 window.preload = preload;
 
@@ -334,7 +353,18 @@ window.addEventListener("addAction", (ev) => {
 
 let game = new Game(player);
 window.addEventListener("enterView", (ev) => {
-  game.enterView(ev.detail);
+  animate.start("fadeOut", false, () => {
+    animate.start("fadeOut", true);
+  });
+  setTimeout(() => {
+    game.enterView(ev.detail);
+  }, 1000);
+
+  if (ev.detail === "startVideo") {
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("startGame"));
+    }, 55000);
+  }
 
   if (ev.detail === "bar") {
     doorSound.play();
@@ -343,6 +373,9 @@ window.addEventListener("enterView", (ev) => {
     phoneVibrationSound.setVolume(0.3);
 
     window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("barPhoneVibration"));
+    }, 1000);
   }
 
   if (ev.detail === "demo") {
@@ -369,6 +402,9 @@ window.addEventListener("enterView", (ev) => {
     fountainSound.fade(0, 2);
     owlSound.fade(0.05, 1);
     demoSound.fade(0.02, 1);
+
+    window.dispatchEvent(new CustomEvent("stoppDemoAnimation"));
+
     if (player.actionDone("demo") || player.actionDone("coffeeHouse")) {
       window.dispatchEvent(new CustomEvent("openKiosk"));
 
@@ -384,15 +420,17 @@ window.addEventListener("enterView", (ev) => {
       window.dispatchEvent(new CustomEvent("hideNewspapers"));
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
-      window.dispatchEvent(
-        new CustomEvent("addAction", {
-          detail: {
-            origin: "demo",
-            name: "endDemo",
-            data: {},
-          },
-        })
-      );
+      setTimeout(() => {
+        window.dispatchEvent(
+          new CustomEvent("addAction", {
+            detail: {
+              origin: "demo",
+              name: "endDemo",
+              data: {},
+            },
+          })
+        );
+      }, 1000);
     }
     if (
       player.actionDone("demo") &&
@@ -445,6 +483,173 @@ function setupGame() {
   game.addView(global);
 
   // display objects & interactive objects
+  let titleScreenBackground = new ColorScreen(
+    0,
+    0,
+    windowWidth,
+    windowHeight,
+    color("#512109")
+  );
+  titleScreen.addChild(titleScreenBackground);
+
+  let titleScreenStreet = new ColorScreen(
+    0,
+    windowHeight * 0.48,
+    windowWidth,
+    windowHeight - windowHeight * 0.48,
+    color("#000000")
+  );
+  titleScreen.addChild(titleScreenStreet);
+
+  let startGameBtn = new TitleScreenButton(
+    windowWidth / 20 + 40,
+    windowHeight / 3,
+    0,
+    20,
+    "Spiel starten",
+    window.fonts.rockwell,
+    color("#8b4726"),
+    color("#ffa500"),
+    "playStartVideo"
+  );
+  titleScreen.addChild(startGameBtn);
+
+  let settingsBtn = new TitleScreenButton(
+    windowWidth / 20 + 40,
+    windowHeight / 3 + 40,
+    0,
+    20,
+    "Steuerung",
+    window.fonts.rockwell,
+    color("#8b4726"),
+    color("#ffa500"),
+    "showInstructions"
+  );
+  titleScreen.addChild(settingsBtn);
+
+  let aboutUsBtn = new TitleScreenButton(
+    windowWidth / 20 + 40,
+    windowHeight / 3 + 80,
+    0,
+    20,
+    "Über uns",
+    window.fonts.rockwell,
+    color("#8b4726"),
+    color("#ffa500"),
+    "showAboutUs"
+  );
+  titleScreen.addChild(aboutUsBtn);
+
+  window.addEventListener("playStartVideo", () => {
+    settingsBtn.disable();
+    aboutUsBtn.disable();
+
+    coffeeHouseMusicSound.fade(0, 1);
+    setTimeout(() => {
+      coffeeHouseMusicSound.stop();
+    });
+
+    window.dispatchEvent(
+      new CustomEvent("enterView", { detail: "startVideo" })
+    );
+    setTimeout(() => {
+      startVideoPlayer.play();
+    }, 1000);
+  });
+
+  window.addEventListener("startGame", () => {
+    if (!citySound.isLooping()) {
+      citySound.loop();
+      leavesSound.loop();
+      fountainSound.loop();
+      owlSound.loop();
+    }
+    if (!demoSound.isLooping()) {
+      demoSound.loop();
+    }
+    window.dispatchEvent(new CustomEvent("enterView", { detail: "park" }));
+    setTimeout(() => {
+      phoneIcon.show();
+      phoneIcon.enable();
+    }, 1000);
+  });
+
+  let titleScreenImage = new DisplayObject(
+    windowWidth * 0.15 + 8,
+    windowHeight * 0.15 - 25,
+    593 * 1.3,
+    403 * 1.3,
+    titleScreenImg
+  );
+  titleScreen.addChild(titleScreenImage);
+
+  let streetLamps = [];
+
+  let titleScreenLampBulb = new StreetLampBulb(
+    windowWidth * 0.15,
+    windowHeight * 0.15,
+    39,
+    17,
+    streetLampBulbOnImg,
+    streetLampBulbOffImg
+  );
+  titleScreen.addChild(titleScreenLampBulb);
+  streetLamps.push(titleScreenLampBulb);
+
+  let instructionBox = new InfoBox(
+    windowWidth * 0.15 + 300,
+    windowHeight * 0.15 - 25,
+    windowWidth / 2,
+    windowHeight / 2 - 50,
+    "Steuerung:",
+    window.fonts.rockwell,
+    "Bewege die Maus nach links oder rechts, um dich umzuschauen. Fahre mit der Maus über Objekte, wenn Sie interaktiv sind, wird sich dein Mauszeiger verändern.",
+    window.fonts.franklinGothic,
+    color("#ffa500")
+  );
+  titleScreen.addChild(instructionBox);
+
+  let aboutUsBox = new InfoBox(
+    windowWidth * 0.15 + 300,
+    windowHeight * 0.15 - 25,
+    windowWidth / 2,
+    windowHeight / 2 - 50,
+    "Über uns:",
+    window.fonts.rockwell,
+    "Wir sind Florian, Luisa, Max und Lars aus dem 2. Semesters des Studiengangs Interactive Media Design. Social Whispers ist unser gemeinsames Semesterprojekt. Es simuliert die Verbreitung von Informationen in sozialen Medien und soll Nutzenden dabei helfen, Informationen im Internet differenzierter zu betrachten. Wir möchten sie dazu anregen, sich Informationen immer aus mehreren, seriösen Quellen einholen.",
+    window.fonts.franklinGothic,
+    color("#ffa500")
+  );
+  titleScreen.addChild(aboutUsBox);
+
+  window.addEventListener("showInstructions", () => {
+    instructionBox.show();
+    aboutUsBox.hide();
+  });
+
+  window.addEventListener("showAboutUs", () => {
+    aboutUsBox.show();
+    instructionBox.hide();
+  });
+
+  let videoScreenBackgnd = new ColorScreen(
+    0,
+    0,
+    windowWidth,
+    windowHeight,
+    color("#1e1814")
+  );
+  startVideoScreen.addChild(videoScreenBackgnd);
+
+  let startVideoPlayer = new VideoElement(
+    (windowWidth - windowHeight * 1.778) / 2,
+    0,
+    windowHeight * 1.778,
+    windowHeight,
+    startVideo
+  );
+  startVideoScreen.addChild(startVideoPlayer);
+
   let moon_park = new DisplayObject(2086, 25, 213, 212, moonImg);
   park.addChild(moon_park);
 
@@ -468,10 +673,10 @@ function setupGame() {
   park.addChild(demoLink_bar);
 
   let demoLink_demo = new DemoLink(
-    1788,
-    425,
-    470,
-    117,
+    1633,
+    372,
+    666,
+    176,
     demoLinkDemoImg_demo,
     demoLinkDemoImg_noDemo,
     demoLinkSignsLeftImg,
@@ -766,6 +971,23 @@ function setupGame() {
   let barPhone = new BarPhone(357, 356, 22, 8, barPhoneImg);
   bar.addChild(barPhone);
 
+  animate.addAnimation(
+    "barPhoneVibrate_1",
+    barPhone,
+    "rotationAngle",
+    0,
+    0.05,
+    0.025
+  );
+  animate.addAnimation(
+    "barPhoneVibrate_2",
+    barPhone,
+    "rotationAngle",
+    0.05,
+    -0.05,
+    0.05
+  );
+
   let streetLampDemo_1 = new StreetLampBulb(
     614,
     34,
@@ -785,6 +1007,27 @@ function setupGame() {
     streetLampBulbOffImg
   );
   demo.addChild(streetLampDemo_2);
+  streetLamps.push(streetLampDemo_2);
+
+  setInterval(() => {
+    for (let elem of streetLamps) {
+      if (
+        ((elem.parent.name === "bar" || elem.parent.name === "titlescreen") &&
+          !floor(random(0, 3))) ||
+        (elem.parent.name === game.currentView &&
+          elem.x > 0 &&
+          elem.x < windowWidth &&
+          !floor(random(0, 10)))
+      ) {
+        elem.switch();
+        lampClickSound.play();
+        setTimeout(() => {
+          elem.switch();
+          lampClickSound.stop();
+        }, 100 * ceil(random(0, 2)));
+      }
+    }
+  }, 1000);
 
   let demoForegnd = new DemoForegnd(
     -160,
@@ -819,7 +1062,7 @@ function setupGame() {
   );
   demo.addChild(counterDemoPeople);
 
-  let demoSignsLeft = new DisplayObject(
+  let demoSignsLeft = new AnimatedDisplayObject(
     214,
     215,
     1315,
@@ -828,7 +1071,7 @@ function setupGame() {
   );
   demo.addChild(demoSignsLeft);
 
-  let demoSignsRight = new DisplayObject(
+  let demoSignsRight = new AnimatedDisplayObject(
     268,
     226,
     1311,
@@ -836,6 +1079,50 @@ function setupGame() {
     demoPeopleSignsImg_right
   );
   demo.addChild(demoSignsRight);
+
+  animate.addAnimation(
+    "moveDemoSigns_left",
+    demoSignsLeft,
+    "y",
+    demoSignsLeft.saveY - 5,
+    demoSignsLeft.saveY + 5,
+    0.5,
+    "ease-in-out-quad"
+  );
+  animate.addAnimation(
+    "moveDemoSigns_right",
+    demoSignsRight,
+    "y",
+    demoSignsRight.saveY - 5,
+    demoSignsRight.saveY + 5,
+    0.5,
+    "ease-in-out-quad"
+  );
+
+  let demoAnimation_left;
+  let demoAnimation_right;
+
+  window.addEventListener("startDemoAnimation", () => {
+    demoAnimation_left = setInterval(() => {
+      animate.start("moveDemoSigns_left", false, () => {
+        console.log(demoSignsLeft.y);
+        animate.start("moveDemoSigns_left", true);
+      });
+    }, 1000);
+
+    demoAnimation_right = setInterval(() => {
+      setTimeout(() => {
+        animate.start("moveDemoSigns_right", false, () => {
+          animate.start("moveDemoSigns_right", true);
+        });
+      }, 400);
+    }, 1000);
+  });
+
+  window.addEventListener("stoppDemoAnimation", () => {
+    clearInterval(demoAnimation_left);
+    clearInterval(demoAnimation_right);
+  });
 
   let demoBubble = new Speechbubble(300, -150, 270, "Demo_1", "left");
   demoPeople.addChild(demoBubble);
@@ -943,6 +1230,38 @@ function setupGame() {
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 5000);
     }
+
+    lampClickSound.fade(0, 1);
+    fountainSound.fade(0, 1);
+    citySound.fade(0, 1);
+    leavesSound.fade(0, 1);
+    doorSound.play();
+
+    coffeeHouse.disable();
+    animate.start("fadeOut");
+
+    setTimeout(() => {
+      coffeeHouseSound.play();
+      coffeeHouseMusicSound.play();
+    }, 800);
+    setTimeout(() => {
+      coffeeHouseSound.fade(0, 1);
+      coffeeHouseMusicSound.fade(0, 1);
+    }, 10000);
+    setTimeout(() => {
+      doorSound.play();
+      citySound.fade(0.1, 2);
+      leavesSound.fade(0.6, 2);
+      fountainSound.fade(0.06, 2);
+      lampClickSound.fade(0.2, 2);
+      animate.start("fadeOut", true, () => {
+        coffeeHouse.enable();
+      });
+    }, 10500);
+    setTimeout(() => {
+      coffeeHouseSound.stop();
+      coffeeHouseMusicSound.stop();
+    }, 12500);
   });
 
   window.addEventListener("interviewAccepted", () => {
@@ -1064,6 +1383,23 @@ function setupGame() {
     phoneIcon.enable();
   });
 
+  animate.addAnimation(
+    "phoneVibrate_1",
+    phoneIcon,
+    "rotationAngle",
+    0,
+    0.05,
+    0.025
+  );
+  animate.addAnimation(
+    "phoneVibrate_2",
+    phoneIcon,
+    "rotationAngle",
+    0.05,
+    -0.05,
+    0.05
+  );
+
   let mobilePhone = new MobilePhone(
     492,
     739,
@@ -1075,6 +1411,34 @@ function setupGame() {
 
   let phoneButton = new PhoneButton(221, 677, 50, 50, phoneBtnImg);
   mobilePhone.addChild(phoneButton);
+
+  animate.addAnimation(
+    "moveToCenter_h",
+    phoneIcon,
+    "x",
+    phoneIcon.saveX,
+    mobilePhone.x,
+    0.6,
+    "linear"
+  );
+  animate.addAnimation(
+    "moveToCenter_v",
+    phoneIcon,
+    "y",
+    phoneIcon.saveY,
+    mobilePhone.y,
+    0.6,
+    "ease-in-quad"
+  );
+  animate.addAnimation(
+    "scaleToPhoneSize",
+    phoneIcon,
+    "scale",
+    phoneIcon.saveScale,
+    mobilePhone.scale * (mobilePhone.height / phoneIcon.height),
+    0.6,
+    "ease-in-quad"
+  );
 
   window.addEventListener("openPhone", () => {
     window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
@@ -1251,15 +1615,15 @@ function setupGame() {
   endScreen.addChild(endBtn);
 
   window.addEventListener("revealRole", () => {
-    endScreen.answer("Verschwörungstheoretiker");
+    endScreen.answer(player.getPersona());
     videoPlayer.setVideo();
   });
 
   let videoPlayer = new PhoneVideoPlayer(
     30,
-    200,
+    335,
     390,
-    292.5,
+    293,
     videoOverlayImg,
     endVideo
   );
@@ -1284,6 +1648,26 @@ function setupGame() {
   window.addEventListener("restartGame", () => {
     game.reset();
   });
+
+  let fadeScreen = new ColorScreen(
+    0,
+    0,
+    windowWidth,
+    windowHeight,
+    color("#000000")
+  );
+  global.addChild(fadeScreen);
+
+  animate.addAnimation(
+    "fadeOut",
+    fadeScreen,
+    "opacity",
+    0,
+    1,
+    1,
+    "ease-in-out-quad"
+  );
+  animate.start("fadeOut", true);
 
   // sound setup
   window.addEventListener("soundReset", () => {
@@ -1331,6 +1715,40 @@ window.addEventListener("phoneSendMsg", () => {
 
 window.addEventListener("phoneVibration", () => {
   phoneVibrationSound.play();
+
+  animate.start("phoneVibrate_1", false, () => {
+    let count = 0;
+    let interval = setInterval(() => {
+      animate.start("phoneVibrate_2", false, () => {
+        if (count < 18) {
+          animate.start("phoneVibrate_2", true);
+        } else {
+          animate.start("phoneVibrate_2", true, () => {
+            animate.start("phoneVibrate_1", false);
+          });
+        }
+      });
+      count++;
+      if (count > 18) {
+        clearInterval(interval);
+      }
+    }, 100);
+  });
+});
+
+let barPhoneVibrate;
+
+window.addEventListener("barPhoneVibration", () => {
+  phoneVibrationSound.loop();
+  phoneVibrationSound.setVolume(0.3);
+
+  animate.start("barPhoneVibrate_1", false, () => {
+    barPhoneVibrate = setInterval(() => {
+      animate.start("barPhoneVibrate_2", false, () => {
+        animate.start("barPhoneVibrate_2", true);
+      });
+    }, 100);
+  });
 });
 
 window.addEventListener("phoneTap", () => {
@@ -1431,6 +1849,90 @@ window.addEventListener("walkInsideSlow", () => {
     !insideStepsSound_fast.isPlaying()
   ) {
     insideStepsSound_slow.play();
+  }
+});
+
+/* parameter changes */
+
+window.addEventListener("pickupSign", () => {
+  player.changeParameters(0, 0, 1);
+});
+
+window.addEventListener("joinDemo", (ev) => {
+  if (ev.detail === "demo") {
+    player.changeParameters(1, -1, 0);
+  } else {
+    player.changeParameters(0, 1, 0);
+  }
+});
+
+window.addEventListener("watchDemo", () => {
+  player.changeParameters(-1, 0, 0);
+});
+
+window.addEventListener("postChosen", (ev) => {
+  switch (ev.detail) {
+    case postImg_watchedProDemo:
+      player.changeParameters(1, -1, 0);
+      break;
+    case postImg_watchedProCounterDemo:
+      player.changeParameters(0, 1, 0);
+      break;
+    case postImg_watchedProNone:
+      player.changeParameters(0, 0, 1);
+      break;
+  }
+});
+
+window.addEventListener("pickupFlyer", (ev) => {
+  if (ev.detail === "coffeeHouse") {
+    player.changeParameters(0, 1, 0);
+  }
+});
+
+window.addEventListener("groupInvitation", () => {
+  if (player.actionDone("coffeeHouse", "invitationAccepted", true)) {
+    player.changeParameters(0, -2, 0);
+  } else {
+    player.changeParameters(0, 1, 0);
+  }
+});
+
+window.addEventListener("interviewAccepted", () => {
+  if (!player.actionDone("coffeeHouse", "interviewAccepted", true)) {
+    player.changeParameters(0, 0, -1);
+  } else {
+    player.changeParameters(0, 0, 1);
+  }
+});
+
+window.addEventListener("statementDefended", () => {
+  if (player.actionDone("coffeeHouse", "statementDefended", true)) {
+    if (player.actionDone("coffeeHouse", "proDemo", true)) {
+      player.changeParameters(1, -1, 1);
+    } else {
+      player.changeParameters(0, 1, 0);
+    }
+  } else if (player.actionDone("coffeeHouse", "proDemo", true)) {
+    player.changeParameters(0, 0, 1);
+  } else {
+    player.changeParameters(1, -1, 1);
+  }
+});
+
+window.addEventListener("buyNewspaper", (ev) => {
+  switch (ev.detail) {
+    case "conspiracy-theorist":
+      player.changeParameters(1, -1, -1);
+      break;
+    case "wannnabe-influencer":
+      player.changeParameters(0, 0, 1);
+      break;
+    case "reflective-user":
+      player.changeParameters(-1, 1, 0);
+      break;
+    case "follower":
+      player.changeParameters(0, -1, 1);
   }
 });
 
