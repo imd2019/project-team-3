@@ -1,21 +1,21 @@
 import Sprite from "../sprite.js";
 
 export default class Game extends Sprite {
-  constructor(player){
+  constructor(player) {
     super(0, 0, windowWidth, windowHeight, undefined);
     this.currentView = undefined;
     this.player = player;
     this.children = {};
   }
 
-  addView(view){
+  addView(view) {
     this.children[view.name] = view;
   }
 
   enterView(name) {
     if (name in this.children) {
-        this.children[name].enter();
-        this.currentView = name;
+      this.children[name].enter();
+      this.currentView = name;
     }
   }
 
@@ -56,6 +56,8 @@ export default class Game extends Sprite {
   }
 
   display() {
+    window.dispatchEvent(new CustomEvent("cursor", { detail: "standard" }));
+
     if (this.currentView) {
       this.children[this.currentView].display();
       this.children.global.display();
@@ -65,7 +67,7 @@ export default class Game extends Sprite {
       if (mouseX >= windowWidth - 50) this.moveView("right", 3);
       else this.moveView("right", 1);
     } else if (mouseX <= 150) {
-      if(mouseX <= 50) this.moveView("left", 3);
+      if (mouseX <= 50) this.moveView("left", 3);
       else this.moveView("left", 1);
     }
   }
@@ -76,7 +78,7 @@ export default class Game extends Sprite {
       elem.reset();
     }
     this.player.reset();
-    window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
+    window.dispatchEvent(new CustomEvent("enterView", { detail: "park" }));
     window.dispatchEvent(new CustomEvent("soundReset"));
   }
 }

@@ -1963,6 +1963,15 @@ window.draw = draw;
 
 /* interaction */
 
+//cursor
+window.addEventListener("cursor", (ev) => {
+  if (ev.detail === "hovered") {
+    cursor("./img/assets/cursorHovered.png");
+  } else {
+    cursor("./img/assets/cursorStandard.png");
+  }
+});
+
 function mouseClicked() {
   game.mouseClicked();
 }
