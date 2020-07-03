@@ -298,14 +298,19 @@ function preload() {
   startVideo.hide();
   reflectiveUserVideo = createVideo("../video/reflectiveUser.mp4");
   reflectiveUserVideo.hide();
-  conspiracyTheoristVideo	= createVideo("../video/conspiracyTheorist.mp4");
+  conspiracyTheoristVideo = createVideo("../video/conspiracyTheorist.mp4");
   conspiracyTheoristVideo.hide();
   followerVideo = createVideo("../video/follower.mp4");
   followerVideo.hide();
   wannabeInfluencerVideo = createVideo("../video/wannabeInfluencer.mp4");
   wannabeInfluencerVideo.hide();
 
-  endVideo = [reflectiveUserVideo, conspiracyTheoristVideo, followerVideo, wannabeInfluencerVideo];
+  endVideo = [
+    reflectiveUserVideo,
+    conspiracyTheoristVideo,
+    followerVideo,
+    wannabeInfluencerVideo,
+  ];
 
   // sound
   owlSound = loadSound("../sound/ambient/owl.mp3");
@@ -340,7 +345,10 @@ function preload() {
   demoBenchSound = loadSound("../sound/eventRelated/benchSitdown.mp3");
   buttonSound = loadSound("../sound/eventRelated/button.mp3");
   citySound = loadSound("../sound/ambient/city.mp3");
-  coffeeHouseMusicSound = loadSound("../sound/ambient/coffeeHouseMusic.mp3", setupGame);
+  coffeeHouseMusicSound = loadSound(
+    "../sound/ambient/coffeeHouseMusic.mp3",
+    setupGame
+  );
 }
 window.preload = preload;
 
@@ -364,16 +372,16 @@ window.addEventListener("enterView", (ev) => {
   }, 1000);
 
   if (ev.detail === "startVideo") {
-    setTimeout( () => {
+    setTimeout(() => {
       window.dispatchEvent(new CustomEvent("startGame"));
-    }, 55000);
+    }, 1000);
   }
-  
-  if(ev.detail === "bar") {
+
+  if (ev.detail === "bar") {
     doorSound.play();
     citySound.fade(0, 1);
     window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
-    setTimeout( () => {
+    setTimeout(() => {
       window.dispatchEvent(new CustomEvent("barPhoneVibration"));
     }, 1000);
   }
@@ -408,7 +416,7 @@ window.addEventListener("enterView", (ev) => {
 
     if (player.actionDone("demo") || player.actionDone("coffeeHouse")) {
       window.dispatchEvent(new CustomEvent("openKiosk"));
-      
+
       let rand = floor(random(0, 3));
       let events = [
         new CustomEvent("randConspiracyTheorist"),
@@ -423,12 +431,16 @@ window.addEventListener("enterView", (ev) => {
       }, 1000);
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
-      setTimeout( () => {
-        window.dispatchEvent(new CustomEvent("addAction", {detail: {
-          origin: "demo",
-          name: "endDemo",
-          data: {},
-        }}));  
+      setTimeout(() => {
+        window.dispatchEvent(
+          new CustomEvent("addAction", {
+            detail: {
+              origin: "demo",
+              name: "endDemo",
+              data: {},
+            },
+          })
+        );
       }, 1000);
     }
     if (
@@ -490,7 +502,13 @@ function setupGame() {
   game.addView(global);
 
   // display objects & interactive objects
-  let titleScreenBackground = new ColorScreen(0, 0, windowWidth, windowHeight, color("#512109"));
+  let titleScreenBackground = new ColorScreen(
+    0,
+    0,
+    windowWidth,
+    windowHeight,
+    color("#512109")
+  );
   titleScreen.addChild(titleScreenBackground);
 
   let titleScreenStreet = new ColorScreen(0, windowHeight * 0.68, windowWidth, windowHeight - windowHeight * 0.68, color("#000000"));
@@ -548,14 +566,14 @@ function setupGame() {
     settingsBtn.disable();
     aboutUsBtn.disable();
     coffeeHouseMusicSound.fade(0, 1);
-    setTimeout( () => {
+    setTimeout(() => {
       coffeeHouseMusicSound.stop();
     }, 1000);
     window.dispatchEvent(new CustomEvent("enterView", {detail: "startVideo"}));
     setTimeout( () => {
       startVideoPlayer.play();
     }, 1000);
-  })
+  });
 
   window.addEventListener("startGame", () => {
     if (!citySound.isLooping()) {
@@ -665,7 +683,13 @@ function setupGame() {
   let videoScreenBackgnd = new ColorScreen(0, 0, windowWidth, windowHeight, color("#1E0E09"));
   startVideoScreen.addChild(videoScreenBackgnd);
 
-  let startVideoPlayer = new VideoElement((windowWidth - windowHeight * 1.778) / 2, 0, windowHeight * 1.778, windowHeight, startVideo);
+  let startVideoPlayer = new VideoElement(
+    (windowWidth - windowHeight * 1.778) / 2,
+    0,
+    windowHeight * 1.778,
+    windowHeight,
+    startVideo
+  );
   startVideoScreen.addChild(startVideoPlayer);
 
   animate.addAnimation("fadeStartVideo", startVideoPlayer, "volume", 1, 0, 1);
@@ -1044,7 +1068,7 @@ function setupGame() {
   demo.addChild(streetLampDemo_2);
   streetLamps.push(streetLampDemo_2);
 
-  setInterval( () => {
+  setInterval(() => {
     for (let elem of streetLamps) {
       if (
         ((elem.parent.name === "bar" || elem.parent.name === "titlescreen") &&
@@ -1357,7 +1381,14 @@ function setupGame() {
     phoneButton.enable();
   });
 
-  let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg, "coffeeHouse");
+  let flyerBox_coffeeHouse = new FlyerBox(
+    601,
+    445,
+    61,
+    139,
+    flyerBoxImg,
+    "coffeeHouse"
+  );
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
   // global objects
@@ -1657,7 +1688,14 @@ function setupGame() {
     videoPlayer.setVideo();
   });
 
-  let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 293, videoOverlayImg, endVideo);
+  let videoPlayer = new PhoneVideoPlayer(
+    30,
+    335,
+    390,
+    293,
+    videoOverlayImg,
+    endVideo
+  );
   endScreen.addChild(videoPlayer);
 
   let restartBtn = new RestartButton(238, 428, 200, 50);
@@ -1880,7 +1918,7 @@ window.addEventListener("watchDemo", () => {
 });
 
 window.addEventListener("postChosen", (ev) => {
-  switch (ev.detail){
+  switch (ev.detail) {
     case postImg_watchedProDemo:
       player.changeParameters(1, -1, 1);
       break;
@@ -1930,7 +1968,7 @@ window.addEventListener("statementDefended", (ev) => {
 });
 
 window.addEventListener("buyNewspaper", (ev) => {
-  switch (ev.detail){
+  switch (ev.detail) {
     case "conspiracy-theorist":
       player.changeParameters(1, -1, -1);
       break;
@@ -1973,3 +2011,11 @@ function mouseWheel(ev) {
   game.mouseWheel(ev);
 }
 window.mouseWheel = mouseWheel;
+
+window.addEventListener("cursor", (ev) => {
+  if (ev.detail === "hovered") {
+    cursor("./img/assets/cursorHovered.png");
+  } else {
+    cursor("./img/assets/cursorStandard.png");
+  }
+});

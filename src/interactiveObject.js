@@ -7,12 +7,26 @@ export default class InteractiveObject extends DisplayObject {
     this.enabled = true;
     this.calcScale = this.scale;
   }
-  enable(){
+  enable() {
     this.enabled = true;
   }
 
-  disable(){
+  disable() {
     this.enabled = false;
+  }
+
+  display() {
+    if (this.visible) {
+      push();
+      translate(this.x, this.y);
+      rotate(this.rotation);
+      scale(this.scale);
+
+      this.draw();
+
+      pop();
+    }
+    this.mouseHovered();
   }
 
   draw() {
@@ -37,10 +51,7 @@ export default class InteractiveObject extends DisplayObject {
       e = e.parent;
     }
 
-    return (
-      m.x > 0 && m.x < this.width * s &&
-      m.y > 0 && m.y < this.height * s
-    );
+    return m.x > 0 && m.x < this.width * s && m.y > 0 && m.y < this.height * s;
   }
 
   pressed() {}
@@ -50,6 +61,10 @@ export default class InteractiveObject extends DisplayObject {
   released() {}
 
   wheel() {}
+
+  hovered() {
+    window.dispatchEvent(new CustomEvent("cursor", { detail: "hovered" }));
+  }
 
   mousePressed() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
@@ -68,7 +83,7 @@ export default class InteractiveObject extends DisplayObject {
   }
 
   mouseReleased() {
-    if (this. enabled && this.hitTest(mouseX, mouseY)) {
+    if (this.enabled && this.hitTest(mouseX, mouseY)) {
       this.released();
       return true;
     }
@@ -77,6 +92,7 @@ export default class InteractiveObject extends DisplayObject {
 
   mouseHovered() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
+      this.hovered();
       return true;
     } else {
       return false;

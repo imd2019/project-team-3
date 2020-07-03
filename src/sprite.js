@@ -21,18 +21,25 @@ export default class Sprite extends InteractiveObject {
 
       pop();
     }
+    this.mouseHovered();
+  }
+
+  hovered() {
+    if (this.children.length === 0) {
+      window.dispatchEvent(new CustomEvent("cursor", { detail: "hovered" }));
+    }
   }
 
   pressed() {
     for (let i = this.children.length - 1; i >= 0; i--) {
-      if(this.children[i].mousePressed()) return true;
+      if (this.children[i].mousePressed()) return true;
     }
     return false;
   }
 
   clicked() {
     for (let i = this.children.length - 1; i >= 0; i--) {
-      if(this.children[i].mouseClicked()) {
+      if (this.children[i].mouseClicked()) {
         return true;
       }
     }
@@ -41,7 +48,7 @@ export default class Sprite extends InteractiveObject {
 
   released() {
     for (let i = this.children.length - 1; i >= 0; i--) {
-      if(this.children[i].mouseReleased()) return true;
+      if (this.children[i].mouseReleased()) return true;
     }
     return false;
   }
@@ -73,7 +80,7 @@ export default class Sprite extends InteractiveObject {
   }
 
   mouseReleased() {
-    if (this. enabled && this.hitTest(mouseX, mouseY)) {
+    if (this.enabled && this.hitTest(mouseX, mouseY)) {
       this.released();
       if (!this.children || this.children.length === 0) {
         return true;
@@ -83,7 +90,7 @@ export default class Sprite extends InteractiveObject {
   }
 
   mouseWheel(ev) {
-    if (this. enabled && this.hitTest(mouseX, mouseY)) {
+    if (this.enabled && this.hitTest(mouseX, mouseY)) {
       this.wheel(ev);
     }
   }
@@ -103,8 +110,8 @@ export default class Sprite extends InteractiveObject {
   }
 
   reset() {
-    this.children.forEach( (child) => {
-        child.reset();
+    this.children.forEach((child) => {
+      child.reset();
     });
     this.resetElement();
   }

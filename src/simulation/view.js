@@ -1,13 +1,13 @@
 import Sprite from "../Sprite.js";
 
 export default class View extends Sprite {
-  constructor(name, width, height, backgnd){
+  constructor(name, width, height, backgnd) {
     super(0, 0, width, height, backgnd);
     this.name = name;
     this.alreadyEntered = false;
     this.scale = windowHeight / height;
     this.calcScale = this.scale;
-    this.x = (windowWidth / 2) - ((width * this.scale) / 2);
+    this.x = windowWidth / 2 - (width * this.scale) / 2;
   }
 
   enter() {
@@ -23,7 +23,10 @@ export default class View extends Sprite {
       switch (dir) {
         case "left":
           if (this.name === "park") {
-            if (this.children[6].x * this.scale < Math.abs(this.x) - 6 * speed) {
+            if (
+              this.children[6].x * this.scale <
+              Math.abs(this.x) - 6 * speed
+            ) {
               if (speed === 3) {
                 this.moveSound("Fast");
               } else {
@@ -33,7 +36,7 @@ export default class View extends Sprite {
               this.children[0].x += 1 * speed;
               // city
               this.children[1].x += 2 * speed;
-              // street 
+              // street
               for (let i = 2; i < 6; i++) {
                 this.children[i].x += 3 * speed;
               }
@@ -43,7 +46,7 @@ export default class View extends Sprite {
               }
             }
           } else {
-            if (this.x < - 3.5 * speed) {
+            if (this.x < -3.5 * speed) {
               if (speed === 3) {
                 this.moveSound("Fast");
               } else {
@@ -62,10 +65,10 @@ export default class View extends Sprite {
                 this.moveSound("Slow");
               }
               // moon
-              this.children[0].x -= 1 * speed;          
+              this.children[0].x -= 1 * speed;
               // city
               this.children[1].x -= 2 * speed;
-              // street 
+              // street
               for (let i = 2; i < 6; i++) {
                 this.children[i].x -= 3 * speed;
               }
@@ -73,7 +76,7 @@ export default class View extends Sprite {
               for (let i = 6; i < this.children.length; i++) {
                 this.children[i].x -= 3.5 * speed;
               }
-          }
+            }
           } else {
             if (this.x > windowWidth - this.width * this.scale) {
               if (speed === 3) {
@@ -107,21 +110,21 @@ export default class View extends Sprite {
 
   mousePressed() {
     for (let i = this.children.length - 1; i >= 0; i--) {
-      if(this.children[i].mousePressed()) return true;
+      if (this.children[i].mousePressed()) return true;
     }
     return false;
   }
 
   mouseClicked() {
     for (let i = this.children.length - 1; i >= 0; i--) {
-      if(this.children[i].mouseClicked()) return true;
+      if (this.children[i].mouseClicked()) return true;
     }
     return false;
   }
 
   mouseReleased() {
     for (let i = this.children.length - 1; i >= 0; i--) {
-      if(this.children[i].mouseReleased()) return true;
+      if (this.children[i].mouseReleased()) return true;
     }
     return false;
   }
