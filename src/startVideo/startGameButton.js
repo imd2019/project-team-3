@@ -7,5 +7,6 @@ export default class StartGameButton extends InteractiveObject {
 
   clicked() {
       window.dispatchEvent(new CustomEvent("startGame"));
+      this.disable();
   }
 }

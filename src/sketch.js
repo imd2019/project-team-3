@@ -214,6 +214,8 @@ window.preload = preload;
 
 /* setup */
 
+let startGameTimeout;
+
 let player = new Player();
 window.addEventListener("addAction", (ev) => {
   window.dispatchEvent(new CustomEvent(ev.detail.name, { detail: ev.detail.data }));
@@ -230,7 +232,7 @@ window.addEventListener("enterView", (ev) => {
   }, 1000);
 
   if (ev.detail === "startVideo") {
-    setTimeout(() => {
+    startGameTimeout = setTimeout(() => {
       window.dispatchEvent(new CustomEvent("startGame"));
     }, 55000);
   }
@@ -412,6 +414,7 @@ function setupGame() {
   titleScreen.addChild(creditsBtn);
 
   window.addEventListener("playStartVideo", () => {
+    startGameBtn.disable();
     settingsBtn.disable();
     aboutUsBtn.disable();
     coffeeHouseMusicSound.fade(0, 1);
@@ -425,6 +428,7 @@ function setupGame() {
   });
 
   window.addEventListener("startGame", () => {
+    clearTimeout(startGameTimeout);
     if (!citySound.isLooping()) {
       citySound.loop();
       leavesSound.loop();
