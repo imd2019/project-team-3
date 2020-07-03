@@ -33,7 +33,7 @@ export default class PhoneMessageButton extends Sprite {
     }
     if (
       this.currentMessage.conversationEnded ||
-      this.currentMessage.demoChosen
+      this.currentMessage.demoChosen || this.currentMessage.proInterview
     ) {
       window.dispatchEvent(
         new CustomEvent("addAction", {
@@ -99,6 +99,10 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Ihr Name ist in Verbindung mit den gerade stattfindenden Demos aufgetaucht. Unterstützen Sie diese?",
                   conversationEnded: false,
+                  proInterview: true,
+                  actionOrigin: "coffeeHouse",
+                  actionName: "interviewAccepted",
+                  actionData: true,
                 };
                 break;
               case "invite":
@@ -138,7 +142,7 @@ export default class PhoneMessageButton extends Sprite {
                   conversationEnded: true,
                   actionOrigin: "coffeeHouse",
                   actionName: "interviewAccepted",
-                  actionData: true,
+                  actionData: false,
                 };
                 break;
 
