@@ -48,9 +48,9 @@ import BarPhone from "./simulation/interactiveElements/bar/barPhone.js";
 import DemoPeople from "./simulation/interactiveElements/demo/demoPeople.js";
 import Newspaper from "./simulation/interactiveElements/kiosk/newspaper.js";
 import DemoForegnd from "./simulation/interactiveElements/demo/demoForegnd.js";
+import StartGameButton from "./startVideo/startGameButton.js";
 
 // utillity classes
-
 import AnimationProcessor from "./animationProcessor.js";
 
 // load images
@@ -70,7 +70,7 @@ let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeople
 
 // load videos
 
-let videoOverlayImg;
+let videoOverlayImg, videoSkipBtnImg;
 let startVideo, endVideo, reflectiveUserVideo, wannabeInfluencerVideo, followerVideo, conspiracyTheoristVideo;
 
 // load soundfiles
@@ -171,6 +171,7 @@ function preload() {
 
   // video
   videoOverlayImg = loadImage("../img/smartphone/endVideoOverlay.png");
+  videoSkipBtnImg = loadImage("../img/assets/arrowBtn.png");
 
   startVideo = createVideo("../video/startVideo.mp4");
   startVideo.hide();
@@ -402,12 +403,10 @@ function setupGame() {
   window.addEventListener("playStartVideo", () => {
     settingsBtn.disable();
     aboutUsBtn.disable();
-
     coffeeHouseMusicSound.fade(0, 1);
     setTimeout( () => {
       coffeeHouseMusicSound.stop();
-    });
-
+    }, 1000);
     window.dispatchEvent(new CustomEvent("enterView", {detail: "startVideo"}));
     setTimeout( () => {
       startVideoPlayer.play();
@@ -424,6 +423,10 @@ function setupGame() {
     if (!demoSound.isLooping()) {
       demoSound.loop();
     }
+    animate.start("fadeStartVideo", false, () => {
+      startVideoPlayer.stop();
+    });
+
     window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
     setTimeout( () => {
       phoneIcon.show();
@@ -478,6 +481,11 @@ function setupGame() {
 
   let startVideoPlayer = new VideoElement((windowWidth - windowHeight * 1.778) / 2, 0, windowHeight * 1.778, windowHeight, startVideo);
   startVideoScreen.addChild(startVideoPlayer);
+
+  animate.addAnimation("fadeStartVideo", startVideoPlayer, "volume", 1, 0, 1);
+
+  let videoSkipBtn = new StartGameButton(windowWidth - 298, windowHeight - 200, 298, 200, videoSkipBtnImg);
+  startVideoScreen.addChild(videoSkipBtn);
 
   let moon_park = new DisplayObject(2086, 25, 213, 212, moonImg);
   park.addChild(moon_park);
