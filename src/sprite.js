@@ -24,12 +24,6 @@ export default class Sprite extends InteractiveObject {
     this.mouseHovered();
   }
 
-  hovered() {
-    if (this.children.length === 0) {
-      window.dispatchEvent(new CustomEvent("cursor", { detail: "hovered" }));
-    }
-  }
-
   pressed() {
     for (let i = this.children.length - 1; i >= 0; i--) {
       if (this.children[i].mousePressed()) return true;
@@ -51,6 +45,12 @@ export default class Sprite extends InteractiveObject {
       if (this.children[i].mouseReleased()) return true;
     }
     return false;
+  }
+
+  hovered() {
+    if (this.children.length === 0) {
+      window.dispatchEvent(new CustomEvent("cursor", { detail: "hovered" }));
+    }
   }
 
   wheel(ev) {

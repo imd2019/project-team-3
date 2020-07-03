@@ -1,6 +1,6 @@
-import Sprite from "../sprite.js";
+import DisplayObject from "../displayObject.js";
 
-export default class VideoElement extends Sprite {
+export default class VideoElement extends DisplayObject {
   constructor(x, y, width, height, video) {
     super(x, y, width, height, video);
     this.volume = 1;

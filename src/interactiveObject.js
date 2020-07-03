@@ -51,7 +51,10 @@ export default class InteractiveObject extends DisplayObject {
       e = e.parent;
     }
 
-    return m.x > 0 && m.x < this.width * s && m.y > 0 && m.y < this.height * s;
+    return (
+      m.x > 0 && m.x < this.width * s &&
+      m.y > 0 && m.y < this.height * s
+    );
   }
 
   pressed() {}

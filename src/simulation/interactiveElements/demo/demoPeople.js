@@ -15,6 +15,10 @@ export default class DemoPeople extends Sprite {
     }}));
   }
 
+  hovered() {
+      window.dispatchEvent(new CustomEvent("cursor", { detail: "hovered" }));
+  }
+
   resetElement() {
     this.enable();
     this.show();

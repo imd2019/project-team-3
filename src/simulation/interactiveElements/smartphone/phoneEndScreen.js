@@ -103,23 +103,11 @@ export default class PhoneEndScreen extends Sprite {
   bufferAnimation() {
     this.message.textAlign(CENTER, CENTER);
     this.message.fill(170);
-    this.message.rect(
-      400,
-      180 + 180 * this.conversation.length + this.pos,
-      80,
-      70,
-      5
-    );
+    this.message.rect(400, 180 + 180 * this.conversation.length + this.pos, 80, 70, 5);
 
     this.message.noStroke();
     this.message.fill(0);
-    this.message.text(
-      ".  .  .",
-      400,
-      180 + 180 * this.conversation.length + this.pos,
-      80,
-      70
-    );
+    this.message.text(".  .  .", 400, 180 + 180 * this.conversation.length + this.pos, 80, 70);
   }
 
   mouseScroll() {

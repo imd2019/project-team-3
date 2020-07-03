@@ -53,6 +53,28 @@ export default class PhoneVideoPlayer extends Sprite {
     this.video.volume(1);
   }
 
+  hitTest(x, y) {
+    let e = this;
+    let m = createVector(x, y);
+    let s = 1;
+
+    while (e != undefined) {
+      let vt = createVector(e.x, e.y);
+      if (e.parent != undefined) {
+        vt.mult(e.parent.calcScale);
+      }
+      m = p5.Vector.sub(m, vt);
+      s *= e.scale;
+
+      e = e.parent;
+    }
+
+    return (
+      m.x > 0 && m.x < this.width * s &&
+      m.y > this.pos + 60 && m.y < this.height * s + this.pos + 60
+    );
+  }
+
   clicked() {
     window.dispatchEvent(new CustomEvent("tapPhone"));
     this.startVideo();

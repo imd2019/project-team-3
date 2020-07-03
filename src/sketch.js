@@ -53,10 +53,6 @@ import StartGameButton from "./startVideo/startGameButton.js";
 // utillity classes
 import AnimationProcessor from "./animationProcessor.js";
 
-// utillity classes
-
-import AnimationProcessor from "./animationProcessor.js";
-
 // load images
 let titleScreenImg;
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
@@ -185,12 +181,7 @@ function preload() {
   wannabeInfluencerVideo = createVideo("../video/wannabeInfluencer.mp4");
   wannabeInfluencerVideo.hide();
 
-  endVideo = [
-    reflectiveUserVideo,
-    conspiracyTheoristVideo,
-    followerVideo,
-    wannabeInfluencerVideo,
-  ];
+  endVideo = [reflectiveUserVideo, conspiracyTheoristVideo, followerVideo, wannabeInfluencerVideo];
 
   // sound
   owlSound = loadSound("../sound/ambient/owl.mp3");
@@ -241,7 +232,7 @@ window.addEventListener("enterView", (ev) => {
   if (ev.detail === "startVideo") {
     setTimeout(() => {
       window.dispatchEvent(new CustomEvent("startGame"));
-    }, 1000);
+    }, 55000);
   }
 
   if (ev.detail === "bar") {
@@ -281,7 +272,7 @@ window.addEventListener("enterView", (ev) => {
 
     window.dispatchEvent(new CustomEvent("stoppDemoAnimation"));
 
-    if (player.actionDone("demo") || player.actionDone("coffeeHouse")) {
+    if ((player.actionDone("demo") || player.actionDone("coffeeHouse")) && !player.actionDone("kiosk")) {
       window.dispatchEvent(new CustomEvent("openKiosk"));
 
       let rand = floor(random(0, 3));
@@ -311,10 +302,7 @@ window.addEventListener("enterView", (ev) => {
       }, 1000);
     }
     if (
-      player.actionDone("demo") &&
-      player.actionDone("coffeeHouse") &&
-      player.actionDone("kiosk")
-    ) {
+      player.actionDone("demo") && player.actionDone("coffeeHouse") && player.actionDone("kiosk")) {
       window.dispatchEvent(new CustomEvent("friendMessage"));
     }
   }
@@ -530,7 +518,7 @@ function setupGame() {
 
   animate.addAnimation("fadeStartVideo", startVideoPlayer, "volume", 1, 0, 1);
 
-  let videoSkipBtn = new StartGameButton(windowWidth - 298, windowHeight - 200, 298, 200, videoSkipBtnImg);
+  let videoSkipBtn = new StartGameButton(windowWidth - 380, windowHeight - 200, 290, 120, videoSkipBtnImg);
   startVideoScreen.addChild(videoSkipBtn);
 
   let moon_park = new DisplayObject(2086, 25, 213, 212, moonImg);

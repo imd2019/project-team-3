@@ -37,10 +37,7 @@ export default class PhoneMessage extends Sprite {
     }
 
     fill(100);
-
     rect(100, 71, this.width - 115, 4);
-    // fill(150);
-    // rect(0, 0, 75, 75);
 
     this.redraw();
   }
