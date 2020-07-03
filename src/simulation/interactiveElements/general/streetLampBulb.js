@@ -32,6 +32,8 @@ export default class StreetLampBulb extends Sprite {
   }
 
   resetElement() {
-    this.on = true;
+    if (this.parent.name != "bar") {
+      this.on = true;
+    }
   }
 }

@@ -53,6 +53,7 @@ export default class AnimatedDisplayObject extends EventDispatcher {
   mouseWheel(ev) { }
 
   reset() {
+    this.show();
     this.x = this.saveX;
     this.y = this.saveY;
     this.scale = this.saveScale;

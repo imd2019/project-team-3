@@ -288,7 +288,9 @@ window.addEventListener("enterView", (ev) => {
       window.dispatchEvent(events[rand]);
     }
     if (player.actionDone("kiosk")) {
-      window.dispatchEvent(new CustomEvent("hideNewspapers"));
+      setTimeout( () => {
+        window.dispatchEvent(new CustomEvent("hideNewspapers"));
+      }, 1000);
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
       setTimeout( () => {
