@@ -60,6 +60,7 @@ export default class PhoneVideoPlayer extends Sprite {
   resetElement() {
     this.video.pause();
     this.video.hide();
+    this.video = undefined;
     this.screen = undefined;
     this.pos = undefined;
     this.isClicked = false;
