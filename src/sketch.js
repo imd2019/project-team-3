@@ -473,7 +473,7 @@ function setupGame() {
     instructionBox.hide();
   });
 
-  let videoScreenBackgnd = new ColorScreen(0, 0, windowWidth, windowHeight, color("#1e1814"));
+  let videoScreenBackgnd = new ColorScreen(0, 0, windowWidth, windowHeight, color("#1E0E09"));
   startVideoScreen.addChild(videoScreenBackgnd);
 
   let startVideoPlayer = new VideoElement((windowWidth - windowHeight * 1.778) / 2, 0, windowHeight * 1.778, windowHeight, startVideo);
