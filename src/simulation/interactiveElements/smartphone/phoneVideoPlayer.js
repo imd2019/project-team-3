@@ -31,21 +31,9 @@ export default class PhoneVideoPlayer extends Sprite {
   }
 
   setVideo() {
-    switch (this.parent.role) {
-      case "Reflektierter Nutzer":
-        this.video = this.videos[0];
-        break;
-      case "Verschwörungstheoretiker":
-        this.video = this.videos[1];
-        break;
-      case "Mitläufer":
-        this.video = this.videos[2];
-        break;
-      case "Möchtegern-Influencer":
-        this.video = this.videos[3];
-        break;
+    if (this.parent.role === "Verschwörungstheoretiker") {
+      this.video = this.videos[0];
     }
-    this.videoSet = true;
   }
 
   startVideo() {
@@ -56,7 +44,6 @@ export default class PhoneVideoPlayer extends Sprite {
 
   clicked() {
     window.dispatchEvent(new CustomEvent("tapPhone"));
-    console.log(this.video);
     this.startVideo();
     this.updatePosition();
     if (!this.isClicked) {

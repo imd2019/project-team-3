@@ -7,5 +7,9 @@ export default class KioskLink extends Kiosk {
 
   clicked() {
     window.dispatchEvent(new CustomEvent("enterView", { detail: "kiosk" }));
+    this.disable();
+    setTimeout( () => {
+      this.enable();
+    }, 1000);
   }
 }

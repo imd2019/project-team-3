@@ -1,0 +1,47 @@
+import InteractiveObject from "../interactiveObject.js";
+
+export default class TitleScreenButton extends InteractiveObject {
+  constructor(x, y, width, height, text, font, textColor, accentColor, action) {
+    super(x, y, width, height);
+    this.text = text;
+    this.font = font;
+    this.textColor = textColor;
+    this.accentColor = accentColor;
+    this.action = action;
+    this.dx = 0;
+    this.playSound = true;
+  }
+
+  draw() {
+    noStroke();
+    textAlign(LEFT, TOP);
+    textSize(this.height);
+    textFont(this.font);
+    this.width = textWidth(this.text) + this.dx;
+
+    if (this.enabled) {
+      if (this.mouseHovered()) {
+        fill(this.accentColor);
+        this.dx = 10;
+
+        if (this.playSound) {
+          window.dispatchEvent(new CustomEvent("playButtonSound"));
+          this.playSound = false;
+        }
+      } else {
+        this.dx = 0;
+        this.playSound = true;
+        fill(this.textColor);
+      }
+    }
+
+    text(this.text, this.dx, 0);
+  }
+
+  clicked() {
+    if (this.enabled) {
+      window.dispatchEvent(new CustomEvent(this.action));
+      window.dispatchEvent(new CustomEvent("playButtonSound"));
+    }
+  }
+}
