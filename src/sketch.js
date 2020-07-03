@@ -1104,7 +1104,7 @@ function setupGame() {
     videoPlayer.setVideo();
   });
 
-  let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 219, videoOverlayImg, endVideo);
+  let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 293, videoOverlayImg, endVideo);
   endScreen.addChild(videoPlayer);
 
   let restartBtn = new RestartButton(238, 428, 200, 50);
