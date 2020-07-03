@@ -1,6 +1,6 @@
-import Sprite from "../../../sprite.js";
+import DisplayObject from "../../../displayObject.js";
 
-export default class DemoForegnd extends Sprite {
+export default class DemoForegnd extends DisplayObject {
   constructor(x, y, width, height, demoImg, noDemoImg) {
     super(x, y, width, height, demoImg);
     this.noDemoImg = noDemoImg;
