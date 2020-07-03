@@ -53,6 +53,10 @@ import StartGameButton from "./startVideo/startGameButton.js";
 // utillity classes
 import AnimationProcessor from "./animationProcessor.js";
 
+// utillity classes
+
+import AnimationProcessor from "./animationProcessor.js";
+
 // load images
 let titleScreenImg;
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
@@ -1136,7 +1140,6 @@ function setupGame() {
   window.addEventListener("startDemoAnimation", () => {
     demoAnimation_left = setInterval(() => {
       animate.start("moveDemoSigns_left", false, () => {
-        console.log(demoSignsLeft.y);
         animate.start("moveDemoSigns_left", true);
       });
     }, 1000);
@@ -1296,8 +1299,8 @@ function setupGame() {
     }, 12500);
   });
 
-  window.addEventListener("interviewAccepted", () => {
-    if (!player.actionDone("coffeeHouse", "interviewAccepted", true)) {
+  window.addEventListener("interviewAccepted", (ev) => {
+    if (!ev.detail) {
       homeScreenBtn.enable();
       postScreenBtn.enable();
       msgScreenBtn.enable();
@@ -1650,7 +1653,7 @@ function setupGame() {
   endScreen.addChild(endBtn);
 
   window.addEventListener("revealRole", () => {
-    endScreen.answer("Verschwörungstheoretiker");
+    endScreen.answer(player.getPersona());
     videoPlayer.setVideo();
   });
 
@@ -1866,23 +1869,23 @@ window.addEventListener("pickupSign", () => {
 
 window.addEventListener("joinDemo", (ev) => {
   if(ev.detail === "demo"){
-    player.changeParameters(1, (-1), 0);
+    player.changeParameters(1, -2, 0);
   }else{
-    player.changeParameters(0, 1, 0);
+    player.changeParameters(-1, 1, 0);
   }
 });
 
 window.addEventListener("watchDemo", () => {
-  player.changeParameters((-1), 0, 0);
+  player.changeParameters(-1, 0, 0);
 });
 
 window.addEventListener("postChosen", (ev) => {
   switch (ev.detail){
     case postImg_watchedProDemo:
-      player.changeParameters(1, (-1), 0);
+      player.changeParameters(1, -1, 1);
       break;
     case postImg_watchedProCounterDemo:
-      player.changeParameters(0, 1, 0);
+      player.changeParameters(0, 1, 1);
       break;
     case postImg_watchedProNone:
       player.changeParameters(0, 0, 1);
@@ -1893,53 +1896,52 @@ window.addEventListener("postChosen", (ev) => {
 window.addEventListener("pickupFlyer", (ev) => {
   if (ev.detail === "coffeeHouse") {
     player.changeParameters(0, 1, 0);
-  } 
-});
-
-window.addEventListener("groupInvitation", () => {
-  if(player.actionDone("coffeeHouse", "invitationAccepted", true)){
-    player.changeParameters(0, (-2), 0);
-  }else{
-    player.changeParameters(0, 1, 0);
   }
 });
 
-window.addEventListener("interviewAccepted", () => {
-  if(!player.actionDone("coffeeHouse", "interviewAccepted", true)){
-    player.changeParameters(0, 0, (-1));
-  }
-  else{
-    player.changeParameters(0, 0, 1);
+window.addEventListener("invitationAccepted", (ev) => {
+  if (ev.detail) {
+    player.changeParameters(2, -2, -1);
+  } else {
+    player.changeParameters(-1, 1, 0);
   }
 });
 
-window.addEventListener("statementDefended", () => {
-  if (player.actionDone("coffeeHouse", "statementDefended", true)) {
+window.addEventListener("interviewAccepted", (ev) => {
+  if (ev.detail) {
+    player.changeParameters(0, 1, 1);
+  } else {
+    player.changeParameters(0, 0, -2);
+  }
+});
+
+window.addEventListener("statementDefended", (ev) => {
+  if (ev.detail) {
     if (player.actionDone("coffeeHouse", "proDemo", true)) {
-      player.changeParameters(1, (-1), 1);
+      player.changeParameters(1, -1, 1);
     } else {
-      player.changeParameters(0, 1, 0);
+      player.changeParameters(-1, 1, -1);
     }
   } else if (player.actionDone("coffeeHouse", "proDemo", true)) {
-    player.changeParameters(0, 0, 1);
+    player.changeParameters(1, -1, -1);
   } else {
-    player.changeParameters(1, (-1), 1);
+    player.changeParameters(1, -1, -1);
   }
 });
 
 window.addEventListener("buyNewspaper", (ev) => {
   switch (ev.detail){
     case "conspiracy-theorist":
-      player.changeParameters(1, (-1), (-1));
+      player.changeParameters(1, -1, -1);
       break;
     case "wannnabe-influencer":
-      player.changeParameters(0, 0, 1);
+      player.changeParameters(1, -1, 1);
       break;
     case "reflective-user":
-      player.changeParameters((-1), 1, 0);
+      player.changeParameters(-1, 1, -1);
       break;
     case "follower":
-      player.changeParameters(0, (-1), 1);
+      player.changeParameters(-1, -1, -1);
   }
 });
 
