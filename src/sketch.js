@@ -10,6 +10,7 @@ import AnimatedDisplayObject from "./animatedDisplayObject.js";
 import ColorScreen from "./colorScreen.js";
 import VideoElement from "./startVideo/videoElement.js";
 import View from "./view.js";
+import TextArea from "./textarea.js";
 
 // interactive element classes
 import InfoBox from "./titlescreen/infoBox.js";
@@ -52,6 +53,7 @@ import StartGameButton from "./startVideo/startGameButton.js";
 
 // utillity classes
 import AnimationProcessor from "./animationProcessor.js";
+import KeyInput from "./keyInput.js";
 
 // load images
 let titleScreenImg;
@@ -219,7 +221,7 @@ window.preload = preload;
 
 /* setup */
 
-let startGameTimeout;
+let keys = new KeyInput();
 
 let player = new Player();
 window.addEventListener("addAction", (ev) => {
@@ -392,7 +394,6 @@ function setupGame() {
   });
 
   window.addEventListener("startGame", () => {
-    clearTimeout(startGameTimeout);
     if (!citySound.isLooping()) {
       citySound.loop();
       leavesSound.loop();
@@ -1170,6 +1171,9 @@ function setupGame() {
   window.addEventListener("restartGame", () => {
     game.reset();
   });
+  
+  let mailTextInput = new TextArea(17, 428, 350, 50, keys);
+  endScreen.addChild(mailTextInput);
 
   let fadeScreen = new ColorScreen(0, 0, windowWidth, windowHeight, color("#000000"));
   global.addChild(fadeScreen);
@@ -1452,6 +1456,16 @@ function mouseWheel(ev) {
 }
 window.mouseWheel = mouseWheel;
 
+function keyTyped() {
+  keys.keyTyped();
+}
+window.keyTyped = keyTyped;
+
+function keyPressed() {
+  keys.keyPressed();
+}
+window.keyPressed = keyPressed;
+
 window.addEventListener("cursor", (ev) => {
   if (ev.detail === "hovered") {
     cursor("./img/assets/cursorHovered.png");
@@ -1459,5 +1473,3 @@ window.addEventListener("cursor", (ev) => {
     cursor("./img/assets/cursorStandard.png");
   }
 });
-
-
