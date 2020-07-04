@@ -24,7 +24,7 @@
   </p>'
     
   // Boundary  
-  $semi_rand = md5(time());  
+  $semi_rand = md5(time());
   $mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";  
 
   // Headers for attachment  

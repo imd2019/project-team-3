@@ -37,7 +37,7 @@ export default class PhoneMailButton extends Sprite {
     text("Mehr Informationen", 0, 0, this.width, this.height);
   }
 
-  sendMail(from, to, content) {
+  sendMail(from, to) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "./src/simulation/interactiveElements/smartphone/mail.php", true);
     xhr.setRequestHeader("Content-Type", "application/json");
