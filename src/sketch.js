@@ -3,13 +3,13 @@
 // game structure classes
 import Player from "./simulation/player.js";
 import Game from "./simulation/game.js";
-import View from "./simulation/view.js";
 
 // general display classes
 import DisplayObject from "./displayObject.js";
 import AnimatedDisplayObject from "./animatedDisplayObject.js";
 import ColorScreen from "./colorScreen.js";
 import VideoElement from "./startVideo/videoElement.js";
+import View from "./view.js";
 
 // interactive element classes
 import InfoBox from "./titlescreen/infoBox.js";
@@ -366,16 +366,16 @@ function setupGame() {
   let titleScreenStreet = new ColorScreen(0, 580, 1935, windowHeight - windowHeight * 0.68, color("#000000"));
   titleScreen.addChild(titleScreenStreet);
 
-  let startGameBtn = new TitleScreenButton(175, 240, 0, 20, "Spiel starten", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "startGame");
+  let startGameBtn = new TitleScreenButton(125, 240, 0, 20, "Spiel starten", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "startGame");
   titleScreen.addChild(startGameBtn);
 
-  let settingsBtn = new TitleScreenButton(175, 280, 0, 20, "Steuerung", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "showInstructions");
+  let settingsBtn = new TitleScreenButton(125, 280, 0, 20, "Steuerung", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "showInstructions");
   titleScreen.addChild(settingsBtn);
 
-  let aboutUsBtn = new TitleScreenButton(175, 320, 0, 20, "Über uns", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "showAboutUs");
+  let aboutUsBtn = new TitleScreenButton(125, 320, 0, 20, "Über uns", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "showAboutUs");
   titleScreen.addChild(aboutUsBtn);
 
-  let creditsBtn = new TitleScreenButton(175, 360, 0, 20, "Credits", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "showCredits");
+  let creditsBtn = new TitleScreenButton(125, 360, 0, 20, "Credits", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "showCredits");
   titleScreen.addChild(creditsBtn);
 
   window.addEventListener("playStartVideo", () => {
@@ -415,17 +415,17 @@ function setupGame() {
     }, 1000);
   });
 
-  let titleScreenImage = new DisplayObject(300, 100, 771, 524, titleScreenImg);
+  let titleScreenImage = new DisplayObject(250, 100, 771, 524, titleScreenImg);
   titleScreen.addChild(titleScreenImage);
 
   let streetLamps = [];
 
-  let titleScreenLampBulb = new StreetLampBulb(290, 125, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
+  let titleScreenLampBulb = new StreetLampBulb(240, 125, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   titleScreen.addChild(titleScreenLampBulb);
   streetLamps.push(titleScreenLampBulb);
 
   let instructionBox = new InfoBox(
-    775, 184,
+    725, 184,
     600, 400,
     "Steuerung:",
     window.fonts.rockwell,
@@ -436,7 +436,7 @@ function setupGame() {
   titleScreen.addChild(instructionBox);
 
   let aboutUsBox = new InfoBox(
-    775, 184,
+    725, 184,
     600, 400,
     "Über uns:",
     window.fonts.rockwell,
@@ -447,7 +447,7 @@ function setupGame() {
   titleScreen.addChild(aboutUsBox);
 
   let creditsBox = new InfoBox(
-    775, 184,
+    725, 184,
     600, 400,
     "Credits:",
     window.fonts.rockwell,

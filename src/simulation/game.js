@@ -73,12 +73,14 @@ export default class Game extends Sprite {
       this.children.global.display();
     }
 
-    if (mouseX >= windowWidth - 150) {
-      if (mouseX >= windowWidth - 50) this.moveView("right", 3);
-      else this.moveView("right", 1);
-    } else if (mouseX <= 150) {
-      if (mouseX <= 50) this.moveView("left", 3);
-      else this.moveView("left", 1);
+    if (this.currentView != "titlescreen") {
+      if (mouseX >= windowWidth - 150) {
+        if (mouseX >= windowWidth - 50) this.moveView("right", 3);
+        else this.moveView("right", 1);
+      } else if (mouseX <= 150) {
+        if (mouseX <= 50) this.moveView("left", 3);
+        else this.moveView("left", 1);
+      }
     }
   }
 

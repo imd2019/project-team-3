@@ -1,4 +1,4 @@
-import Sprite from "../Sprite.js";
+import Sprite from "./Sprite.js";
 
 export default class View extends Sprite {
   constructor(name, width, height, backgnd) {
@@ -7,7 +7,9 @@ export default class View extends Sprite {
     this.alreadyEntered = false;
     this.scale = windowHeight / height;
     this.calcScale = this.scale;
-    this.x = windowWidth / 2 - (width * this.scale) / 2;
+    if (this.name != "titlescreen") {
+      this.x = windowWidth / 2 - (width * this.scale) / 2;
+    }
   }
 
   enter() {
