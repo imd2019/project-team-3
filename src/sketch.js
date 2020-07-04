@@ -232,7 +232,7 @@ window.addEventListener("enterView", (ev) => {
   animate.start("fadeOut", false, () => {
     animate.start("fadeOut", true);
   });
-  setTimeout(() => {
+  setTimeout( () => {
     game.enterView(ev.detail);
   }, 1000);
 
@@ -240,7 +240,7 @@ window.addEventListener("enterView", (ev) => {
     doorSound.play();
     citySound.fade(0, 1);
     window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
-    setTimeout(() => {
+    setTimeout( () => {
       window.dispatchEvent(new CustomEvent("barPhoneVibration"));
     }, 1000);
   }
@@ -252,7 +252,7 @@ window.addEventListener("enterView", (ev) => {
     if (!player.actionDone("demo", "endDemo")) {
       window.dispatchEvent(new CustomEvent("startDemoAnimation"));
       demoSound.fade(0.2, 1);
-      setTimeout(() => {
+      setTimeout( () => {
         policeSirenSound.play();
         policeSirenSound.setVolume(0.4);
         policeSirenSound.fade(0, 7.5);
@@ -285,12 +285,12 @@ window.addEventListener("enterView", (ev) => {
       window.dispatchEvent(events[rand]);
     }
     if (player.actionDone("kiosk")) {
-      setTimeout(() => {
+      setTimeout( () => {
         window.dispatchEvent(new CustomEvent("hideNewspapers"));
       }, 1000);
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
-      setTimeout(() => {
+      setTimeout( () => {
         window.dispatchEvent(new CustomEvent("addAction", {
           detail: {
             origin: "demo",
@@ -382,11 +382,11 @@ function setupGame() {
     aboutUsBtn.disable();
     creditsBtn.disable();
     coffeeHouseMusicSound.fade(0, 1);
-    setTimeout(() => {
+    setTimeout( () => {
       coffeeHouseMusicSound.stop();
     }, 1000);
     window.dispatchEvent(new CustomEvent("enterView", { detail: "startVideo" }));
-    setTimeout(() => {
+    setTimeout( () => {
       startVideoPlayer.play();
     }, 1000);
   });
@@ -407,7 +407,7 @@ function setupGame() {
     });
 
     window.dispatchEvent(new CustomEvent("enterView", { detail: "park" }));
-    setTimeout(() => {
+    setTimeout( () => {
       phoneIcon.show();
       phoneIcon.enable();
     }, 1000);
@@ -673,14 +673,14 @@ function setupGame() {
   demo.addChild(streetLampDemo_2);
   streetLamps.push(streetLampDemo_2);
 
-  setInterval(() => {
+  setInterval( () => {
     for (let elem of streetLamps) {
       if (elem.parent.name === game.currentView) {
         if (((elem.parent.name === "bar" || elem.parent.name === "titlescreen") && !floor(random(0, 3))) ||
           (elem.getRealPos().x > 0 && elem.getRealPos().x < windowWidth && !floor(random(0, 10)))) {
           elem.switch();
           lampClickSound.play();
-          setTimeout(() => {
+          setTimeout( () => {
             elem.switch();
             lampClickSound.stop();
           }, 100 * random([1, 1, 1, 2, 2, 3, 4, 5]));
@@ -714,14 +714,14 @@ function setupGame() {
   let demoAnimation_right;
 
   window.addEventListener("startDemoAnimation", () => {
-    demoAnimation_left = setInterval(() => {
+    demoAnimation_left = setInterval( () => {
       animate.start("moveDemoSigns_left", false, () => {
         animate.start("moveDemoSigns_left", true);
       });
     }, 1000);
 
-    demoAnimation_right = setInterval(() => {
-      setTimeout(() => {
+    demoAnimation_right = setInterval( () => {
+      setTimeout( () => {
         animate.start("moveDemoSigns_right", false, () => {
           animate.start("moveDemoSigns_right", true);
         });
@@ -777,14 +777,14 @@ function setupGame() {
     counterDemoPeople.disable();
 
     if (ev.detail === "demo") {
-      setTimeout(() => {
+      setTimeout( () => {
         homeScreen.setPost(postImg_demoJoined);
         phoneIcon.setNotification();
         homeScreenBtn.setNotification();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 6000);
     } else {
-      setTimeout(() => {
+      setTimeout( () => {
         homeScreen.setPost(postImg_counterDemoJoined);
         phoneIcon.setNotification();
         homeScreenBtn.setNotification();
@@ -817,7 +817,7 @@ function setupGame() {
   });
 
   window.addEventListener("friendMessage", () => {
-    setTimeout(() => {
+    setTimeout( () => {
       messageScreen.reset();
       phoneButton.enable();
       barLink.enable();
@@ -836,7 +836,7 @@ function setupGame() {
       player.actionDone("demo", "joinDemo") ||
       player.actionDone("coffeeHouse", "groupInvitation")
     ) {
-      setTimeout(() => {
+      setTimeout( () => {
         messageScreen.reset();
         messageScreen.setEvent("interview");
         phoneIcon.setNotification();
@@ -855,16 +855,16 @@ function setupGame() {
     coffeeHouse.disable();
     animate.start("fadeOut");
 
-    setTimeout(() => {
+    setTimeout( () => {
       coffeeHouseSound.play();
       coffeeHouseMusicSound.play();
       coffeeHouseMusicSound.setVolume(0.15);
     }, 800);
-    setTimeout(() => {
+    setTimeout( () => {
       coffeeHouseSound.fade(0, 1);
       coffeeHouseMusicSound.fade(0, 1);
     }, 10000);
-    setTimeout(() => {
+    setTimeout( () => {
       doorSound.play();
       citySound.fade(0.1, 2);
       leavesSound.fade(0.6, 2);
@@ -874,7 +874,7 @@ function setupGame() {
         coffeeHouse.enable();
       });
     }, 10500);
-    setTimeout(() => {
+    setTimeout( () => {
       coffeeHouseSound.stop();
       coffeeHouseMusicSound.stop();
     }, 12500);
@@ -884,7 +884,7 @@ function setupGame() {
     if (!ev.detail) {
       phoneButton.enable();
 
-      setTimeout(() => {
+      setTimeout( () => {
         homeScreen.setPost(postImg_interviewDenied);
         phoneIcon.setNotification();
         homeScreenBtn.setNotification();
@@ -894,7 +894,7 @@ function setupGame() {
   });
 
   window.addEventListener("statementDefended", () => {
-    setTimeout(() => {
+    setTimeout( () => {
       if (player.actionDone("coffeeHouse", "statementDefended", true)) {
         if (player.actionDone("coffeeHouse", "proDemo", true)) {
           homeScreen.setPost(postImg_interviewDefend);
@@ -919,7 +919,7 @@ function setupGame() {
   });
 
   window.addEventListener("groupInvitation", () => {
-    setTimeout(() => {
+    setTimeout( () => {
       messageScreen.reset();
       messageScreen.setEvent("invite");
       phoneButton.disable();
@@ -1029,7 +1029,7 @@ function setupGame() {
       player.actionDone("coffeeHouse", "invitationAccepted") &&
       !player.actionDone("coffeeHouse", "invitationPostWatched")
     ) {
-      setTimeout(() => {
+      setTimeout( () => {
         if (player.actionDone("coffeeHouse", "invitationAccepted", true)) {
           homeScreen.setPost(postImg_groupInvitationAccepted);
           demoBench.disable();
@@ -1224,7 +1224,7 @@ window.addEventListener("phoneVibration", () => {
 
   animate.start("phoneVibrate_1", false, () => {
     let count = 0;
-    let interval = setInterval(() => {
+    let interval = setInterval( () => {
       animate.start("phoneVibrate_2", false, () => {
         if (count < 18) {
           animate.start("phoneVibrate_2", true);
@@ -1249,7 +1249,7 @@ window.addEventListener("barPhoneVibration", () => {
   phoneVibrationSound.setVolume(0.3);
 
   animate.start("barPhoneVibrate_1", false, () => {
-    barPhoneVibrate = setInterval(() => {
+    barPhoneVibrate = setInterval( () => {
       animate.start("barPhoneVibrate_2", false, () => {
         animate.start("barPhoneVibrate_2", true);
       });
@@ -1275,7 +1275,7 @@ window.addEventListener("closeFlyer", () => {
 
 window.addEventListener("buyNewspaper", () => {
   newspaperSound.play();
-  setTimeout(() => {
+  setTimeout( () => {
     registerSound.play();
   }, 500);
 });
