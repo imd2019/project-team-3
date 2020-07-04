@@ -1180,6 +1180,7 @@ function setupGame() {
   
   let mailTextInput = new TextArea(17, 428, 350, 50, keys);
   endScreen.addChild(mailTextInput);
+  keys.getFocus(mailTextInput);
 
   let fadeScreen = new ColorScreen(0, 0, windowWidth, windowHeight, color("#000000"));
   global.addChild(fadeScreen);

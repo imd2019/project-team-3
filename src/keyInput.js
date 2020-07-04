@@ -14,8 +14,7 @@ export default class KeyInput {
 
   keyTyped() {
     this.sendKey(key);
-    preventDefault
-
+    
     return false;
   }
 

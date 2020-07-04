@@ -12,11 +12,13 @@ export default class PhoneMailButton extends Sprite {
     window.dispatchEvent(new CustomEvent("tapPhone"));
     this.hide();
     this.disable();
+    this.parent.children[5].disable();
+    this.parent.children[5].hide();
 
     // send mail
     let from = "social-whispers@interactivemedia.design";
-    let to = this.parent.children[4].getContent();
-    let content = ` 
+    let to = this.parent.children[5].getContent();
+    let content = `
     <p>
       Liebe*r Teilnehmer*in,<br />
       <br />
@@ -54,8 +56,7 @@ export default class PhoneMailButton extends Sprite {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        window.dispatchEvent(new CustomEvent("mailSendt"));
-        console.log("Mail sendt successfully!");
+        window.dispatchEvent(new CustomEvent("mailSent"));
       }
     };
     xhr.send(JSON.stringify({ from: from, to: to, content: content }));
