@@ -995,6 +995,20 @@ function setupGame() {
   let mobilePhone = new MobilePhone(492, 739, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg);
   global.addChild(mobilePhone);
 
+  window.addEventListener("clearNotifications", () => {
+    if(homeScreenBtn.notificationActive() && mobilePhone.activeScreen() === "homeScreen") {
+      homeScreenBtn.resetNotification();
+      if (!msgScreenBtn.notificationActive()) {
+        phoneIcon.resetNotification();
+      }
+    } else if(msgScreenBtn.notificationActive() && mobilePhone.activeScreen() === "messageScreen") {
+      msgScreenBtn.resetNotification();
+      if (!homeScreenBtn.notificationActive()) {
+        phoneIcon.resetNotification();
+      }
+    }
+  });
+
   let phoneButton = new PhoneButton(221, 677, 50, 50, phoneBtnImg);
   mobilePhone.addChild(phoneButton);
 
@@ -1004,18 +1018,20 @@ function setupGame() {
     mobilePhone.scale * (mobilePhone.height / phoneIcon.height), 0.6, "ease-in-quad");
 
   window.addEventListener("openPhone", () => {
-    game.currentView
+    phoneIcon.showNotification(false);
     animate.start("moveToCenter_h");
     animate.start("moveToCenter_v");
     animate.start("scaleToPhoneSize", false, () => {
       window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
       mobilePhone.show();
       mobilePhone.enable();
+      window.dispatchEvent(new CustomEvent("clearNotifications"));
     });
     player.usePhone(true);
   });
 
   window.addEventListener("closePhone", () => {
+    phoneIcon.showNotification(true);
     window.dispatchEvent(new CustomEvent("showPhoneIcon"));
     mobilePhone.hide();
     mobilePhone.disable();
@@ -1139,7 +1155,6 @@ function setupGame() {
   let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 293, videoOverlayImg, endVideo);
   endScreen.addChild(videoPlayer);
   for (let elem of endVideo) {
-    console.log(elem.elt.id);
     document.getElementById(elem.elt.id).onended = () => {
       videoPlayer.activateButtons();
     };
@@ -1154,6 +1169,7 @@ function setupGame() {
   window.addEventListener("endGame", () => {
     phoneVibrationSound.stop();
     clearInterval(barPhoneVibrate);
+    barPhone.hide();
     window.dispatchEvent(new CustomEvent("openPhone"));
     mobilePhone.showScreen("endScreen");
     mobilePhone.break();
