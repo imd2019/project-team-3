@@ -15,7 +15,7 @@ export default class RestartButton extends Sprite {
 
   draw() {
     this.enable();
-    if (this.mouseHovered()) {
+    if (this.hover) {
       stroke("yellow");
     } else {
       noStroke();

@@ -20,7 +20,7 @@ export default class PhonePostButton extends Sprite {
   }
 
   draw() {
-    if (this.mouseHovered()) {
+    if (this.hover) {
       stroke("yellow");
     } else {
       noStroke();

@@ -93,7 +93,7 @@ export default class PhoneMessageButton extends Sprite {
   }
 
   draw() {
-    if (this.mouseHovered()) {
+    if (this.hover) {
       stroke(255, 165, 0);
     } else {
       noStroke();
