@@ -993,12 +993,12 @@ function setupGame() {
   global.addChild(mobilePhone);
 
   window.addEventListener("clearNotifications", () => {
-    if(homeScreenBtn.notificationActive() && mobilePhone.activeScreen() === "homeScreen") {
+    if (homeScreenBtn.notificationActive() && mobilePhone.activeScreen() === "homeScreen") {
       homeScreenBtn.resetNotification();
       if (!msgScreenBtn.notificationActive()) {
         phoneIcon.resetNotification();
       }
-    } else if(msgScreenBtn.notificationActive() && mobilePhone.activeScreen() === "messageScreen") {
+    } else if (msgScreenBtn.notificationActive() && mobilePhone.activeScreen() === "messageScreen") {
       msgScreenBtn.resetNotification();
       if (!homeScreenBtn.notificationActive()) {
         phoneIcon.resetNotification();
@@ -1134,7 +1134,7 @@ function setupGame() {
   let msgButton_2 = new PhoneMessageButton(238, 428, 200, 50, "B");
   messageScreen.addChild(msgButton_2);
 
-  let endScreen = new PhoneEndScreen(18.9, 111.2, 454, 491, brokenPhoneOverlayImg);
+  let endScreen = new PhoneEndScreen(18.9, 111.2, 454, 491, brokenPhoneOverlayImg, userIconImg);
   mobilePhone.addChild(endScreen);
 
   let endBtn = new PhoneEndButton(130, 428, 200, 50);

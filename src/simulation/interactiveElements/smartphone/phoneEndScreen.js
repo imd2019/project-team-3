@@ -1,10 +1,11 @@
 import Sprite from "../../../sprite.js";
 
 export default class PhoneEndScreen extends Sprite {
-  constructor(x, y, width, height, overlay) {
+  constructor(x, y, width, height, overlay, user) {
     super(x, y, width, height);
     this.name = "endScreen";
     this.overlay = overlay;
+    this.user = user;
     this.answered = false;
     this.role = undefined;
     this.pos = 0.1;
@@ -28,10 +29,13 @@ export default class PhoneEndScreen extends Sprite {
     textSize(16);
     textAlign(LEFT, CENTER);
 
+    rect(0, 0, this.width, 80);
+
+    image(this.user, 20, 20);
+
+
     fill(100);
-    rect(0, 0, this.width, 75);
-    fill(150);
-    rect(0, 0, 75, 75);
+    rect(100, 71, this.width - 115, 4);
 
     this.redraw();
   }
