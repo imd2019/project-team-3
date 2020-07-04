@@ -782,7 +782,6 @@ function setupGame() {
         homeScreen.setPost(postImg_demoJoined);
         phoneIcon.setNotification();
         homeScreenBtn.setNotification();
-        // mobilePhone.showScreen("homeScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 6000);
     } else {
@@ -790,7 +789,6 @@ function setupGame() {
         homeScreen.setPost(postImg_counterDemoJoined);
         phoneIcon.setNotification();
         homeScreenBtn.setNotification();
-        // mobilePhone.showScreen("homeScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 6000);
     }
@@ -821,18 +819,11 @@ function setupGame() {
 
   window.addEventListener("friendMessage", () => {
     setTimeout(() => {
-<<<<<<< HEAD
-      barLink.enable();
-      messageScreen.setEvent("friendMessage");
-      mobilePhone.showScreen("messageScreen");
-=======
       messageScreen.reset();
       barLink.enable();
       messageScreen.setEvent("friendMessage");
       phoneIcon.setNotification();
       msgScreenBtn.setNotification();
-      // mobilePhone.showScreen("messageScreen");
->>>>>>> animations-implementation
       window.dispatchEvent(new CustomEvent("phoneVibration"));
     }, 2000);
   });
@@ -850,10 +841,6 @@ function setupGame() {
         messageScreen.setEvent("interview");
         phoneIcon.setNotification();
         msgScreenBtn.setNotification();
-        // mobilePhone.showScreen("messageScreen");
-        // homeScreenBtn.disable();
-        // postScreenBtn.disable();
-        // msgScreenBtn.disable();
         phoneButton.disable();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 14000);
