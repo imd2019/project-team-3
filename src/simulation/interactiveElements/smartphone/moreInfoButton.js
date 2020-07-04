@@ -23,7 +23,6 @@ export default class MoreInfoButton extends Sprite {
     draw() {
         this.enable();
         if (this.hover) {
-            this.parent.hoverAnimation();
             stroke(255, 165, 0);
         } else {
             noStroke();

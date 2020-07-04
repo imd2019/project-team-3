@@ -9,8 +9,8 @@ export default class PhonePostButton extends Sprite {
   }
 
   postIsReady() {
-    this.show();
-    this.enable();
+    // this.show();
+    // this.enable();
   }
 
   clicked() {

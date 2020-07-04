@@ -27,12 +27,15 @@ export default class PhonePostScreen extends Sprite {
         if (this.children[1].hover) {
           this.post.clear();
           this.post.image(this.children[1].post, 12.5, 12.5, 430, 324);
+          this.setPost(this.children[1].post);
         } else if (this.children[2].hover) {
           this.post.clear();
           this.post.image(this.children[2].post, 12.5, 12.5, 430, 324);
+          this.setPost(this.children[2].post);
         } else if (this.children[3].hover) {
           this.post.clear();
           this.post.image(this.children[3].post, 12.5, 12.5, 430, 324);
+          this.setPost(this.children[3].post);
         }
       }
     }
@@ -55,9 +58,9 @@ export default class PhonePostScreen extends Sprite {
   }
 
   setPost(img) {
-    // this.newPost = img;
-    // this.postReady = true;
-    // this.redraw();
+    this.newPost = img;
+    this.postReady = true;
+    this.redraw();
   }
 
   getPost() {
