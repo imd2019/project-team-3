@@ -1,6 +1,6 @@
-import EventDispatcher from "./eventDispatcher.js"
+import DisplayObject from "./displayObject.js";
 
-export default class AnimatedDisplayObject extends EventDispatcher { 
+export default class AnimatedDisplayObject extends DisplayObject { 
   constructor(x, y, width, height, backgnd = undefined) {
     super();
     this.x = x;
