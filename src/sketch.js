@@ -55,11 +55,7 @@ import AnimationProcessor from "./animationProcessor.js";
 // load images
 let titleScreenImg;
 let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
-let kioskTreesImg,
-  kioskBuildingImg_on,
-  kioskBuildingImg_off,
-  kioskTrashcanImg,
-  kioskSunshadeImg;
+let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
 let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
@@ -438,7 +434,7 @@ let animate = new AnimationProcessor(30);
 
 function setupGame() {
   // views
-  let titleScreen = new View("titlescreen", windowWidth, windowHeight);
+  let titleScreen = new View("titlescreen", 1935, 768);
   game.addView(titleScreen);
   game.enterView("titlescreen");
 
@@ -462,74 +458,22 @@ function setupGame() {
 
   // display objects & interactive objects
 
-  let titleScreenBackground = new ColorScreen(
-    0,
-    0,
-    windowWidth,
-    windowHeight,
-    color("#512109")
-  );
+  let titleScreenBackground = new ColorScreen(0, 0, 1935, 768, color("#512109"));
   titleScreen.addChild(titleScreenBackground);
 
-  let titleScreenStreet = new ColorScreen(
-    0,
-    windowHeight * 0.68,
-    windowWidth,
-    windowHeight - windowHeight * 0.68,
-    color("#000000")
-  );
+  let titleScreenStreet = new ColorScreen(0, 580, 1935, windowHeight - windowHeight * 0.68, color("#000000"));
   titleScreen.addChild(titleScreenStreet);
 
-  let startGameBtn = new TitleScreenButton(
-    windowWidth / 20 + 40,
-    windowHeight / 3,
-    0,
-    20,
-    "Spiel starten",
-    window.fonts.rockwell,
-    color("#8b4726"),
-    color("#ffa500"),
-    "startGame"
-  );
+  let startGameBtn = new TitleScreenButton(175, 240, 0, 20, "Spiel starten", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "startGame");
   titleScreen.addChild(startGameBtn);
 
-  let settingsBtn = new TitleScreenButton(
-    windowWidth / 20 + 40,
-    windowHeight / 3 + 40,
-    0,
-    20,
-    "Steuerung",
-    window.fonts.rockwell,
-    color("#8b4726"),
-    color("#ffa500"),
-    "showInstructions"
-  );
+  let settingsBtn = new TitleScreenButton(175, 280, 0, 20, "Steuerung", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "showInstructions");
   titleScreen.addChild(settingsBtn);
 
-  let aboutUsBtn = new TitleScreenButton(
-    windowWidth / 20 + 40,
-    windowHeight / 3 + 80,
-    0,
-    20,
-    "Über uns",
-    window.fonts.rockwell,
-    color("#8b4726"),
-    color("#ffa500"),
-    "showAboutUs"
-  );
+  let aboutUsBtn = new TitleScreenButton(175, 320, 0, 20, "Über uns", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "showAboutUs");
   titleScreen.addChild(aboutUsBtn);
 
-  let creditsBtn = new TitleScreenButton(
-    windowWidth / 20 + 40,
-    windowHeight / 3 + 120,
-    0,
-    20,
-    "Credits",
-    window.fonts.rockwell,
-    color("#8b4726"),
-    color("#ffa500"),
-    "showCredits"
-  );
+  let creditsBtn = new TitleScreenButton(175, 360, 0, 20, "Credits", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "showCredits");
   titleScreen.addChild(creditsBtn);
 
   window.addEventListener("startGame", () => {
@@ -549,33 +493,18 @@ function setupGame() {
     }, 1000);
   });
 
-  let titleScreenImage = new DisplayObject(
-    windowWidth * 0.15 + 8,
-    windowHeight * 0.15 - 25,
-    593 * 1.3,
-    403 * 1.3,
-    titleScreenImg
-  );
+  let titleScreenImage = new DisplayObject(300, 100, 771, 524, titleScreenImg);
   titleScreen.addChild(titleScreenImage);
 
   let streetLamps = [];
 
-  let titleScreenLampBulb = new StreetLampBulb(
-    windowWidth * 0.15,
-    windowHeight * 0.15,
-    39,
-    17,
-    streetLampBulbOnImg,
-    streetLampBulbOffImg
-  );
+  let titleScreenLampBulb = new StreetLampBulb(290, 125, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   titleScreen.addChild(titleScreenLampBulb);
   streetLamps.push(titleScreenLampBulb);
 
   let instructionBox = new InfoBox(
-    windowWidth * 0.15 + 300,
-    windowHeight * 0.15 - 25,
-    windowWidth / 2,
-    windowHeight / 2 - 50,
+    775, 184,
+    600, 400,
     "Steuerung:",
     window.fonts.rockwell,
     "Bewege die Maus nach links oder rechts, um dich umzuschauen. Fahre mit der Maus über Objekte, wenn Sie interaktiv sind, wird sich dein Mauszeiger verändern.",
@@ -585,23 +514,19 @@ function setupGame() {
   titleScreen.addChild(instructionBox);
 
   let aboutUsBox = new InfoBox(
-    windowWidth * 0.15 + 300,
-    windowHeight * 0.15 - 25,
-    windowWidth / 2,
-    windowHeight / 2 - 50,
+    775, 184,
+    600, 400,
     "Über uns:",
     window.fonts.rockwell,
-    "Wir sind Florian, Luisa, Max und Lars aus dem 2. Semesters des Studiengangs Interactive Media Design. Social Whispers ist unser gemeinsames Semesterprojekt. Es simuliert die Verbreitung von Informationen in sozialen Medien und soll Nutzenden dabei helfen, Informationen im Internet differenzierter zu betrachten. Wir möchten sie dazu anregen, sich Informationen immer aus mehreren, seriösen Quellen einholen.",
+    "Wir sind Florian, Luisa, Max und Lars aus dem 2. Semesters des Studiengangs Interactive Media Design. Social Whispers ist unser gemeinsames Semesterprojekt. Es simuliert die Verbreitung von Informationen in sozialen Medien und soll Nutzenden dabei helfen, Informationen im Internet differenzierter zu betrachten. Wir möchten sie dazu anregen, sich Informationen immer aus mehreren, seriösen Quellen einzuholen.",
     window.fonts.franklinGothic,
     color("#ffa500")
   );
   titleScreen.addChild(aboutUsBox);
 
   let creditsBox = new InfoBox(
-    windowWidth * 0.15 + 300,
-    windowHeight * 0.15 - 25,
-    windowWidth / 2,
-    windowHeight / 2 - 50,
+    775, 184,
+    600, 400,
     "Credits:",
     window.fonts.rockwell,
     "Sounds: Zapsplat.com" +

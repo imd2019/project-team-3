@@ -15,12 +15,12 @@ export default class InfoBox extends DisplayObject {
     noStroke();
     fill(this.color);
     textFont(this.headlineFont);
-    textSize(35);
+    textSize(25);
     text(this.headline, 0, 0, this.width, this.height);
 
     textFont(this.txtFont);
-    textSize(25);
+    textSize(20);
     textLeading(this.textSize);
-    text(this.text, 0, 100, this.width, this.height);
+    text(this.text, 0, 50, this.width, this.height);
   }
 }
