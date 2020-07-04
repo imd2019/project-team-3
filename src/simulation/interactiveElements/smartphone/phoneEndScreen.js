@@ -10,10 +10,11 @@ export default class PhoneEndScreen extends Sprite {
     this.role = undefined;
     this.pos = 0.1;
     this.message = createGraphics(width, height);
-    // this.message.input = createInput();
-    // this.message.input.hide();
     this.buttonsActivated = false;
     this.inputActivated = false;
+    this.mailSent = false;
+    this.mailFailed = false;
+    this.mailAdresse = undefined;
   }
 
   draw() {
@@ -126,10 +127,60 @@ export default class PhoneEndScreen extends Sprite {
         400,
         170
       );
-
-      // //input shown
-      // this.children[4].show();
     }
+
+    if (this.mailSent) {
+      this.message.fill(170);
+      this.message.rect(90, 1150 + this.pos, 330, 130, 5);
+      this.message.noStroke();
+      this.message.fill(0);
+      this.message.text(
+        "Meine E-Mail-Adresse lautet " + this.mailAdresse + ".",
+        105,
+        250 + this.pos,
+        320,
+        120
+      );
+    }
+
+    if (this.mailFailed) {
+      this.message.fill(200);
+      this.message.rect(20, 1300 + this.pos, 330, 130, 5);
+      this.message.noStroke();
+      this.message.fill(0);
+      this.message.text(
+        "Upps! Da ist wohl etwas schiefgelaufen.",
+        35,
+        1310 + this.pos,
+        320,
+        120
+      );
+    } else {
+      this.message.fill(200);
+
+      this.message.rect(20, 1300 + this.pos, 330, 130, 5);
+      this.message.noStroke();
+      this.message.fill(0);
+      this.message.text(
+        "Vielen Dank! Check mal deine E-Mails.",
+        35,
+        1310 + this.pos,
+        320,
+        120
+      );
+    }
+  }
+
+  getAdresse(mail) {
+    this.mailAdresse = mail;
+  }
+
+  sendFailed() {
+    this.mailFailed = true;
+  }
+
+  sendMail() {
+    this.mailSent = true;
   }
 
   buttonsActive() {
