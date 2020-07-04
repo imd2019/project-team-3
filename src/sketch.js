@@ -171,14 +171,19 @@ function preload() {
   videoSkipBtnImg = loadImage("../img/assets/arrowBtn.png");
 
   startVideo = createVideo("../video/startVideo.mp4");
+  startVideo.id("startVideo");
   startVideo.hide();
   reflectiveUserVideo = createVideo("../video/reflectiveUser.mp4");
+  reflectiveUserVideo.id("reflectiveUserVideo");
   reflectiveUserVideo.hide();
   conspiracyTheoristVideo = createVideo("../video/conspiracyTheorist.mp4");
+  conspiracyTheoristVideo.id("conspiracyTheoristVideo");
   conspiracyTheoristVideo.hide();
   followerVideo = createVideo("../video/follower.mp4");
+  followerVideo.id("followerVideo");
   followerVideo.hide();
   wannabeInfluencerVideo = createVideo("../video/wannabeInfluencer.mp4");
+  wannabeInfluencerVideo.id("wannabeInfluencerVideo");
   wannabeInfluencerVideo.hide();
 
   endVideo = [reflectiveUserVideo, conspiracyTheoristVideo, followerVideo, wannabeInfluencerVideo];
@@ -286,19 +291,19 @@ window.addEventListener("enterView", (ev) => {
       window.dispatchEvent(events[rand]);
     }
     if (player.actionDone("kiosk")) {
-      setTimeout( () => {
+      setTimeout(() => {
         window.dispatchEvent(new CustomEvent("hideNewspapers"));
       }, 1000);
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
       setTimeout(() => {
         window.dispatchEvent(new CustomEvent("addAction", {
-            detail: {
-              origin: "demo",
-              name: "endDemo",
-              data: {},
-            },
-          })
+          detail: {
+            origin: "demo",
+            name: "endDemo",
+            data: {},
+          },
+        })
         );
       }, 1000);
     }
@@ -386,8 +391,8 @@ function setupGame() {
     setTimeout(() => {
       coffeeHouseMusicSound.stop();
     }, 1000);
-    window.dispatchEvent(new CustomEvent("enterView", {detail: "startVideo"}));
-    setTimeout( () => {
+    window.dispatchEvent(new CustomEvent("enterView", { detail: "startVideo" }));
+    setTimeout(() => {
       startVideoPlayer.play();
     }, 1000);
   });
@@ -407,8 +412,8 @@ function setupGame() {
       startVideoPlayer.stop();
     });
 
-    window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
-    setTimeout( () => {
+    window.dispatchEvent(new CustomEvent("enterView", { detail: "park" }));
+    setTimeout(() => {
       phoneIcon.show();
       phoneIcon.enable();
     }, 1000);
@@ -451,12 +456,12 @@ function setupGame() {
     "Credits:",
     window.fonts.rockwell,
     "Sounds: Zapsplat.com" +
-      "                                                                          " +
-      "Music: freemusicarchive.org" +
-      "                                                                        " +
-      "Voice: Martin Haas martin.haas@h-da.de" +
-      "                                                   " +
-      "broken phone screen: https://www.vecteezy.com/free-vector/wrecking-ball ",
+    "                                                                          " +
+    "Music: freemusicarchive.org" +
+    "                                                                        " +
+    "Voice: Martin Haas martin.haas@h-da.de" +
+    "                                                   " +
+    "broken phone screen: https://www.vecteezy.com/free-vector/wrecking-ball ",
     window.fonts.franklinGothic,
     color("#ffa500")
   );
@@ -679,12 +684,12 @@ function setupGame() {
       if (elem.parent.name === game.currentView) {
         if (((elem.parent.name === "bar" || elem.parent.name === "titlescreen") && !floor(random(0, 3))) ||
           (elem.getRealPos().x > 0 && elem.getRealPos().x < windowWidth && !floor(random(0, 10)))) {
+          elem.switch();
+          lampClickSound.play();
+          setTimeout(() => {
             elem.switch();
-            lampClickSound.play();
-            setTimeout(() => {
-              elem.switch();
-              lampClickSound.stop();
-            }, 100 * random([1, 1, 1, 2, 2, 3, 4, 5]));
+            lampClickSound.stop();
+          }, 100 * random([1, 1, 1, 2, 2, 3, 4, 5]));
         }
       }
     }
@@ -820,6 +825,7 @@ function setupGame() {
   window.addEventListener("friendMessage", () => {
     setTimeout(() => {
       messageScreen.reset();
+      phoneButton.enable();
       barLink.enable();
       messageScreen.setEvent("friendMessage");
       phoneIcon.setNotification();
@@ -1000,7 +1006,7 @@ function setupGame() {
 
   animate.addAnimation("moveToCenter_h", phoneIcon, "x", phoneIcon.saveX, mobilePhone.x, 0.6, "linear");
   animate.addAnimation("moveToCenter_v", phoneIcon, "y", phoneIcon.saveY, mobilePhone.y, 0.6, "ease-in-quad");
-  animate.addAnimation("scaleToPhoneSize", phoneIcon, "scale", phoneIcon.saveScale, 
+  animate.addAnimation("scaleToPhoneSize", phoneIcon, "scale", phoneIcon.saveScale,
     mobilePhone.scale * (mobilePhone.height / phoneIcon.height), 0.6, "ease-in-quad");
 
   window.addEventListener("openPhone", () => {
@@ -1138,6 +1144,12 @@ function setupGame() {
 
   let videoPlayer = new PhoneVideoPlayer(30, 335, 390, 293, videoOverlayImg, endVideo);
   endScreen.addChild(videoPlayer);
+  for (let elem of endVideo) {
+    console.log(elem.elt.id);
+    document.getElementById(elem.elt.id).onended = () => {
+      videoPlayer.activateButtons();
+    };
+  }
 
   let restartBtn = new RestartButton(238, 428, 200, 50);
   endScreen.addChild(restartBtn);
@@ -1448,3 +1460,5 @@ window.addEventListener("cursor", (ev) => {
     cursor("./img/assets/cursorStandard.png");
   }
 });
+
+

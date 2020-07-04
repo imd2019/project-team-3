@@ -19,7 +19,7 @@ export default class ChoosePostButton extends Sprite {
 
   draw() {
     if (this.hover) {
-      stroke("yellow");
+      stroke(255, 165, 0);
     } else {
       noStroke();
     }

@@ -17,7 +17,7 @@ export default class PhoneEndButton extends Sprite {
 
   draw() {
     if (this.hover) {
-      stroke("yellow");
+      stroke(255, 165, 0);
     } else {
       noStroke();
     }

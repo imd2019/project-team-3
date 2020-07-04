@@ -35,7 +35,7 @@ export default class PhoneMailButton extends Sprite {
   draw() {
     this.enable();
     if (this.hover) {
-      stroke("yellow");
+      stroke(255, 165, 0);
     } else {
       noStroke();
     }

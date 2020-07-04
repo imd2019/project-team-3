@@ -11,6 +11,7 @@ export default class PhoneVideoPlayer extends Sprite {
     this.videoSet = false;
     this.hide();
     this.disable();
+
   }
 
   draw() {
@@ -75,14 +76,15 @@ export default class PhoneVideoPlayer extends Sprite {
     );
   }
 
+  activateButtons() {
+    this.parent.children[2].visible = true;
+    this.parent.children[3].visible = true;
+  }
+
   clicked() {
     window.dispatchEvent(new CustomEvent("tapPhone"));
     this.startVideo();
     this.updatePosition();
-    if (!this.isClicked) {
-      this.parent.children[2].visible = true;
-      this.parent.children[3].visible = true;
-    }
     this.isClicked = true;
   }
 

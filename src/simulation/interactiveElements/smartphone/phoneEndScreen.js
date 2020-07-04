@@ -79,9 +79,9 @@ export default class PhoneEndScreen extends Sprite {
       this.message.fill(0);
       this.message.text(
         "Natürlich. Du hast deine Spuren bereits hinterlassen. \nDu bist ein" +
-          " " +
-          this.role +
-          ".",
+        " " +
+        this.role +
+        ".",
         35,
         380 + this.pos,
         400,
