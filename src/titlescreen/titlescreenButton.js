@@ -18,23 +18,14 @@ export default class TitleScreenButton extends InteractiveObject {
     textSize(this.height);
     textFont(this.font);
     this.width = textWidth(this.text) + this.dx;
-
-    if (this.enabled) {
-      if (this.mouseHovered()) {
-        fill(this.accentColor);
-        this.dx = 10;
-
-        if (this.playSound) {
-          window.dispatchEvent(new CustomEvent("playButtonSound"));
-          this.playSound = false;
-        }
-      } else {
-        this.dx = 0;
-        this.playSound = true;
-        fill(this.textColor);
-      }
+    if (this.hover) {
+      this.dx = 10;
+      fill(this.accentColor);
+    } else {
+      this.dx = 0;
+      this.playSound = true;
+      fill(this.textColor);
     }
-
     text(this.text, this.dx, 0);
   }
 
@@ -42,6 +33,14 @@ export default class TitleScreenButton extends InteractiveObject {
     if (this.enabled) {
       window.dispatchEvent(new CustomEvent(this.action));
       window.dispatchEvent(new CustomEvent("playButtonSound"));
+    }
+  }
+
+  hovered() {
+    window.dispatchEvent(new CustomEvent("cursor", { detail: "hovered" }));
+    if (this.playSound) {
+      window.dispatchEvent(new CustomEvent("playButtonSound"));
+      this.playSound = false;
     }
   }
 }

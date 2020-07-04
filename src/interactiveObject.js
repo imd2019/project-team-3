@@ -6,6 +6,7 @@ export default class InteractiveObject extends DisplayObject {
     this.parent = undefined;
     this.enabled = true;
     this.calcScale = this.scale;
+    this.hover = false;
   }
   enable() {
     this.enabled = true;
@@ -26,6 +27,7 @@ export default class InteractiveObject extends DisplayObject {
 
       pop();
     }
+    this.hover = false;
   }
 
   draw() {
@@ -94,6 +96,7 @@ export default class InteractiveObject extends DisplayObject {
 
   mouseHovered() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
+      this.hover = true;
       this.hovered();
     }
   }

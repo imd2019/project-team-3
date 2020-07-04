@@ -366,7 +366,7 @@ function setupGame() {
   let titleScreenStreet = new ColorScreen(0, 580, 1935, windowHeight - windowHeight * 0.68, color("#000000"));
   titleScreen.addChild(titleScreenStreet);
 
-  let startGameBtn = new TitleScreenButton(125, 240, 0, 20, "Spiel starten", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "startGame");
+  let startGameBtn = new TitleScreenButton(125, 240, 0, 20, "Spiel starten", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "playStartVideo");
   titleScreen.addChild(startGameBtn);
 
   let settingsBtn = new TitleScreenButton(125, 280, 0, 20, "Steuerung", window.fonts.rockwell, color("#8b4726"), color("#ffa500"), "showInstructions");
@@ -1200,7 +1200,9 @@ function setupGame() {
 /* sound events */
 
 window.addEventListener("playButtonSound", () => {
-  buttonSound.play();
+  if (!buttonSound.isPlaying()) {
+    buttonSound.play();
+  }
 });
 
 window.addEventListener("phoneSendMsg", () => {

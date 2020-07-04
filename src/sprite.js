@@ -21,6 +21,7 @@ export default class Sprite extends InteractiveObject {
 
       pop();
     }
+    this.hover = false;
   }
 
   pressed() {
