@@ -14,7 +14,7 @@ export default class PhoneEndScreen extends Sprite {
     this.inputActivated = false;
     this.mailSent = false;
     this.mailFailed = false;
-    this.mailAdresse = undefined;
+    this.mailAddress = undefined;
   }
 
   draw() {
@@ -135,7 +135,7 @@ export default class PhoneEndScreen extends Sprite {
       this.message.noStroke();
       this.message.fill(0);
       this.message.text(
-        "Meine E-Mail-Adresse lautet " + this.mailAdresse + ".",
+        "Meine E-Mail-Adresse lautet " + this.mailAddress + ".",
         105,
         250 + this.pos,
         320,
@@ -171,8 +171,8 @@ export default class PhoneEndScreen extends Sprite {
     }
   }
 
-  getAdresse(mail) {
-    this.mailAdresse = mail;
+  setAddress(mail) {
+    this.mailAddress = mail;
   }
 
   sendFailed() {

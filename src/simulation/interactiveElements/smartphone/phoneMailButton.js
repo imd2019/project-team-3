@@ -31,7 +31,7 @@ export default class PhoneMailButton extends Sprite {
     </p>`
 
     this.sendMail(from, to, content);
-    console.log("Send mail to: " + from);
+    this.parent.setAddress(to);
   }
 
   draw() {
@@ -55,8 +55,8 @@ export default class PhoneMailButton extends Sprite {
     xhr.open("POST", "./src/simulation/interactiveElements/smartphone/mail.php", true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        window.dispatchEvent(new CustomEvent("mailSent"));
+      if (!(xhr.readyState === 4 && xhr.status === 200)) {
+        this.parent.children[5].sendFailed();
       }
     };
     xhr.send(JSON.stringify({ from: from, to: to, content: content }));
