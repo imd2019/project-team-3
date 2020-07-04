@@ -171,16 +171,14 @@ export default class PhoneEndScreen extends Sprite {
     }
   }
 
-  setAddress(mail) {
+  sendMail(mail) {
+    this.mailSent = true;
     this.mailAddress = mail;
+    this.children[3].show();
   }
 
   sendFailed() {
     this.mailFailed = true;
-  }
-
-  sendMail() {
-    this.mailSent = true;
   }
 
   buttonsActive() {

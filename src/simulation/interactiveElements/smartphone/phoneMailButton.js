@@ -22,8 +22,8 @@ export default class PhoneMailButton extends Sprite {
     <p>
       Liebe*r Teilnehmer*in,<br />
       <br />
-      vielen Dank für Ihre Teilnahme an unserer Simulation und Ihr Interesse am Thema!<br />
-      Im Anhang finden Sie weitere Hinweise zum Umgang mit Informationen in sozialen Medien.<br />
+      vielen Dank für Deine Teilnahme an unserer Simulation und Dein Interesse am Thema!<br />
+      Im Anhang findest Du weitere Hinweise zum Umgang mit Informationen in sozialen Medien.<br />
       <br />
       Viele Grüße<br />
       <br />
@@ -31,7 +31,7 @@ export default class PhoneMailButton extends Sprite {
     </p>`
 
     this.sendMail(from, to, content);
-    this.parent.setAddress(to);
+    this.parent.sendMail(to);
   }
 
   draw() {
