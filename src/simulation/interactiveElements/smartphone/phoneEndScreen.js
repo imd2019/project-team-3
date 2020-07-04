@@ -9,6 +9,10 @@ export default class PhoneEndScreen extends Sprite {
     this.role = undefined;
     this.pos = 0.1;
     this.message = createGraphics(width, height);
+    // this.message.input = createInput();
+    // this.message.input.hide();
+    this.buttonsActivated = false;
+    this.inputActivated = false;
   }
 
   draw() {
@@ -89,6 +93,49 @@ export default class PhoneEndScreen extends Sprite {
       );
       this.children[1].draw();
     }
+
+    if (this.buttonsActivated) {
+      this.message.fill(200);
+
+      this.message.rect(20, 820 + this.pos, 330, 130, 5);
+      this.message.noStroke();
+      this.message.fill(0);
+      this.message.text(
+        "Möchtest du mehr erfahren oder es noch einmal versuchen?",
+        35,
+        830 + this.pos,
+        320,
+        120
+      );
+    }
+
+    if (this.inputActivated) {
+      this.message.fill(200);
+
+      this.message.rect(20, 970 + this.pos, 410, 180, 5);
+      this.message.noStroke();
+      this.message.fill(0);
+      this.message.text(
+        "Super! Nach Eingabe deiner E-Mail-Adresse schicken wir dir unsere Handlungsempfehlungen für den Umgang mit Informationen in sozialen Netzwerken als PDF zu.",
+        35,
+        980 + this.pos,
+        400,
+        170
+      );
+
+      //input shown
+      noStroke();
+      fill("white");
+      rect(17, 428, 350, 50);
+    }
+  }
+
+  buttonsActive() {
+    this.buttonsActivated = true;
+  }
+
+  inputActive() {
+    this.inputActivated = true;
   }
 
   updatePosition() {
@@ -127,8 +174,8 @@ export default class PhoneEndScreen extends Sprite {
     if (this.visible) {
       if (this.pos > 0) {
         this.pos = 0;
-      } else if (this.pos < -(1 + this.message.height)) {
-        this.pos = -(1 + this.message.height);
+        // } else if (this.pos < -(1 + this.message.height)) {
+        //   this.pos = -(1 + this.message.height);
       } else {
         this.pos -= ev.delta;
         this.redraw();

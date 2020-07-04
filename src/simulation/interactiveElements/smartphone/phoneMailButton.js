@@ -45,7 +45,7 @@ export default class PhoneMailButton extends Sprite {
     rect(0, 0, this.width, this.height, 5);
     noStroke();
     fill("black");
-    text("Mehr Informationen", 0, 0, this.width, this.height);
+    text("Senden", 0, 0, this.width, this.height);
   }
 
   sendMail(from, to, content) {
