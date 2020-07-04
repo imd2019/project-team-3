@@ -685,7 +685,7 @@ function setupGame() {
             setTimeout(() => {
               elem.switch();
               lampClickSound.stop();
-            }, 100 * ceil(random(0, 2)));
+            }, 100 * random([1, 1, 1, 2, 2, 3, 4, 5]));
         }
       }
     }
