@@ -1,4 +1,3 @@
-
 export default class Simulation{
   constructor(){
     this.manipulativity = 0.5;

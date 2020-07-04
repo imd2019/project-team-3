@@ -1,4 +1,4 @@
-import Sprite from "../../../Sprite.js";
+import Sprite from "../../../sprite.js";
 
 export default class Kiosk extends Sprite {
   constructor(x, y, width, height, closedImg, openedImg) {
