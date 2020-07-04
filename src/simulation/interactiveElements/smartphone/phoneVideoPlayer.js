@@ -77,8 +77,9 @@ export default class PhoneVideoPlayer extends Sprite {
   }
 
   activateButtons() {
-    this.parent.children[2].visible = true;
-    this.parent.children[3].visible = true;
+    this.parent.children[2].show();
+    this.parent.children[3].show();
+    this.parent.buttonsActive();
   }
 
   clicked() {
