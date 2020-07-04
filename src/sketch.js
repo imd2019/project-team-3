@@ -532,6 +532,8 @@ function setupGame() {
   let parkForegnd = new DisplayObject(2, 228, 3904, 543, parkForegndImg);
   park.addChild(parkForegnd);
 
+  let streetLamps = [];
+
   let streetLamp_1 = new StreetLampBulb(496, 336, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
   park.addChild(streetLamp_1);
   streetLamps.push(streetLamp_1);
