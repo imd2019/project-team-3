@@ -1,7 +1,7 @@
 import Kiosk from "../kiosk/kiosk.js";
 
 export default class KioskLink extends Kiosk {
-  constructor(x, y, width, height, closedImg, openedImg, newspapers) {
+  constructor(x, y, width, height, closedImg, openedImg) {
     super(x, y, width, height, closedImg, openedImg);
   }
 

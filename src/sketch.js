@@ -417,6 +417,7 @@ function setupGame() {
     startGameBtn.disable();
     settingsBtn.disable();
     aboutUsBtn.disable();
+    creditsBtn.disable();
     coffeeHouseMusicSound.fade(0, 1);
     setTimeout(() => {
       coffeeHouseMusicSound.stop();
@@ -517,12 +518,17 @@ function setupGame() {
   let videoScreenBackgnd = new ColorScreen(0, 0, windowWidth, windowHeight, color("#1E0E09"));
   startVideoScreen.addChild(videoScreenBackgnd);
 
-  let startVideoPlayer = new VideoElement((windowWidth - windowHeight * 1.778) / 2, 0, windowHeight * 1.778, windowHeight, startVideo);
+  let startVideoPlayer;
+  if (windowWidth < 1.778 * windowHeight) {
+    startVideoPlayer = new VideoElement(0, (windowHeight - windowWidth / 1.778) / 2, windowWidth, windowWidth / 1.778, startVideo);
+  } else {
+    startVideoPlayer = new VideoElement((windowWidth - windowHeight * 1.778) / 2, 0, windowHeight * 1.778, windowHeight, startVideo);
+  }
   startVideoScreen.addChild(startVideoPlayer);
 
   animate.addAnimation("fadeStartVideo", startVideoPlayer, "volume", 1, 0, 1);
 
-  let videoSkipBtn = new StartGameButton(windowWidth - 380, windowHeight - 200, 290, 120, videoSkipBtnImg);
+  let videoSkipBtn = new StartGameButton(windowWidth - 300, windowHeight - 150, 224, 93, videoSkipBtnImg);
   startVideoScreen.addChild(videoSkipBtn);
 
   let moon_park = new DisplayObject(2086, 25, 213, 212, moonImg);
@@ -680,10 +686,12 @@ function setupGame() {
   let barLamp_2 = new BarLampBulb(1033, 203, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
   bar.addChild(barLamp_2);
   barLamp_2.switch();
+  barLamp_2.disable();
 
   let barLamp_3 = new BarLampBulb(1270, 217, 74, 32, streetLampBulbOnImg, streetLampBulbOffImg);
   bar.addChild(barLamp_3);
   barLamp_3.switch();
+  barLamp_3.disable();
 
   let barArcade = new Arcade(1532, 222, 210, 528, barArcadeImg);
   bar.addChild(barArcade);
@@ -887,6 +895,7 @@ function setupGame() {
     setTimeout(() => {
       coffeeHouseSound.play();
       coffeeHouseMusicSound.play();
+      coffeeHouseMusicSound.setVolume(0.15);
     }, 800);
     setTimeout(() => {
       coffeeHouseSound.fade(0, 1);
@@ -1465,7 +1474,7 @@ function mouseWheel(ev) {
 window.mouseWheel = mouseWheel;
 
 window.addEventListener("cursor", (ev) => {
-  if (ev.detail === "hovered") {
+  if (ev.detail === "hovered" && !player.phoneInUse) {
     cursor("./img/assets/cursorHovered.png");
   } else {
     cursor("./img/assets/cursorStandard.png");

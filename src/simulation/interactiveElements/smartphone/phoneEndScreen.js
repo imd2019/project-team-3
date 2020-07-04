@@ -112,12 +112,14 @@ export default class PhoneEndScreen extends Sprite {
 
   mouseScroll() {
     let ev = {};
-    if (mouseY < 0.25 * windowHeight) {
-      ev["delta"] = -6;
-      this.wheel(ev);
-    } else if (mouseY > 0.7 * windowHeight) {
-      ev["delta"] = 6;
-      this.wheel(ev);
+    if (this.mouseHovered()) {
+      if (mouseY < 0.25 * windowHeight) {
+        ev["delta"] = -6;
+        this.wheel(ev);
+      } else if (mouseY > 0.7 * windowHeight) {
+        ev["delta"] = 6;
+        this.wheel(ev);
+      }
     }
   }
 
