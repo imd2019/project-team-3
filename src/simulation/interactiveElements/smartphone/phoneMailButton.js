@@ -15,7 +15,7 @@ export default class PhoneMailButton extends Sprite {
 
     // send mail
     let from = "social-whispers@interactivemedia.design";
-    let to = "info@florian-beck.de";
+    let to = this.parent.children[4].getContent();
     let content = ` 
     <p>
       Liebe*r Teilnehmer*in,<br />

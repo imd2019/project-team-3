@@ -1170,6 +1170,8 @@ function setupGame() {
     mobilePhone.showScreen("endScreen");
     msgScreenBtn.setTarget("endScreen");
     mobilePhone.break();
+    homeScreenBtn.resetNotification();
+    msgScreenBtn.resetNotification();
   });
 
   window.addEventListener("restartGame", () => {
