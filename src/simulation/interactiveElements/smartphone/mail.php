@@ -9,7 +9,7 @@
  
   // Mail content
   $subject = "Simulationsspiel \"Social Whispers\"";
-  $file = "./docs/test.pdf";
+  $file = "test.pdf";
   $headers = "From: " . $from;
   $htmlContent = '
   <p>
