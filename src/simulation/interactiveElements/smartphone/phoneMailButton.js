@@ -29,7 +29,7 @@ export default class PhoneMailButton extends Sprite {
       <br />
       Florian, Lars, Luisa und Max
     </p>`
-
+    this.parent.updatePosition();
     this.sendMail(from, to, content);
     this.parent.sendMail(to);
   }

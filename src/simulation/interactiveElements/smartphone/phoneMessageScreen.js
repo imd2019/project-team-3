@@ -11,6 +11,7 @@ export default class PhoneMessage extends Sprite {
     this.pos = 0;
     this.event = undefined;
     this.message = createGraphics(width, height);
+    this.buffer = false;
   }
 
   draw() {
@@ -123,15 +124,20 @@ export default class PhoneMessage extends Sprite {
     }
 
 
-    if (this.children[0].mouseHovered() || this.children[1].mouseHovered()) {
+    if (this.children[0].hover || this.children[1].hover) {
       this.hoverAnimation();
+    }
+
+    if (this.buffering) {
+      this.bufferAnimation(this.bufferingDirection);
     }
   }
 
 
 
   updatePosition() {
-    this.pos = (this.pos - 0.2) * 9;
+    this.pos += -55;
+    this.redraw();
   }
 
   showConversation(textNode) {
@@ -146,16 +152,28 @@ export default class PhoneMessage extends Sprite {
     }
   }
 
+  setBufferAnimation(direction) {
+    this.buffering = true;
+    this.bufferingDirection = direction;
+  }
+
+  clearBufferAnimation() {
+    this.buffering = false;
+  }
+
   bufferAnimation(direction) {
+
     switch (direction) {
 
       case "RIGHT":
+
         this.message.textAlign(CENTER, CENTER);
         this.message.fill(170);
         this.message.rect(350, 250 + 300 * (this.conversation.length - 1) + this.pos, 80, 70, 5);
         this.message.noStroke();
         this.message.fill(0);
         this.message.text(".  .  .", 350, 250 + 300 * (this.conversation.length - 1) + this.pos, 80, 70);
+
         break;
       case "LEFT":
         this.message.textAlign(CENTER, CENTER);
@@ -179,7 +197,7 @@ export default class PhoneMessage extends Sprite {
 
   mouseScroll() {
     let ev = {};
-    if (this.mouseHovered()) {
+    if (this.hover) {
       if (mouseY < 0.25 * windowHeight) {
         ev["delta"] = -6;
         this.wheel(ev);

@@ -11,6 +11,7 @@ export default class MoreInfoButton extends Sprite {
     clicked() {
         window.dispatchEvent(new CustomEvent("tapPhone"));
         this.parent.inputActive();
+        this.parent.updatePosition();
         this.parent.children[2].hide();
         this.parent.children[3].hide();
         this.parent.children[4].show();
@@ -22,6 +23,7 @@ export default class MoreInfoButton extends Sprite {
     draw() {
         this.enable();
         if (this.hover) {
+            this.parent.hoverAnimation();
             stroke(255, 165, 0);
         } else {
             noStroke();

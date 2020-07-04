@@ -20,13 +20,13 @@ export default class PhoneMessageButton extends Sprite {
     this.currentMessage.animationText = setInterval(() => {
       this.currentMessage.animationTextOver = false;
       this.currentMessage.animationAnswerOver = false;
-      this.parent.bufferAnimation("RIGHT");
-    }, 30 / 1000);
+      this.parent.setBufferAnimation("RIGHT");
+    }, 200);
     setTimeout(() => {
       this.currentMessage.animationAnswer = setInterval(() => {
         ;
-        this.parent.bufferAnimation("LEFT");
-      }, 30 / 1000);
+        this.parent.setBufferAnimation("LEFT");
+      }, 200);
     }, 3000);
     setTimeout(() => {
       this.parent.children.forEach((btn) => {
@@ -39,12 +39,18 @@ export default class PhoneMessageButton extends Sprite {
             btn.conversationIndex++
             this.currentMessage.animationAnswerOver = true;
             clearInterval(this.currentMessage.animationAnswer);
+            this.parent.clearBufferAnimation();
+            this.parent.updatePosition();
+            window.dispatchEvent(new CustomEvent("phoneSendMsg"));
             btn.setUpMessages();
             console.log(this.currentMessage.conversationEnded);
             if (btn.conversationIndex < 4 && btn.visible) {
               btn.enable();
             }
           }, 4000);
+          this.parent.clearBufferAnimation();
+          this.parent.updatePosition();
+          window.dispatchEvent(new CustomEvent("phoneSendMsg"));
           btn.setUpMessages();
         }, 2000);
 
@@ -64,7 +70,7 @@ export default class PhoneMessageButton extends Sprite {
 
 
     this.parent.showConversation(this.currentMessage);
-    this.parent.updatePosition();
+    // this.parent.updatePosition();
     this.parent.redraw();
 
 

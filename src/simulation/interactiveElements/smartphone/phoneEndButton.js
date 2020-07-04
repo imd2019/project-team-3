@@ -12,7 +12,9 @@ export default class PhoneEndButton extends Sprite {
     window.dispatchEvent(new CustomEvent("revealRole"));
     this.hide();
     this.disable();
+    this.parent.updatePosition();
     this.parent.children[1].visible = true;
+
   }
 
   draw() {

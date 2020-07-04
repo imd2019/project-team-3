@@ -15,6 +15,7 @@ export default class PhoneEndScreen extends Sprite {
     this.mailSent = false;
     this.mailFailed = false;
     this.mailAddress = undefined;
+    this.mail
   }
 
   draw() {
@@ -155,7 +156,7 @@ export default class PhoneEndScreen extends Sprite {
         320,
         120
       );
-    } else {
+    } else if (this.mailSent) {
       this.message.fill(200);
 
       this.message.rect(20, 1320 + this.pos, 330, 130, 5);
@@ -190,7 +191,7 @@ export default class PhoneEndScreen extends Sprite {
   }
 
   updatePosition() {
-    this.pos = this.pos * 4.99;
+    this.pos += -60;
   }
 
   showConversation(textNode) {
@@ -210,7 +211,7 @@ export default class PhoneEndScreen extends Sprite {
 
   mouseScroll() {
     let ev = {};
-    if (this.mouseHovered()) {
+    if (this.hover) {
       if (mouseY < 0.25 * windowHeight) {
         ev["delta"] = -6;
         this.wheel(ev);
