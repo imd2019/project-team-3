@@ -121,9 +121,6 @@ export default class PhoneMessageButton extends Sprite {
 
   setUpMessages() {
     let conversation;
-    // this.conversationIndex++;
-    console.log(this.conversationIndex);
-
     switch (this.conversationIndex) {
       case 1:
         switch (this.name) {

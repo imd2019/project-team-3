@@ -38,4 +38,10 @@ export default class PhoneMenuIcon extends Sprite {
   clicked() {
     window.dispatchEvent(new CustomEvent("showScreen", { detail: this.target }));
   }
+
+  resetElement() {
+    if (this.target === "endScreen") {
+      this.target = "messageScreen";
+    }
+  }
 }

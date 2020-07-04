@@ -19,6 +19,8 @@ export default class PhoneHomeScreen extends Sprite {
     this.mouseScroll();
 
     image(this.posts, 0, 0, this.width, this.height);
+
+    this.redraw();
   }
 
   setPost(img) {
