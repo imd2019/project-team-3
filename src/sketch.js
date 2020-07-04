@@ -712,20 +712,16 @@ function setupGame() {
 
   setInterval(() => {
     for (let elem of streetLamps) {
-      if (
-        ((elem.parent.name === "bar" || elem.parent.name === "titlescreen") &&
-          !floor(random(0, 3))) ||
-        (elem.parent.name === game.currentView &&
-          elem.x > 0 &&
-          elem.x < windowWidth &&
-          !floor(random(0, 10)))
-      ) {
-        elem.switch();
-        lampClickSound.play();
-        setTimeout(() => {
-          elem.switch();
-          lampClickSound.stop();
-        }, 100 * ceil(random(0, 2)));
+      if (elem.parent.name === game.currentView) {
+        if (((elem.parent.name === "bar" || elem.parent.name === "titlescreen") && !floor(random(0, 3))) ||
+          (elem.getRealPos().x > 0 && elem.getRealPos().x < windowWidth && !floor(random(0, 10)))) {
+            elem.switch();
+            lampClickSound.play();
+            setTimeout(() => {
+              elem.switch();
+              lampClickSound.stop();
+            }, 100 * ceil(random(0, 2)));
+        }
       }
     }
   }, 1000);
@@ -1039,6 +1035,7 @@ function setupGame() {
     mobilePhone.scale * (mobilePhone.height / phoneIcon.height), 0.6, "ease-in-quad");
 
   window.addEventListener("openPhone", () => {
+    game.currentView
     animate.start("moveToCenter_h");
     animate.start("moveToCenter_v");
     animate.start("scaleToPhoneSize", false, () => {
@@ -1474,7 +1471,7 @@ function mouseWheel(ev) {
 window.mouseWheel = mouseWheel;
 
 window.addEventListener("cursor", (ev) => {
-  if (ev.detail === "hovered" && !player.phoneInUse) {
+  if (ev.detail === "hovered") {
     cursor("./img/assets/cursorHovered.png");
   } else {
     cursor("./img/assets/cursorStandard.png");

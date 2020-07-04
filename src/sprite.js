@@ -21,7 +21,6 @@ export default class Sprite extends InteractiveObject {
 
       pop();
     }
-    this.mouseHovered();
   }
 
   pressed() {
@@ -48,7 +47,11 @@ export default class Sprite extends InteractiveObject {
   }
 
   hovered() {
-    if (this.children.length === 0) {
+    if (this.children.length > 0) {
+      for (let elem of this.children) {
+        elem.mouseHovered();
+      }
+    } else {
       window.dispatchEvent(new CustomEvent("cursor", { detail: "hovered" }));
     }
   }

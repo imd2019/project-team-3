@@ -26,7 +26,6 @@ export default class InteractiveObject extends DisplayObject {
 
       pop();
     }
-    this.mouseHovered();
   }
 
   draw() {
@@ -96,9 +95,6 @@ export default class InteractiveObject extends DisplayObject {
   mouseHovered() {
     if (this.enabled && this.hitTest(mouseX, mouseY)) {
       this.hovered();
-      return true;
-    } else {
-      return false;
     }
   }
 

@@ -31,6 +31,21 @@ export default class StreetLampBulb extends Sprite {
     }
   }
 
+  getRealPos() {
+    let e = this;
+    let ve = createVector(0, 0);
+
+    while (e != undefined) {
+      let vt = createVector(e.x, e.y);
+      if (e.parent != undefined) {
+        vt.mult(e.parent.calcScale);
+      }
+      ve = p5.Vector.add(ve, vt);
+      e = e.parent;
+    }
+    return {x: ve.x, y: ve.y};
+  }
+
   resetElement() {
     if (this.parent.name != "bar") {
       this.on = true;

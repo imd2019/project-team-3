@@ -49,6 +49,15 @@ export default class Game extends Sprite {
     }
   }
 
+  mouseHovered() {
+    if (this.currentView) {
+      this.children.global.mouseHovered();
+      if (!this.player.phoneInUse) {
+        this.children[this.currentView].mouseHovered();
+      }
+    }
+  }
+
   mouseWheel(ev) {
     if (this.currentView) {
       this.children.global.mouseWheel(ev);
@@ -57,6 +66,7 @@ export default class Game extends Sprite {
 
   display() {
     window.dispatchEvent(new CustomEvent("cursor", { detail: "standard" }));
+    this.mouseHovered();
 
     if (this.currentView) {
       this.children[this.currentView].display();

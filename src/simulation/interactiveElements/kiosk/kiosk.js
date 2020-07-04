@@ -11,23 +11,6 @@ export default class Kiosk extends Sprite {
     this.opened = true;
   }
 
-  display() {
-    if (this.visible) {
-      push();
-      translate(this.x, this.y);
-      rotate(this.rotation);
-      scale(this.scale);
-
-      this.draw();
-
-      for (let elem of this.children) {
-        elem.display();
-      }
-
-      pop();
-    }
-  }
-
   draw(){
     if(this.opened) {
       image(this.openedImg, 0, 0, this.width, this.height);
@@ -35,6 +18,8 @@ export default class Kiosk extends Sprite {
       image(this.backgnd, 0, 0, this.width, this.height);
     }
   }
+
+  // hovered() {}
 
   resetElement() {
     this.opened = false;
