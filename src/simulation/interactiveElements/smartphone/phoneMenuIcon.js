@@ -7,6 +7,10 @@ export default class PhoneMenuIcon extends Sprite {
     this.notification = false;
   }
 
+  setTarget(target) {
+    this.target = target;
+  }
+
   setNotification() {
     this.notification = true;
   }

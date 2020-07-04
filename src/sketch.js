@@ -911,10 +911,6 @@ function setupGame() {
       phoneIcon.setNotification();
       homeScreenBtn.setNotification();
     }, 8000);
-
-    homeScreenBtn.enable();
-    postScreenBtn.enable();
-    msgScreenBtn.enable();
     phoneButton.enable();
   });
 
@@ -930,9 +926,6 @@ function setupGame() {
   });
 
   window.addEventListener("invitationAccepted", () => {
-    homeScreenBtn.enable();
-    postScreenBtn.enable();
-    msgScreenBtn.enable();
     phoneButton.enable();
   });
 
@@ -947,6 +940,7 @@ function setupGame() {
   global.addChild(flyerPark);
 
   window.addEventListener("pickupFlyer", (ev) => {
+    phoneIcon.disable();
     if (ev.detail === "coffeeHouse") {
       flyerCoffeeHouse.show();
       flyerCoffeeHouse.enable();
@@ -969,6 +963,7 @@ function setupGame() {
   });
 
   window.addEventListener("closeFlyer", () => {
+    phoneIcon.enable();
     player.usePhone(false);
   });
 
@@ -1109,8 +1104,6 @@ function setupGame() {
     choosePostBtn_2.enable();
     choosePostBtn_3.show();
     choosePostBtn_3.enable();
-    homeScreenBtn.disable();
-    msgScreenBtn.disable();
   });
 
   window.addEventListener("postChosen", (ev) => {
@@ -1120,8 +1113,6 @@ function setupGame() {
     choosePostBtn_2.disable();
     choosePostBtn_3.hide();
     choosePostBtn_3.disable();
-    homeScreenBtn.enable();
-    msgScreenBtn.enable();
     phoneButton.enable();
     homeScreen.setPost(ev.detail);
     mobilePhone.showScreen("homeScreen");
@@ -1172,10 +1163,8 @@ function setupGame() {
     barPhone.hide();
     window.dispatchEvent(new CustomEvent("openPhone"));
     mobilePhone.showScreen("endScreen");
+    msgScreenBtn.setTarget("endScreen");
     mobilePhone.break();
-    homeScreenBtn.disable();
-    postScreenBtn.disable();
-    msgScreenBtn.disable();
   });
 
   window.addEventListener("restartGame", () => {
