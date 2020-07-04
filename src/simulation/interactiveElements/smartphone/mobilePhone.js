@@ -17,10 +17,15 @@ export default class MobilePhone extends Sprite{
     for (let i in this.children) {
       if (this.children[i].name === name) {
         this.currentScreen = i;
+        window.dispatchEvent(new CustomEvent("clearNotifications"));
         return true;
       }
     }
     return false;
+  }
+
+  activeScreen() {
+    return this.children[this.currentScreen].name;
   }
 
   display() {

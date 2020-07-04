@@ -8,6 +8,7 @@ export default class PhoneIcon extends InteractiveObject {
     this.saveY = this.y;
     this.saveScale = this.scale;
     this.notification = false;
+    this.hideNotification = false;
     this.hide();
     this.disable();
   }
@@ -19,9 +20,10 @@ export default class PhoneIcon extends InteractiveObject {
     if (this.backgnd != undefined) {
       image(this.backgnd, -(this.width / 2), -(this.height / 2), this.width, this.height);
     }
-    if (this.notification) {
-      fill("red");
-      ellipse(this.width - 58, -80, 25);
+    if (this.notification && !this.hideNotification) {
+      noStroke();
+      fill("#ff0000");
+      ellipse(this.width - 58, -80, 20);
     }
     pop();
   }
@@ -29,9 +31,8 @@ export default class PhoneIcon extends InteractiveObject {
   clicked() {
     window.dispatchEvent(new CustomEvent("phoneTap"));
     window.dispatchEvent(new CustomEvent("openPhone"));
-
+  
   }
-
 
   setNotification() {
     this.notification = true;
@@ -39,6 +40,10 @@ export default class PhoneIcon extends InteractiveObject {
 
   resetNotification() {
     this.notification = false;
+  }
+
+  showNotification(bool) {
+    this.hideNotification = !bool;
   }
 
   resetElement() {
