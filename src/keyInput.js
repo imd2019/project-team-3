@@ -1,8 +1,7 @@
 /*
-Class to route key inputs.
-Distributed under the MIT License.
-(c)2020 Florian Beck.
-*/
+ * Published under the MIT license.
+ * (c) 2020 Florian Beck
+ */
 
 export default class KeyInput {
   constructor() {
