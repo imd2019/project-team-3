@@ -236,12 +236,6 @@ window.addEventListener("enterView", (ev) => {
     game.enterView(ev.detail);
   }, 1000);
 
-  if (ev.detail === "startVideo") {
-    startGameTimeout = setTimeout(() => {
-      window.dispatchEvent(new CustomEvent("startGame"));
-    }, 55000);
-  }
-
   if (ev.detail === "bar") {
     doorSound.play();
     citySound.fade(0, 1);
