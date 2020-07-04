@@ -1145,8 +1145,6 @@ function setupGame() {
   let mailBtn = new PhoneMailButton(17, 428, 200, 50);
   endScreen.addChild(mailBtn);
 
-  mailBtn.clicked();
-
   window.addEventListener("endGame", () => {
     phoneVibrationSound.stop();
     clearInterval(barPhoneVibrate);
