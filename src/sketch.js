@@ -171,6 +171,7 @@ function preload() {
   videoSkipBtnImg = loadImage("../img/assets/arrowBtn.png");
 
   startVideo = createVideo("../video/startVideo.mp4");
+  startVideo.id("startVideo");
   startVideo.hide();
   reflectiveUserVideo = createVideo("../video/reflectiveUser.mp4");
   reflectiveUserVideo.hide();
@@ -230,12 +231,6 @@ window.addEventListener("enterView", (ev) => {
   setTimeout(() => {
     game.enterView(ev.detail);
   }, 1000);
-
-  if (ev.detail === "startVideo") {
-    startGameTimeout = setTimeout(() => {
-      window.dispatchEvent(new CustomEvent("startGame"));
-    }, 55000);
-  }
 
   if (ev.detail === "bar") {
     doorSound.play();

@@ -15,6 +15,10 @@ export default class VideoElement extends DisplayObject {
     this.backgnd.show();
     this.backgnd.size(this.height);
     this.backgnd.play();
+
+    document.getElementById("startVideo").onended = () => {
+      window.dispatchEvent(new CustomEvent("startGame"));
+    };
   }
 
   stop() {
