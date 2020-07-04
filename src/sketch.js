@@ -292,8 +292,7 @@ window.addEventListener("enterView", (ev) => {
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
       setTimeout(() => {
-        window.dispatchEvent(
-          new CustomEvent("addAction", {
+        window.dispatchEvent(new CustomEvent("addAction", {
             detail: {
               origin: "demo",
               name: "endDemo",
@@ -781,13 +780,17 @@ function setupGame() {
     if (ev.detail === "demo") {
       setTimeout(() => {
         homeScreen.setPost(postImg_demoJoined);
-        mobilePhone.showScreen("homeScreen");
+        phoneIcon.setNotification();
+        homeScreenBtn.setNotification();
+        // mobilePhone.showScreen("homeScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 6000);
     } else {
       setTimeout(() => {
         homeScreen.setPost(postImg_counterDemoJoined);
-        mobilePhone.showScreen("homeScreen");
+        phoneIcon.setNotification();
+        homeScreenBtn.setNotification();
+        // mobilePhone.showScreen("homeScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 6000);
     }
@@ -818,9 +821,18 @@ function setupGame() {
 
   window.addEventListener("friendMessage", () => {
     setTimeout(() => {
+<<<<<<< HEAD
       barLink.enable();
       messageScreen.setEvent("friendMessage");
       mobilePhone.showScreen("messageScreen");
+=======
+      messageScreen.reset();
+      barLink.enable();
+      messageScreen.setEvent("friendMessage");
+      phoneIcon.setNotification();
+      msgScreenBtn.setNotification();
+      // mobilePhone.showScreen("messageScreen");
+>>>>>>> animations-implementation
       window.dispatchEvent(new CustomEvent("phoneVibration"));
     }, 2000);
   });
@@ -834,11 +846,14 @@ function setupGame() {
       player.actionDone("coffeeHouse", "groupInvitation")
     ) {
       setTimeout(() => {
+        messageScreen.reset();
         messageScreen.setEvent("interview");
-        mobilePhone.showScreen("messageScreen");
-        homeScreenBtn.disable();
-        postScreenBtn.disable();
-        msgScreenBtn.disable();
+        phoneIcon.setNotification();
+        msgScreenBtn.setNotification();
+        // mobilePhone.showScreen("messageScreen");
+        // homeScreenBtn.disable();
+        // postScreenBtn.disable();
+        // msgScreenBtn.disable();
         phoneButton.disable();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 14000);
@@ -880,16 +895,14 @@ function setupGame() {
 
   window.addEventListener("interviewAccepted", (ev) => {
     if (!ev.detail) {
-      homeScreenBtn.enable();
-      postScreenBtn.enable();
-      msgScreenBtn.enable();
       phoneButton.enable();
 
       setTimeout(() => {
         homeScreen.setPost(postImg_interviewDenied);
-        messageScreen.reset();
+        phoneIcon.setNotification();
+        homeScreenBtn.setNotification();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
-      }, 3000);
+      }, 8000);
     }
   });
 
@@ -898,6 +911,7 @@ function setupGame() {
       if (player.actionDone("coffeeHouse", "statementDefended", true)) {
         if (player.actionDone("coffeeHouse", "proDemo", true)) {
           homeScreen.setPost(postImg_interviewDefend);
+
         } else {
           homeScreen.setPost(postImg_interviewRevoke);
         }
@@ -906,10 +920,10 @@ function setupGame() {
       } else {
         homeScreen.setPost(postImg_interviewDefend);
       }
-      messageScreen.reset();
-      mobilePhone.showScreen("homeScreen");
       window.dispatchEvent(new CustomEvent("phoneVibration"));
-    }, 3000);
+      phoneIcon.setNotification();
+      homeScreenBtn.setNotification();
+    }, 8000);
 
     homeScreenBtn.enable();
     postScreenBtn.enable();
@@ -919,13 +933,12 @@ function setupGame() {
 
   window.addEventListener("groupInvitation", () => {
     setTimeout(() => {
+      messageScreen.reset();
       messageScreen.setEvent("invite");
-      mobilePhone.showScreen("messageScreen");
-      homeScreenBtn.disable();
-      postScreenBtn.disable();
-      msgScreenBtn.disable();
       phoneButton.disable();
       window.dispatchEvent(new CustomEvent("phoneVibration"));
+      phoneIcon.setNotification();
+      msgScreenBtn.setNotification();
     }, 6000);
   });
 
@@ -985,6 +998,10 @@ function setupGame() {
     phoneIcon.enable();
   });
 
+  window.addEventListener("resetNotification", () => {
+    phoneIcon.resetNotification();
+  })
+
   animate.addAnimation("phoneVibrate_1", phoneIcon, "rotationAngle", 0, 0.05, 0.025);
   animate.addAnimation("phoneVibrate_2", phoneIcon, "rotationAngle", 0.05, -0.05, 0.05);
 
@@ -1032,8 +1049,10 @@ function setupGame() {
         } else {
           homeScreen.setPost(postImg_groupInvitationDenied);
         }
-        mobilePhone.showScreen("homeScreen");
-        messageScreen.reset();
+        // mobilePhone.showScreen("homeScreen");
+        // messageScreen.reset();
+        homeScreenBtn.setNotification();
+        phoneIcon.setNotification();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
         window.dispatchEvent(
           new CustomEvent("addAction", {
@@ -1333,9 +1352,9 @@ window.addEventListener("pickupSign", () => {
 });
 
 window.addEventListener("joinDemo", (ev) => {
-  if(ev.detail === "demo"){
+  if (ev.detail === "demo") {
     player.changeParameters(1, -2, 0);
-  }else{
+  } else {
     player.changeParameters(-1, 1, 0);
   }
 });
