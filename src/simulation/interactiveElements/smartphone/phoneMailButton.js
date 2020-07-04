@@ -16,8 +16,19 @@ export default class PhoneMailButton extends Sprite {
     // send mail
     let from = "info@florian-beck.de";
     let to = "social-whispers@interactivemedia.design";
+    let text = ` 
+    <p>
+      Liebe*r Teilnehmer*in,<br />
+      <br />
+      vielen Dank für Ihre Teilnahme an unserer Simulation und Ihr Interesse am Thema!<br />
+      Im Anhang finden Sie weitere Hinweise zum Umgang mit Informationen in sozialen Medien.<br />
+      <br />
+      Viele Grüße<br />
+      <br />
+      Florian, Lars, Luisa und Max
+    </p>`
 
-    this.sendMail(from, to);
+    this.sendMail(from, to, text);
     console.log("Send mail to: " + from);
   }
 
@@ -37,7 +48,7 @@ export default class PhoneMailButton extends Sprite {
     text("Mehr Informationen", 0, 0, this.width, this.height);
   }
 
-  sendMail(from, to) {
+  sendMail(from, to, content) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "./src/simulation/interactiveElements/smartphone/mail.php", true);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -47,7 +58,7 @@ export default class PhoneMailButton extends Sprite {
         console.log("Mail sendt successfully!");
       }
     };
-    xhr.send(JSON.stringify({ from: from, to: to}));
+    xhr.send(JSON.stringify({ from: from, to: to, content: content }));
   }
 
   resetElement() {
