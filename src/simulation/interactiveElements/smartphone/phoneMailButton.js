@@ -14,9 +14,9 @@ export default class PhoneMailButton extends Sprite {
     this.disable();
 
     // send mail
-    let from = "info@florian-beck.de";
-    let to = "social-whispers@interactivemedia.design";
-    let text = ` 
+    let from = "social-whispers@interactivemedia.design";
+    let to = "info@florian-beck.de";
+    let content = ` 
     <p>
       Liebe*r Teilnehmer*in,<br />
       <br />
@@ -28,7 +28,7 @@ export default class PhoneMailButton extends Sprite {
       Florian, Lars, Luisa und Max
     </p>`
 
-    this.sendMail(from, to, text);
+    this.sendMail(from, to, content);
     console.log("Send mail to: " + from);
   }
 

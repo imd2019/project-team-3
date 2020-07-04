@@ -1036,8 +1036,6 @@ function setupGame() {
         } else {
           homeScreen.setPost(postImg_groupInvitationDenied);
         }
-        // mobilePhone.showScreen("homeScreen");
-        // messageScreen.reset();
         homeScreenBtn.setNotification();
         phoneIcon.setNotification();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
