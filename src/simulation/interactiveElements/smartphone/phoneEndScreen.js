@@ -127,10 +127,8 @@ export default class PhoneEndScreen extends Sprite {
         170
       );
 
-      //input shown
-      noStroke();
-      fill("white");
-      rect(17, 428, 350, 50);
+      // //input shown
+      // this.children[4].show();
     }
   }
 

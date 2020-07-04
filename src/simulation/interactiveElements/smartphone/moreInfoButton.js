@@ -14,6 +14,7 @@ export default class MoreInfoButton extends Sprite {
         this.parent.children[2].hide();
         this.parent.children[3].hide();
         this.parent.children[4].show();
+        this.parent.children[5].show();
     }
 
 

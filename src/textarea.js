@@ -12,6 +12,8 @@ export default class TextArea extends InteractiveObject {
     this.input = keyInput;
     this.cursorPos = 0;
     this.cursorInterval = 0;
+    this.hide();
+    this.disable();
   }
 
   clicked() {
@@ -70,10 +72,11 @@ export default class TextArea extends InteractiveObject {
   }
 
   draw() {
-    noFill();
+    this.enable();
+    fill(170);
     rect(0, 0, this.width, this.height, 5);
-    fill("grey");
-    textSize(16);
+    fill(0);
+    textSize(16 * this.calcScale);
     textAlign(LEFT, TOP);
     textFont(window.fonts.franklinGothic);
     text(this.content.join(""), 5, 5, this.width - 5, this.height - 5);
