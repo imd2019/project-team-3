@@ -210,25 +210,25 @@ window.addEventListener("enterView", (ev) => {
   animate.start("fadeOut", false, () => {
     animate.start("fadeOut", true);
   });
-  setTimeout( () => {
+  setTimeout(() => {
     game.enterView(ev.detail);
   }, 1000);
-  
-  if(ev.detail === "bar") {
+
+  if (ev.detail === "bar") {
     doorSound.play();
     citySound.fade(0, 1);
     window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
     window.dispatchEvent(new CustomEvent("barPhoneVibration"));
   }
 
-  if(ev.detail === "demo") {
+  if (ev.detail === "demo") {
     citySound.fade(0.2, 2);
     leavesSound.fade(0, 1);
     owlSound.fade(0, 1);
     if (!player.actionDone("demo", "endDemo")) {
       window.dispatchEvent(new CustomEvent("startDemoAnimation"));
       demoSound.fade(0.2, 1);
-      setTimeout( () => {
+      setTimeout(() => {
         policeSirenSound.play();
         policeSirenSound.setVolume(0.4);
         policeSirenSound.fade(0, 7.5);
@@ -236,7 +236,7 @@ window.addEventListener("enterView", (ev) => {
     }
   }
 
-  if(ev.detail === "kiosk") {
+  if (ev.detail === "kiosk") {
     demoSound.fade(0, 1);
   }
 
@@ -246,7 +246,7 @@ window.addEventListener("enterView", (ev) => {
     fountainSound.fade(0, 2);
     owlSound.fade(0.05, 1);
     demoSound.fade(0.02, 1);
-    
+
     window.dispatchEvent(new CustomEvent("stoppDemoAnimation"));
 
     if (player.actionDone("demo") || player.actionDone("coffeeHouse")) {
@@ -261,15 +261,19 @@ window.addEventListener("enterView", (ev) => {
       window.dispatchEvent(events[rand]);
     }
     if (player.actionDone("kiosk")) {
-      window.dispatchEvent(new CustomEvent("hideNewspapers"));
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent("hideNewspapers"));
+      }, 1000);
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse")) {
 
-      window.dispatchEvent(new CustomEvent("addAction", {detail: {
-        origin: "demo",
-        name: "endDemo",
-        data: {},
-      }}));
+      window.dispatchEvent(new CustomEvent("addAction", {
+        detail: {
+          origin: "demo",
+          name: "endDemo",
+          data: {},
+        }
+      }));
     }
     if (player.actionDone("demo") && player.actionDone("coffeeHouse") && player.actionDone("kiosk")) {
       window.dispatchEvent(new CustomEvent("friendMessage"));
@@ -302,7 +306,7 @@ function setupGame() {
   // views
   let park = new View("park", 4098, 768, parkBackgnd);
   game.addView(park);
-  window.dispatchEvent(new CustomEvent("enterView", {detail: "park"}));
+  window.dispatchEvent(new CustomEvent("enterView", { detail: "park" }));
 
   let kiosk = new View("kiosk", 1792, 768, parkBackgnd);
   game.addView(kiosk);
@@ -320,6 +324,172 @@ function setupGame() {
   game.addView(global);
 
   // display objects & interactive objects
+  let titleScreenBackground = new ColorScreen(0, 0, windowWidth, windowHeight, color("#512109"));
+  titleScreen.addChild(titleScreenBackground);
+
+  let titleScreenStreet = new ColorScreen(0, windowHeight * 0.68, windowWidth, windowHeight - windowHeight * 0.68, color("#000000"));
+  titleScreen.addChild(titleScreenStreet);
+
+  let startGameBtn = new TitleScreenButton(
+    windowWidth / 20 + 40,
+    windowHeight / 3,
+    0, 20,
+    "Spiel starten",
+    window.fonts.rockwell,
+    color("#8b4726"),
+    color("#ffa500"),
+    "playStartVideo"
+  );
+  titleScreen.addChild(startGameBtn);
+
+  let settingsBtn = new TitleScreenButton(
+    windowWidth / 20 + 40,
+    windowHeight / 3 + 40,
+    0, 20,
+    "Steuerung",
+    window.fonts.rockwell,
+    color("#8b4726"),
+    color("#ffa500"),
+    "showInstructions"
+  );
+  titleScreen.addChild(settingsBtn);
+
+  let aboutUsBtn = new TitleScreenButton(
+    windowWidth / 20 + 40,
+    windowHeight / 3 + 80,
+    0, 20,
+    "Über uns",
+    window.fonts.rockwell,
+    color("#8b4726"),
+    color("#ffa500"),
+    "showAboutUs"
+  );
+  titleScreen.addChild(aboutUsBtn);
+
+  let creditsBtn = new TitleScreenButton(
+    windowWidth / 20 + 40,
+    windowHeight / 3 + 120,
+    0, 20,
+    "Credits",
+    window.fonts.rockwell,
+    color("#8b4726"),
+    color("#ffa500"),
+    "showCredits"
+  );
+  titleScreen.addChild(creditsBtn);
+
+  window.addEventListener("playStartVideo", () => {
+    startGameBtn.disable();
+    settingsBtn.disable();
+    aboutUsBtn.disable();
+    coffeeHouseMusicSound.fade(0, 1);
+    setTimeout(() => {
+      coffeeHouseMusicSound.stop();
+    }, 1000);
+    window.dispatchEvent(new CustomEvent("enterView", { detail: "startVideo" }));
+    setTimeout(() => {
+      startVideoPlayer.play();
+    }, 1000);
+  });
+
+  window.addEventListener("startGame", () => {
+    clearTimeout(startGameTimeout);
+    if (!citySound.isLooping()) {
+      citySound.loop();
+      leavesSound.loop();
+      fountainSound.loop();
+      owlSound.loop();
+    }
+    if (!demoSound.isLooping()) {
+      demoSound.loop();
+    }
+    animate.start("fadeStartVideo", false, () => {
+      startVideoPlayer.stop();
+    });
+
+    window.dispatchEvent(new CustomEvent("enterView", { detail: "park" }));
+    setTimeout(() => {
+      phoneIcon.show();
+      phoneIcon.enable();
+    }, 1000);
+  });
+
+  let titleScreenImage = new DisplayObject(windowWidth * 0.15 + 8, windowHeight * 0.15 - 25, 593 * 1.3, 403 * 1.3, titleScreenImg);
+  titleScreen.addChild(titleScreenImage);
+
+  let streetLamps = [];
+
+  let titleScreenLampBulb = new StreetLampBulb(windowWidth * 0.15, windowHeight * 0.15, 39, 17, streetLampBulbOnImg, streetLampBulbOffImg);
+  titleScreen.addChild(titleScreenLampBulb);
+  streetLamps.push(titleScreenLampBulb);
+
+  let instructionBox = new InfoBox(
+    windowWidth * 0.15 + 300, windowHeight * 0.15 - 25,
+    windowWidth / 2, windowHeight / 2 - 50,
+    "Steuerung:",
+    window.fonts.rockwell,
+    "Bewege die Maus nach links oder rechts, um dich umzuschauen. Fahre mit der Maus über Objekte, wenn Sie interaktiv sind, wird sich dein Mauszeiger verändern.",
+    window.fonts.franklinGothic,
+    color("#ffa500")
+  );
+  titleScreen.addChild(instructionBox);
+
+  let aboutUsBox = new InfoBox(
+    windowWidth * 0.15 + 300, windowHeight * 0.15 - 25,
+    windowWidth / 2, windowHeight / 2 - 50,
+    "Über uns:",
+    window.fonts.rockwell,
+    "Wir sind Florian, Luisa, Max und Lars aus dem 2. Semesters des Studiengangs Interactive Media Design. Social Whispers ist unser gemeinsames Semesterprojekt. Es simuliert die Verbreitung von Informationen in sozialen Medien und soll Nutzenden dabei helfen, Informationen im Internet differenzierter zu betrachten. Wir möchten sie dazu anregen, sich Informationen immer aus mehreren, seriösen Quellen einholen.",
+    window.fonts.franklinGothic,
+    color("#ffa500")
+  );
+  titleScreen.addChild(aboutUsBox);
+
+  let creditsBox = new InfoBox(
+    windowWidth * 0.15 + 300, windowHeight * 0.15 - 25,
+    windowWidth / 2, windowHeight / 2 - 50,
+    "Credits:",
+    window.fonts.rockwell,
+    "Sounds: Zapsplat.com" +
+    "                                                                          " +
+    "Music: freemusicarchive.org" +
+    "                                                                        " +
+    "Voice: Martin Haas martin.haas@h-da.de" +
+    "                                                   " +
+    "broken phone screen: https://www.vecteezy.com/free-vector/wrecking-ball ",
+    window.fonts.franklinGothic,
+    color("#ffa500")
+  );
+  titleScreen.addChild(creditsBox);
+
+  window.addEventListener("showInstructions", () => {
+    instructionBox.show();
+    aboutUsBox.hide();
+    creditsBox.hide();
+  });
+
+  window.addEventListener("showAboutUs", () => {
+    aboutUsBox.show();
+    instructionBox.hide();
+    creditsBox.hide();
+  });
+  window.addEventListener("showCredits", () => {
+    creditsBox.show();
+    instructionBox.hide();
+    aboutUsBox.hide();
+  });
+
+  let videoScreenBackgnd = new ColorScreen(0, 0, windowWidth, windowHeight, color("#1E0E09"));
+  startVideoScreen.addChild(videoScreenBackgnd);
+
+  let startVideoPlayer = new VideoElement((windowWidth - windowHeight * 1.778) / 2, 0, windowHeight * 1.778, windowHeight, startVideo);
+  startVideoScreen.addChild(startVideoPlayer);
+
+  animate.addAnimation("fadeStartVideo", startVideoPlayer, "volume", 1, 0, 1);
+
+  let videoSkipBtn = new StartGameButton(windowWidth - 380, windowHeight - 200, 290, 120, videoSkipBtnImg);
+  startVideoScreen.addChild(videoSkipBtn);
+
   let moon_park = new DisplayObject(2086, 25, 213, 212, moonImg);
   park.addChild(moon_park);
 
@@ -500,13 +670,13 @@ function setupGame() {
   streetLamps.push(streetLampDemo_2);
 
   // lamps flickering
-  setInterval( () => {
+  setInterval(() => {
     for (let elem of streetLamps) {
-      if ((elem.parent.name === "bar" && !floor(random(0, 3))) || 
-      (elem.parent.name === game.currentView && elem.x > 0 && elem.x < windowWidth && !floor(random(0, 10)))) {
+      if ((elem.parent.name === "bar" && !floor(random(0, 3))) ||
+        (elem.parent.name === game.currentView && elem.x > 0 && elem.x < windowWidth && !floor(random(0, 10)))) {
         elem.switch();
         lampClickSound.play();
-        setTimeout( () => {
+        setTimeout(() => {
           elem.switch();
         }, 100 * floor(random(1, 2)));
       }
@@ -538,15 +708,15 @@ function setupGame() {
   let demoAnimation_right;
 
   window.addEventListener("startDemoAnimation", () => {
-    demoAnimation_left = setInterval( () => {
+    demoAnimation_left = setInterval(() => {
       animate.start("moveDemoSigns_left", false, () => {
         console.log(demoSignsLeft.y);
         animate.start("moveDemoSigns_left", true);
       });
     }, 1000);
 
-    demoAnimation_right = setInterval( () => {
-      setTimeout( () => {
+    demoAnimation_right = setInterval(() => {
+      setTimeout(() => {
         animate.start("moveDemoSigns_right", false, () => {
           animate.start("moveDemoSigns_right", true);
         });
@@ -554,7 +724,7 @@ function setupGame() {
     }, 1000);
   });
 
-  window.addEventListener("stoppDemoAnimation", () => { 
+  window.addEventListener("stoppDemoAnimation", () => {
     clearInterval(demoAnimation_left);
     clearInterval(demoAnimation_right);
   });
@@ -604,13 +774,17 @@ function setupGame() {
     if (ev.detail === "demo") {
       setTimeout(() => {
         homeScreen.setPost(postImg_demoJoined);
-        mobilePhone.showScreen("homeScreen");
+        phoneIcon.setNotification();
+        homeScreenBtn.setNotification();
+        // mobilePhone.showScreen("homeScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 8000);
     } else {
       setTimeout(() => {
         homeScreen.setPost(postImg_counterDemoJoined);
-        mobilePhone.showScreen("homeScreen");
+        phoneIcon.setNotification();
+        homeScreenBtn.setNotification();
+        // mobilePhone.showScreen("homeScreen");
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 8000);
     }
@@ -640,9 +814,13 @@ function setupGame() {
   });
 
   window.addEventListener("friendMessage", () => {
-    setTimeout( () => {
+    setTimeout(() => {
+      messageScreen.reset();
       barLink.enable();
       messageScreen.setEvent("friendMessage");
+      phoneIcon.setNotification();
+      msgScreenBtn.setNotification();
+      // mobilePhone.showScreen("messageScreen");
       window.dispatchEvent(new CustomEvent("phoneVibration"));
     }, 2000);
   });
@@ -653,11 +831,14 @@ function setupGame() {
   window.addEventListener("enterCoffeeHouse", () => {
     if (player.actionDone("demo", "joinDemo") || player.actionDone("coffeeHouse", "groupInvitation")) {
       setTimeout(() => {
+        messageScreen.reset();
         messageScreen.setEvent("interview");
-        mobilePhone.showScreen("messageScreen");
-        homeScreenBtn.disable();
-        postScreenBtn.disable();
-        msgScreenBtn.disable();
+        phoneIcon.setNotification();
+        msgScreenBtn.setNotification();
+        // mobilePhone.showScreen("messageScreen");
+        // homeScreenBtn.disable();
+        // postScreenBtn.disable();
+        // msgScreenBtn.disable();
         phoneButton.disable();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
       }, 5000);
@@ -668,19 +849,19 @@ function setupGame() {
     citySound.fade(0, 1);
     leavesSound.fade(0, 1);
     doorSound.play();
-  
+
     coffeeHouse.disable();
     animate.start("fadeOut");
-  
-    setTimeout( () => {
+
+    setTimeout(() => {
       coffeeHouseSound.play();
       coffeeHouseMusicSound.play();
     }, 800);
-    setTimeout( () => {
+    setTimeout(() => {
       coffeeHouseSound.fade(0, 1);
       coffeeHouseMusicSound.fade(0, 1);
     }, 10000);
-    setTimeout( () => {
+    setTimeout(() => {
       doorSound.play();
       citySound.fade(0.1, 2);
       leavesSound.fade(0.6, 2);
@@ -690,24 +871,26 @@ function setupGame() {
         coffeeHouse.enable();
       });
     }, 10500);
-    setTimeout( () => {
+    setTimeout(() => {
       coffeeHouseSound.stop();
       coffeeHouseMusicSound.stop();
     }, 12500);
   });
 
-  window.addEventListener("interviewAccepted", () => {
-    if (!player.actionDone("coffeeHouse", "interviewAccepted", true)) {
-      homeScreenBtn.enable();
-      postScreenBtn.enable();
-      msgScreenBtn.enable();
+  window.addEventListener("interviewAccepted", (ev) => {
+    if (!ev.detail) {
+      // homeScreenBtn.enable();
+      // postScreenBtn.enable();
+      // msgScreenBtn.enable();
       phoneButton.enable();
 
       setTimeout(() => {
         homeScreen.setPost(postImg_interviewDenied);
-        messageScreen.reset();
+        phoneIcon.setNotification();
+        homeScreenBtn.setNotification();
+        // messageScreen.reset();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
-      }, 3000);
+      }, 8000);
     }
   });
 
@@ -716,6 +899,7 @@ function setupGame() {
       if (player.actionDone("coffeeHouse", "statementDefended", true)) {
         if (player.actionDone("coffeeHouse", "proDemo", true)) {
           homeScreen.setPost(postImg_interviewDefend);
+
         } else {
           homeScreen.setPost(postImg_interviewRevoke);
         }
@@ -724,9 +908,12 @@ function setupGame() {
       } else {
         homeScreen.setPost(postImg_interviewDefend);
       }
-      messageScreen.reset();
+      // messageScreen.reset();
+      // mobilePhone.showScreen("homeScreen");
       window.dispatchEvent(new CustomEvent("phoneVibration"));
-    }, 3000);
+      phoneIcon.setNotification();
+      homeScreenBtn.setNotification();
+    }, 8000);
 
     homeScreenBtn.enable();
     postScreenBtn.enable();
@@ -736,14 +923,18 @@ function setupGame() {
 
   window.addEventListener("groupInvitation", () => {
     setTimeout(() => {
+      messageScreen.reset();
       messageScreen.setEvent("invite");
-      mobilePhone.showScreen("messageScreen");
-      homeScreenBtn.disable();
-      postScreenBtn.disable();
-      msgScreenBtn.disable();
+
+      // mobilePhone.showScreen("messageScreen");
+      // homeScreenBtn.disable();
+      // postScreenBtn.disable();
+      // msgScreenBtn.disable();
       phoneButton.disable();
       window.dispatchEvent(new CustomEvent("phoneVibration"));
-    }, 8000);
+      phoneIcon.setNotification();
+      msgScreenBtn.setNotification();
+    }, 6000);
   });
 
   window.addEventListener("invitationAccepted", () => {
@@ -809,6 +1000,10 @@ function setupGame() {
     phoneIcon.enable();
   });
 
+  window.addEventListener("resetNotification", () => {
+    phoneIcon.resetNotification();
+  })
+
   animate.addAnimation("phoneVibrate_1", phoneIcon, "rotationAngle", 0, 0.05, 0.025);
   animate.addAnimation("phoneVibrate_2", phoneIcon, "rotationAngle", 0.05, -0.05, 0.05);
 
@@ -820,7 +1015,8 @@ function setupGame() {
 
   animate.addAnimation("moveToCenter_h", phoneIcon, "x", phoneIcon.saveX, mobilePhone.x, 0.6, "linear");
   animate.addAnimation("moveToCenter_v", phoneIcon, "y", phoneIcon.saveY, mobilePhone.y, 0.6, "ease-in-quad");
-  animate.addAnimation("scaleToPhoneSize", phoneIcon, "scale", phoneIcon.saveScale, mobilePhone.scale * (mobilePhone.height / phoneIcon.height), 0.6, "ease-in-quad");
+  animate.addAnimation("scaleToPhoneSize", phoneIcon, "scale", phoneIcon.saveScale,
+    mobilePhone.scale * (mobilePhone.height / phoneIcon.height), 0.6, "ease-in-quad");
 
   window.addEventListener("openPhone", () => {
     animate.start("moveToCenter_h");
@@ -854,8 +1050,10 @@ function setupGame() {
         } else {
           homeScreen.setPost(postImg_groupInvitationDenied);
         }
-        mobilePhone.showScreen("homeScreen");
-        messageScreen.reset();
+        // mobilePhone.showScreen("homeScreen");
+        // messageScreen.reset();
+        homeScreenBtn.setNotification();
+        phoneIcon.setNotification();
         window.dispatchEvent(new CustomEvent("phoneVibration"));
         window.dispatchEvent(
           new CustomEvent("addAction", {
@@ -980,41 +1178,41 @@ function setupGame() {
   global.addChild(fadeScreen);
 
   animate.addAnimation("fadeOut", fadeScreen, "opacity", 0, 1, 1, "ease-in-out-quad");
-+
-  // sound setup
-  window.addEventListener("soundReset", () => {
-    if (!citySound.isLooping()) {
-      citySound.loop();
-      leavesSound.loop();
-      fountainSound.loop();
-      owlSound.loop();
-    }
-    if (!demoSound.isLooping()) {
-      demoSound.loop();
-    }
+  +
+    // sound setup
+    window.addEventListener("soundReset", () => {
+      if (!citySound.isLooping()) {
+        citySound.loop();
+        leavesSound.loop();
+        fountainSound.loop();
+        owlSound.loop();
+      }
+      if (!demoSound.isLooping()) {
+        demoSound.loop();
+      }
 
-    outsideStepsSound_fast.setVolume(0.3);
-    outsideStepsSound_slow.setVolume(0.3);
-    insideStepsSound_fast.setVolume(0.2);
-    insideStepsSound_slow.setVolume(0.2);
-    flyerSound.setVolume(0.3);
-    streetsignClickSound.setVolume(0.7);
-    pickupSignSound.setVolume(0.8);
-    phoneVibrationSound.setVolume(1.3);
-    phoneMsgSound.setVolume(0.4);
-    phoneTapSound.setVolume(0.5);
-    newspaperSound.setVolume(0.3);
-    fountainSound.setVolume(0);
-    owlSound.setVolume(0.05);
-    demoSound.setVolume(0.02);
-    doorSound.setVolume(0.3);
-    coffeeHouseSound.setVolume(0.7);
-    coffeeHouseMusicSound.setVolume(0.15);
-    lampClickSound.setVolume(0.6);
-    registerSound.setVolume(0.7);
-    citySound.setVolume(0.05);
-    demoBenchSound.setVolume(0.6);
-  });
+      outsideStepsSound_fast.setVolume(0.3);
+      outsideStepsSound_slow.setVolume(0.3);
+      insideStepsSound_fast.setVolume(0.2);
+      insideStepsSound_slow.setVolume(0.2);
+      flyerSound.setVolume(0.3);
+      streetsignClickSound.setVolume(0.7);
+      pickupSignSound.setVolume(0.8);
+      phoneVibrationSound.setVolume(1.3);
+      phoneMsgSound.setVolume(0.4);
+      phoneTapSound.setVolume(0.5);
+      newspaperSound.setVolume(0.3);
+      fountainSound.setVolume(0);
+      owlSound.setVolume(0.05);
+      demoSound.setVolume(0.02);
+      doorSound.setVolume(0.3);
+      coffeeHouseSound.setVolume(0.7);
+      coffeeHouseMusicSound.setVolume(0.15);
+      lampClickSound.setVolume(0.6);
+      registerSound.setVolume(0.7);
+      citySound.setVolume(0.05);
+      demoBenchSound.setVolume(0.6);
+    });
 
   window.dispatchEvent(new CustomEvent("soundReset"));
 }
@@ -1030,10 +1228,10 @@ window.addEventListener("phoneVibration", () => {
 
   animate.start("phoneVibrate_1", false, () => {
     let count = 0;
-    let interval = setInterval( () => {
+    let interval = setInterval(() => {
       animate.start("phoneVibrate_2", false, () => {
         if (count < 18) {
-          animate.start("phoneVibrate_2", true);          
+          animate.start("phoneVibrate_2", true);
         } else {
           animate.start("phoneVibrate_2", true, () => {
             animate.start("phoneVibrate_1", false);
@@ -1055,7 +1253,7 @@ window.addEventListener("barPhoneVibration", () => {
   phoneVibrationSound.setVolume(0.3);
 
   animate.start("barPhoneVibrate_1", false, () => {
-    barPhoneVibrate = setInterval( () => {
+    barPhoneVibrate = setInterval(() => {
       animate.start("barPhoneVibrate_2", false, () => {
         animate.start("barPhoneVibrate_2", true);
       });
@@ -1134,6 +1332,90 @@ window.addEventListener("walkInsideSlow", () => {
   }
 });
 
+/* parameter changes */
+
+window.addEventListener("pickupSign", () => {
+  player.changeParameters(0, 0, 1);
+});
+
+window.addEventListener("joinDemo", (ev) => {
+  if (ev.detail === "demo") {
+    player.changeParameters(1, -2, 0);
+  } else {
+    player.changeParameters(-1, 1, 0);
+  }
+});
+
+window.addEventListener("watchDemo", () => {
+  player.changeParameters(-1, 0, 0);
+});
+
+window.addEventListener("postChosen", (ev) => {
+  switch (ev.detail) {
+    case postImg_watchedProDemo:
+      player.changeParameters(1, -1, 1);
+      break;
+    case postImg_watchedProCounterDemo:
+      player.changeParameters(0, 1, 1);
+      break;
+    case postImg_watchedProNone:
+      player.changeParameters(0, 0, 1);
+      break;
+  }
+});
+
+window.addEventListener("pickupFlyer", (ev) => {
+  if (ev.detail === "coffeeHouse") {
+    player.changeParameters(0, 1, 0);
+  }
+});
+
+window.addEventListener("invitationAccepted", (ev) => {
+  if (ev.detail) {
+    player.changeParameters(2, -2, -1);
+  } else {
+    player.changeParameters(-1, 1, 0);
+  }
+});
+
+window.addEventListener("interviewAccepted", (ev) => {
+  if (ev.detail) {
+    player.changeParameters(0, 1, 1);
+  } else {
+    player.changeParameters(0, 0, -2);
+  }
+});
+
+window.addEventListener("statementDefended", (ev) => {
+  if (ev.detail) {
+    if (player.actionDone("coffeeHouse", "proDemo", true)) {
+      player.changeParameters(1, -1, 1);
+    } else {
+      player.changeParameters(-1, 1, -1);
+    }
+  } else if (player.actionDone("coffeeHouse", "proDemo", true)) {
+    player.changeParameters(1, -1, -1);
+  } else {
+    player.changeParameters(1, -1, -1);
+  }
+});
+
+window.addEventListener("buyNewspaper", (ev) => {
+  switch (ev.detail) {
+    case "conspiracy-theorist":
+      player.changeParameters(1, -1, -1);
+      break;
+    case "wannnabe-influencer":
+      player.changeParameters(1, -1, 1);
+      break;
+    case "reflective-user":
+      player.changeParameters(-1, 1, -1);
+      break;
+    case "follower":
+      player.changeParameters(-1, -1, -1);
+  }
+});
+
 /* display */
 
 function draw() {
@@ -1162,3 +1444,14 @@ function mouseWheel(ev) {
   game.mouseWheel(ev);
 }
 window.mouseWheel = mouseWheel;
+
+window.addEventListener("cursor", (ev) => {
+  if (ev.detail === "hovered") {
+    cursor("./img/assets/cursorHovered.png");
+  } else {
+    cursor("./img/assets/cursorStandard.png");
+  }
+});
+
+
+

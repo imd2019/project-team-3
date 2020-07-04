@@ -1,5 +1,6 @@
 import Sprite from "../../../sprite.js";
 
+
 export default class PhoneMessageButton extends Sprite {
   constructor(x, y, width, height, name, backgnd = undefined) {
     super(x, y, width, height, backgnd);
@@ -8,29 +9,65 @@ export default class PhoneMessageButton extends Sprite {
     this.conversationIndex = 0;
     this.currentMessage = undefined;
     this.event = undefined;
+    // this.animationOver = undefined;
+    // this.animation = undefined;
     this.disable();
     this.hide();
   }
 
   clicked() {
     window.dispatchEvent(new CustomEvent("phoneSendMsg"));
-    this.currentMessage.isClicked = true;
+    this.currentMessage.animationText = setInterval(() => {
+      this.currentMessage.animationTextOver = false;
+      this.currentMessage.animationAnswerOver = false;
+      this.parent.bufferAnimation("RIGHT");
+    }, 30 / 1000);
+    setTimeout(() => {
+      this.currentMessage.animationAnswer = setInterval(() => {
+        ;
+        this.parent.bufferAnimation("LEFT");
+      }, 30 / 1000);
+    }, 3000);
     setTimeout(() => {
       this.parent.children.forEach((btn) => {
+        this.currentMessage.isClicked = true;
+        btn.disable();
+        setTimeout(() => {
+          this.currentMessage.animationTextOver = true;
+          clearInterval(this.currentMessage.animationText);
+          setTimeout(() => {
+            btn.conversationIndex++
+            this.currentMessage.animationAnswerOver = true;
+            clearInterval(this.currentMessage.animationAnswer);
+            btn.setUpMessages();
+            console.log(this.currentMessage.conversationEnded);
+            if (btn.conversationIndex < 4 && btn.visible) {
+              btn.enable();
+            }
+          }, 4000);
+          btn.setUpMessages();
+        }, 2000);
+
+
+
         btn.updateMessages();
+        // btn.setUpMessages();
+        if (this.currentMessage.conversationEnded) {
+          this.parent.children.forEach((btn) => {
+            btn.hide();
+            btn.disable();
+          });
+        }
+
       });
     }, 0); // setTimeout as temporary bugfix - a real fix will need bigger code restructuring
+
 
     this.parent.showConversation(this.currentMessage);
     this.parent.updatePosition();
     this.parent.redraw();
 
-    if (this.currentMessage.conversationEnded) {
-      this.parent.children.forEach((btn) => {
-        btn.hide();
-        btn.disable();
-      });
-    }
+
     if (
       this.currentMessage.conversationEnded ||
       this.currentMessage.demoChosen
@@ -51,6 +88,7 @@ export default class PhoneMessageButton extends Sprite {
     this.event = this.parent.event;
     this.show();
     this.enable();
+    this.conversationIndex++;
     this.setUpMessages();
   }
 
@@ -70,7 +108,7 @@ export default class PhoneMessageButton extends Sprite {
   }
 
   updateMessages() {
-    this.setUpMessages();
+
 
     if (this.conversationIndex > 2 && this.conversationIndex < 4) {
       this.show();
@@ -83,7 +121,8 @@ export default class PhoneMessageButton extends Sprite {
 
   setUpMessages() {
     let conversation;
-    this.conversationIndex++;
+    // this.conversationIndex++;
+    console.log(this.conversationIndex);
 
     switch (this.conversationIndex) {
       case 1:
@@ -99,6 +138,12 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Ihr Name ist in Verbindung mit den gerade stattfindenden Demos aufgetaucht. Unterstützen Sie diese?",
                   conversationEnded: false,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
+                  proInterview: true,
+                  actionOrigin: "coffeeHouse",
+                  actionName: "interviewAccepted",
+                  actionData: true,
                 };
                 break;
               case "invite":
@@ -110,6 +155,8 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Du bist damit nicht alleine. Du wurdest von den Mainstream-Medien geblendet. Aber damit ist es nun vorbei.",
                   conversationEnded: false,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                 };
                 break;
               case "friendMessage":
@@ -121,6 +168,8 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Komm einfach zum 14qm. Du wirst es verstehen, sobald du dort angekommen bist.",
                   conversationEnded: true,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                 };
                 break;
             }
@@ -132,10 +181,12 @@ export default class PhoneMessageButton extends Sprite {
                   id: 1,
                   buttonText: "Kein Interesse.",
                   conversationText:
-                    "Von der 'The Daily Whisper' also? Euch beantworte ich keine Fragen!",
+                    "Von der \"The Daily Whisper\" also? Euch beantworte ich keine Fragen!",
                   conversationAnswer:
-                    "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
+                    "Na gut. Dann checken Sie lieber mal Ihren Socialbook-Feed.",
                   conversationEnded: true,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                   actionOrigin: "coffeeHouse",
                   actionName: "interviewAccepted",
                   actionData: true,
@@ -147,10 +198,12 @@ export default class PhoneMessageButton extends Sprite {
                   id: 1,
                   buttonText: "Das passiert jetzt nicht wirklich.",
                   conversationText:
-                    "Ihr kennt also 'die Wahrheit'? Vermutlich zündet ihr auch regelmäßig 5G-Türme auf eurer Suche nach der Wahrheit an.",
+                    "Ihr kennt also \"die Wahrheit\"? Vermutlich zündet ihr auch regelmäßig 5G-Türme auf eurer Suche nach der Wahrheit an.",
                   conversationAnswer:
-                    "Schafe wie du werden erst verstehen, was um sie herum wirklich passiert, wenn es längst zu spät ist.",
+                    "Schafe wie du werden erst verstehen, was um sie herum wirklich passiert, wenn es längst zu spät ist!",
                   conversationEnded: true,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                   actionOrigin: "coffeeHouse",
                   actionName: "invitationAccepted",
                   actionData: false,
@@ -165,6 +218,8 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Ich bin ein alter Freund. Komm so schnell du kannst zum 14qm.",
                   conversationEnded: true,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                 };
                 break;
             }
@@ -182,8 +237,10 @@ export default class PhoneMessageButton extends Sprite {
                   conversationText:
                     "In meinen Augen stehen die Demonstranten für die richtige Sache ein.",
                   conversationAnswer:
-                    "Sie wollen also damit sagen, sie unterstützen die Aussagen und Handlungen dieser Gruppe?",
+                    "Sie wollen also damit sagen, Sie unterstützen die Aussagen und Handlungen dieser Gruppe?",
                   conversationEnded: false,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                   demoChosen: true,
                   actionOrigin: "coffeeHouse",
                   actionName: "proDemo",
@@ -199,6 +256,8 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Damit wirst du vom Schaf zum Wolf. Willkommen!",
                   conversationEnded: true,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                   actionOrigin: "coffeeHouse",
                   actionName: "invitationAccepted",
                   actionData: true,
@@ -217,6 +276,8 @@ export default class PhoneMessageButton extends Sprite {
                   conversationAnswer:
                     "Sie stellen sich also damit auf die Seite der Gegendemonstranten?",
                   conversationEnded: false,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                   demoChosen: true,
                   actionOrigin: "coffeeHouse",
                   actionName: "proDemo",
@@ -228,10 +289,12 @@ export default class PhoneMessageButton extends Sprite {
                   id: 2,
                   buttonText: "Anders überlegen.",
                   conversationText:
-                    "Ich glaube, ich sollte mich vorher erstmal informieren, was ihr so tut. ",
+                    "Ich glaube, ich sollte mich vorher erstmal informieren, was ihr so tut.",
                   conversationAnswer:
-                    "Die Mainstream-Medien verbreiten nur Lügen und Fake News. Dir ist nicht mehr zu helfen.",
+                    "Die Mainstream-Medien verbreiten nur Lügen und Fake News! Dir ist nicht mehr zu helfen.",
                   conversationEnded: true,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                   actionOrigin: "coffeeHouse",
                   actionName: "invitationAccepted",
                   actionData: false,
@@ -251,8 +314,10 @@ export default class PhoneMessageButton extends Sprite {
                   buttonText: "Aussage verteidigen.",
                   conversationText: "Ich bleibe bei dem, was ich gesagt habe.",
                   conversationAnswer:
-                    "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
+                    "Na gut. Dann checken Sie lieber mal Ihren Socialbook-Feed.",
                   conversationEnded: true,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                   actionOrigin: "coffeeHouse",
                   actionName: "statementDefended",
                   actionData: true,
@@ -268,8 +333,10 @@ export default class PhoneMessageButton extends Sprite {
                   buttonText: "Aussage revidieren.",
                   conversationText: "Das habe ich so nicht gesagt!",
                   conversationAnswer:
-                    "Na gut. Dann checken Sie lieber mal ihren Socialbook-Feed.",
+                    "Na gut. Dann checken Sie lieber mal Ihren Socialbook-Feed.",
                   conversationEnded: true,
+                  animationTextOver: false,
+                  animationAnswerOver: false,
                   actionOrigin: "coffeeHouse",
                   actionName: "statementDefended",
                   actionData: false,

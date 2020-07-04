@@ -60,7 +60,7 @@ export default class PhoneMessage extends Sprite {
       this.message.noStroke();
       this.message.fill(0);
       this.message.text(
-        "Hallo, ich bin Journalist bei der 'The Daily Whisper' und hätte ein paar Fragen.",
+        "Hallo, ich bin Journalist bei der \"The Daily Whisper\" und hätte ein paar Fragen.",
         35,
         105 + this.pos,
         315,
@@ -98,10 +98,15 @@ export default class PhoneMessage extends Sprite {
       this.message.text("Du hast keine neuen Nachrichten.", 30, 90, 330, 105);
     }
 
-    for (let elem in this.conversation) {
-      if (this.conversation[elem].isClicked) {
-        this.message.fill(170);
+    // for (let elem in this.conversation) {
+    //   if (!this.conversation[elem].animationOver && this.conversation[elem].isClicked) {
+    //     this.bufferAnimation("RIGHT");
+    //   }
+    // }
 
+    for (let elem in this.conversation) {
+      if (this.conversation[elem].isClicked && this.conversation[elem].animationTextOver) {
+        this.message.fill(170);
         this.message.rect(90, 250 + 300 * elem + this.pos, 330, 130, 5);
         this.message.noStroke();
         this.message.fill(0);
@@ -109,18 +114,24 @@ export default class PhoneMessage extends Sprite {
       }
     }
 
+
     for (let elem in this.conversation) {
-      this.message.fill(200);
-      this.message.rect(20, 400 + 300 * elem + this.pos, 330, 130, 5);
-      this.message.noStroke();
-      this.message.fill(0);
-      this.message.text(this.conversation[elem].conversationAnswer, 35, 400 + 300 * elem + this.pos, 320, 120);
+      if (this.conversation[elem].isClicked && this.conversation[elem].animationAnswerOver) {
+        this.message.fill(200);
+        this.message.rect(20, 400 + 300 * elem + this.pos, 330, 130, 5);
+        this.message.noStroke();
+        this.message.fill(0);
+        this.message.text(this.conversation[elem].conversationAnswer, 35, 400 + 300 * elem + this.pos, 320, 120);
+      }
     }
 
+
     if (this.children[0].mouseHovered() || this.children[1].mouseHovered()) {
-      this.bufferAnimation();
+      this.hoverAnimation();
     }
   }
+
+
 
   updatePosition() {
     this.pos = (this.pos - 0.2) * 9;
@@ -138,11 +149,32 @@ export default class PhoneMessage extends Sprite {
     }
   }
 
-  bufferAnimation() {
+  bufferAnimation(direction) {
+    switch (direction) {
+
+      case "RIGHT":
+        this.message.textAlign(CENTER, CENTER);
+        this.message.fill(170);
+        this.message.rect(350, 250 + 300 * (this.conversation.length - 1) + this.pos, 80, 70, 5);
+        this.message.noStroke();
+        this.message.fill(0);
+        this.message.text(".  .  .", 350, 250 + 300 * (this.conversation.length - 1) + this.pos, 80, 70);
+        break;
+      case "LEFT":
+        this.message.textAlign(CENTER, CENTER);
+        this.message.fill(200);
+        this.message.rect(20, 400 + 300 * (this.conversation.length - 1) + this.pos, 80, 70, 5);
+        this.message.noStroke();
+        this.message.fill(0);
+        this.message.text(".  .  .", 20, 400 + 300 * (this.conversation.length - 1) + this.pos, 80, 70);
+        break;
+    };
+  }
+
+  hoverAnimation() {
     this.message.textAlign(CENTER, CENTER);
     this.message.fill(170);
     this.message.rect(350, 250 + 300 * this.conversation.length + this.pos, 80, 70, 5);
-
     this.message.noStroke();
     this.message.fill(0);
     this.message.text(".  .  .", 350, 250 + 300 * this.conversation.length + this.pos, 80, 70);
