@@ -1149,6 +1149,7 @@ function setupGame() {
   endScreen.addChild(videoPlayer);
   for (let elem of endVideo) {
     document.getElementById(elem.elt.id).onended = () => {
+      videoPlayer.updatePosition();
       videoPlayer.activateButtons();
     };
   }
@@ -1177,7 +1178,7 @@ function setupGame() {
   window.addEventListener("restartGame", () => {
     game.reset();
   });
-  
+
   let mailTextInput = new TextArea(17, 428, 350, 50, keys);
   endScreen.addChild(mailTextInput);
   keys.getFocus(mailTextInput);

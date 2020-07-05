@@ -7,18 +7,28 @@ export default class PhoneEndScreen extends Sprite {
     this.overlay = overlay;
     this.user = user;
     this.answered = false;
+    this.answeredAnimation = { a1: false, a2: false };
+
     this.role = undefined;
     this.pos = 0.1;
     this.message = createGraphics(width, height);
     this.buttonsActivated = false;
+    this.buttonsActivatedAnimation = false;
     this.inputActivated = false;
+    this.inputActivatedAnimation = false;
     this.mailSent = false;
+    this.mailSentAnimation = { a1: false, a2: false };
     this.mailFailed = false;
     this.mailAddress = undefined;
-    this.mail
+
+    this.buffering = false;
+    this.chatNode = undefined;
+    this.count = 0;
+    this.chatAnimated = false;
   }
 
   draw() {
+    console.log(this.pos);
     fill(220);
     noStroke();
     rect(0, 0, this.width, this.height);
@@ -40,11 +50,7 @@ export default class PhoneEndScreen extends Sprite {
     rect(100, 71, this.width - 115, 4);
 
     this.redraw();
-  }
 
-  answer(role) {
-    this.answered = true;
-    this.role = role;
   }
 
   redraw() {
@@ -70,81 +76,111 @@ export default class PhoneEndScreen extends Sprite {
     );
 
     if (this.answered) {
-      this.message.fill(170);
-      this.message.rect(90, 250 + this.pos, 330, 130, 5);
-      this.message.noStroke();
-      this.message.fill(0);
-      this.message.text(
-        "Hast du mir geschrieben? Wovon sprichst du? Weißt du wer ich bin?",
-        105,
-        250 + this.pos,
-        320,
-        120
-      );
+      if (!this.answeredAnimation.a1) {
+        this.chatAnimation();
+        this.bufferAnimation("RIGHT", 340, 250);
+      } else {
+        this.message.fill(170);
+        this.message.rect(90, 250 + this.pos, 330, 130, 5);
+        this.message.noStroke();
+        this.message.fill(0);
+        this.message.text(
+          "Hast du mir geschrieben? Wovon sprichst du? Weißt du wer ich bin?",
+          105,
+          250 + this.pos,
+          320,
+          120
+        );
+      }
 
-      this.message.fill(200);
+      if (this.answeredAnimation.a1 && !this.answeredAnimation.a2) {
+        this.chatAnimation();
+        this.bufferAnimation("LEFT", 20, 400);
+      } else if (this.answeredAnimation.a2) {
 
-      this.message.rect(20, 400 + this.pos, 410, 400, 5);
-      this.message.noStroke();
-      this.message.fill(0);
-      this.message.text(
-        "Natürlich. Du hast deine Spuren bereits hinterlassen. \nDu bist ein" +
-        " " +
-        this.role +
-        ".",
-        35,
-        380 + this.pos,
-        400,
-        120
-      );
-      this.children[1].draw();
+        this.message.fill(200);
+
+        this.message.rect(20, 400 + this.pos, 410, 400, 5);
+        this.message.noStroke();
+        this.message.fill(0);
+        this.message.text(
+          "Natürlich. Du hast deine Spuren bereits hinterlassen. \nDu bist ein" +
+          " " +
+          this.role +
+          ".",
+          35,
+          380 + this.pos,
+          400,
+          120
+        );
+        this.children[1].show();
+        this.children[1].draw();
+      }
     }
 
     if (this.buttonsActivated) {
-      this.message.fill(200);
-
-      this.message.rect(20, 820 + this.pos, 330, 130, 5);
-      this.message.noStroke();
-      this.message.fill(0);
-      this.message.text(
-        "Möchtest du mehr erfahren oder es noch einmal versuchen?",
-        35,
-        830 + this.pos,
-        320,
-        120
-      );
+      if (!this.buttonsActivatedAnimation) {
+        this.chatAnimation();
+        this.bufferAnimation("LEFT", 20, 820);
+      } else {
+        this.message.fill(200);
+        this.message.rect(20, 820 + this.pos, 330, 130, 5);
+        this.message.noStroke();
+        this.message.fill(0);
+        this.message.text(
+          "Möchtest du mehr erfahren oder es noch einmal versuchen?",
+          35,
+          830 + this.pos,
+          320,
+          120
+        );
+        this.parent.children[2].hide();
+        this.parent.children[3].hide();
+        this.parent.children[4].show();
+        this.parent.children[5].show();
+      }
     }
 
     if (this.inputActivated) {
-      this.message.fill(200);
+      if (!this.inputActivatedAnimation) {
+        this.chatAnimation();
+        this.bufferAnimation("LEFT", 20, 970);
+      } else {
+        this.message.fill(200);
 
-      this.message.rect(20, 970 + this.pos, 410, 180, 5);
-      this.message.noStroke();
-      this.message.fill(0);
-      this.message.text(
-        "Super! Nach Eingabe deiner E-Mail-Adresse schicken wir dir unsere Handlungsempfehlungen für den Umgang mit Informationen in sozialen Netzwerken als PDF zu.",
-        35,
-        980 + this.pos,
-        400,
-        170
-      );
+        this.message.rect(20, 970 + this.pos, 410, 180, 5);
+        this.message.noStroke();
+        this.message.fill(0);
+        this.message.text(
+          "Super! Nach Eingabe deiner E-Mail-Adresse schicken wir dir unsere Handlungsempfehlungen für den Umgang mit Informationen in sozialen Netzwerken als PDF zu.",
+          35,
+          980 + this.pos,
+          400,
+          170
+        );
+      }
     }
 
     if (this.mailSent) {
-      this.message.fill(170);
-      this.message.rect(90, 1170 + this.pos, 330, 130, 5);
-      this.message.noStroke();
-      this.message.fill(0);
-      this.message.text(
-        "Meine E-Mail-Adresse lautet " + this.mailAddress + ".",
-        105,
-        1180 + this.pos,
-        320,
-        120
-      );
+      if (!this.mailSentAnimation.a1) {
+        this.chatAnimation();
+        this.bufferAnimation("RIGHT", 340, 1170);
+      } else {
+        this.message.fill(170);
+        this.message.rect(90, 1170 + this.pos, 330, 130, 5);
+        this.message.noStroke();
+        this.message.fill(0);
+        this.message.text(
+          "Meine E-Mail-Adresse lautet " + this.mailAddress + ".",
+          105,
+          1180 + this.pos,
+          320,
+          120
+        );
+      }
     }
 
-    if (this.mailFailed) {
+    if (this.mailFailed && this.mailSentAnimation.a1) {
       this.message.fill(200);
       this.message.rect(20, 1320 + this.pos, 330, 130, 5);
       this.message.noStroke();
@@ -156,9 +192,11 @@ export default class PhoneEndScreen extends Sprite {
         320,
         120
       );
-    } else if (this.mailSent) {
+    } else if (this.mailSent && this.mailSentAnimation.a1 && !this.mailSentAnimation.a2) {
+      this.chatAnimation();
+      this.bufferAnimation("LEFT", 20, 1320);
+    } else if (this.mailSentAnimation.a2) {
       this.message.fill(200);
-
       this.message.rect(20, 1320 + this.pos, 330, 130, 5);
       this.message.noStroke();
       this.message.fill(0);
@@ -169,29 +207,72 @@ export default class PhoneEndScreen extends Sprite {
         320,
         120
       );
+      this.children[3].show();
     }
   }
 
+  answer(role) {
+    this.answered = true;
+    this.role = role;
+    this.updatePosition(-30);
+    setTimeout(() => {
+      this.answeredAnimation.a1 = true;
+      this.clearChatAnimation();
+    }, 2000)
+    setTimeout(() => {
+      this.answeredAnimation.a2 = true;
+      this.clearChatAnimation();
+      this.updatePosition(-170);
+    }, 5000)
+  }
+
+  buttonsActive() {
+    this.buttonsActivated = true;
+    this.updatePosition(-606);
+    setTimeout(() => {
+      this.buttonsActivatedAnimation = true;
+      this.clearChatAnimation();
+    }, 2000)
+  }
+
+  inputActive() {
+    this.inputActivated = true;
+    this.updatePosition(-744);
+    setTimeout(() => {
+      this.inputActivatedAnimation = true;
+      this.clearChatAnimation();
+
+    }, 2000)
+  }
+
   sendMail(mail) {
+
     this.mailSent = true;
     this.mailAddress = mail;
-    this.children[3].show();
+    this.updatePosition(-810);
+    setTimeout(() => {
+      this.mailSentAnimation.a1 = true;
+      this.clearChatAnimation();
+      this.updatePosition(-1040);
+    }, 2000)
+    setTimeout(() => {
+      this.mailSentAnimation.a2 = true;
+      this.clearChatAnimation();
+
+    }, 5000)
+
   }
 
   sendFailed() {
     this.mailFailed = true;
   }
 
-  buttonsActive() {
-    this.buttonsActivated = true;
-  }
 
-  inputActive() {
-    this.inputActivated = true;
-  }
 
-  updatePosition() {
-    this.pos += -60;
+
+
+  updatePosition(pos) {
+    this.pos = pos;
   }
 
   showConversation(textNode) {
@@ -199,14 +280,45 @@ export default class PhoneEndScreen extends Sprite {
     this.conversation.push(conv);
   }
 
-  bufferAnimation() {
-    this.message.textAlign(CENTER, CENTER);
-    this.message.fill(170);
-    this.message.rect(400, 180 + 180 * this.conversation.length + this.pos, 80, 70, 5);
+  bufferAnimation(direction, x, y) {
+    switch (direction) {
+      case "RIGHT":
+        this.message.textAlign(CENTER, CENTER);
+        this.message.fill(170);
+        this.message.rect(x, y + this.pos, 80, 70, 5);
+        this.message.noStroke();
+        this.message.fill(0);
+        this.message.text(this.chatNode, x, y + this.pos, 80, 70);
+        break;
+      case "LEFT":
+        this.message.textAlign(CENTER, CENTER);
+        this.message.fill(200);
+        this.message.rect(x, y + this.pos, 80, 70, 5);
+        this.message.noStroke();
+        this.message.fill(0);
+        this.message.text(this.chatNode, x, y + this.pos, 80, 70);
+        break;
+    };
+  }
 
-    this.message.noStroke();
-    this.message.fill(0);
-    this.message.text(".  .  .", 400, 180 + 180 * this.conversation.length + this.pos, 80, 70);
+  clearChatAnimation() {
+    this.count = 0;
+    window.dispatchEvent(new CustomEvent("phoneSendMsg"));
+  }
+
+  chatAnimation() {
+    if (this.count < 45) {
+      this.count++;
+    } else {
+      this.count = 0
+    }
+    if (this.count <= 15) {
+      this.chatNode = ".      ";
+    } else if (this.count > 15 && this.count <= 30) {
+      this.chatNode = ".  .   ";
+    } else {
+      this.chatNode = ".  .  .";
+    }
   }
 
   mouseScroll() {

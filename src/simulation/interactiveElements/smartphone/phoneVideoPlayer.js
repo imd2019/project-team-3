@@ -11,7 +11,6 @@ export default class PhoneVideoPlayer extends Sprite {
     this.videoSet = false;
     this.hide();
     this.disable();
-
   }
 
   draw() {
@@ -77,6 +76,7 @@ export default class PhoneVideoPlayer extends Sprite {
   }
 
   activateButtons() {
+
     this.parent.children[2].show();
     this.parent.children[3].show();
     this.parent.buttonsActive();
@@ -90,7 +90,7 @@ export default class PhoneVideoPlayer extends Sprite {
   }
 
   updatePosition() {
-    this.parent.pos = -290;
+    this.parent.updatePosition(-318);
   }
 
   resetElement() {
