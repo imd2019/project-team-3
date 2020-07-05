@@ -51,6 +51,8 @@ import DemoPeople from "./simulation/interactiveElements/demo/demoPeople.js";
 import Newspaper from "./simulation/interactiveElements/kiosk/newspaper.js";
 import DemoForegnd from "./simulation/interactiveElements/demo/demoForegnd.js";
 import StartGameButton from "./startVideo/startGameButton.js";
+import PongGame from "./simulation/interactiveElements/bar/pong/pongGame.js";
+import PongStartButton from "./simulation/interactiveElements/bar/pong/pongStartButton.js";
 
 // utillity classes
 import AnimationProcessor from "./animationProcessor.js";
@@ -240,12 +242,20 @@ window.addEventListener("enterView", (ev) => {
   }, 1000);
 
   if (ev.detail === "bar") {
-    doorSound.play();
-    citySound.fade(0, 1);
-    window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
-    setTimeout(() => {
-      window.dispatchEvent(new CustomEvent("barPhoneVibration"));
-    }, 1000);
+    phoneVibrationSound.fade(0.5, 1);    
+    if (!player.actionDone("bar", "playPong")) {
+      doorSound.play();
+      citySound.fade(0, 1);
+      window.dispatchEvent(new CustomEvent("hidePhoneIcon"));
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent("barPhoneVibration"));
+      }, 1000);
+    }
+  }
+
+  if (ev.detail === "pong") {
+    phoneVibrationSound.fade(0, 1);
+
   }
 
   if (ev.detail === "demo") {
@@ -355,6 +365,9 @@ function setupGame() {
 
   let bar = new View("bar", 1793, 768, barBackgnd);
   game.addView(bar);
+
+  let pong = new View("pong", windowWidth, windowHeight, barBackgnd);
+  game.addView(pong);
 
   let global = new View("global", windowWidth, windowHeight);
   game.addView(global);
@@ -955,6 +968,15 @@ function setupGame() {
   let flyerBox_coffeeHouse = new FlyerBox(601, 445, 61, 139, flyerBoxImg, "coffeeHouse");
   coffeeHouse.addChild(flyerBox_coffeeHouse);
 
+  let arcadeScreen = new ColorScreen(0, 0, windowWidth, windowHeight, color("#888988"));
+  pong.addChild(arcadeScreen);
+
+  let pongGame = new PongGame((windowWidth - 1.1 * windowHeight) / 2, 0.1 * windowHeight, 1.1 * windowHeight, 0.8 * windowHeight);
+  pong.addChild(pongGame);
+
+  let pongStartBtn = new PongStartButton(windowWidth / 2 - 50, windowHeight / 2 - 25, 100, 50);
+  pongGame.addChild(pongStartBtn);
+
   // global objects
   let flyerCoffeeHouse = new Flyer(492, 736, flyerImg_coffeeHouse);
   global.addChild(flyerCoffeeHouse);
@@ -1285,7 +1307,6 @@ let barPhoneVibrate;
 
 window.addEventListener("barPhoneVibration", () => {
   phoneVibrationSound.loop();
-  phoneVibrationSound.setVolume(0.5);
 
   animate.start("barPhoneVibrate_1", false, () => {
     barPhoneVibrate = setInterval(() => {

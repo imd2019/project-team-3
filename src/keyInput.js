@@ -13,25 +13,31 @@ export default class KeyInput {
   }
 
   keyTyped() {
-    this.sendKey(key);
-    
+    this.sendKeyTyped(key);
     return false;
   }
 
   keyPressed() {
     if (keyCode === BACKSPACE) {
       this.deleteKey();
-    }
-
-    if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) {
+    } else if (
+      keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW ||
+      keyCode === UP_ARROW || keyCode === DOWN_ARROW
+    ) {
       this.arrowKeys(keyCode);
     }
+
+    this.sendKeyPressed(keyCode);
 
     return false;
   }
 
-  sendKey(key) {
-    this.focusElement.getKey(key);
+  sendKeyTyped(key) {
+    this.focusElement.keyTyped(key);
+  }
+
+  sendKeyPressed(keyCode) {
+    this.focusElement.keyPressed(keyCode);
   }
 
   deleteKey() {
