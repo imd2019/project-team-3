@@ -11,6 +11,11 @@ export default class PhoneMessage extends Sprite {
     this.pos = 0;
     this.event = undefined;
     this.message = createGraphics(width, height);
+    this.buffering = false;
+    this.bufferingDirection = undefined;
+    this.chatNode = undefined;
+    this.chatAnimated = false;
+    this.count = 0;
   }
 
   draw() {
@@ -95,12 +100,6 @@ export default class PhoneMessage extends Sprite {
       this.message.text("Du hast keine neuen Nachrichten.", 30, 90, 330, 105);
     }
 
-    // for (let elem in this.conversation) {
-    //   if (!this.conversation[elem].animationOver && this.conversation[elem].isClicked) {
-    //     this.bufferAnimation("RIGHT");
-    //   }
-    // }
-
     for (let elem in this.conversation) {
       if (this.conversation[elem].isClicked && this.conversation[elem].animationTextOver) {
         this.message.fill(170);
@@ -110,7 +109,6 @@ export default class PhoneMessage extends Sprite {
         this.message.text(this.conversation[elem].conversationText, 105, 250 + 300 * elem + this.pos, 320, 120);
       }
     }
-
 
     for (let elem in this.conversation) {
       if (this.conversation[elem].isClicked && this.conversation[elem].animationAnswerOver) {
@@ -122,16 +120,23 @@ export default class PhoneMessage extends Sprite {
       }
     }
 
-
-    if (this.children[0].mouseHovered() || this.children[1].mouseHovered()) {
+    if (this.children[0].hover || this.children[1].hover) {
       this.hoverAnimation();
+    }
+
+    if (this.buffering) {
+      this.bufferAnimation(this.bufferingDirection);
+      this.chatAnimation();
+    } else {
+      this.clearChatAnimation();
     }
   }
 
 
 
   updatePosition() {
-    this.pos = (this.pos - 0.2) * 9;
+    this.pos += -55;
+    this.redraw();
   }
 
   showConversation(textNode) {
@@ -146,16 +151,43 @@ export default class PhoneMessage extends Sprite {
     }
   }
 
+  setBufferAnimation(direction) {
+    this.buffering = true;
+    this.bufferingDirection = direction;
+  }
+
+  clearBufferAnimation() {
+    this.buffering = false;
+  }
+
+  clearChatAnimation() {
+    this.count = 0;
+  }
+
+  chatAnimation() {
+    if (this.count < 45) {
+      this.count++;
+    } else {
+      this.count = 0
+    }
+    if (this.count <= 15) {
+      this.chatNode = ".      ";
+    } else if (this.count > 15 && this.count <= 30) {
+      this.chatNode = ".  .   ";
+    } else {
+      this.chatNode = ".  .  .";
+    }
+  }
+
   bufferAnimation(direction) {
     switch (direction) {
-
       case "RIGHT":
         this.message.textAlign(CENTER, CENTER);
         this.message.fill(170);
         this.message.rect(350, 250 + 300 * (this.conversation.length - 1) + this.pos, 80, 70, 5);
         this.message.noStroke();
         this.message.fill(0);
-        this.message.text(".  .  .", 350, 250 + 300 * (this.conversation.length - 1) + this.pos, 80, 70);
+        this.message.text(this.chatNode, 350, 250 + 300 * (this.conversation.length - 1) + this.pos, 80, 70);
         break;
       case "LEFT":
         this.message.textAlign(CENTER, CENTER);
@@ -163,7 +195,7 @@ export default class PhoneMessage extends Sprite {
         this.message.rect(20, 400 + 300 * (this.conversation.length - 1) + this.pos, 80, 70, 5);
         this.message.noStroke();
         this.message.fill(0);
-        this.message.text(".  .  .", 20, 400 + 300 * (this.conversation.length - 1) + this.pos, 80, 70);
+        this.message.text(this.chatNode, 20, 400 + 300 * (this.conversation.length - 1) + this.pos, 80, 70);
         break;
     };
   }
@@ -179,15 +211,16 @@ export default class PhoneMessage extends Sprite {
 
   mouseScroll() {
     let ev = {};
-    if (this.mouseHovered()) {
-      if (mouseY < 0.25 * windowHeight) {
-        ev["delta"] = -6;
-        this.wheel(ev);
-      } else if (mouseY > 0.7 * windowHeight) {
-        ev["delta"] = 6;
-        this.wheel(ev);
+    for (let elem of this.conversation)
+      if (this.hover && elem.conversationEnded) {
+        if (mouseY < 0.25 * windowHeight) {
+          ev["delta"] = -6;
+          this.wheel(ev);
+        } else if (mouseY > 0.7 * windowHeight) {
+          ev["delta"] = 6;
+          this.wheel(ev);
+        }
       }
-    }
   }
 
   wheel(ev) {

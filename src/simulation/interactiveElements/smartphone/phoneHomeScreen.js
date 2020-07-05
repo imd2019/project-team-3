@@ -53,7 +53,7 @@ export default class PhoneHomeScreen extends Sprite {
 
   mouseScroll() {
     let ev = {};
-    if (this.mouseHovered()) {
+    if (this.hover) {
       if (mouseY < 0.25 * windowHeight) {
         ev["delta"] = -6;
         this.wheel(ev);

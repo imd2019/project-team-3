@@ -11,6 +11,7 @@ export default class MoreInfoButton extends Sprite {
     clicked() {
         window.dispatchEvent(new CustomEvent("tapPhone"));
         this.parent.inputActive();
+        this.parent.updatePosition();
         this.parent.children[2].hide();
         this.parent.children[3].hide();
         this.parent.children[4].show();

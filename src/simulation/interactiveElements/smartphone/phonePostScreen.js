@@ -24,15 +24,18 @@ export default class PhonePostScreen extends Sprite {
 
     for (let elem in this.children) {
       if (this.children[elem].visible) {
-        if (this.children[1].mouseHovered()) {
+        if (this.children[1].hover) {
           this.post.clear();
           this.post.image(this.children[1].post, 12.5, 12.5, 430, 324);
-        } else if (this.children[2].mouseHovered()) {
+          this.setPost(this.children[1].post);
+        } else if (this.children[2].hover) {
           this.post.clear();
           this.post.image(this.children[2].post, 12.5, 12.5, 430, 324);
-        } else if (this.children[3].mouseHovered()) {
+          this.setPost(this.children[2].post);
+        } else if (this.children[3].hover) {
           this.post.clear();
           this.post.image(this.children[3].post, 12.5, 12.5, 430, 324);
+          this.setPost(this.children[3].post);
         }
       }
     }
