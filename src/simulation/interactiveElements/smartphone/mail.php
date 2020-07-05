@@ -9,7 +9,7 @@
  
     // Mail content
     $subject = "Simulationsspiel „Social Whispers“";
-    $file = "../../../../docs/Handlungsempfehlungen_Social-Media.pdf";
+    $file = "../../../../docs/Handlungsempfehlungen Social-Media.pdf";
     $headers = "From: " . $from;
  
     // Boundary  
