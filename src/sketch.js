@@ -1006,8 +1006,6 @@ function setupGame() {
     });
   });
 
-  game.enterView("bar");
-
   // global objects
   let flyerCoffeeHouse = new Flyer(492, 736, flyerImg_coffeeHouse);
   global.addChild(flyerCoffeeHouse);
