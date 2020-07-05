@@ -243,7 +243,6 @@ export default class PhoneEndScreen extends Sprite {
   }
 
   sendMail(mail) {
-
     this.mailSent = true;
     this.mailAddress = mail;
     this.updatePosition(-810);
@@ -255,18 +254,12 @@ export default class PhoneEndScreen extends Sprite {
     setTimeout(() => {
       this.mailSentAnimation.a2 = true;
       this.clearChatAnimation();
-
     }, 5000)
-
   }
 
   sendFailed() {
     this.mailFailed = true;
   }
-
-
-
-
 
   updatePosition(pos) {
     this.pos = pos;
