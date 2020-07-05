@@ -8,7 +8,7 @@
     $htmlContent = $content['content'];
  
     // Mail content
-    $subject = "Simulationsspiel \"Social Whispers\"";
+    $subject = "Simulationsspiel „Social Whispers“";
     $file = "../../../../docs/test.pdf";
     $headers = "From: " . $from;
  
