@@ -316,7 +316,7 @@ window.addEventListener("enterView", (ev) => {
     fountainSound.fade(0.06, 2);
     owlSound.fade(0, 1);
     demoSound.fade(0, 1);
-    if (player.actionDone("demo", "joinDemo")) {
+    if (player.actionDone("demo", "joinDemo") && !player.actionDone("coffeeHouse", "groupInvitation")) {
       window.dispatchEvent(
         new CustomEvent("addAction", {
           detail: {
@@ -1185,6 +1185,7 @@ function setupGame() {
 
   window.addEventListener("endGame", () => {
     phoneVibrationSound.stop();
+    phoneVibrationSound.setLoop(false);
     clearInterval(barPhoneVibrate);
     barPhone.hide();
     window.dispatchEvent(new CustomEvent("openPhone"));
@@ -1193,6 +1194,7 @@ function setupGame() {
     mobilePhone.break();
     homeScreenBtn.resetNotification();
     msgScreenBtn.resetNotification();
+    phoneButton.disable();
   });
 
   window.addEventListener("restartGame", () => {
@@ -1258,7 +1260,6 @@ window.addEventListener("phoneSendMsg", () => {
 
 window.addEventListener("phoneVibration", () => {
   phoneVibrationSound.play();
-
   animate.start("phoneVibrate_1", false, () => {
     let count = 0;
     let interval = setInterval(() => {

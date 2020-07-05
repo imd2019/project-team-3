@@ -50,6 +50,8 @@ export default class PhoneIcon extends InteractiveObject {
     this.x = this.saveX;
     this.y = this.saveY;
     this.scale = this.saveScale;
+    this.notification = false;
+    this.hideNotification = false;
     setTimeout( () => {
       this.show();
       this.enable();
