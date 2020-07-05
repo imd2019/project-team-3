@@ -7,8 +7,8 @@ export default class PhoneHomeScreen extends Sprite {
     this.name = "homeScreen";
     this.pos = 0;
     this.activePosts = [];
-    this.posts = createGraphics(width, height);
     this.postSet = false;
+    this.posts = createGraphics(this.width, this.height);
   }
 
   draw() {
@@ -20,7 +20,7 @@ export default class PhoneHomeScreen extends Sprite {
 
     image(this.posts, 0, 0, this.width, this.height);
 
-    this.redraw();
+    // this.redraw();
   }
 
   setPost(img) {
@@ -80,6 +80,7 @@ export default class PhoneHomeScreen extends Sprite {
   resetElement() {
     this.pos = 0;
     this.activePosts = [];
-    this.redraw();
+    this.postSet = false;
+    this.posts = createGraphics(this.width, this.height);
   }
 }

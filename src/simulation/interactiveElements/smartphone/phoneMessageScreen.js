@@ -10,7 +10,7 @@ export default class PhoneMessage extends Sprite {
     this.conversation = [];
     this.pos = 0;
     this.event = undefined;
-    this.message = createGraphics(width, height);
+    this.message = createGraphics(this.width, this.height);
     this.buffering = false;
     this.bufferingDirection = undefined;
     this.chatNode = undefined;
@@ -132,8 +132,6 @@ export default class PhoneMessage extends Sprite {
     }
   }
 
-
-
   updatePosition() {
     this.pos += -55;
     this.redraw();
@@ -237,9 +235,14 @@ export default class PhoneMessage extends Sprite {
   }
 
   resetElement() {
-    this.event = undefined;
     this.conversation = [];
     this.pos = 0;
-    this.redraw();
+    this.event = undefined;
+    this.buffering = false;
+    this.bufferingDirection = undefined;
+    this.chatNode = undefined;
+    this.chatAnimated = false;
+    this.count = 0;
+    this.message = createGraphics(this.width, this.height);
   }
 }

@@ -4,7 +4,7 @@ export default class PhonePostScreen extends Sprite {
   constructor(x, y, width, height) {
     super(x, y, width, height);
     this.name = "postScreen";
-    this.post = createGraphics(width, height);
+    this.post = createGraphics(this.width, this.height);
     this.newPost = undefined;
     this.postReady = false;
   }
@@ -70,6 +70,6 @@ export default class PhonePostScreen extends Sprite {
   resetElement() {
     this.newPost = undefined;
     this.postReady = false;
-    this.redraw();
+    this.post = createGraphics(this.width, this.height);
   }
 }

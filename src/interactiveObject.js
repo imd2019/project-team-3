@@ -106,10 +106,4 @@ export default class InteractiveObject extends DisplayObject {
       this.wheel(ev);
     }
   }
-
-  reset() {
-    this.resetElement();
-  }
-
-  resetElement() {}
 }

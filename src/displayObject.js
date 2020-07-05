@@ -50,5 +50,9 @@ export default class DisplayObject extends EventDispatcher {
 
   mouseWheel(ev) {}
 
-  reset() {}
+  reset() {
+    this.resetElement();
+  }
+
+  resetElement() {}
 }

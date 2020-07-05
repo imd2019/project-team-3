@@ -43,5 +43,6 @@ export default class PhoneMenuIcon extends Sprite {
     if (this.target === "endScreen") {
       this.target = "messageScreen";
     }
+    this.show();
   }
 }

@@ -5,7 +5,7 @@
 
 export default class KeyInput {
   constructor() {
-    this.focusElement = null;
+    this.focusElement = undefined;
   }
 
   getFocus(element) {
@@ -13,22 +13,25 @@ export default class KeyInput {
   }
 
   keyTyped() {
-    this.sendKeyTyped(key);
+    if (this.focusElement != undefined) {
+      this.sendKeyTyped(key);
+    }
     return false;
   }
 
   keyPressed() {
-    if (keyCode === BACKSPACE) {
-      this.deleteKey();
-    } else if (
-      keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW ||
-      keyCode === UP_ARROW || keyCode === DOWN_ARROW
-    ) {
-      this.arrowKeys(keyCode);
+    if (this.focusElement != undefined) {
+      if (keyCode === BACKSPACE) {
+        this.deleteKey();
+      } else if (
+        keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW ||
+        keyCode === UP_ARROW || keyCode === DOWN_ARROW
+      ) {
+        this.arrowKeys(keyCode);
+      }
+  
+      this.sendKeyPressed(keyCode);
     }
-
-    this.sendKeyPressed(keyCode);
-
     return false;
   }
 

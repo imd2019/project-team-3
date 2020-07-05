@@ -1267,6 +1267,8 @@ function setupGame() {
 
     demoSound.loop();
   });
+
+  window.dispatchEvent(new CustomEvent("restartGame"));
 }
 
 /* sound events */
@@ -1282,7 +1284,9 @@ window.addEventListener("phoneSendMsg", () => {
 });
 
 window.addEventListener("phoneVibration", () => {
-  phoneVibrationSound.play();
+  if (!phoneVibrationSound.isPlaying()) {
+    phoneVibrationSound.play();
+  }
   animate.start("phoneVibrate_1", false, () => {
     let count = 0;
     let interval = setInterval(() => {

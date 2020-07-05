@@ -8,7 +8,6 @@ export default class PhoneEndScreen extends Sprite {
     this.user = user;
     this.answered = false;
     this.answeredAnimation = { a1: false, a2: false };
-
     this.role = undefined;
     this.pos = 0.1;
     this.message = createGraphics(width, height);
@@ -20,7 +19,6 @@ export default class PhoneEndScreen extends Sprite {
     this.mailSentAnimation = { a1: false, a2: false };
     this.mailFailed = false;
     this.mailAddress = undefined;
-
     this.buffering = false;
     this.chatNode = undefined;
     this.count = 0;
@@ -28,7 +26,6 @@ export default class PhoneEndScreen extends Sprite {
   }
 
   draw() {
-    console.log(this.pos);
     fill(220);
     noStroke();
     rect(0, 0, this.width, this.height);
@@ -349,8 +346,21 @@ export default class PhoneEndScreen extends Sprite {
 
   resetElement() {
     this.answered = false;
+    this.answeredAnimation = { a1: false, a2: false };
     this.role = undefined;
     this.pos = 0.1;
-    this.redraw();
+    this.message = createGraphics(width, height);
+    this.buttonsActivated = false;
+    this.buttonsActivatedAnimation = false;
+    this.inputActivated = false;
+    this.inputActivatedAnimation = false;
+    this.mailSent = false;
+    this.mailSentAnimation = { a1: false, a2: false };
+    this.mailFailed = false;
+    this.mailAddress = undefined;
+    this.buffering = false;
+    this.chatNode = undefined;
+    this.count = 0;
+    this.chatAnimated = false;
   }
 }
