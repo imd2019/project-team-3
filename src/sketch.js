@@ -1267,8 +1267,6 @@ function setupGame() {
 
     demoSound.loop();
   });
-
-  window.dispatchEvent(new CustomEvent("restartGame"));
 }
 
 /* sound events */
