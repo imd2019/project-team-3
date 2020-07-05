@@ -1284,7 +1284,7 @@ let barPhoneVibrate;
 
 window.addEventListener("barPhoneVibration", () => {
   phoneVibrationSound.loop();
-  phoneVibrationSound.setVolume(0.3);
+  phoneVibrationSound.setVolume(0.5);
 
   animate.start("barPhoneVibrate_1", false, () => {
     barPhoneVibrate = setInterval(() => {
