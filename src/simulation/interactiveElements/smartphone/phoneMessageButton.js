@@ -43,7 +43,6 @@ export default class PhoneMessageButton extends Sprite {
             this.parent.updatePosition();
             window.dispatchEvent(new CustomEvent("phoneSendMsg"));
             btn.setUpMessages();
-            console.log(this.currentMessage.conversationEnded);
             if (btn.conversationIndex < 4 && btn.visible) {
               btn.enable();
             }
