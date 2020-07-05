@@ -18,4 +18,9 @@ export default class BarPhone extends Sprite {
   clicked() {
     window.dispatchEvent(new CustomEvent("endGame"));
   }
+
+  resetElement() {
+    this.show();
+    this.enable();
+  }
 }

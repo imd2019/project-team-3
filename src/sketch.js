@@ -316,7 +316,7 @@ window.addEventListener("enterView", (ev) => {
     fountainSound.fade(0.06, 2);
     owlSound.fade(0, 1);
     demoSound.fade(0, 1);
-    if (player.actionDone("demo", "joinDemo")) {
+    if (player.actionDone("demo", "joinDemo") && !player.actionDone("coffeeHouse", "groupInvitation")) {
       window.dispatchEvent(
         new CustomEvent("addAction", {
           detail: {
@@ -424,6 +424,17 @@ function setupGame() {
   titleScreen.addChild(titleScreenLampBulb);
   streetLamps.push(titleScreenLampBulb);
 
+  let startGameBox = new InfoBox(
+    725, 184,
+    600, 400,
+    "Spielstart",
+    window.fonts.rockwell,
+    "Klicke um das Spiel zu starten.",
+    window.fonts.franklinGothic,
+    color("#ffa500")
+  );
+  titleScreen.addChild(startGameBox);
+
   let instructionBox = new InfoBox(
     725, 184,
     600, 400,
@@ -453,11 +464,11 @@ function setupGame() {
     window.fonts.rockwell,
     "Sounds: Zapsplat.com" +
     "                                                                          " +
-    "Music: freemusicarchive.org" +
+    "Musik: freemusicarchive.org" +
     "                                                                        " +
-    "Voice: Martin Haas martin.haas@h-da.de" +
-    "                                                   " +
-    "broken phone screen: https://www.vecteezy.com/free-vector/wrecking-ball ",
+    "Sprecher: Martin Haas (martin.haas@h-da.de)" +
+    "                                          " +
+    "Broken phone screen: https://www.vecteezy.com/free-vector/wrecking-ball ",
     window.fonts.franklinGothic,
     color("#ffa500")
   );
@@ -465,17 +476,27 @@ function setupGame() {
 
   window.addEventListener("showInstructions", () => {
     instructionBox.show();
+    startGameBox.hide();
     aboutUsBox.hide();
     creditsBox.hide();
   });
 
   window.addEventListener("showAboutUs", () => {
     aboutUsBox.show();
+    startGameBox.hide();
     instructionBox.hide();
     creditsBox.hide();
   });
   window.addEventListener("showCredits", () => {
     creditsBox.show();
+    startGameBox.hide();
+    instructionBox.hide();
+    aboutUsBox.hide();
+  });
+
+  window.addEventListener("showStartInfo", () => {
+    startGameBox.show();
+    creditsBox.hide();
     instructionBox.hide();
     aboutUsBox.hide();
   });
@@ -1165,6 +1186,7 @@ function setupGame() {
 
   window.addEventListener("endGame", () => {
     phoneVibrationSound.stop();
+    phoneVibrationSound.setLoop(false);
     clearInterval(barPhoneVibrate);
     barPhone.hide();
     window.dispatchEvent(new CustomEvent("openPhone"));
@@ -1173,6 +1195,7 @@ function setupGame() {
     mobilePhone.break();
     homeScreenBtn.resetNotification();
     msgScreenBtn.resetNotification();
+    phoneButton.disable();
   });
 
   window.addEventListener("restartGame", () => {
@@ -1238,7 +1261,6 @@ window.addEventListener("phoneSendMsg", () => {
 
 window.addEventListener("phoneVibration", () => {
   phoneVibrationSound.play();
-
   animate.start("phoneVibrate_1", false, () => {
     let count = 0;
     let interval = setInterval(() => {
@@ -1263,7 +1285,7 @@ let barPhoneVibrate;
 
 window.addEventListener("barPhoneVibration", () => {
   phoneVibrationSound.loop();
-  phoneVibrationSound.setVolume(0.3);
+  phoneVibrationSound.setVolume(0.5);
 
   animate.start("barPhoneVibrate_1", false, () => {
     barPhoneVibrate = setInterval(() => {

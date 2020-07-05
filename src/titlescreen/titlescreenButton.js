@@ -30,7 +30,7 @@ export default class TitleScreenButton extends InteractiveObject {
   }
 
   clicked() {
-    if (this.enabled) {
+    if (this.enabled && this.action === "playStartVideo") {
       window.dispatchEvent(new CustomEvent(this.action));
       window.dispatchEvent(new CustomEvent("playButtonSound"));
     }
@@ -38,6 +38,11 @@ export default class TitleScreenButton extends InteractiveObject {
 
   hovered() {
     window.dispatchEvent(new CustomEvent("cursor", { detail: "hovered" }));
+    if (this.action === "playStartVideo") {
+      window.dispatchEvent(new CustomEvent("showStartInfo"));
+    } else {
+      window.dispatchEvent(new CustomEvent(this.action));
+    }
     if (this.playSound) {
       window.dispatchEvent(new CustomEvent("playButtonSound"));
       this.playSound = false;

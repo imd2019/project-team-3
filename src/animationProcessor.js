@@ -59,7 +59,7 @@ export default class AnimationProcessor {
       easing: easing,
       delay: delay,
       repeat: repeat
-    }
+    };
   }
 
   removeAnimation(name) {
