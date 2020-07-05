@@ -17,7 +17,7 @@
     $mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";  
  
     // Headers for attachment  
-    $headers .= "\nMIME-Version: 1.0\n" . "Content-Type: multipart/mixed; charset=\"UTF-8\"\n" . " boundary=\"{$mime_boundary}\""; 
+    $headers .= "\nMIME-Version: 1.0\n" . "Content-Type: multipart/mixed;\n" . " boundary=\"{$mime_boundary}\""; 
  
     // Multipart boundary  
     $message = "--{$mime_boundary}\n" . "Content-Type: text/html; charset=\"UTF-8\"\n" . 
@@ -41,5 +41,5 @@
     $message .= "--{$mime_boundary}--"; 
  
     // Send email 
-    mail($to, $subject, $message, $headers);
+    mail($to, '=?utf-8?B?'.base64_encode($subject).'?=', $message, $headers);
 ?>
