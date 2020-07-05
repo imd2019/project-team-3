@@ -6,6 +6,6 @@ export default class Arcade extends Sprite {
   }
 
   clicked() {
-    // window.dispatchEvent(new CustomEvent("enterView", { detail: "pong" }));
+    window.dispatchEvent(new CustomEvent("enterView", { detail: "pong" }));
   }
 }

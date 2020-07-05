@@ -20,7 +20,7 @@ export default class TextArea extends InteractiveObject {
     this.input.getFocus(this);
   }
 
-  getKey(key) {
+  keyTyped(key) {
     if (this.cursorPos < this.content.length - 1) {
       this.content.splice(this.cursorPos, 0, key);
     } else {
@@ -28,6 +28,8 @@ export default class TextArea extends InteractiveObject {
     }
     this.cursorPos++;
   }
+
+  keyPressed() {}
 
   deleteKey() {
     this.content.splice(this.cursorPos - 1, 1);
