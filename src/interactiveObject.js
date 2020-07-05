@@ -30,12 +30,6 @@ export default class InteractiveObject extends DisplayObject {
     this.hover = false;
   }
 
-  draw() {
-    if (this.backgnd != undefined) {
-      image(this.backgnd, 0, 0, this.width, this.height);
-    }
-  }
-
   hitTest(x, y) {
     let e = this;
     let m = createVector(x, y);

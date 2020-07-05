@@ -22,12 +22,12 @@ export default class KeyInput {
   keyPressed() {
     if (this.focusElement != undefined) {
       if (keyCode === BACKSPACE) {
-        this.deleteKey();
+        this.sendDeleteKey();
       } else if (
         keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW ||
         keyCode === UP_ARROW || keyCode === DOWN_ARROW
       ) {
-        this.arrowKeys(keyCode);
+        this.sendArrowKeys(keyCode);
       }
   
       this.sendKeyPressed(keyCode);
@@ -43,11 +43,11 @@ export default class KeyInput {
     this.focusElement.keyPressed(keyCode);
   }
 
-  deleteKey() {
+  sendDeleteKey() {
     this.focusElement.deleteKey();
   }
 
-  arrowKeys(keyCode) {
+  sendArrowKeys(keyCode) {
     this.focusElement.arrowKeys(keyCode);
   }
 }

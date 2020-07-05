@@ -102,14 +102,6 @@ export default class View extends Sprite {
     }
   }
 
-  moveSound(speed) {
-    if (this.name != "bar") {
-      window.dispatchEvent(new CustomEvent("walkOutside" + speed));
-    } else {
-      window.dispatchEvent(new CustomEvent("walkInside" + speed));
-    }
-  }
-
   mousePressed() {
     for (let i = this.children.length - 1; i >= 0; i--) {
       if (this.children[i].mousePressed()) return true;
