@@ -57,6 +57,7 @@ import PongStartButton from "./simulation/interactiveElements/bar/pong/pongStart
 // utillity classes
 import AnimationProcessor from "./animationProcessor.js";
 import KeyInput from "./keyInput.js";
+import LeaveArcadeButton from "./simulation/interactiveElements/bar/pong/leaveArcadeButton.js";
 
 // load images
 let titleScreenImg;
@@ -67,7 +68,7 @@ let coffeeHouseBackgnd, coffeeHouseForegndImg;
 let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg_on, demoLinkBarImg_off, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, kioskLinkNewspapersImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
-let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg;
+let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg, pongBackImg, pongStartImg;
 let phoneIconImg, phoneOutlineImg, phoneOverlayImg, brokenPhoneOverlayImg, phoneBtnImg, homeIconImg, msgIconImg, postIconImg, userIconImg, journalistIconImg, conspiracyIconImg;
 let postOverlayImg, postImg_demoJoined, postImg_counterDemoJoined, postImg_watchedProDemo, postImg_watchedProCounterDemo, postImg_watchedProNone, postImg_groupInvitationAccepted, postImg_groupInvitationDenied, postImg_interviewDenied, postImg_interviewDefend, postImg_interviewRevoke, postImg_11, postImg_12, postImg_13;
 let demoPeopleImg_left, demoPeopleImg_right, demoPeopleSignsImg_left, demoPeopleSignsImg_right;
@@ -79,7 +80,7 @@ let startVideo, endVideo, reflectiveUserVideo, wannabeInfluencerVideo, followerV
 
 // load soundfiles
 let owlSound, demoSound, citySound, leavesSound, coffeeHouseSound, coffeeHouseMusicSound, fountainSound, policeSirenSound, demoBenchSound;
-let phoneMsgSound, phoneVibrationSound, phoneTapSound, doorSound, insideStepsSound_fast, insideStepsSound_slow, outsideStepsSound_fast, outsideStepsSound_slow, lampClickSound, streetsignClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound, buttonSound;
+let phoneMsgSound, phoneVibrationSound, phoneTapSound, doorSound, insideStepsSound_fast, insideStepsSound_slow, outsideStepsSound_fast, outsideStepsSound_slow, lampClickSound, streetsignClickSound, registerSound, newspaperSound, pickupSignSound, flyerSound, buttonSound, arcadeLeverSound;
 
 function preload() {
   // fonts
@@ -136,6 +137,8 @@ function preload() {
   doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png");
   kioskBuildingImg_on = loadImage("../img/kiosk/2_building_on.png");
   barArcadeImg = loadImage("../img/bar/2_elements/2_arcade.png");
+  pongBackImg = loadImage("../img/bar/2_elements/2_pongBack.png");
+  pongStartImg = loadImage("../img/bar/2_elements/2_pongStart.png");
   barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png");
 
   // smartphone
@@ -217,6 +220,7 @@ function preload() {
   flyerSound = loadSound("../sound/eventRelated/flyer.mp3");
   demoBenchSound = loadSound("../sound/eventRelated/benchSitdown.mp3");
   buttonSound = loadSound("../sound/eventRelated/button.mp3");
+  arcadeLeverSound = loadSound("../sound/eventRelated/arcadeLever.mp3");
   citySound = loadSound("../sound/ambient/city.mp3");
   coffeeHouseMusicSound = loadSound("../sound/ambient/coffeeHouseMusic.mp3", setupGame);
 }
@@ -242,7 +246,7 @@ window.addEventListener("enterView", (ev) => {
   }, 1000);
 
   if (ev.detail === "bar") {
-    phoneVibrationSound.fade(0.5, 1);    
+    phoneVibrationSound.fade(0.5, 1);
     if (!player.actionDone("bar", "playPong")) {
       doorSound.play();
       citySound.fade(0, 1);
@@ -974,8 +978,35 @@ function setupGame() {
   let pongGame = new PongGame((windowWidth - 1.1 * windowHeight) / 2, 0.1 * windowHeight, 1.1 * windowHeight, 0.8 * windowHeight);
   pong.addChild(pongGame);
 
-  let pongStartBtn = new PongStartButton(windowWidth / 2 - 50, windowHeight / 2 - 25, 100, 50);
-  pongGame.addChild(pongStartBtn);
+  let pongStartBtn = new PongStartButton(0.9 * windowWidth - 150, windowHeight - 360, 150, 389, pongStartImg);
+  pong.addChild(pongStartBtn);
+
+  let leaveArcadeBtn = new LeaveArcadeButton(0.1 * windowWidth, windowHeight - 360, 150, 389, pongBackImg);
+  pong.addChild(leaveArcadeBtn);
+
+  animate.addAnimation("movePongStartBtn", pongStartBtn, "y", pongStartBtn.y, pongStartBtn.y + 50, 0.2, "ease-in-out-sine");
+  animate.addAnimation("movePongBackBtn", leaveArcadeBtn, "y", leaveArcadeBtn.y, leaveArcadeBtn.y + 50, 0.2, "ease-in-out-sine")
+
+  window.addEventListener("pongStart", () => {
+    arcadeLeverSound.play();
+    animate.start("movePongStartBtn", false, () => {
+      animate.start("movePongStartBtn", true, () => {
+        setTimeout( () => {
+          pongGame.start();
+        }, 30);
+      });
+    });
+  });
+
+  window.addEventListener("pongLeave", () => {
+    arcadeLeverSound.play();
+    animate.start("movePongBackBtn", false, () => {
+      window.dispatchEvent(new CustomEvent("enterView", { detail: "bar" }));
+      animate.start("movePongBackBtn", true);
+    });
+  });
+
+  game.enterView("bar");
 
   // global objects
   let flyerCoffeeHouse = new Flyer(492, 736, flyerImg_coffeeHouse);
@@ -1256,6 +1287,7 @@ function setupGame() {
   registerSound.setVolume(0.7);
   citySound.setVolume(0.05);
   demoBenchSound.setVolume(0.6);
+  arcadeLeverSound.setVolume(0.4);
 
   coffeeHouseMusicSound.loop();
 
@@ -1308,8 +1340,9 @@ window.addEventListener("phoneVibration", () => {
 let barPhoneVibrate;
 
 window.addEventListener("barPhoneVibration", () => {
-  phoneVibrationSound.loop();
-
+  if (!phoneVibrationSound.isLooping()) {
+    phoneVibrationSound.loop();
+  }
   animate.start("barPhoneVibrate_1", false, () => {
     barPhoneVibrate = setInterval(() => {
       animate.start("barPhoneVibrate_2", false, () => {

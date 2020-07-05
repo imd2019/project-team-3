@@ -4,9 +4,9 @@
  * (c) 2020 Max Weber and Florian Beck
  */
 
-import Sprite from "../../../../sprite.js";
+import DisplayObject from "../../../../displayObject.js";
 
-export default class PongGame extends Sprite {
+export default class PongGame extends DisplayObject {
   constructor(x, y, width, height) {
     super(x, y, width, height);
     this.started = false;
@@ -66,13 +66,15 @@ export default class PongGame extends Sprite {
     rect(this.player[1].x, this.player[1].y, 10, 40);
 
     // ball
-    fill(255);
-    rect(this.ball.x, this.ball.y, 10, 10);
-  
-    stroke(255);
-    line(this.player[0].x, 80, this.player[1].x, 80);
-    line(this.player[0].x, this.height - 50, this.player[1].x, this.height - 50);
-    noStroke();
+    if (this.ball.moving) {
+      fill(255);
+      rect(this.ball.x, this.ball.y, 10, 10);
+    
+      stroke(255);
+      line(this.player[0].x, 80, this.player[1].x, 80);
+      line(this.player[0].x, this.height - 50, this.player[1].x, this.height - 50);
+      noStroke();
+    }
 
     // instructions
     if (!this.ball.moving) {
@@ -170,8 +172,7 @@ export default class PongGame extends Sprite {
       this.ball.x = this.width / 2;
       this.ball.y = this.height / 2;
       this.started = false;
-      this.children[0].show();
-      this.children[0].enable();
+      this.parent.children[2].enable();
     }
   }
 
