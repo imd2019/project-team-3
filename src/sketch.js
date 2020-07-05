@@ -424,6 +424,17 @@ function setupGame() {
   titleScreen.addChild(titleScreenLampBulb);
   streetLamps.push(titleScreenLampBulb);
 
+  let startGameBox = new InfoBox(
+    725, 184,
+    600, 400,
+    "Spielstart",
+    window.fonts.rockwell,
+    "Klicke um das Spiel zu starten.",
+    window.fonts.franklinGothic,
+    color("#ffa500")
+  );
+  titleScreen.addChild(startGameBox);
+
   let instructionBox = new InfoBox(
     725, 184,
     600, 400,
@@ -453,11 +464,11 @@ function setupGame() {
     window.fonts.rockwell,
     "Sounds: Zapsplat.com" +
     "                                                                          " +
-    "Music: freemusicarchive.org" +
+    "Musik: freemusicarchive.org" +
     "                                                                        " +
-    "Voice: Martin Haas martin.haas@h-da.de" +
-    "                                                   " +
-    "broken phone screen: https://www.vecteezy.com/free-vector/wrecking-ball ",
+    "Sprecher: Martin Haas (martin.haas@h-da.de)" +
+    "                                          " +
+    "Broken phone screen: https://www.vecteezy.com/free-vector/wrecking-ball ",
     window.fonts.franklinGothic,
     color("#ffa500")
   );
@@ -465,17 +476,27 @@ function setupGame() {
 
   window.addEventListener("showInstructions", () => {
     instructionBox.show();
+    startGameBox.hide();
     aboutUsBox.hide();
     creditsBox.hide();
   });
 
   window.addEventListener("showAboutUs", () => {
     aboutUsBox.show();
+    startGameBox.hide();
     instructionBox.hide();
     creditsBox.hide();
   });
   window.addEventListener("showCredits", () => {
     creditsBox.show();
+    startGameBox.hide();
+    instructionBox.hide();
+    aboutUsBox.hide();
+  });
+
+  window.addEventListener("showStartInfo", () => {
+    startGameBox.show();
+    creditsBox.hide();
     instructionBox.hide();
     aboutUsBox.hide();
   });
