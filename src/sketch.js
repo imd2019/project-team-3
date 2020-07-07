@@ -71,7 +71,7 @@ let parkBackgnd, moonImg, cityImg, streetImg, treesImg, parkForegndImg;
 let kioskTreesImg, kioskBuildingImg_on, kioskBuildingImg_off, kioskTrashcanImg, kioskSunshadeImg;
 let demoBackgnd, demoForegndImg_demo, demoForegndImg_pastDemo;
 let coffeeHouseBackgnd, coffeeHouseForegndImg;
-let barBackgnd, barForegndImg, barArcadeImg, barPhoneImg;
+let barBackgnd, barForegndImg, barArcadeImg_dark, barArcadeImg_light, barPhoneImg;
 
 let barLinkImg, coffeeHouseLinkImg, demoLinkBarImg_on, demoLinkBarImg_off, demoLinkDemoImg_demo, demoLinkDemoImg_noDemo, demoLinkSignsLeftImg, demoLinkSignsRightImg, kioskLinkImg_on, kioskLinkImg_off, kioskLinkNewspapersImg, parkLinkImg_kiosk, parkLinkImg_demo, parkLinkImg_coffeeHouse;
 let doorImg, demoSignImg, flyerBoxImg, flyerImg_coffeeHouse, flyerImg_park, streetLampBulbOnImg, streetLampBulbOffImg, demoBenchImg, newspaperImg, pongBackImg, pongStartImg;
@@ -142,7 +142,8 @@ function preload() {
   streetLampBulbOffImg = loadImage("../img/assets/lamp-off.png");
   doorImg = loadImage("../img/coffeeHouse/2_elements/2_door.png");
   kioskBuildingImg_on = loadImage("../img/kiosk/2_building_on.png");
-  barArcadeImg = loadImage("../img/bar/2_elements/2_arcade.png");
+  barArcadeImg_dark = loadImage("../img/bar/2_elements/2_arcade_dark.png");
+  barArcadeImg_light = loadImage("../img/bar/2_elements/2_arcade_light.png");
   pongBackImg = loadImage("../img/bar/2_elements/2_pongBack.png");
   pongStartImg = loadImage("../img/bar/2_elements/2_pongStart.png");
   barPhoneImg = loadImage("../img/bar/2_elements/2_mobilePhone.png");
@@ -702,7 +703,7 @@ function setupGame() {
   barLamp_3.switch();
   barLamp_3.disable();
 
-  let barArcade = new Arcade(1532, 222, 210, 528, barArcadeImg);
+  let barArcade = new Arcade(1532, 222, 210, 528, barArcadeImg_dark, barArcadeImg_light);
   bar.addChild(barArcade);
 
   let barPhone = new BarPhone(357, 356, 22, 8, barPhoneImg);
