@@ -1,3 +1,9 @@
+/*
+ * Social Whispers – Simulation game
+ * Published under the MIT license.
+ * (c) 2020 Florian Beck, Lars Brandies, Luisa von Trümbach and Maximilian Weber
+ */
+
 export default class Simulation{
   constructor(){
     this.manipulativity = 0.5;

@@ -1,5 +1,5 @@
 /*
- * Simple pong game.
+ * Pong game.
  * Published under the MIT license.
  * (c) 2020 Max Weber and Florian Beck
  */

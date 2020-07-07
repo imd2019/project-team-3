@@ -1,6 +1,6 @@
 /*
  * Animation processor for javascript animations.
- * Distributed under the MIT license.
+ * Published under the MIT license.
  * (c) 2020 Florian Beck
 */
 
@@ -68,28 +68,6 @@ export default class AnimationProcessor {
     }
     delete this.animations[name];
   }
-
-  // addAnimationChain(name, delay = 0, repeat = 0, callback = undefined, ...args) {
-  //   if (name in this.animations) {
-  //     return false;
-  //   }
-  //   this.animations[name] = function () {
-  //     this.chainAnimations( ...args);
-  //   };
-  // }
-
-  // chainAnimations(name, ...args) {
-  //   if (!(name in this.animations) || args.length < 2) {
-  //     return false;
-  //   }
-  //   for (let elem of args) {
-  //     if (!(elem in this.animations)) {
-  //       continue;
-  //     }
-  //     this.an
-  //     this.animations[elem].call();
-  //   }
-  // }
 
   start(name, reversed = false, callback = undefined) {
     if (!(name in this.animations)) {
