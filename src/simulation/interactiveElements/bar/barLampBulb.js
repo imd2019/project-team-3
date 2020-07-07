@@ -1,3 +1,9 @@
+/*
+ * Social Whispers – Simulation game
+ * Published under the MIT license.
+ * (c) 2020 Florian Beck, Lars Brandies, Luisa von Trümbach and Maximilian Weber
+ */
+
 import StreetLampBulb from "../general/streetLampBulb.js";
 
 export default class BarLampBulb extends StreetLampBulb {
