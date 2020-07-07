@@ -8,8 +8,8 @@ import InteractiveObject from "./interactiveObject.js";
 export default class TextArea extends InteractiveObject {
   constructor(x, y, width, height, keyInput) {
     super(x, y, width, height);
-    this.content = [];
     this.input = keyInput;
+    this.content = [];
     this.cursorPos = 0;
     this.cursorInterval = 0;
     this.hide();
@@ -106,5 +106,13 @@ export default class TextArea extends InteractiveObject {
       }
       this.cursorInterval = 0;
     }
+  }
+
+  resetElement() {
+    this.content = [];
+    this.cursorPos = 0;
+    this.cursorInterval = 0;
+    this.hide();
+    this.disable();
   }
 }
