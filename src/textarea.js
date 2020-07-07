@@ -27,13 +27,17 @@ export default class TextArea extends InteractiveObject {
       this.content.push(key);
     }
     this.cursorPos++;
+    return false;
   }
 
-  keyPressed() {}
+  keyPressed() {
+    return false;
+  }
 
   deleteKey() {
     this.content.splice(this.cursorPos - 1, 1);
     this.cursorPos--;
+    return false;
   }
 
   arrowKeys(keyCode) {
@@ -53,6 +57,7 @@ export default class TextArea extends InteractiveObject {
       case DOWN_ARROW:
         break;
     }
+    return false;
   }
 
   getLength() {
